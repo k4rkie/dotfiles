@@ -271,4 +271,7 @@ exec_always gsettings set org.gnome.desktop.interface gtk-theme 'Kripton-v40'
 exec_always gsettings set org.gnome.desktop.interface icon-theme 'Flat-Remix-Grey-Dark'
 exec_always gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 
-
+# Globally remap Caps Lock to Escape
+input * {
+    xkb_options caps:escape
+}

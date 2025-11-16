@@ -1,14 +1,10 @@
 @import "/home/k4rkie/.config/rofi/colors-rofi-dark.rasi"
 configuration {
-	modi:                       "drun,filebrowser";
-    show-icons:                 true;
+	modi:                       "drun";
+    show-icons:                 false;
     display-drun:               "Apps";
     display-run:                "Run";
     run-shell-command: "/usr/bin/zsh -c '{cmd}'";
-    display-filebrowser:        "Files";
-    display-window:             "Window";
-    display-emoji:              "Emoji";
-    display-calc:              "Calc";
 	drun-display-format:        "{name} [<span weight='light' size='small'><i>({generic})</i></span>]";
 	window-format:              "{w} · {c} · {t}";
 }

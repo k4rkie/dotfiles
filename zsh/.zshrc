@@ -75,6 +75,8 @@ alias ..="cd .."
 alias mv="mv -i"
 alias rm="rm -i"
 
+alias ins='yay -Syu'
+alias sp="yay -Ss"
 alias please='sudo $(fc -ln -1)'  # still works the same
 alias reload="source ~/.zshrc"
 # -------------------------------
