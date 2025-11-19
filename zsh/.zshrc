@@ -75,7 +75,6 @@ alias ..="cd .."
 alias mv="mv -i"
 alias rm="rm -i"
 
-alias ins='yay -Syu'
 alias sp="yay -Ss"
 alias please='sudo $(fc -ln -1)'  # still works the same
 alias reload="source ~/.zshrc"
@@ -89,6 +88,7 @@ export NVM_DIR="$HOME/.nvm"
 
 export PATH="$HOME/.local/bin/scripts:$PATH"
 
+export TERMINAL=kitty
 export EDITOR=nvim
 export VISUAL=nvim
 
@@ -104,3 +104,4 @@ function y() {
 	rm -f -- "$tmp"
 }
 export PATH="$HOME/.cargo/bin:$PATH"
+

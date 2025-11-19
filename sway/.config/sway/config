@@ -257,7 +257,8 @@ client.focused_inactive #202020 #202020 #918478 #202020 #202020
 client.unfocused #202020 #202020 #918478 #202020 #202020
 
 # Gaps
-gaps inner 8
+gaps inner 6
+smart_gaps on
 
 set $GTK_FONT JetBrains\ Mono\ 11.5
 set $GTK_THEME Kription-v40
