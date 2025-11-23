@@ -87,6 +87,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 export PATH="$HOME/.local/bin/scripts:$PATH"
+export PATH="$HOME/scripts:$PATH"
 
 export TERMINAL=kitty
 export EDITOR=nvim
@@ -103,5 +104,6 @@ function y() {
 	[ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
 	rm -f -- "$tmp"
 }
-export PATH="$HOME/.cargo/bin:$PATH"
 
+# Vi mode
+bindkey -v

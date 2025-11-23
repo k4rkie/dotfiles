@@ -5,7 +5,8 @@
   "margin-bottom": 0,
   "modules-left": [
     "clock",
-    "pulseaudio"
+    "pulseaudio",
+    "custom/recording"
   ],
   "modules-center": [
     "sway/workspaces"
@@ -23,7 +24,8 @@
     "format": "  {:%I:%M %p} ",
     "interval": 60,
     "tooltip": true,
-    "tooltip-format": "{:%d %B %H:%M}"
+    "tooltip-format": "{:%d %B %H:%M}",
+    "on-click": "kitty -e calcure"
   },
   "sway/workspaces": {
     "format": "{icon}",
@@ -44,11 +46,7 @@
       "9": "9",
       "10": "10"
     },
-    "persistent-workspaces": {
-      "1": [],
-      "2": [],
-      "3": []
-    }
+    "persistent-workspaces": {}
   },
   "temperature": {
     "format": "{icon} {temperatureC}°C ",
@@ -90,5 +88,9 @@
       " 󰂀",
       " 󰁹"
     ]
+  },
+  "custom/recording": {
+    "exec": "/home/k4rkie/scripts/wf-status.sh",
+    "interval": 1
   }
 }
