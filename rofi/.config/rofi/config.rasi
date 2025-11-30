@@ -1,4 +1,4 @@
-@import "/home/k4rkie/.config/rofi/colors-rofi-dark.rasi"
+@import ".config/rofi/colors-rofi-dark.rasi"
 configuration {
 	modi:                       "drun";
     show-icons:                 false;

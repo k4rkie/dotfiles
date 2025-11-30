@@ -1,6 +1,6 @@
 {
   "layer": "top",
-  "position": "top",
+  "position": "bottom",
   "height": 24,
   "margin-bottom": 0,
   "modules-left": [
@@ -14,14 +14,13 @@
   "modules-right": [
     "memory",
     "battery",
-    "tray"
   ],
   "tray": {
     "icon-size": 18,
     "spacing": 4
   },
   "clock": {
-    "format": "  {:%I:%M %p} ",
+    "format": " {:%I:%M %p} ",
     "interval": 60,
     "tooltip": true,
     "tooltip-format": "{:%d %B %H:%M}",
@@ -59,15 +58,15 @@
     ]
   },
   "memory": {
-    "format": "󰫗 {}% ",
+    "format": "mem:{}% ",
     "tooltip": "false"
   },
   "cpu": {
-    "format": " {usage}% ",
+    "format": "cpu:{usage}% ",
     "tooltip": "false"
   },
   "pulseaudio": {
-    "format": " {volume}%",
+    "format": "vol:{volume}%",
     "scroll-step": 1,
     "on-click": "pavucontrol"
   },
@@ -76,10 +75,10 @@
       "warning": 30,
       "critical": 15
     },
-    "format": "{icon} {capacity}%",
-    "format-full": "{icon} {capacity}%",
-    "format-charging": "󱐋 {capacity}%",
-    "format-plugged": " {capacity}%",
+    "format": "{icon}",
+    "format-full": "{icon}",
+    "format-charging": "󱐋",
+    "format-plugged": "",
     "format-alt": "{time} {icon}",
     "format-icons": [
       " 󰁺",
