@@ -1,19 +1,16 @@
 {
   "layer": "top",
   "position": "bottom",
-  "height": 24,
+  "height": 20,
   "margin-bottom": 0,
   "modules-left": [
-    "clock",
-    "pulseaudio",
-    "custom/recording"
-  ],
-  "modules-center": [
     "sway/workspaces"
   ],
+  "modules-center": [],
   "modules-right": [
-    "cpu",
     "memory",
+    "pulseaudio",
+    "clock",
     "network",
     "battery"
   ],
@@ -22,7 +19,7 @@
     "spacing": 4
   },
   "clock": {
-    "format": " {:%I:%M %p} ",
+    "format": "{:%I:%M %p}",
     "interval": 60,
     "tooltip": true,
     "tooltip-format": "{:%d %B %H:%M}",
@@ -49,16 +46,6 @@
     },
     "persistent-workspaces": {}
   },
-  "temperature": {
-    "format": "{icon} {temperatureC}°C ",
-    "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
-    "critical-threshold": 80,
-    "format-icons": [
-      "",
-      "",
-      ""
-    ]
-  },
   "memory": {
     "format": "mem:{}%",
     "tooltip": "false"
@@ -83,11 +70,11 @@
     "format-plugged": "",
     "format-alt": "{time} {icon}",
     "format-icons": [
-      " 󰁺",
-      " 󰁽",
-      " 󰁿",
-      " 󰂀",
-      " 󰁹"
+      "󰁺",
+      "󰁽",
+      "󰁿",
+      "󰂀",
+      "󰁹"
     ]
   },
   "custom/recording": {
@@ -104,6 +91,7 @@
     "tooltip-format-wifi": "{essid} ({signalStrength}%) ",
     "tooltip-format-ethernet": "{ifname} ",
     "tooltip-format-disconnected": "Disconnected",
-    "max-length": 50
+    "max-length": 50,
+    "on-click": "~/scripts/rofi-wifi-menu.sh"
   }
 }

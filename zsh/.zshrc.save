@@ -46,9 +46,16 @@ source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # -------------------------------
-# 5. Prompt Configuration 
+# 5. Prompt Configuration (Gruvbox Dark, adjusted)
 # -------------------------------
-PROMPT="   %~ %k❯ "
+# Base16 Black Metal colors
+BG_USER="#000000"    # base00
+BG_CWD="#080808"     # base01
+FG_USER="#5f8787"    # base08
+FG_CWD="#918478"     # base05
+
+# 2-line prompt
+PROMPT="%k%K{$BG_CWD}%F{$FG_CWD}  %~ %k❯ "
 # -------------------------------
 # 6. Aliases
 # -------------------------------

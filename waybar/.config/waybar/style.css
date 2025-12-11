@@ -2,8 +2,8 @@
   border: none;
   border-radius: 0;
   min-height: 0;
-  font-family: "JetBrainsMono Nerd Font";
-  font-size: 14px;
+  font-family: "Iosevka Nerd Font";
+  font-size: 13px;
   padding: 0;
 }
 
@@ -28,7 +28,7 @@ tooltip {
 }
 
 #workspaces button {
-  color: #908070;
+  color: #272420;
 }
 
 

@@ -1,4 +1,4 @@
-@import ".config/rofi/colors-rofi-dark.rasi"
+@import "~/.config/rofi/colors-rofi-dark.rasi"
 configuration {
 	modi:                       "drun";
     show-icons:                 false;
@@ -9,7 +9,7 @@ configuration {
 	window-format:              "{w} · {c} · {t}";
 }
 *{
-    font : "JetBrainsMono Nerd Font 12";
+    font : "Iosevka Nerd Font 12";
 }
 window {
     /* properties for window widget */
