@@ -1,5 +1,5 @@
 [global]
-    font = Iosevka Nerd Font 10
+    font = FiraCode Nerd Font 10
     geometry = "300x50-10+50"
     frame_width = 2
     separator_height = 2

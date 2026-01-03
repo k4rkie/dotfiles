@@ -6,11 +6,12 @@
   "modules-left": [
     "sway/workspaces"
   ],
-  "modules-center": [],
+  "modules-center": [
+    "clock"
+  ],
   "modules-right": [
     "memory",
     "pulseaudio",
-    "clock",
     "network",
     "battery"
   ],

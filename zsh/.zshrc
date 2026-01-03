@@ -56,8 +56,6 @@ alias ls='eza -lh --icons --git --group-directories-first'
 alias la='eza -lha --icons --git --group-directories-first'
 alias lt='eza --icons --git --tree --level=2'
 
-alias code='flatpak run com.vscodium.codium'
-
 alias nv="nvim"
 alias cl="clear"
 alias ff="fastfetch"

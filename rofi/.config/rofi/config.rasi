@@ -1,6 +1,6 @@
 @import "~/.config/rofi/colors-rofi-dark.rasi"
 configuration {
-	modi:                       "drun";
+	modi:                       "drun,emoji";
     show-icons:                 false;
     display-drun:               "Apps";
     display-run:                "Run";
@@ -9,7 +9,7 @@ configuration {
 	window-format:              "{w} · {c} · {t}";
 }
 *{
-    font : "Iosevka Nerd Font 12";
+    font : "FiraCode Nerd Font 12";
 }
 window {
     /* properties for window widget */
