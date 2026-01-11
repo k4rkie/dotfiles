@@ -64,7 +64,6 @@ alias serve="browser-sync start --server --files '*.html, *.css, *.js'"
 
 alias ..="cd .."
 alias mv="mv -i"
-alias rm="rm -i"
 
 alias sp="yay -Ss"
 alias please='sudo $(fc -ln -1)'  # still works the same
@@ -72,11 +71,6 @@ alias reload="source ~/.zshrc"
 # -------------------------------
 # End of config
 # -------------------------------
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
 export PATH="$HOME/.local/bin/scripts:$PATH"
 export PATH="$HOME/scripts:$PATH"
 
@@ -98,3 +92,7 @@ function y() {
 
 # Vi mode
 bindkey -v
+
+export NVM_DIR="$HOME/.config/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
