@@ -1,5 +1,9 @@
 
 require("telescope").setup({
+  pickers = {
+    find_files = {
+    }
+  },
   defaults = {
     border = true,
     results_title = false,
@@ -24,6 +28,9 @@ require("telescope").setup({
     entry_prefix = "  ",
     path_display = { "truncate" },
   },
+  extensions = {
+    fzf = {}
+  }
 })
 
 vim.api.nvim_set_hl(0, "TelescopeBorder", { link = "FloatBorder" })

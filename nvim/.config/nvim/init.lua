@@ -1,9 +1,9 @@
-require('plugins')
+require('lazy_setup')
 require('options')
 require('colorscheme')
-require('keymaps')
 require('statusline')
 require('telescope_conf')
+require('keymaps')
 
 vim.diagnostic.config({
   signs = false,

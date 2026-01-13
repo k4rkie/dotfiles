@@ -1,7 +1,7 @@
 @import "~/.config/rofi/colors-rofi-dark.rasi"
 configuration {
 	modi:                       "drun,emoji";
-    show-icons:                 false;
+    show-icons:                 true;
     display-drun:               "Apps";
     display-run:                "Run";
     run-shell-command: "/usr/bin/zsh -c '{cmd}'";

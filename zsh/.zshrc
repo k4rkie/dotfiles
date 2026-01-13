@@ -48,7 +48,7 @@ source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # -------------------------------
 # 5. Prompt Configuration 
 # -------------------------------
-PROMPT="   %~ %k❯ "
+PROMPT="   %~ %k❯ "
 # -------------------------------
 # 6. Aliases
 # -------------------------------
@@ -69,10 +69,12 @@ alias sp="yay -Ss"
 alias please='sudo $(fc -ln -1)'  # still works the same
 alias reload="source ~/.zshrc"
 # -------------------------------
-# End of config
+#  PATH variables
 # -------------------------------
 export PATH="$HOME/.local/bin/scripts:$PATH"
 export PATH="$HOME/scripts:$PATH"
+export PATH="$HOME/.local/bin/:$PATH"
+export PATH="/usr/local/go/bin/:$PATH"
 
 export TERMINAL=kitty
 export EDITOR=nvim
