@@ -2,24 +2,47 @@
 
 local ok, base16 = pcall(require, "base16-colorscheme")
 if not ok then
-  return
+    return
 end
 
 base16.setup({
-  base00 = "#080808",
-  base01 = "#121212",
-  base02 = "#222222",
-  base03 = "#333333",
-  base04 = "#999999",
-  base05 = "#c1c1c1",
-  base06 = "#999999",
-  base07 = "#c1c1c1",
-  base08 = "#5f8787",
-  base09 = "#aaaaaa",
-  base0A = "#a06666",
-  base0B = "#dd9999",
-  base0C = "#aaaaaa",
-  base0D = "#888888",
-  base0E = "#999999",
-  base0F = "#444444",
+
+    -- Blackmetal 
+
+    -- base00 = "#080808",
+    -- base01 = "#121212",
+    -- base02 = "#222222",
+    -- base03 = "#333333",
+    -- base04 = "#999999",
+    -- base05 = "#c1c1c1",
+    -- base06 = "#999999",
+    -- base07 = "#c1c1c1",
+    -- base08 = "#5f8787",
+    -- base09 = "#aaaaaa",
+    -- base0A = "#a06666",
+    -- base0B = "#dd9999",
+    -- base0C = "#aaaaaa",
+    -- base0D = "#888888",
+    -- base0E = "#999999",
+    -- base0F = "#444444",
+    --
+
+    -- Blackmetal khold
+
+    base00= "#080808",
+    base01= "#121212",
+    base02= "#222222",
+    base03= "#333333",
+    base04= "#999999",
+    base05= "#c1c1c1",
+    base06= "#999999",
+    base07= "#c1c1c1",
+    base08= "#5f8787",
+    base09= "#aaaaaa",
+    base0A= "#974b46",
+    base0B= "#eceee3",
+    base0C= "#aaaaaa",
+    base0D= "#888888",
+    base0E= "#999999",
+    base0F= "#444444",
 })

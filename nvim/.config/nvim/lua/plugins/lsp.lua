@@ -12,8 +12,8 @@ return {
         version = "1.*",
         config = function()
             require("blink.cmp").setup({
-            fuzzy = { implementation = "lua" } 
+            fuzzy = { implementation = "lua" }
             })
         end,
-    }	
+    }
 }

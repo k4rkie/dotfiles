@@ -1,39 +1,39 @@
 * {
     /* Base colors */
-    background: #080808;          /* base00 */
-    background-color: #080808;
-    foreground: #918478;          /* base07 */
-    border-color: #080808;
+    background: #111111;          
+    background-color: #111111;
+    foreground: #918478;         
+    border-color: #111111;
     spacing: 2;
 
     /* States */
-    active-background: #5f8787;   /* base08, subtle highlight */
-    active-foreground: #080808;
+    active-background: #5f8787; 
+    active-foreground: #111111;
 
-    normal-background: #080808;
+    normal-background: #111111;
     normal-foreground: #918478;
 
-    urgent-background: #a06666;   /* base0A */
-    urgent-foreground: #080808;
+    urgent-background: #a06666;
+    urgent-foreground: #111111;
 
     /* Alternates */
-    alternate-active-background: #121212;  /* base01 */
+    alternate-active-background: #121212;
     alternate-active-foreground: #918478;
 
-    alternate-normal-background: #080808;
+    alternate-normal-background: #111111;
     alternate-normal-foreground: #918478;
-    alternate-urgent-background: #444444;  /* base0F */
+    alternate-urgent-background: #444444;
     alternate-urgent-foreground: #c1c1c1;
 
     /* Selected (highlighted) entries */
-    selected-active-background: #8197bf;   /* keeping your previous highlight */
-    selected-active-foreground: #080808;
+    selected-active-background: #8197bf; 
+    selected-active-foreground: #111111;
 
-    selected-normal-background: #222222;   /* base02 */
+    selected-normal-background: #222222;
     selected-normal-foreground: #c1c1c1;
 
-    selected-urgent-background: #a06666;   /* base0A */
-    selected-urgent-foreground: #080808;
+    selected-urgent-background: #a06666;
+    selected-urgent-foreground: #111111;
 }
 
 #window {
