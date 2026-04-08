@@ -1,28 +1,60 @@
 [global]
-    font = FiraCode Nerd Font 10
-    geometry = "300x50-10+50"
+    font = MartianMono Nerd Font 12
+
+    width = 320
+    height = 80
+    offset = 20x20
+    origin = top-right
+
+    padding = 14
+    horizontal_padding = 16
+    text_icon_padding = 12
+
     frame_width = 2
-    separator_height = 2
+    frame_color = "#222222"
+
+    separator_height = 0
+
+    corner_radius = 12
+
+    transparency = 10
+
     alignment = left
+    word_wrap = yes
+    markup = full
+
     shrink = yes
-    transparency = 0    
     progress_bar = true
+    progress_bar_height = 8
+    progress_bar_frame_width = 0
+
+    icon_position = left
+    min_icon_size = 32
+    max_icon_size = 48
+
+    idle_threshold = 120
+    show_age_threshold = 60
+
+    stack_duplicates = false
+    hide_duplicate_count = false
+
+    format = "<b>%s</b>\n%b"
 
 [urgency_low]
-    background = "#121212"
-    foreground = "#918478"
-    frame_color = "#918478"
-    highlight = "#918478"
+    background = "#0d0d0dEE"
+    foreground = "#909090"
+    highlight = "#909090"
+    timeout = 4
 
 [urgency_normal]
-    background = "#121212"
-    foreground = "#918478"
-    frame_color = "#918478"
-    highlight = "#918478"
+    background = "#0d0d0dEE"
+    foreground = "#909090"
+    highlight = "#909090"
+    timeout = 6
 
 [urgency_critical]
-    background = "#ff5555"
-    foreground = "#ffffff"
-    frame_color = "#918478"
-    highlight = "#918478"
-
+    background = "#1a0f10EE"
+    foreground = "#909090"
+    frame_color = "#ff5c57"
+    highlight = "#ff5c57"
+    timeout = 0

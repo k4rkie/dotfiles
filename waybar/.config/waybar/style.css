@@ -2,18 +2,22 @@
   border: none;
   border-radius: 0;
   min-height: 0;
-  font-family: "FiraCode Nerd Font";
+  font-family: "IosevkaTerm Nerd Font";
   font-size: 13px;
-  padding: 0;
+  padding: 0px;
 }
 
 window#waybar {
-  background: #080808;
-  color: #918478;
+  background: rgba(8, 8, 8, 1);
+  color: #5f8787;
+  margin-left: 6px;
+  margin-right: 6px;
+  margin-bottom: 6px;
 }
 
+
 tooltip {
-  background-color: #202020;
+  background-color: rgba(8, 8, 8, 1);
 }
 
 #clock,
@@ -25,28 +29,42 @@ tooltip {
 #pulseaudio {
   margin: 2px 2px 0px 0px;
   padding: 1px 4px;
+  background: transparent;
 }
 
 #workspaces button {
   color: #272420;
+  background: transparent;
 }
 
-
 #workspaces button.focused {
-  color: #918478;
+  color: #5f8787;
 }
 
 #workspaces button.active {
-  background-color: #202020;
-  color: #918478;
+  background: transparent;
+  color: #5f8787;
 }
 
 #battery,
 #tray,
 #clock,
-#cpu,
-#pulseaudio,
+#cpu {
+  color: #5f8787;
+}
+
 #memory {
-  /* background-color: none; */
-  color: #918478;
+  color: #ffa460;
+}
+
+#pulseaudio {
+  color: #94b978;
+}
+
+#clock {
+  color: #6e94b2;
+}
+
+#custom-separator {
+  color: #263038;
 }

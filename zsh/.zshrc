@@ -48,19 +48,16 @@ source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # -------------------------------
 # 5. Prompt Configuration 
 # -------------------------------
-PROMPT="   %~ %k❯ "
+PROMPT=" %~ %k❯ "
 # -------------------------------
 # 6. Aliases
 # -------------------------------
-alias ls='eza -lh --icons --git --group-directories-first'
-alias la='eza -lha --icons --git --group-directories-first'
-alias lt='eza --icons --git --tree --level=2'
+alias ls="ls -lh --color=auto -F"
+alias la="ls -lha --color=auto -F"
 
 alias nv="nvim"
 alias cl="clear"
 alias ff="fastfetch"
-alias pf="~/scripts/pfetch"
-alias serve="browser-sync start --server --files '*.html, *.css, *.js'"
 
 alias ..="cd .."
 alias mv="mv -i"
@@ -68,6 +65,7 @@ alias mv="mv -i"
 alias sp="yay -Ss"
 alias please='sudo $(fc -ln -1)'  # still works the same
 alias reload="source ~/.zshrc"
+alias air='~/go/bin/air'
 # -------------------------------
 #  PATH variables
 # -------------------------------
@@ -93,8 +91,26 @@ function y() {
 }
 
 # Vi mode
-# bindkey -v
+bindkey -v
 
 export NVM_DIR="$HOME/.config/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+
+# bun completions
+[ -s "/home/k4rkie/.bun/_bun" ] && source "/home/k4rkie/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# export PATH=$PATH:$(go env GOPATH)/bin
+
+
+# ZVM
+export ZVM_INSTALL="$HOME/.zvm/self"
+export PATH="$PATH:$HOME/.zvm/bin"
+export PATH="$PATH:$ZVM_INSTALL/"
+
+. "$HOME/.local/bin/env"

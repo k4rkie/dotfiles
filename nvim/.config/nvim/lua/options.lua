@@ -1,5 +1,6 @@
 vim.opt.number = true
 vim.opt.relativenumber = true
+vim.opt.swapfile = false
 
 vim.opt.hlsearch = false
 vim.opt.incsearch = true
@@ -7,8 +8,8 @@ vim.opt.incsearch = true
 vim.opt.mouse = "a"
 
 vim.opt.expandtab = true
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
 vim.opt.autoindent = true
 vim.opt.smartindent = true
 
@@ -35,11 +36,14 @@ vim.opt.clipboard = "unnamedplus"
 
 vim.opt.cmdheight = 0
 
+vim.opt.winborder = "single"
+
 vim.diagnostic.config({
-    virtual_text = { severity = vim.diagnostic.severity.ERROR },
-    signs = false,
-    underline = false,
-    -- virtual_lines = true,
+  virtual_text = { severity = vim.diagnostic.severity.ERROR },
+  -- virtual_text = false,
+  signs = false,
+  underline = { severity = vim.diagnostic.severity.ERROR },
+  -- underline = false,
 })
 
 vim.opt.guicursor = {
@@ -50,16 +54,81 @@ vim.opt.guicursor = {
 }
 
 -- colorscheme
-vim.cmd[[colorscheme jellybeans-muted]]
+-- vim.cmd("colorscheme vague")
 
 vim.api.nvim_set_hl(0, "TelescopeBorder", { link = "FloatBorder" })
 vim.api.nvim_set_hl(0, "TelescopePromptBorder", { link = "FloatBorder" })
 vim.api.nvim_set_hl(0, "TelescopeResultsBorder", { link = "FloatBorder" })
 vim.api.nvim_set_hl(0, "TelescopePreviewBorder", { link = "FloatBorder" })
 
-local prompt_bg = "#111111" 
+local prompt_bg = "#080808"
 
-vim.api.nvim_set_hl(0, "TelescopePromptNormal",  { bg = prompt_bg })
-vim.api.nvim_set_hl(0, "TelescopePromptTitle",   { bg = prompt_bg })
-vim.api.nvim_set_hl(0, "TelescopePromptPrefix",  { bg = prompt_bg })
+vim.api.nvim_set_hl(0, "TelescopePromptNormal", { bg = prompt_bg })
+vim.api.nvim_set_hl(0, "TelescopePromptTitle", { bg = prompt_bg })
+vim.api.nvim_set_hl(0, "TelescopePromptPrefix", { bg = prompt_bg })
 vim.api.nvim_set_hl(0, "TelescopePromptCounter", { bg = prompt_bg })
+
+
+-- Built-In tabline config
+vim.o.showtabline = 2
+
+-- set the tabline to a Lua function
+vim.o.tabline = "%!v:lua.tabline()"
+
+function _G.tabline()
+  local s = ""
+  for i = 1, vim.fn.tabpagenr("$") do
+    local buflist = vim.fn.tabpagebuflist(i)
+    local winnr = vim.fn.tabpagewinnr(i)
+    local buf = buflist[winnr]
+    local bufname = vim.fn.bufname(buf)
+    -- placeholder for unnamed buffers
+    if bufname == "" then
+      bufname = "[No Name]"
+    end
+    -- filename only
+    bufname = vim.fn.fnamemodify(bufname, ":t")
+    -- show [+] if the buffer is modified
+    if vim.fn.getbufvar(buf, "&mod") == 1 then
+      bufname = bufname .. " [+]"
+    end
+    -- highlight current tab
+    if i == vim.fn.tabpagenr() then
+      s = s .. "%#TabLineSel#"
+    else
+      s = s .. "%#TabLine#"
+    end
+    -- make tab clickable
+    s = s .. "%" .. i .. "T"
+
+    -- add filename
+    s = s .. " " .. bufname .. " "
+  end
+  -- fill the rest
+  s = s .. "%#TabLineFill#"
+  return s
+end
+
+vim.api.nvim_set_hl(0, "TabLineSel", {
+  fg = "#080808",
+  bg = "#888888",
+  bold = true,
+})
+vim.api.nvim_set_hl(0, "TabLine", {
+  fg = "#a0a0a0",
+  bg = "#080808",
+})
+
+vim.api.nvim_set_hl(0, "TabLineFill", {
+  bg = "#080808",
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "*",
+  callback = function()
+    vim.opt_local.formatoptions = vim.opt_local.formatoptions
+        - "r"
+        - "o"
+        - "c"
+  end
+})

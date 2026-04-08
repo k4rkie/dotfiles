@@ -9,7 +9,7 @@ configuration {
 	window-format:              "{w} · {c} · {t}";
 }
 *{
-    font : "FiraCode Nerd Font 12";
+    font : "IosevkaTerm Nerd Font 13";
 }
 window {
     /* properties for window widget */

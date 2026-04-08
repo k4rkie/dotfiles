@@ -12,19 +12,19 @@ set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:FiraCode Nerd Font 8
+font pango:IosevkaTerm Nerd Font 12
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango:FiraCode Nerd Font 8
+font pango:IosevkaTerm Nerd Font 12
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
 exec_always --no-startup-id blueman-applet
 
-# Nitrogen for wallpaper management
-output * bg /home/k4rkie/Pictures/Wallpapers/wallhaven-72ggvv.jpg fill
+# swaybg for wallpaper management
+output * bg /home/k4rkie/Pictures/Wallpapers/wallhaven-5gz5p7_edited.jpg fill
 
 # Use wpctl (PipeWire) to adjust volume
 bindsym XF86AudioRaiseVolume exec --no-startup-id ~/scripts/volume.sh up
@@ -45,17 +45,21 @@ exec_always wlsunset -l 27.7006 -L 83.4484 -t 3800 -T 6500
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
-# start a terminal
+# open a terminal
 bindsym $mod+Return exec kitty
+
+# open browser
+bindsym $mod+b exec firefox
 
 # start file manager (thunar)
 bindsym $mod+Shift+f exec thunar
-# bindsym $mod+Shift+f exec $HOME/scripts/yazi_fm.sh
+
 # kill focused window
 bindsym $mod+Shift+q kill
 
 exec --no-startup-id waybar &
 exec --no-startup-id dunst &
+# exec_always swaync
 
 # start rofi (a program launcher)
 bindsym $mod+d exec --no-startup-id rofi -show
@@ -108,9 +112,6 @@ bindsym $mod+space focus mode_toggle
 
 # focus the parent container
 bindsym $mod+a focus parent
-
-# focus the child container
-#bindsym $mod+d focus child
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
@@ -183,34 +184,71 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 # floating window class
-for_window [class="pavucontrol"] floating enable, focus, move position center
+for_window [app_id="pavucontrol"] floating enable, focus, move position center
+for_window [app_id="blueman-applet"] floating enable, focus, move position center
+for_window [app_id="swayimg"] floating enable, focus, move position center
 
 # Window decoratrions
 default_border pixel 2
 default_floating_border pixel 2
+smart_borders on
 
-client.focused #918478 #918478 #000000 #918478 #918478
-client.focused_inactive #202020 #202020 #918478 #202020 #202020
-client.unfocused #202020 #202020 #918478 #202020 #202020
+client.focused #888888 #888888 #111111 #888888 #888888
+client.focused_inactive #202020 #202020 #888888 #202020 #202020
+client.unfocused #202020 #202020 #888888 #202020 #202020
 
 # Gaps
-gaps inner 6
-# smart_gaps on
+gaps inner 8
 
-set $GTK_FONT FiraCode\ 11.5
+set $GTK_FONT IosevkaTerm\ 12
 set $GTK_THEME Kription-v40
 set $XDG_CURRENT_DESKTOP sway
 
 # Export environment + GTK tweaks
 exec_always export GTK_FONT=$GTK_FONT
 exec_always export GTK_THEME=$GTK_THEME
-exec_always gsettings set org.gnome.desktop.interface font-name 'FiraCode Nerd Font 11.5'
+exec_always gsettings set org.gnome.desktop.interface font-name 'IosevkaTerm Nerd Font 12'
 exec_always gsettings set org.gnome.desktop.interface gtk-theme 'Kripton-v40'
-exec_always gsettings set org.gnome.desktop.interface icon-theme 'Papirus'
+exec_always gsettings set org.gnome.desktop.interface icon-theme 'elementary'
 exec_always gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 
 # Globally remap Caps Lock to Escape
 input * {
     xkb_options caps:escape
 }
+
+input "type:touchpad" {
+    tap enabled
+    natural_scroll enabled
+    middle_emulation enabled
+}
+
+# ---SwayFX-----
+# corner_radius 8
+#
+# blur enable
+# blur_passes 3
+# blur_radius 6
+#
+# for_window [app_id=""] opacity 0.90
+#
+# shadows enable
+# shadows_on_csd enable
+#
+# shadow_blur_radius 25
+# shadow_color #00000099
+# shadow_inactive_color #00000055
+# shadow_offset 0 6
+#
+# layer_effects "waybar" {
+#     blur enable;
+#     shadows enable;
+#     blur_ignore_transparent enable
+# }
+#
+# layer_effects "swaync" {
+#     blur enable;
+#     shadows enable;
+#     blur_ignore_transparent enable
+# }
 

@@ -14,4 +14,10 @@ vim.opt.rtp:prepend(lazypath)
 
 local plugins = require("plugins") -- loads lua/plugins/init.lua
 
-require("lazy").setup(plugins)
+require("lazy").setup(plugins,{
+    ui = {
+        border = "single",
+        wrap = true,
+        backdrop = 100,
+    },
+})

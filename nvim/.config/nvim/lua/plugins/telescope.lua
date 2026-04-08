@@ -5,46 +5,44 @@ return {
   config = function()
     require("telescope").load_extension("recent-files")
     require("telescope").setup({
-        pickers = {
-            find_files = {
-            }
+      defaults = {
+        file_ignore_patterns = {
+          "node_modules",
+          "venv",
+          "%.venv",
+          "__pycache__",
         },
-        defaults = {
-            file_ignore_patterns = {
-                "node_modules",
-                "venv",
-                "%.venv",
-                "__pycache__",
-            },
 
-            border = true,
-            results_title = false,
-            preview_title = false,
+        border = true,
+        results_title = false,
+        preview_title = false,
 
-            borderchars = {
-                "─", "│", "─", "│",
-                "╭", "╮", "╯", "╰",
-            },
-
-            layout_strategy = "horizontal",
-            layout_config = {
-                prompt_position = "bottom",
-                width = 0.9,
-                height = 0.85,
-                preview_width = 0.6,
-            },
-
-            sorting_strategy = "descending",
-            winblend = 0,
-            selection_caret = "➜ ",
-            entry_prefix = "  ",
-            path_display = { "truncate" },
+        -- borderchars = {
+        --     "─", "│", "─", "│",
+        --     "╭", "╮", "╯", "╰",
+        -- },
+        borderchars = {
+          "─", "│", "─", "│",
+          "┌", "┐", "┘", "└",
         },
-        extensions = {
-            fzf = {}
+        layout_strategy = "horizontal",
+        layout_config = {
+          prompt_position = "top",
+          width = 0.9,
+          height = 0.85,
+          preview_width = 0,
         },
+
+        sorting_strategy = "ascending",
+        winblend = 0,
+        selection_caret = "➜ ",
+        entry_prefix = "  ",
+        path_display = { "truncate" },
+      },
+      extensions = {
+        fzf = {}
+      },
 
     })
-end,
+  end,
 }
-

@@ -11,9 +11,12 @@
   ],
   "modules-right": [
     "memory",
+    "custom/separator",
     "pulseaudio",
-    "network",
-    "battery"
+    "custom/separator",
+    "battery",
+    "custom/separator",
+    "tray"
   ],
   "tray": {
     "icon-size": 18,
@@ -24,7 +27,7 @@
     "interval": 60,
     "tooltip": true,
     "tooltip-format": "{:%d %B %H:%M}",
-    "on-click": "kitty -e calcure"
+    "on-click": "gsimplecal"
   },
   "sway/workspaces": {
     "format": "{icon}",
@@ -65,9 +68,9 @@
       "warning": 30,
       "critical": 15
     },
-    "format": "{icon}",
-    "format-full": "{icon}",
-    "format-charging": "󱐋",
+    "format": "bat:{capacity}%",
+    "format-full": "bat:{capacity}%",
+    "format-charging": "bat:{capacity}%",
     "format-plugged": "",
     "format-alt": "{time} {icon}",
     "format-icons": [
@@ -94,5 +97,30 @@
     "tooltip-format-disconnected": "Disconnected",
     "max-length": 50,
     "on-click": "~/scripts/rofi-wifi-menu.sh"
-  }
+  },
+  "custom/separator": {
+    "format": "|",
+    "interval": "once",
+    "tooltip": false
+  },
+  "custom/notifications": {
+    "tooltip": true,
+    "format": "<span size='16pt'>{icon}</span>",
+    "format-icons": {
+      "notification": "󱅫",
+      "none": "󰂜",
+      "dnd-notification": "󰂠",
+      "dnd-none": "󰪓",
+      "inhibited-notification": "󰂛",
+      "inhibited-none": "󰪑",
+      "dnd-inhibited-notification": "󰂛",
+      "dnd-inhibited-none": "󰪑"
+    },
+    "return-type": "json",
+    "exec-if": "which swaync-client",
+    "exec": "swaync-client -swb",
+    "on-click": "swaync-client -t -sw",
+    "on-click-right": "swaync-client -d -sw",
+    "escape": true
+  },
 }
