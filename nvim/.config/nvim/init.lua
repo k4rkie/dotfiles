@@ -29,3 +29,4 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     vim.fn.matchadd("NoteComment", "NOTE:")
   end,
 })
+vim.lsp.log.set_level("OFF")

@@ -65,6 +65,8 @@ exec --no-startup-id dunst &
 bindsym $mod+d exec --no-startup-id rofi -show
 # Power-menu
 bindsym $mod+Escape exec --no-startup-id rofi -show powermenu -modi powermenu:~/scripts/rofi-power-menu
+# Rofi-sessionizer
+bindsym $mod+Shift+s exec --no-startup-id ~/scripts/rofi-sessionizer.sh
 
 # change focus
 bindsym $mod+j focus left

@@ -11,4 +11,5 @@ return {
   require("plugins.oil"),
   require("plugins.rendermarkdown"),
   require("plugins.conform"),
+  require("vim._core.ui2").enable({}),
 }

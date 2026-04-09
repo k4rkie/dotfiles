@@ -30,7 +30,7 @@ return {
           prompt_position = "top",
           width = 0.9,
           height = 0.85,
-          preview_width = 0,
+          preview_width = 0.6,
         },
 
         sorting_strategy = "ascending",
