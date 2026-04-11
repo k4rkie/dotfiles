@@ -3,6 +3,7 @@
 DIRS=(
     "$HOME"
     "$HOME/dev"
+    "$HOME/dev/go"
     "$HOME/dev/Feriyo"
     "$HOME/dev/C"
     "$HOME/dev/JS"

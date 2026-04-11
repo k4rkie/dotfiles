@@ -193,14 +193,15 @@ for_window [app_id="swayimg"] floating enable, focus, move position center
 # Window decoratrions
 default_border pixel 2
 default_floating_border pixel 2
-smart_borders on
+# smart_borders on
 
 client.focused #888888 #888888 #111111 #888888 #888888
 client.focused_inactive #202020 #202020 #888888 #202020 #202020
 client.unfocused #202020 #202020 #888888 #202020 #202020
 
 # Gaps
-gaps inner 8
+gaps inner 6
+# smart_gaps on
 
 set $GTK_FONT IosevkaTerm\ 12
 set $GTK_THEME Kription-v40

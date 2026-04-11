@@ -3,6 +3,7 @@
 DIRS=(
     "$HOME"
     "$HOME/dev"
+    "$HOME/dev/go"
     "$HOME/dev/Feriyo"
     "$HOME/dev/C"
     "$HOME/dev/JS"
@@ -16,7 +17,7 @@ folder_list=$(fd . "${DIRS[@]}" --type=dir --max-depth=1 --full-path --base-dire
 session_list=$(tmux list-sessions -F "#S" 2>/dev/null)
 
 # 3. Combine them, remove duplicates, and pipe to Rofi
-selected=$(printf "%s\n%s" "$folder_list" "$session_list" | sort -u | rofi -dmenu -i -p "󱫋 Project/Session")
+selected=$(printf "%s\n%s" "$folder_list" "$session_list" | sort -u | rofi -dmenu -i -p "󱫋 Session")
 
 [[ ! $selected ]] && exit 0
 
