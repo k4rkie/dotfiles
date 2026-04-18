@@ -6,10 +6,14 @@ vim.keymap.set("n", "<leader>qq", ":bd<CR>", { desc = "Close current buffer" })
 
 vim.keymap.set("n", "<leader>rr", ":restart<CR>", { desc = "Restart Nvim" })
 
-vim.keymap.set("n", "<C-e>", ":Oil --float<CR>", { desc = "Open oil in cwd" })
+vim.keymap.set("n", "<C-e>", ":Oil<CR>", { desc = "Open oil in cwd" })
 
 vim.keymap.set("n", "<A-l>", ":tabn<CR>", { desc = "Switch to next tab" })
 vim.keymap.set("n", "<A-h>", ":tabp<CR>", { desc = "Switch to pervious tab" })
+
+-- Move selected lines up and down in Visual Mode
+vim.keymap.set("v", "<C-j>", ":m '>+1<CR>gv=gv")
+vim.keymap.set("v", "<C-k>", ":m '<-2<CR>gv=gv")
 
 -- Telescope
 local builtin = require("telescope.builtin")
@@ -45,3 +49,5 @@ vim.api.nvim_create_autocmd("LspAttach", {
 for i = 1, 8 do
   vim.keymap.set({ "n", "t" }, "<M-" .. i .. ">", "<Cmd>tabnext " .. i .. "<CR>")
 end
+
+vim.keymap.set("n", "gx", [[:silent! execute '!xdg-open ' . shellescape(expand('<cfile>'), 1)<CR>]], { silent = false })

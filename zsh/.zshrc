@@ -48,7 +48,19 @@ source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # -------------------------------
 # 5. Prompt Configuration 
 # -------------------------------
-PROMPT=" %~ %k❯ "
+# PROMPT=" %~ %k❯ "
+# 1. Enable parameter expansion in the prompt
+setopt PROMPT_SUBST
+
+# 2. Load vcs_info
+autoload -Uz vcs_info
+precmd() { vcs_info }
+
+# 3. Format the git output
+zstyle ':vcs_info:git:*' formats '(%b) '
+
+# 4. Set the prompt (ensure you use single quotes here)
+PROMPT='%~ ${vcs_info_msg_0_}%k❯ '
 # -------------------------------
 # 6. Aliases
 # -------------------------------
@@ -63,9 +75,10 @@ alias ..="cd .."
 alias mv="mv -i"
 
 alias sp="yay -Ss"
-alias please='sudo $(fc -ln -1)'  # still works the same
+alias please='sudo $(fc -ln -1)' 
 alias reload="source ~/.zshrc"
 alias air='~/go/bin/air'
+
 # -------------------------------
 #  PATH variables
 # -------------------------------

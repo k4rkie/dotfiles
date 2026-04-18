@@ -11,16 +11,20 @@ end
 local function file_type()
   local ft = vim.bo.filetype
   local icons = {
-    lua = " LUA",
+    lua = "[ LUA]",
     c = "[ C]",
     python = "[ PY]",
     javascript = "[ JS]",
+    javascriptreact = "[ JSX]",
+    typescript = "[ TS]",
+    typescriptreact = "[ TSX]",
     html = "[ HTML]",
     css = "[ CSS]",
     json = "[ JSON]",
-    markdown = "[ MD]",
+    markdown = "[  MD]",
     vim = "[ VIM]",
     sh = "[SH]",
+    go = "[ GO]",
   }
 
   if ft == "" then
@@ -91,6 +95,8 @@ local function setup_dynamic_statusline()
         " ",
         "%#StatusLineBold#",
         "%{v:lua.mode_icon()}",
+        " | ",
+        "%{v:lua.file_type()}",
         "%=", -- Right-align everything after this
         "%{v:lua.file_size()}",
         "  ",
@@ -98,7 +104,7 @@ local function setup_dynamic_statusline()
       }
     end
   })
-  vim.api.nvim_set_hl(0, "StatusLineBold", { bold = false })
+  vim.api.nvim_set_hl(0, "StatusLineBold", { bold = true })
 
   vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave" }, {
     callback = function()

@@ -8,7 +8,7 @@
 }
 
 window#waybar {
-  background: rgba(8, 8, 8, 1);
+  background: #080808;
   color: #5f8787;
   margin-left: 6px;
   margin-right: 6px;
@@ -17,7 +17,7 @@ window#waybar {
 
 
 tooltip {
-  background-color: rgba(8, 8, 8, 1);
+  background-color: #080808;
 }
 
 #clock,
@@ -38,7 +38,8 @@ tooltip {
 }
 
 #workspaces button.focused {
-  color: #5f8787;
+  background: #888888;
+  color: #080808;
 }
 
 #workspaces button.active {
@@ -46,25 +47,34 @@ tooltip {
   color: #5f8787;
 }
 
+/* #battery, */
+/* #tray, */
+/* #clock, */
+/* #cpu { */
+/*   color: #5f8787; */
+/* } */
+/**/
+/* #memory { */
+/*   color: #ffa460; */
+/* } */
+/**/
+/* #pulseaudio { */
+/*   color: #94b978; */
+/* } */
+/**/
+/* #clock { */
+/*   color: #6e94b2; */
+/* } */
+/**/
+/* #custom-separator { */
+/*   color: #263038; */
+/* } */
+
 #battery,
 #tray,
 #clock,
+#memory,
+#pulseaudio,
 #cpu {
-  color: #5f8787;
-}
-
-#memory {
-  color: #ffa460;
-}
-
-#pulseaudio {
-  color: #94b978;
-}
-
-#clock {
-  color: #6e94b2;
-}
-
-#custom-separator {
-  color: #263038;
+  color: #c1c1c1;
 }

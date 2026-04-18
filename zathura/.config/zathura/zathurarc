@@ -1,0 +1,8 @@
+set recolor true
+set recolor-lightcolor "#000000"
+set recolor-darkcolor "#918478"
+
+set statusbar-bg "#000000"
+set statusbar-fg "#918478"
+
+set font "IosevkaTerm Nerd Font 12"

@@ -38,6 +38,8 @@ vim.opt.cmdheight = 0
 
 vim.opt.winborder = "single"
 
+vim.opt.scrolloff = 999
+
 vim.diagnostic.config({
   virtual_text = { severity = vim.diagnostic.severity.ERROR },
   -- virtual_text = false,
@@ -132,3 +134,23 @@ vim.api.nvim_create_autocmd("FileType", {
         - "c"
   end
 })
+
+-- Define the colors
+vim.api.nvim_set_hl(0, "TodoComment", { fg = "#5f8787", bg = "#121212", bold = true })
+vim.api.nvim_set_hl(0, "FixmeComment", { fg = "#af5f5f", bg = "#121212", bold = true })
+vim.api.nvim_set_hl(0, "WarningComment", { fg = "#dfaf87", bg = "#121212", bold = true })
+vim.api.nvim_set_hl(0, "NoteComment", { fg = "#aaaaaa", bg = "#121212", bold = true })
+
+-- Create a function to apply these patterns to any file you open
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = "*",
+  callback = function()
+    vim.fn.matchadd("TodoComment", "TODO:")
+    vim.fn.matchadd("FixmeComment", "FIXME:")
+    vim.fn.matchadd("WarningComment", "WARNING:")
+    vim.fn.matchadd("NoteComment", "NOTE:")
+  end,
+})
+
+-- Disable logging the diagnostics
+vim.lsp.log.set_level("OFF")

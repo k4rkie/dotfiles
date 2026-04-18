@@ -8,6 +8,7 @@ DIRS=(
     "$HOME/dev/C"
     "$HOME/dev/JS"
     "$HOME/dotfiles/"
+    "$HOME/Braincache/"
 )
 
 # 1. Get all folders from your DIRS
