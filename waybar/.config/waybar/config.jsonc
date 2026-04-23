@@ -11,6 +11,8 @@
     "clock"
   ],
   "modules-right": [
+    "custom/keyboard",
+    "custom/separator",
     "memory",
     "custom/separator",
     "pulseaudio",
@@ -124,4 +126,12 @@
     "on-click-right": "swaync-client -d -sw",
     "escape": true
   },
+  "custom/keyboard": {
+    "exec": "~/scripts/kbtoggle.sh",
+    "on-click": "~/scripts/kbtoggle.sh --toggle && pkill -RTMIN+8 waybar",
+    "return-type": "json",
+    "interval": 5,
+    "signal": 8,
+    "tooltip": false
+  }
 }

@@ -23,7 +23,7 @@ exec --no-startup-id nm-applet
 exec_always --no-startup-id blueman-applet
 
 # swaybg for wallpaper management
-output * bg /home/k4rkie/Pictures/Wallpapers/wallhaven-5gz5p7_edited.jpg fill
+output * bg /home/k4rkie/Pictures/Wallpapers/wallhaven-yx6dyk.jpg fill
 
 # Use wpctl (PipeWire) to adjust volume
 bindsym XF86AudioRaiseVolume exec --no-startup-id ~/scripts/volume.sh up
@@ -203,7 +203,7 @@ client.focused_inactive #202020 #202020 #888888 #202020 #202020
 client.unfocused #202020 #202020 #888888 #202020 #202020
 
 # Gaps
-gaps inner 0
+gaps inner 6
 # smart_gaps on
 
 set $GTK_FONT IosevkaTerm\ 12

@@ -78,3 +78,11 @@ tooltip {
 #cpu {
   color: #c1c1c1;
 }
+
+#custom-keyboard {
+  color: #ffffff;
+}
+
+#custom-keyboard.disabled {
+  color: #ff0000;
+}

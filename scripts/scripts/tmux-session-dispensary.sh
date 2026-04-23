@@ -7,6 +7,7 @@ DIRS=(
     "$HOME/dev/Feriyo"
     "$HOME/dev/C"
     "$HOME/dev/JS"
+    "$HOME/dev/Rust/"
     "$HOME/dotfiles/"
     "$HOME/Braincache/"
 )
