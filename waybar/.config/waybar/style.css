@@ -26,6 +26,8 @@ tooltip {
 #memory,
 #battery,
 #network,
+#custom-separator,
+#window,
 #pulseaudio {
   margin: 2px 2px 0px 0px;
   padding: 1px 4px;
@@ -38,8 +40,7 @@ tooltip {
 }
 
 #workspaces button.focused {
-  background: #888888;
-  color: #080808;
+  color: #c1c1c1;
 }
 
 #workspaces button.active {
@@ -75,6 +76,7 @@ tooltip {
 #clock,
 #memory,
 #pulseaudio,
+#window,
 #cpu {
   color: #c1c1c1;
 }

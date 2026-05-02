@@ -5,20 +5,22 @@
   "height": 20,
   "margin-bottom": 0,
   "modules-left": [
-    "sway/workspaces"
+    "sway/workspaces",
+    "hyprland/workspaces"
+    // "sway/window"
   ],
   "modules-center": [
     "clock"
   ],
   "modules-right": [
-    "custom/keyboard",
-    "custom/separator",
+    // "custom/keyboard",
+    // "custom/separator",
     "memory",
-    "custom/separator",
+    // "custom/separator",
     "pulseaudio",
-    "custom/separator",
+    // "custom/separator",
     "battery",
-    "custom/separator",
+    // "custom/separator",
     "tray"
   ],
   "tray": {
@@ -133,5 +135,13 @@
     "interval": 5,
     "signal": 8,
     "tooltip": false
+  },
+  "sway/window": {
+    "format": " > {}",
+    "max-length": 50,
+    "rewrite": {
+      "(.*) - Mozilla Firefox": "🌎 $1",
+      "(.*) - zsh": "> [$1]"
+    }
   }
 }

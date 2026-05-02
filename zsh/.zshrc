@@ -127,3 +127,5 @@ export PATH="$PATH:$HOME/.zvm/bin"
 export PATH="$PATH:$ZVM_INSTALL/"
 
 . "$HOME/.local/bin/env"
+
+export PATH=$PATH:/home/k4rkie/.spicetify

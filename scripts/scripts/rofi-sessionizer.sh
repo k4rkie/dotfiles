@@ -6,6 +6,7 @@ DIRS=(
     "$HOME/dev/go"
     "$HOME/dev/Feriyo"
     "$HOME/dev/C"
+    "$HOME/dev/C/graphics"
     "$HOME/dev/JS"
     "$HOME/dev/Rust/"
     "$HOME/dotfiles/"
