@@ -10,7 +10,6 @@ DIRS=(
     "$HOME/dev/JS"
     "$HOME/dev/Rust/"
     "$HOME/dotfiles/"
-    "$HOME/Braincache/"
 )
 
 # 1. Get all folders from your DIRS

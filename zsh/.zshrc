@@ -117,15 +117,3 @@ export NVM_DIR="$HOME/.config/nvm"
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
-
-# export PATH=$PATH:$(go env GOPATH)/bin
-
-
-# ZVM
-export ZVM_INSTALL="$HOME/.zvm/self"
-export PATH="$PATH:$HOME/.zvm/bin"
-export PATH="$PATH:$ZVM_INSTALL/"
-
-. "$HOME/.local/bin/env"
-
-export PATH=$PATH:/home/k4rkie/.spicetify

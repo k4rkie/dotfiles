@@ -10,7 +10,6 @@ DIRS=(
     "$HOME/dev/JS"
     "$HOME/dev/Rust/"
     "$HOME/dotfiles/"
-    "$HOME/Braincache/"
 )
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

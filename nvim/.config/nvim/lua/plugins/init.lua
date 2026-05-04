@@ -11,7 +11,6 @@ return {
   require("plugins.oil"),
   require("plugins.rendermarkdown"),
   require("plugins.conform"),
-  require("plugins.image"),
   require("plugins.luasnip"),
   require("plugins.compile-mode"),
 }
