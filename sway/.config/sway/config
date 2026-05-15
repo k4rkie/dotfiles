@@ -23,7 +23,7 @@ exec --no-startup-id nm-applet
 exec_always --no-startup-id blueman-applet
 
 # swaybg for wallpaper management
-output * bg /home/k4rkie/Pictures/Wallpapers/666348.jpg fill
+output * bg /home/k4rkie/Pictures/CachyWalls/Wallpapers/666348.jpg fill
 
 # Use wpctl (PipeWire) to adjust volume
 bindsym XF86AudioRaiseVolume exec --no-startup-id ~/scripts/volume.sh up
@@ -59,9 +59,7 @@ bindsym $mod+Shift+q kill
 # exec --no-startup-id waybar &
 bar {
     swaybar_command waybar
-    # status_command i3status
 }
-
 
 exec --no-startup-id dunst &
 
@@ -212,7 +210,7 @@ exec_always export GTK_FONT=$GTK_FONT
 exec_always export GTK_THEME=$GTK_THEME
 exec_always gsettings set org.gnome.desktop.interface font-name 'IosevkaTerm Nerd Font 12'
 exec_always gsettings set org.gnome.desktop.interface gtk-theme 'Kripton-v40'
-exec_always gsettings set org.gnome.desktop.interface icon-theme 'elementary'
+exec_always gsettings set org.gnome.desktop.interface icon-theme 'AdwaitaLegacy'
 exec_always gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 
 # Globally remap Caps Lock to Escape
@@ -228,21 +226,4 @@ input "type:touchpad" {
 
 # Diplay scale
 output eDP-1 scale 1
-
-# ---SwayFX-----
-# corner_radius 8
-#
-# blur enable
-# blur_passes 3
-# blur_radius 6
-#
-# for_window [app_id=""] opacity 0.95
-#
-# shadows enable
-# shadows_on_csd enable
-
-shadow_blur_radius 25
-shadow_color #08080895
-shadow_inactive_color #08080895
-shadow_offset 0 6
 

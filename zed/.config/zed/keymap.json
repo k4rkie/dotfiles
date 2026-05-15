@@ -1,0 +1,58 @@
+[
+  {
+    "context": "ProjectPanel && not_editing",
+    "bindings": {
+      "a": "project_panel::NewFile",
+    },
+  },
+  {
+    "context": "ProjectPanel && not_editing",
+    "bindings": {
+      "r": "project_panel::Rename",
+    },
+  },
+  {
+    "context": "ProjectPanel && not_editing",
+    "unbind": {
+      "%": "project_panel::NewFile",
+    },
+  },
+  {
+    "context": "Workspace || (Editor && vim_mode == normal)",
+    "bindings": {
+      "ctrl-b": "workspace::ToggleRightDock",
+    },
+  },
+  {
+    "context": "Workspace",
+    "unbind": {
+      "ctrl-alt-b": "workspace::ToggleRightDock",
+    },
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "ctrl-alt-b": "workspace::ToggleLeftDock",
+    },
+  },
+  {
+    "context": "Workspace",
+    "unbind": {
+      "ctrl-b": "workspace::ToggleLeftDock",
+    },
+  },
+  {
+    "context": "Editor && vim_mode == visual && !VimWaiting && !VimObject",
+    "bindings": {
+      "shift-j": "editor::MoveLineDown",
+      "shift-k": "editor::MoveLineUp",
+    },
+  },
+  {
+    "context": "Editor && vim_mode == normal && !VimWaiting && !VimObject",
+    "bindings": {
+      "space w": "workspace::Save",
+      "space f f": "file_finder::Toggle",
+    },
+  },
+]

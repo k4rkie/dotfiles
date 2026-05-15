@@ -115,12 +115,12 @@ end
 -- Active statusline
 vim.api.nvim_set_hl(0, "StatusLine", {
   fg = "#888888",
-  bg = "#080808",
+  bg = "#000000",
 })
 
 -- Inactive statusline
 vim.api.nvim_set_hl(0, "StatusLineNC", {
   fg = "#888888",
-  bg = "#080808",
+  bg = "#000000",
 })
 setup_dynamic_statusline()
