@@ -17,7 +17,7 @@
 
     corner_radius = 12
 
-    transparency = 10
+    transparency = 0
 
     alignment = left
     word_wrap = yes
@@ -41,19 +41,19 @@
     format = "<b>%s</b>\n%b"
 
 [urgency_low]
-    background = "#0d0d0dEE"
+    background = "#0d0d0dAA"
     foreground = "#909090"
     highlight = "#909090"
     timeout = 4
 
 [urgency_normal]
-    background = "#0d0d0dEE"
+    background = "#0d0d0dAA"
     foreground = "#909090"
     highlight = "#909090"
     timeout = 6
 
 [urgency_critical]
-    background = "#1a0f10EE"
+    background = "#1a0f10AA"
     foreground = "#909090"
     frame_color = "#ff5c57"
     highlight = "#ff5c57"

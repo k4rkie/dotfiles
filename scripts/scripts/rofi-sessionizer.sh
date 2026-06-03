@@ -39,4 +39,5 @@ else
 fi
 
 # 5. Launch Kitty
+# ghostty -e tmux attach-session -t "$selected_name"
 kitty --detach tmux attach-session -t "$selected_name"

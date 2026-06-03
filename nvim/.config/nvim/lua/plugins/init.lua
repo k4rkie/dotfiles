@@ -1,5 +1,6 @@
 return {
   require("plugins.base16"),
+  require("plugins.ibl"),
   require("plugins.treesitter"),
   require("plugins.autopairs"),
   require("plugins.lsp"),

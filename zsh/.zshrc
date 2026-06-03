@@ -121,3 +121,14 @@ export PATH=$PATH:$HOME/go/bin
 
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
+
+# opencode
+export PATH=/home/k4rkie/.opencode/bin:$PATH
+
+# pnpm
+export PNPM_HOME="/home/k4rkie/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
+esac
+# pnpm end

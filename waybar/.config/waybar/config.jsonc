@@ -2,10 +2,10 @@
   "layer": "top",
   "position": "bottom",
   "reload_style_on_change": true,
-  "height": 20,
+  "height": 30,
   "margin-bottom": 0,
   "modules-left": [
-    "sway/workspaces",
+    // "sway/workspaces",
     "hyprland/workspaces"
     // "sway/window"
   ],
@@ -13,22 +13,19 @@
     "clock"
   ],
   "modules-right": [
-    // "custom/keyboard",
-    // "custom/separator",
     "memory",
-    // "custom/separator",
+    "cpu",
     "pulseaudio",
-    // "custom/separator",
     "battery",
-    // "custom/separator",
-    "tray"
+    "tray",
+    "network"
   ],
   "tray": {
     "icon-size": 18,
     "spacing": 4
   },
   "clock": {
-    "format": "{:%I:%M %p}",
+    "format": "󰅐 {:%I:%M %p}",
     "interval": 60,
     "tooltip": true,
     "tooltip-format": "{:%d %B %H:%M}",
@@ -56,15 +53,23 @@
     "persistent-workspaces": {}
   },
   "memory": {
-    "format": "mem:{}%",
+    "format": "󰍛 {}%",
     "tooltip": "false"
   },
   "cpu": {
-    "format": "cpu:{usage}% ",
+    "format": " {usage}%",
     "tooltip": "false"
   },
   "pulseaudio": {
-    "format": "vol:{volume}%",
+    "format": "{icon} {volume}%",
+    "format-muted": " {volume}%",
+    "format-icons": {
+      "default": [
+        "",
+        "",
+        ""
+      ]
+    },
     "scroll-step": 1,
     "on-click": "pavucontrol"
   },
@@ -73,11 +78,10 @@
       "warning": 30,
       "critical": 15
     },
-    "format": "bat:{capacity}%",
-    "format-full": "bat:{capacity}%",
-    "format-charging": "bat:{capacity}%",
-    "format-plugged": "",
-    "format-alt": "{time} {icon}",
+    "format": "{icon}",
+    "format-full": "{icon}",
+    "format-charging": "󰂄",
+    "format-plugged": " ",
     "format-icons": [
       "󰁺",
       "󰁽",
@@ -91,16 +95,14 @@
     "interval": 1
   },
   "network": {
-    "interface": "wlan0",
-    "format": "{ifname}",
-    "format-wifi": "wifi",
-    "format-ethernet": "eth",
-    "format-disconnected": "no-wifi",
+    "format": "󰖩 ",
+    "format-wifi": "󰖩 ",
+    "format-ethernet": "󰈀 ",
+    "format-disconnected": "󰖪 ",
     "tooltip-format": "{ifname}",
     "tooltip-format-wifi": "{essid} ({signalStrength}%) ",
-    "tooltip-format-ethernet": "{ifname} ",
+    "tooltip-format-ethernet": "{ifname}󰈀 ",
     "tooltip-format-disconnected": "Disconnected",
-    "max-length": 50,
     "on-click": "~/scripts/rofi-wifi-menu.sh"
   },
   "custom/separator": {
