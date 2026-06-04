@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=Void
+Comment=A pure black GTK theme based on Kripton
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+GtkTheme=Void
+MetacityTheme=Void
+IconTheme=Papirus-Dark
+ButtonLayout=:minimize,maximize,close

@@ -209,8 +209,9 @@ gaps inner 6
 exec_always export GTK_FONT=$GTK_FONT
 exec_always export GTK_THEME=$GTK_THEME
 exec_always gsettings set org.gnome.desktop.interface font-name 'IosevkaTerm Nerd Font 12'
-exec_always gsettings set org.gnome.desktop.interface gtk-theme 'Kripton-v40'
+exec_always gsettings set org.gnome.desktop.interface gtk-theme 'Void'
 exec_always gsettings set org.gnome.desktop.interface icon-theme 'AdwaitaLegacy'
+exec_always sed -i 's/gtk-icon-theme-name="hicolor"/gtk-icon-theme-name="AdwaitaLegacy"/' "${HOME}/.gtkrc-2.0"
 exec_always gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 
 # Globally remap Caps Lock to Escape

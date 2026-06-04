@@ -3,7 +3,7 @@
   border-radius: 0;
   min-height: 0;
   font-family: "IosevkaTerm Nerd Font";
-  font-size: 15px;
+  font-size: 14px;
   padding: 0px;
 }
 
@@ -16,7 +16,7 @@ window#waybar {
 }
 
 window#waybar>box {
-  padding: 2px;
+  padding: 0px;
 }
 
 
@@ -35,7 +35,7 @@ tooltip {
 #pulseaudio,
 #custom-notifications {
   margin: 2px 2px 0px 0px;
-  padding: 1px 4px;
+  padding: 1px 5px;
   background: transparent;
 }
 
@@ -47,14 +47,18 @@ tooltip {
 #pulseaudio:hover,
 #network:hover,
 #custom-notifications:hover {
-  opacity: 0.8;
+  opacity: 0.9;
+}
+
+#workspaces {
+  padding-left: 2px;
 }
 
 #workspaces button {
   color: #272420;
   background: transparent;
-  padding: 0 2px;
-  margin: 3px 0;
+  margin: 3px 2px;
+  min-width: 15px;
 }
 
 #workspaces button.focused {
@@ -64,12 +68,11 @@ tooltip {
 }
 
 #workspaces button.active {
-  background: #c1c1c1;
-  color: #000000;
+  background: #000000;
+  color: #5f8787;
   border-radius: 2px;
 }
 
-#battery,
 #tray,
 #clock,
 #cpu {
@@ -90,4 +93,12 @@ tooltip {
 
 #custom-separator {
   color: #263038;
+}
+
+#battery {
+  color: #a1a1a1;
+}
+
+#custom-notifications {
+  color: #c1c1c1;
 }

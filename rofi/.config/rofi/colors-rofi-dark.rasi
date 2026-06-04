@@ -23,12 +23,16 @@
 
     selected-normal-background: #252530; /* slightly lighter for normal selection */
     selected-normal-foreground: #cdcdcd;
+    selected-urgent-background: #d8647e;
+    selected-urgent-foreground: #080808;
 
     /* Optional alternates for subtle row differences */
     alternate-normal-background: #080808;
     alternate-normal-foreground: #cdcdcd;
     alternate-active-background: #7fa563;
     alternate-active-foreground: #080808;
+    alternate-urgent-background: #d8647e;
+    alternate-urgent-foreground: #080808;
 
 }
 

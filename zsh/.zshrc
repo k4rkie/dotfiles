@@ -132,3 +132,6 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME/bin:$PATH" ;;
 esac
 # pnpm end
+
+#nimble
+export PATH=/home/k4rkie/.nimble/bin:$PATH

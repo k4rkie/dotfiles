@@ -2,30 +2,29 @@
   "layer": "top",
   "position": "bottom",
   "reload_style_on_change": true,
-  "height": 30,
+  "height": 18,
   "margin-bottom": 0,
   "modules-left": [
-    // "sway/workspaces",
     "hyprland/workspaces"
-    // "sway/window"
   ],
   "modules-center": [
     "clock"
   ],
   "modules-right": [
+    "custom/caffeine",
     "memory",
     "cpu",
     "pulseaudio",
     "battery",
+    "custom/notifications",
     "tray",
-    "network"
   ],
   "tray": {
     "icon-size": 18,
     "spacing": 4
   },
   "clock": {
-    "format": "󰅐 {:%I:%M %p}",
+    "format": "{:%I:%M %p}",
     "interval": 60,
     "tooltip": true,
     "tooltip-format": "{:%d %B %H:%M}",
@@ -53,23 +52,16 @@
     "persistent-workspaces": {}
   },
   "memory": {
-    "format": "󰍛 {}%",
+    "format": "mem{}%",
     "tooltip": "false"
   },
   "cpu": {
-    "format": " {usage}%",
+    "format": "cpu:{usage}%",
     "tooltip": "false"
   },
   "pulseaudio": {
-    "format": "{icon} {volume}%",
-    "format-muted": " {volume}%",
-    "format-icons": {
-      "default": [
-        "",
-        "",
-        ""
-      ]
-    },
+    "format": "vol:{volume}%",
+    "format-muted": "vol: {volume}%",
     "scroll-step": 1,
     "on-click": "pavucontrol"
   },
@@ -78,17 +70,10 @@
       "warning": 30,
       "critical": 15
     },
-    "format": "{icon}",
-    "format-full": "{icon}",
-    "format-charging": "󰂄",
-    "format-plugged": " ",
-    "format-icons": [
-      "󰁺",
-      "󰁽",
-      "󰁿",
-      "󰂀",
-      "󰁹"
-    ]
+    "format": "bat:{capacity}%",
+    "format-full": "bat:{capacity}%",
+    "format-charging": "bat:{capacity}%",
+    "format-plugged": "bat:{capacity}%",
   },
   "custom/recording": {
     "exec": "/home/k4rkie/scripts/wf-status.sh",
@@ -112,10 +97,10 @@
   },
   "custom/notifications": {
     "tooltip": true,
-    "format": "<span size='16pt'>{icon}</span>",
+    "format": "<span size='12pt'>{icon}</span>",
     "format-icons": {
       "notification": "󱅫",
-      "none": "󰂜",
+      "none": "",
       "dnd-notification": "󰂠",
       "dnd-none": "󰪓",
       "inhibited-notification": "󰂛",
@@ -129,6 +114,14 @@
     "on-click": "swaync-client -t -sw",
     "on-click-right": "swaync-client -d -sw",
     "escape": true
+  },
+  "custom/caffeine": {
+    "exec": "~/scripts/caffeine-status.sh",
+    "on-click": "~/scripts/caffeine-toggle.sh",
+    "return-type": "json",
+    "interval": 10,
+    "signal": 8,
+    "tooltip": true
   },
   "custom/keyboard": {
     "exec": "~/scripts/kbtoggle.sh",

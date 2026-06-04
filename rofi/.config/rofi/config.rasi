@@ -2,6 +2,7 @@
 configuration {
 	modi:                       "drun";
     show-icons:                 true;
+    icon-theme:                 "Papirus-Dark";
     display-drun:               "Apps";
     display-run:                "Run";
     run-shell-command: "/usr/bin/zsh -c '{cmd}'";
