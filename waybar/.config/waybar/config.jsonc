@@ -4,8 +4,10 @@
   "reload_style_on_change": true,
   "height": 18,
   "margin-bottom": 0,
+
   "modules-left": [
     "hyprland/workspaces"
+    // "mpris"
   ],
   "modules-center": [
     "clock"
@@ -27,8 +29,8 @@
     "format": "{:%I:%M %p}",
     "interval": 60,
     "tooltip": true,
-    "tooltip-format": "{:%d %B %H:%M}",
-    "on-click": "gsimplecal"
+    "tooltip-format": "{:%A %d %B %H:%M}",
+    "on-click": "{calander}"
   },
   "sway/workspaces": {
     "format": "{icon}",
@@ -53,11 +55,13 @@
   },
   "memory": {
     "format": "mem{}%",
-    "tooltip": "false"
+    "tooltip": "false",
+    "on-click": "kitty btop"
   },
   "cpu": {
     "format": "cpu:{usage}%",
-    "tooltip": "false"
+    "tooltip": "false",
+    "on-click": "kitty btop"
   },
   "pulseaudio": {
     "format": "vol:{volume}%",
@@ -138,5 +142,13 @@
       "(.*) - Mozilla Firefox": "🌎 $1",
       "(.*) - zsh": "> [$1]"
     }
+  },
+  "mpris": {
+    "format": "  {artist} - {title}",
+    "format-paused": "  {artist} - {title}",
+    "on-click": "playerctl play-pause",
+    "on-scroll-up": "playerctl previous",
+    "on-scroll-down": "playerctl next",
+    "max-length": 45
   }
 }

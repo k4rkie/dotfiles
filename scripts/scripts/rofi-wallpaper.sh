@@ -24,12 +24,10 @@ chosen=$(printf "%b" "$entries" | rofi -dmenu -theme ~/.config/rofi/wallpaper.ra
 if [[ -n "$chosen" ]]; then
     selected=$(find "$WALL_DIR" -maxdepth 1 -type f -name "$chosen" | head -1)
     if [[ -n "$selected" ]]; then
-        hyprctl hyprpaper preload "$selected"
-        hyprctl hyprpaper wallpaper "$MONITOR,$selected"
+        killall swaybg 2>/dev/null
+        swaybg -i "$selected" -m fill &
 
         abs=$(realpath "$selected")
-        sed -i "s|^preload = .*|preload = $abs|" "$HOME/.config/hypr/hyprpaper.conf"
-        sed -i "/^wallpaper {/,/^}/s|path = .*|path = $abs|" "$HOME/.config/hypr/hyprpaper.conf"
         sed -i "/^background {/,/^}/s|path = .*|path = $abs|" "$HOME/.config/hypr/hyprlock.conf"
 
         notify-send "Wallpaper" "Set to $chosen"

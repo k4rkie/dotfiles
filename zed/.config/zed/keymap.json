@@ -1,58 +1,49 @@
 [
+  // ── Workspace ──
   {
-    "context": "ProjectPanel && not_editing",
+    "context": "Workspace",
     "bindings": {
-      "a": "project_panel::NewFile",
+      "ctrl-alt-b": "workspace::ToggleLeftDock"
     },
-  },
-  {
-    "context": "ProjectPanel && not_editing",
-    "bindings": {
-      "r": "project_panel::Rename",
-    },
-  },
-  {
-    "context": "ProjectPanel && not_editing",
     "unbind": {
-      "%": "project_panel::NewFile",
-    },
+      "ctrl-alt-b": "workspace::ToggleRightDock",
+      "ctrl-b": "workspace::ToggleLeftDock"
+    }
   },
   {
     "context": "Workspace || (Editor && vim_mode == normal)",
     "bindings": {
-      "ctrl-b": "workspace::ToggleRightDock",
-    },
+      "ctrl-b": "workspace::ToggleRightDock"
+    }
   },
+
+  // ── Project Panel ──
   {
-    "context": "Workspace",
-    "unbind": {
-      "ctrl-alt-b": "workspace::ToggleRightDock",
-    },
-  },
-  {
-    "context": "Workspace",
+    "context": "ProjectPanel && not_editing",
     "bindings": {
-      "ctrl-alt-b": "workspace::ToggleLeftDock",
+      "a": "project_panel::NewFile",
+      "r": "project_panel::Rename"
     },
-  },
-  {
-    "context": "Workspace",
     "unbind": {
-      "ctrl-b": "workspace::ToggleLeftDock",
-    },
+      "%": "project_panel::NewFile"
+    }
   },
-  {
-    "context": "Editor && vim_mode == visual && !VimWaiting && !VimObject",
-    "bindings": {
-      "shift-j": "editor::MoveLineDown",
-      "shift-k": "editor::MoveLineUp",
-    },
-  },
+
+  // ── Editor — Normal Mode ──
   {
     "context": "Editor && vim_mode == normal && !VimWaiting && !VimObject",
     "bindings": {
       "space w": "workspace::Save",
-      "space f f": "file_finder::Toggle",
-    },
+      "space f f": "file_finder::Toggle"
+    }
   },
+
+  // ── Editor — Visual Mode ──
+  {
+    "context": "Editor && vim_mode == visual && !VimWaiting && !VimObject",
+    "bindings": {
+      "shift-j": "editor::MoveLineDown",
+      "shift-k": "editor::MoveLineUp"
+    }
+  }
 ]

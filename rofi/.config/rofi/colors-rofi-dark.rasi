@@ -1,4 +1,3 @@
-
 * {
     /* Base colors */
     background: #080808;          
@@ -21,8 +20,8 @@
     selected-active-background: #7fa563;  /* same as active */
     selected-active-foreground: #080808;
 
-    selected-normal-background: #252530; /* slightly lighter for normal selection */
-    selected-normal-foreground: #cdcdcd;
+    selected-normal-background: #a06666; /* slightly lighter for normal selection */
+    selected-normal-foreground: #080808;
     selected-urgent-background: #d8647e;
     selected-urgent-foreground: #080808;
 
@@ -79,7 +78,7 @@
 
 #element {
     border: 0;
-    padding: 1px;
+    padding: 2px;
 }
 
 #element-text, element-icon {

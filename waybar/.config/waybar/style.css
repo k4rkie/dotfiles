@@ -19,7 +19,6 @@ window#waybar>box {
   padding: 0px;
 }
 
-
 tooltip {
   background-color: #000000;
 }
@@ -46,7 +45,8 @@ tooltip {
 #battery:hover,
 #pulseaudio:hover,
 #network:hover,
-#custom-notifications:hover {
+#custom-notifications:hover,
+#mpris:hover {
   opacity: 0.9;
 }
 
@@ -69,8 +69,9 @@ tooltip {
 
 #workspaces button.active {
   background: #000000;
-  color: #5f8787;
+  color: #999999;
   border-radius: 2px;
+  font-weight: bold;
 }
 
 #tray,
@@ -88,15 +89,31 @@ tooltip {
 }
 
 #clock {
-  color: #6e94b2;
+  color: #a1a1a1;
 }
 
-#custom-separator {
-  color: #263038;
+#custom-caffeine {
+  color: #dd9999;
+}
+
+#custom-caffeine.inactive {
+  color: #5f8787;
+  opacity: 0.4;
 }
 
 #battery {
   color: #a1a1a1;
+}
+
+#mpris {
+  margin: 2px 2px 0px 8px;
+  padding: 1px 5px;
+  background: transparent;
+  color: #a1a1a1;
+}
+
+#mpris.paused {
+  color: #606060;
 }
 
 #custom-notifications {

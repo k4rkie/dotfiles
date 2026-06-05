@@ -27,7 +27,7 @@ window {
     margin:                      0px;
     padding:                     6px;
     border:                      0px solid;
-    border-radius:               0px;
+    border-radius:               2px;
     cursor:                      "default";
 }
 /*****----- Listview -----*****/
@@ -44,7 +44,7 @@ listview {
     fixed-columns:               true;
     spacing:                     0px;
     margin:                      0px;
-    padding:                     0px;
+    padding:                     2px;
     border:                      0px solid;
     border-radius:               0px;
     cursor:                      "default";

@@ -5,7 +5,7 @@ CAFFEINE_FILE="/tmp/caffeine"
 if [[ -f "$CAFFEINE_FILE" ]]; then
   rm -f "$CAFFEINE_FILE"
   hypridle &
-  notify-send " Caffeine OFF" "Screen will lock normally"
+  notify-send "󰾪 Caffeine OFF" "Screen will lock normally"
 else
   pkill hypridle
   touch "$CAFFEINE_FILE"
