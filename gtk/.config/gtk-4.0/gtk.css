@@ -10,10 +10,10 @@
 @define-color selected_fg_color #000000;
 @define-color theme_selected_bg_color #888888;
 @define-color theme_selected_fg_color #000000;
-@define-color selected_bg_color #5a5e8d;
-@define-color theme_selected_bg_color #5a5e8d;
-@define-color unfocused_selected_bg_color #5a5e8d;
-@define-color theme_unfocused_selected_bg_color #5a5e8d;
+@define-color selected_bg_color #4e5687;
+@define-color theme_selected_bg_color #4e5687;
+@define-color unfocused_selected_bg_color #4e5687;
+@define-color theme_unfocused_selected_bg_color #4e5687;
 
 .thunar,
 .thunar .view,
@@ -39,7 +39,7 @@
 
 .thunar .view widget:selected,
 .thunar treeview *:selected {
-  background-color: #9ea1b9;
+  background-color: #4e5687;
 }
 
 .thunar .view .rubberband,

@@ -1,24 +1,24 @@
-@define-color center-bg              alpha(#000000, 0.85);
-@define-color notification-bg        alpha(#000000, 0.9);
+@define-color center-bg alpha(#000000, 0.85);
+@define-color notification-bg alpha(#000000, 0.9);
 @define-color center-notification-bg #050505;
-@define-color background             alpha(#000000, 0.9);
-@define-color background-alt         #050505;
-@define-color border                 #202020;
-@define-color text                   #888888;
-@define-color text-alt               #686868;
-@define-color selected               alpha(#888888, 0.25);
-@define-color hover                  alpha(#888888, 0.1);
-@define-color urgent                 #888888;
+@define-color background alpha(#000000, 0.9);
+@define-color background-alt #050505;
+@define-color border #202020;
+@define-color text #888888;
+@define-color text-alt #686868;
+@define-color selected alpha(#4d60aa, 0.75);
+@define-color hover alpha(#888888, 0.1);
+@define-color urgent #888888;
 
 * {
   all: unset;
   font-family: "IosevkaTerm Nerd Font";
-  font-size: 12px;
+  font-size: 14px;
 
   --border-radius: 2px;
   --border-radius-s: 2px;
   --border-radius-xl: 2px;
-  --shadow: 2px 4px 10px rgba(0,0,0,0.15);
+  --shadow: 2px 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 .notification {
@@ -29,7 +29,7 @@
   background: @notification-bg;
   border: 1px solid @border;
   border-radius: var(--border-radius);
-  margin: 8px;
+  margin: 16px;
   padding: 0;
 }
 
@@ -116,7 +116,7 @@
   background: @center-bg;
   border: 1px solid @border;
   border-radius: var(--border-radius);
-  margin: 5px;
+  margin: 16px;
   padding: 5px 5px 0 5px;
   animation: cc-slide-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -154,7 +154,7 @@
   padding: 4px 8px;
 }
 
-.notification-group-headers > label {
+.notification-group-headers>label {
   margin: 0 3px;
   font-size: 1rem;
 }
@@ -188,7 +188,7 @@
   color: @text;
 }
 
-.widget-dnd > label {
+.widget-dnd>label {
   font-size: 1rem;
   font-weight: 700;
 }
@@ -223,43 +223,46 @@
   background: transparent;
 }
 
-@keyframes slide-in {
-  from {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-@keyframes slide-out {
-  from {
-    transform: translateX(0);
-    opacity: 1;
-  }
-  to {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-}
-
-@keyframes cc-slide-in {
-  from {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-.notification-row {
-  animation: slide-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.notification-row:empty {
-  animation: slide-out 0.2s ease;
-}
+/* @keyframes slide-in { */
+/*   from { */
+/*     transform: translateX(100%); */
+/*     opacity: 0; */
+/*   } */
+/**/
+/*   to { */
+/*     transform: translateX(0); */
+/*     opacity: 1; */
+/*   } */
+/* } */
+/**/
+/* @keyframes slide-out { */
+/*   from { */
+/*     transform: translateX(0); */
+/*     opacity: 1; */
+/*   } */
+/**/
+/*   to { */
+/*     transform: translateX(100%); */
+/*     opacity: 0; */
+/*   } */
+/* } */
+/**/
+/* @keyframes cc-slide-in { */
+/*   from { */
+/*     transform: translateX(100%); */
+/*     opacity: 0; */
+/*   } */
+/**/
+/*   to { */
+/*     transform: translateX(0); */
+/*     opacity: 1; */
+/*   } */
+/* } */
+/**/
+/* .notification-row { */
+/*   animation: slide-in 0.3s cubic-bezier(0.16, 1, 0.3, 1); */
+/* } */
+/**/
+/* .notification-row:empty { */
+/*   animation: slide-out 0.2s ease; */
+/* } */

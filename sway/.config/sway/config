@@ -190,7 +190,9 @@ bindsym $mod+r mode "resize"
 # floating window class
 for_window [app_id="pavucontrol"] floating enable, focus, move position center
 for_window [app_id="blueman-applet"] floating enable, focus, move position center
+for_window [app_id="blueman-manager"] floating enable, focus, move position center
 for_window [app_id="swayimg"] floating enable, focus, move position center
+for_window [app_id="qalculate-gtk"] floating enable, focus, move position center
 
 # Window decoratrions
 default_border pixel 2

@@ -58,8 +58,8 @@ tooltip {
   color: #272420;
   background: transparent;
   margin: 3px 2px;
-  min-width: 14px;
-  padding: 0px 2px;
+  min-width: 12px;
+  padding: 0px 6px;
 }
 
 #workspaces button.focused {
