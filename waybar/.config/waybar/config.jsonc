@@ -4,10 +4,9 @@
   "reload_style_on_change": true,
   "height": 18,
   "margin-bottom": 0,
-
   "modules-left": [
-    "hyprland/workspaces"
-    // "mpris"
+    "hyprland/workspaces",
+    "group/media"
   ],
   "modules-center": [
     "clock"
@@ -32,7 +31,7 @@
     "tooltip-format": "{:%A %d %B %H:%M}",
     "on-click": "{calander}"
   },
-  "sway/workspaces": {
+  "hyprland/workspaces": {
     "format": "{icon}",
     "separate-outputs": false,
     "active-only": false,
@@ -51,7 +50,11 @@
       "9": "9",
       "10": "10"
     },
-    "persistent-workspaces": {}
+    "persistent-workspaces": {
+      "1": "1",
+      "2": "2",
+      "3": "3",
+    }
   },
   "memory": {
     "format": "mem{}%",
@@ -143,12 +146,30 @@
       "(.*) - zsh": "> [$1]"
     }
   },
-  "mpris": {
-    "format": "  {artist} - {title}",
-    "format-paused": "  {artist} - {title}",
-    "on-click": "playerctl play-pause",
-    "on-scroll-up": "playerctl previous",
-    "on-scroll-down": "playerctl next",
-    "max-length": 45
+  "group/media": {
+    "orientation": "horizontal",
+    "modules": [
+      "custom/media-animation",
+      "custom/media-now-playing",
+      "custom/media-time"
+    ]
+  },
+  "custom/media-now-playing": {
+    "exec": "/home/k4rkie/.config/waybar/custom_modules/media/media-now-playing.sh",
+    "escape": true,
+    "tooltip": false,
+    "on-click": "mpc toggle",
+    "on-click-middle": "mpc prev",
+    "on-click-right": "mpc next",
+  },
+  "custom/media-animation": {
+    "exec": "~/.config/waybar/custom_modules/media/media-animation.sh",
+    "tooltip": false,
+  },
+  "custom/media-time": {
+    "exec": "~/.config/waybar/custom_modules/media/media-time.sh",
+    "escape": true,
+    "interval": 1,
+    "tooltip": false,
   }
 }

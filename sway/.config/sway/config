@@ -23,7 +23,7 @@ exec --no-startup-id nm-applet
 exec_always --no-startup-id blueman-applet
 
 # swaybg for wallpaper management
-output * bg /home/k4rkie/Pictures/Wallhaven/bladerunner.png fill
+output * bg /home/k4rkie/Pictures/Wallhaven/sea_sky_clouds_sand_beach_beacon_sunset_purple.jpg fill
 
 # Use wpctl (PipeWire) to adjust volume
 bindsym XF86AudioRaiseVolume exec --no-startup-id ~/scripts/volume.sh up

@@ -29,6 +29,8 @@ if [[ -n "$chosen" ]]; then
 
         abs=$(realpath "$selected")
         sed -i "/^background {/,/^}/s|path = .*|path = $abs|" "$HOME/.config/hypr/hyprlock.conf"
+        sed -i "s|^    hl\.exec_cmd(\"swaybg -i .* -m fill\")$|    hl.exec_cmd(\"swaybg -i $abs -m fill\")|" "$HOME/.config/hypr/hyprland.lua"
+        pkill -USR2 hyprlock 2>/dev/null
 
         notify-send "Wallpaper" "Set to $chosen"
     fi

@@ -1,5 +1,16 @@
 {
-  // ── Editor Core ──
+  "debugger": {
+    "button": false,
+  },
+  "terminal": {
+    "button": false,
+  },
+  "agent": {
+    "button": false,
+    "sidebar_side": "right",
+    "favorite_models": [],
+    "model_parameters": [],
+  },
   "vim_mode": true,
   "tab_size": 2,
   "current_line_highlight": "none",
@@ -13,13 +24,11 @@
     "provider": "copilot",
   },
   "indent_guides": {
-    "enabled": true,
+    "enabled": false,
   },
   "buffer_line_height": {
     "custom": 1.35,
   },
-
-  // ── Appearance — Theme & Fonts ──
   "theme": {
     "mode": "dark",
     "light": "Ayu Light",
@@ -40,8 +49,6 @@
   "ui_font_size": 22.0,
   "buffer_font_size": 22.0,
   "window_decorations": "server",
-
-  // ── Panels — Toolbar ──
   "toolbar": {
     "code_actions": false,
     "agent_review": true,
@@ -49,8 +56,6 @@
     "quick_actions": false,
     "breadcrumbs": false,
   },
-
-  // ── Panels — Tab Bar ──
   "tab_bar": {
     "show": false,
     "show_tab_bar_buttons": false,
@@ -60,8 +65,6 @@
     "git_status": false,
     "show_close_button": "hover",
   },
-
-  // ── Panels — Gutter & Scrollbar ──
   "gutter": {
     "folds": false,
     "bookmarks": false,
@@ -72,16 +75,12 @@
   "scrollbar": {
     "show": "never",
   },
-
-  // ── Panels — Status Bar ──
   "status_bar": {
     "show_active_file": true,
     "cursor_position_button": false,
     "active_encoding_button": "disabled",
     "active_language_button": false,
   },
-
-  // ── Panels — Title Bar ──
   "title_bar": {
     "show_menus": false,
     "button_layout": "platform_default",
@@ -93,10 +92,8 @@
     "show_project_items": false,
     "show_branch_name": false,
   },
-
-  // ── Panels — Side / Dock Panels ──
   "project_panel": {
-    "default_width": 500,
+    "default_width": 400,
     "button": false,
     "dock": "right",
     "auto_fold_dirs": false,
@@ -104,92 +101,83 @@
       "show": "never",
     },
   },
-  "outline_panel": { "button": false },
-  "collaboration_panel": { "button": false },
-  "git_panel": { "button": false },
+  "outline_panel": {
+    "button": false,
+  },
+  "collaboration_panel": {
+    "button": false,
+  },
+  "git_panel": {
+    "button": false,
+  },
   "search": {
     "button": false,
-  },
-  "debugger": {
-    "button": false,
-  },
-  "diagnostics": {
-    "button": true,
-  },
-
-  // ── Agent ──
-  "agent": {
-    "flexible": false,
-    "dock": "right",
-    "sidebar_side": "right",
-    "default_model": {
-      "provider": "copilot_chat",
-      "model": "gpt-4.1",
-      "enable_thinking": false,
+    "debugger": {
+      "button": false,
     },
-    "favorite_models": [],
-    "model_parameters": [],
-  },
-  "agent_servers": {
-    "github-copilot-cli": {
-      "type": "registry",
+    "diagnostics": {
+      "button": true,
     },
-  },
-  "use_system_prompts": false,
-  "use_system_path_prompts": false,
-
-  // ── Git ──
-  "git": {
-    "disable_git": false,
-    "inline_blame": {
-      "enabled": false,
+    "agent": {
+      "flexible": false,
+      "dock": "right",
+      "sidebar_side": "right",
+      "default_model": {
+        "provider": "copilot_chat",
+        "model": "gpt-4.1",
+        "enable_thinking": false,
+      },
+      "favorite_models": [],
+      "model_parameters": [],
     },
-    "enable_diff": true,
-    "enable_status": true,
-  },
-
-  // ── Terminal ──
-  "terminal": {
-    "button": false,
-    "toolbar": {
-      "breadcrumbs": false,
+    "agent_servers": {
+      "github-copilot-cli": {
+        "type": "registry",
+      },
     },
-    "font_size": 22.0,
-    "font_family": "IosevkaTerm Nerd Font",
-  },
-
-  // ── Vim ──
-  "vim": {
-    "cursor_shape": {
-      "insert": "block",
+    "use_system_prompts": false,
+    "use_system_path_prompts": false,
+    "git": {
+      "disable_git": false,
+      "inline_blame": {
+        "enabled": false,
+      },
+      "enable_diff": true,
+      "enable_status": true,
     },
-    "use_smartcase_find": true,
-    "toggle_relative_line_numbers": true,
-  },
-
-  // ── File Management ──
-  "file_finder": {
-    "modal_max_width": "medium",
-  },
-  "file_scan_exclusions": [
-    "**/node_modules/**",
-    "**/.git/**",
-    "**/dist/**",
-    "**/.next/**",
-  ],
-  "session": {
-    "trust_all_worktrees": true,
-  },
-  "restore_on_startup": "launchpad",
-  "cli_default_open_behavior": "existing_window",
-
-  // ── Languages — Per-Language Overrides ──
-  "languages": {
-    "TypeScript": {
-      "show_edit_predictions": true,
+    "terminal": {
+      "button": false,
+      "toolbar": {
+        "breadcrumbs": false,
+      },
+      "font_size": 22.0,
+      "font_family": "IosevkaTerm Nerd Font",
+    },
+    "vim": {
+      "cursor_shape": {
+        "insert": "block",
+      },
+      "use_smartcase_find": true,
+      "toggle_relative_line_numbers": true,
+    },
+    "file_finder": {
+      "modal_max_width": "medium",
+    },
+    "file_scan_exclusions": [
+      "**/node_modules/**",
+      "**/.git/**",
+      "**/dist/**",
+      "**/.next/**",
+    ],
+    "session": {
+      "trust_all_worktrees": true,
+    },
+    "restore_on_startup": "launchpad",
+    "cli_default_open_behavior": "existing_window",
+    "languages": {
+      "TypeScript": {
+        "show_edit_predictions": true,
+      },
     },
   },
-
-  // ── Miscellaneous ──
-  "proxy": "",
 }

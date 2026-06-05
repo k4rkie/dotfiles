@@ -3,7 +3,7 @@
   border-radius: 0;
   min-height: 0;
   font-family: "IosevkaTerm Nerd Font";
-  font-size: 14px;
+  font-size: 15px;
   padding: 0px;
 }
 
@@ -16,7 +16,7 @@ window#waybar {
 }
 
 window#waybar>box {
-  padding: 0px;
+  padding: 1px;
 }
 
 tooltip {
@@ -58,7 +58,8 @@ tooltip {
   color: #272420;
   background: transparent;
   margin: 3px 2px;
-  min-width: 15px;
+  min-width: 14px;
+  padding: 0px 2px;
 }
 
 #workspaces button.focused {
@@ -68,8 +69,8 @@ tooltip {
 }
 
 #workspaces button.active {
-  background: #000000;
-  color: #999999;
+  background: #4e5687;
+  color: #000000;
   border-radius: 2px;
   font-weight: bold;
 }
@@ -118,4 +119,23 @@ tooltip {
 
 #custom-notifications {
   color: #c1c1c1;
+}
+
+#media {
+  color: #4e5687;
+  margin: 4px 0px 4px 10px;
+}
+
+#custom-media-animation {
+  font-size: 15px;
+  margin-right: 10px;
+}
+
+#custom-media-now-playing {
+  margin-right: 10px;
+}
+
+#custom-media-time {
+  color: rgba(39, 39, 42, 1);
+  font-size: 13px;
 }

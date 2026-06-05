@@ -1,0 +1,67 @@
+2026-06-05T10:35:25 exception: Failed to open "/home/k4rkie/.config/mpd/state": No such file or directory
+2026-06-05T10:37:35 exception: No such directory
+2026-06-05T10:38:16 event: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+2026-06-05T10:38:16 state_file: Loading state file /home/k4rkie/.config/mpd/state
+2026-06-05T10:38:19 client: [[::1]:56012] client connected
+2026-06-05T10:38:19 client: [[::1]:56012] process command list
+2026-06-05T10:38:19 client: process command "update \"\""
+2026-06-05T10:38:19 update: spawned thread for update job id 1
+2026-06-05T10:38:19 client: command returned 0
+2026-06-05T10:38:19 update: starting
+2026-06-05T10:38:19 client: [[::1]:56012] process command list returned 0
+2026-06-05T10:38:19 client: [[::1]:56012] process command list
+2026-06-05T10:38:19 client: process command "status"
+2026-06-05T10:38:19 client: command returned 0
+2026-06-05T10:38:19 client: process command "currentsong"
+2026-06-05T10:38:19 client: command returned 0
+2026-06-05T10:38:19 client: [[::1]:56012] process command list returned 0
+2026-06-05T10:38:19 update: finished
+2026-06-05T10:38:19 client: [[::1]:56012] disconnected
+2026-06-05T10:38:22 client: [[::1]:56826] client connected
+2026-06-05T10:38:22 client: [[::1]:56826] process command "listall \"\""
+2026-06-05T10:38:22 client: [[::1]:56826] command returned 0
+2026-06-05T10:38:22 client: [[::1]:56826] disconnected
+2026-06-05T10:38:22 state_file: Saving state file /home/k4rkie/.config/mpd/state
+2026-06-05T10:38:37 exception: Access to local files via TCP is not allowed
+2026-06-05T10:38:37 exception: Access to local files via TCP is not allowed
+2026-06-05T10:38:53 exception: Failed to open "/home/k4rkie/.config/mpd/state": No such file or directory
+2026-06-05T10:39:40 update: added /Sunflower.mp3
+2026-06-05T10:41:51 player: played "Sunflower.mp3"
+2026-06-05T10:43:12 update: updating /Sunflower.mp3
+2026-06-05T10:45:52 update: added /Bipul Chettri - Syndicate (Album - Maya).mp3
+2026-06-05T10:47:00 player: played "Sunflower.mp3"
+2026-06-05T10:47:04 update: updating /Bipul Chettri - Syndicate (Album - Maya).mp3
+2026-06-05T10:47:10 pipewire_output: Decoder is too slow; playing silence to avoid xrun
+2026-06-05T10:48:17 player: played "Bipul Chettri - Syndicate (Album - Maya).mp3"
+2026-06-05T10:48:18 exception: Not playing
+2026-06-05T11:07:31 player: played "Bipul Chettri - Syndicate (Album - Maya).mp3"
+2026-06-05T11:14:10 client: [[::1]:56328] command "close" during idle
+2026-06-05T11:23:40 player: played "Bipul Chettri - Syndicate (Album - Maya).mp3"
+2026-06-05T11:23:54 player: played "Bipul Chettri - Syndicate (Album - Maya).mp3"
+2026-06-05T11:23:55 exception: Not playing
+2026-06-05T11:23:57 exception: Not playing
+2026-06-05T11:23:58 exception: Not playing
+2026-06-05T11:23:58 exception: Not playing
+2026-06-05T11:28:27 player: played "Bipul Chettri - Syndicate (Album - Maya).mp3"
+2026-06-05T11:31:19 player: played "Sunflower.mp3"
+2026-06-05T11:35:33 player: played "Bipul Chettri - Syndicate (Album - Maya).mp3"
+2026-06-05T11:39:04 player: played "Sunflower.mp3"
+2026-06-05T11:40:21 player: played "Sunflower.mp3"
+2026-06-05T11:42:06 update: added /Kendrick Lamar & SZA - Luther (Official Music Video).mp3
+2026-06-05T11:48:11 update: updating /Kendrick Lamar & SZA - Luther (Official Music Video).mp3
+2026-06-05T11:54:03 update: updating /Sunflower.mp3
+2026-06-05T11:54:03 update: updating /Bipul Chettri - Syndicate (Album - Maya).mp3
+2026-06-05T11:54:03 update: removing Kendrick Lamar & SZA - Luther (Official Music Video).mp3
+2026-06-05T12:00:30 update: added /Luther.mp3
+2026-06-05T12:00:30 update: added /See You Again (Clean) - Tyler, The CreatorKali Uchis.mp3
+2026-06-05T12:00:30 update: added /Bruno Mars - Thats What I Like [Official Music Video].mp3
+2026-06-05T12:03:45 update: updating /See You Again (Clean) - Tyler, The CreatorKali Uchis.mp3
+2026-06-05T12:03:45 update: updating /Bruno Mars - Thats What I Like [Official Music Video].mp3
+2026-06-05T12:04:38 update: updating /Luther.mp3
+2026-06-05T12:11:08 player: played "See You Again (Clean) - Tyler, The CreatorKali Uchis.mp3"
+2026-06-05T12:16:16 player: played "Bipul Chettri - Syndicate (Album - Maya).mp3"
+2026-06-05T12:18:53 player: played "Sunflower.mp3"
+2026-06-05T12:30:49 update: added /C418-Minecraft.mp3
+2026-06-05T12:38:48 update: added /HollowKnight.mp3
+2026-06-05T13:05:53 player: played "See You Again (Clean) - Tyler, The CreatorKali Uchis.mp3"
+2026-06-05T16:16:12 player: played "See You Again (Clean) - Tyler, The CreatorKali Uchis.mp3"
