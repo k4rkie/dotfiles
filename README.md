@@ -1,8 +1,8 @@
+<h1 align="center">dotfiles</h1>
+
 <p align="center">
   <img src="images/rice_desktop.png" alt="desktop" width="800"/>
 </p>
-
-<h1 align="center">~ k4rkie's dotfiles ~</h1>
 
 <p align="center">
   <img src="https://img.shields.io/badge/OS-Fedora-294172?style=flat&logo=fedora&logoColor=white"/>
