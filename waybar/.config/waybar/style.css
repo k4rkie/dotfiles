@@ -90,7 +90,7 @@ tooltip {
 }
 
 #clock {
-  color: #a1a1a1;
+  color: #A0C2FF;
 }
 
 #custom-caffeine {
@@ -136,6 +136,6 @@ tooltip {
 }
 
 #custom-media-time {
-  color: rgba(39, 39, 42, 1);
-  font-size: 13px;
+  color: rgba(50, 50, 50, 1);
+  font-size: 14px;
 }

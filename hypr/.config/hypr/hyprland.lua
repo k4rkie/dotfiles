@@ -55,6 +55,7 @@ hl.layer_rule({
   match        = { namespace = "swayosd" },
   blur         = true,
   ignore_alpha = 0,
+  animation    = "slide bottom"
 })
 hl.layer_rule({
   name         = "animate-waybar",
@@ -85,7 +86,7 @@ hl.config({
   },
   decoration = {
     rounding         = 4,
-    active_opacity   = 0.95,
+    active_opacity   = 0.98,
     inactive_opacity = 0.90,
     shadow           = {
       enabled      = true,
@@ -95,8 +96,8 @@ hl.config({
     },
     blur             = {
       enabled    = true,
-      size       = 6,
-      passes     = 2,
+      size       = 8,
+      passes     = 1,
       noise      = 0.01,
       contrast   = 0.95,
       brightness = 0.95,
@@ -132,7 +133,13 @@ hl.on("hyprland.start", function()
   hl.exec_cmd("pkill dunst")
   hl.exec_cmd("swaync")
   hl.exec_cmd("swayosd-server")
-  hl.exec_cmd("swaybg -i /home/k4rkie/Pictures/Wallhaven/sea_sky_clouds_sand_beach_beacon_sunset_purple.jpg -m fill")
+  local wall_path = (io.open(os.getenv("HOME") .. "/.config/hypr/current_wallpaper", "r") or io.open("/dev/null")):read(
+    "*a"):gsub("%s+$", "")
+  if wall_path == "" then
+    wall_path =
+    "/home/k4rkie/Pictures/Wallhaven/sea_sky_clouds_sand_beach_beacon_sunset_purple.jpg"
+  end
+  hl.exec_cmd("swaybg -i " .. wall_path .. " -m fill")
   hl.exec_cmd("wlsunset -l 27.7006 -L 83.4484 -t 3800 -T 6500")
   hl.exec_cmd("gsettings set org.gnome.desktop.interface font-name 'IosevkaTerm Nerd Font 12'")
   hl.exec_cmd("gsettings set org.gnome.desktop.interface gtk-theme 'Void'")

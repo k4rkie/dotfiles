@@ -8,26 +8,16 @@ DIRS=(
     "$HOME/dev/C"
     "$HOME/dev/C/graphics"
     "$HOME/dev/JS"
-    "$HOME/dev/Rust/"
     "$HOME/dotfiles/"
 )
-
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-source "$SCRIPT_DIR/skim-themes.sh"
 
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    # We use a subshell ( ... ) to collect output from both commands
-    # This is more robust for Skim/Fzf piping
     selected=$({
-        # 1. Get folders from disk
         fd . "${DIRS[@]}" --type=dir --max-depth=1 --full-path --base-directory "$HOME" | sed "s|^$HOME/||"
-        
-        # 2. Get active tmux sessions (only the names)
-        # 2>/dev/null ensures it doesn't crash if no sessions exist
         tmux list-sessions -F "#S" 2>/dev/null
-    } | sort -u | sk "${SKIM_THEME_SESSION[@]}")
+    } | sort -u | fzf --color=bw --height=70% --margin=10%,20%,20%,20% --layout=reverse --info=hidden --scheme=path)
 fi
 
 [[ ! $selected ]] && exit 0

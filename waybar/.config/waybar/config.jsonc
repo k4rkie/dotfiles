@@ -57,7 +57,7 @@
     }
   },
   "memory": {
-    "format": "mem{}%",
+    "format": "mem:{}%",
     "tooltip": "false",
     "on-click": "kitty btop"
   },

@@ -1,7 +1,7 @@
-@define-color center-bg alpha(#000000, 0.85);
-@define-color notification-bg alpha(#000000, 0.9);
+@define-color center-bg alpha(#000000, 0.95);
+@define-color notification-bg alpha(#000000, 0.95);
 @define-color center-notification-bg #050505;
-@define-color background alpha(#000000, 0.9);
+@define-color background alpha(#000000, 0.95);
 @define-color background-alt #050505;
 @define-color border #202020;
 @define-color text #888888;
