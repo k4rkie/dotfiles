@@ -1,5 +1,6 @@
 return {
   require("plugins.base16"),
+  require("plugins.lualine"),
   require("plugins.treesitter"),
   require("plugins.autopairs"),
   require("plugins.lsp"),
@@ -13,4 +14,5 @@ return {
   require("plugins.conform"),
   require("plugins.luasnip"),
   require("plugins.compile-mode"),
+  require("plugins.markdownpreview"),
 }

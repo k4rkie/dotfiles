@@ -1,7 +1,7 @@
 <h1 align="center">dotfiles</h1>
 
 <p align="center">
-  <img src="images/rice_desktop.png" alt="desktop" width="800"/>
+  <img src="images/rice_preview.png" alt="desktop" width="800"/>
 </p>
 
 <p align="center">

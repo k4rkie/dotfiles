@@ -165,6 +165,7 @@
   "custom/media-animation": {
     "exec": "~/.config/waybar/custom_modules/media/media-animation.sh",
     "tooltip": false,
+    "on-click": "kitty --class ncmpcpp ncmpcpp"
   },
   "custom/media-time": {
     "exec": "~/.config/waybar/custom_modules/media/media-time.sh",

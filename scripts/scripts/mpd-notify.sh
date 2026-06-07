@@ -26,22 +26,45 @@ def find_song(rel):
 
 def extract(filepath):
     try:
-        from mutagen.id3 import ID3
-        audio = ID3(filepath)
-        title = str(audio.get("TIT2", [""])[0])
-        artist = str(audio.get("TPE1", [""])[0])
-        album = str(audio.get("TALB", [""])[0])
+        import mutagen
+        audio = mutagen.File(filepath, easy=False)
 
-        apic = audio.get("APIC:cover") or audio.get("APIC")
+        title = ""
+        artist = ""
+        album = ""
         art = None
-        if apic and hasattr(apic, "data") and len(apic.data) > 0:
-            ext = ".jpg"
-            if hasattr(apic, "mime"):
-                ext = { "image/jpeg": ".jpg", "image/png": ".png" }.get(apic.mime, ".jpg")
-            art = os.path.join(CACHE_DIR, f"cover{ext}")
-            with open(art, "wb") as f:
-                f.write(apic.data)
-        return title or os.path.splitext(os.path.basename(filepath))[0], artist, album, art
+
+        if audio is not None:
+            if "TIT2" in audio:
+                title = str(audio["TIT2"])
+            elif "title" in audio:
+                title = str(audio["title"][0])
+
+            if "TPE1" in audio:
+                artist = str(audio["TPE1"])
+            elif "artist" in audio:
+                artist = str(audio["artist"][0])
+
+            if "TALB" in audio:
+                album = str(audio["TALB"])
+            elif "album" in audio:
+                album = str(audio["album"][0])
+
+            for key in list(audio.keys()):
+                if key.startswith("APIC"):
+                    apic = audio[key]
+                    if hasattr(apic, "data") and len(apic.data) > 0:
+                        ext = ".jpg"
+                        if hasattr(apic, "mime"):
+                            ext = {"image/jpeg": ".jpg", "image/png": ".png"}.get(apic.mime, ".jpg")
+                        art = os.path.join(CACHE_DIR, f"cover{ext}")
+                        with open(art, "wb") as f:
+                            f.write(apic.data)
+                        break
+
+        if not title:
+            title = os.path.splitext(os.path.basename(filepath))[0]
+        return title, artist, album, art
     except:
         return os.path.splitext(os.path.basename(filepath))[0], "", "", None
 
@@ -53,13 +76,11 @@ while True:
         path = find_song(rel)
         if path:
             title, artist, album, art = extract(path)
-            body = artist
-            if album:
-                body = f"{artist} · {album}" if artist else album
-            summary = title
-            cmd = ["notify-send", "Now Playing", summary]
-            if body:
-                cmd[2] = f"{summary}\n{body}"
+            if artist:
+                body = f"{artist} - {title}"
+            else:
+                body = title
+            cmd = ["notify-send", "Now Playing", body]
             if art:
                 cmd.extend(["--icon", art])
             subprocess.run(cmd, timeout=2)

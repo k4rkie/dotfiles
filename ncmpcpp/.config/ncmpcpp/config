@@ -1,3 +1,134 @@
 mpd_host = "localhost"
 mpd_port = "6600"
 
+##### directories #####
+ncmpcpp_directory = ~/.config/ncmpcpp
+lyrics_directory = ~/.lyrics
+
+##### music visualizer #####
+visualizer_data_source = /tmp/mpd.fifo
+visualizer_output_name = Visualizer feed
+visualizer_in_stereo = yes
+visualizer_type = spectrum
+visualizer_fps = 60
+visualizer_autoscale = yes
+visualizer_look = ┃│
+visualizer_color = 47, 83, 119, 155, 191, 227, 221, 215
+visualizer_spectrum_smooth_look = yes
+visualizer_spectrum_dft_size = 2
+visualizer_spectrum_gain = 10
+visualizer_spectrum_hz_min = 20
+visualizer_spectrum_hz_max = 20000
+
+##### delays #####
+playlist_disable_highlight_delay = 5
+message_delay_time = 2
+
+##### song format #####
+song_list_format = $8%n. $1%t $R$8%l
+song_status_format = $2%a $8- $1%t $8- $3%b
+song_library_format = $8%n. $1%t
+alternative_header_first_line_format = $1$b%t$/b$8
+alternative_header_second_line_format = $2%a $8- $3%b $8($6%y$8)
+current_item_prefix = $6$r
+current_item_suffix = $/r$8
+current_item_inactive_column_prefix = $5$r
+current_item_inactive_column_suffix = $/r$8
+now_playing_prefix = $1
+now_playing_suffix = $8
+browser_playlist_prefix = "$4playlist$8 "
+selected_item_prefix = $3
+selected_item_suffix = $8
+modified_item_prefix = $2> $8
+song_window_title_format = {%a - }{%t}|{%f}
+
+##### columns settings #####
+song_columns_list_format = (7f)[8]{NE} (25)[2]{a} (5f)[1]{l} (45)[8]{t|f:Title} (20)[3]{b}
+
+##### various settings #####
+playlist_show_mpd_host = no
+playlist_show_remaining_time = no
+playlist_shorten_total_times = no
+playlist_separate_albums = no
+playlist_display_mode = columns
+browser_display_mode = classic
+search_engine_display_mode = classic
+playlist_editor_display_mode = classic
+discard_colors_if_item_is_selected = no
+show_duplicate_tags = yes
+incremental_seeking = yes
+seek_time = 1
+volume_change_step = 2
+autocenter_mode = no
+centered_cursor = no
+progressbar_look = ━━╸
+default_place_to_search_in = database
+user_interface = alternative
+data_fetching_delay = yes
+media_library_primary_tag = album_artist
+media_library_albums_split_by_date = yes
+media_library_hide_album_dates = no
+default_find_mode = wrapped
+default_tag_editor_pattern = %n - %t
+header_visibility = yes
+statusbar_visibility = yes
+connected_message_on_startup = no
+titles_visibility = yes
+header_text_scrolling = yes
+cyclic_scrolling = no
+follow_now_playing_lyrics = yes
+fetch_lyrics_for_current_song_in_background = yes
+store_lyrics_in_song_dir = no
+generate_win32_compatible_filenames = yes
+allow_for_physical_item_deletion = no
+space_add_mode = add_remove
+show_hidden_files_in_local_browser = no
+screen_switcher_mode = playlist, browser
+startup_screen = playlist
+startup_slave_screen = ""
+locked_screen_width_part = 50
+ask_for_locked_screen_width_part = yes
+jump_to_now_playing_song_at_start = yes
+ask_before_clearing_playlists = yes
+clock_display_seconds = no
+display_volume_level = yes
+display_bitrate = no
+display_remaining_time = yes
+regular_expressions = perl
+ignore_leading_the = no
+block_search_constraints_change_if_items_found = yes
+mouse_support = yes
+lines_scrolled = 5
+empty_tag_marker = ∅
+tags_separator = " | "
+tag_editor_extended_numeration = no
+media_library_sort_by_mtime = no
+enable_window_title = yes
+search_engine_default_search_mode = 1
+external_editor = nvim
+use_console_editor = yes
+
+##### colors #####
+# Black Metal theme: bg #000000, fg #c1c1c1
+# color1=#5f8787 (teal)  color2=#d0dfff (ice blue)
+# color3=#5f81a5 (steel)  color4=#888888 (gray)
+# color5=#999999          color6=#aaaaaa
+# color7=#c1c1c1 (white)  color8=#333333 (dark gray)
+
+colors_enabled = yes
+empty_tag_color = 4
+header_window_color = 8
+volume_color = 8
+state_line_color = 8
+state_flags_color = 8:b
+main_window_color = 8
+color1 = 8
+color2 = 8
+progressbar_color = 8:b
+progressbar_elapsed_color = 3:b
+statusbar_color = 8
+statusbar_time_color = 1:b
+player_state_color = 1:b
+alternative_ui_separator_color = 8:b
+window_border_color = 8
+active_window_border = 3

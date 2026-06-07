@@ -41,13 +41,13 @@ hl.gesture({
 hl.layer_rule({
   name         = "blur-swaync-notif",
   match        = { namespace = "swaync-notification-window" },
-  blur         = true,
+  blur         = false,
   ignore_alpha = 0,
 })
 hl.layer_rule({
   name         = "blur-swaync-ctrl",
   match        = { namespace = "swaync-control-center" },
-  blur         = true,
+  blur         = false,
   ignore_alpha = 0,
 })
 hl.layer_rule({
@@ -76,20 +76,20 @@ hl.layer_rule({
 hl.config({
   general = {
     gaps_in     = 4,
-    gaps_out    = 16,
-    border_size = 0,
+    gaps_out    = 8,
+    border_size = 2,
     col         = {
-      active_border   = "rgb(5f8787)",
+      active_border   = "rgb(5f81a5)",
       inactive_border = "rgb(202020)",
     },
     layout      = "dwindle",
   },
   decoration = {
-    rounding         = 4,
-    active_opacity   = 0.98,
-    inactive_opacity = 0.90,
+    rounding         = 0,
+    active_opacity   = 1,
+    inactive_opacity = 1,
     shadow           = {
-      enabled      = true,
+      enabled      = false,
       range        = 12,
       render_power = 4,
       color        = "rgba(000000aa)",
@@ -97,7 +97,7 @@ hl.config({
     blur             = {
       enabled    = true,
       size       = 8,
-      passes     = 1,
+      passes     = 2,
       noise      = 0.01,
       contrast   = 0.95,
       brightness = 0.95,
@@ -116,8 +116,8 @@ hl.curve("snappy", { type = "bezier", points = { { 0.05, 0.9 }, { 0.1, 1.05 } } 
 hl.curve("smooth", { type = "bezier", points = { { 0.5, 0.0 }, { 0.5, 1.0 } } })
 
 ---- ANIMATIONS ----
-hl.animation({ leaf = "windows", enabled = true, speed = 3, bezier = "snappy", style = "slide" })
-hl.animation({ leaf = "windowsOut", enabled = true, speed = 3, bezier = "snappy", style = "slide" })
+hl.animation({ leaf = "windows", enabled = true, speed = 3, bezier = "snappy", style = "popin" })
+hl.animation({ leaf = "windowsOut", enabled = true, speed = 3, bezier = "snappy", style = "popin" })
 hl.animation({ leaf = "border", enabled = true, speed = 10, bezier = "default" })
 hl.animation({ leaf = "borderangle", enabled = true, speed = 8, bezier = "default" })
 hl.animation({ leaf = "fade", enabled = true, speed = 3, bezier = "snappy" })
@@ -141,7 +141,7 @@ hl.on("hyprland.start", function()
   end
   hl.exec_cmd("swaybg -i " .. wall_path .. " -m fill")
   hl.exec_cmd("wlsunset -l 27.7006 -L 83.4484 -t 3800 -T 6500")
-  hl.exec_cmd("gsettings set org.gnome.desktop.interface font-name 'IosevkaTerm Nerd Font 12'")
+  hl.exec_cmd("gsettings set org.gnome.desktop.interface font-name 'CaskaydiaCove Nerd Font 12'")
   hl.exec_cmd("gsettings set org.gnome.desktop.interface gtk-theme 'Void'")
   hl.exec_cmd("gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'")
   hl.exec_cmd("sed -i 's/gtk-icon-theme-name=\"hicolor\"/gtk-icon-theme-name=\"Papirus-Dark\"/' \"${HOME}/.gtkrc-2.0\"")
@@ -211,6 +211,32 @@ hl.bind(mainMod .. " + SHIFT + Right", hl.dsp.window.move({ direction = "right" 
 ---- MOUSE ----
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
+
+---- ZOOM ----
+local MAX_ZOOM = 8
+local MIN_ZOOM = 1
+local ZOOM_TOGGLE_FACTOR = 1.5
+
+local function zoom(offset)
+  local current = hl.get_config("cursor.zoom_factor")
+  if offset ~= nil then
+    current = current + offset
+  elseif current ~= MIN_ZOOM then
+    current = MIN_ZOOM
+  else
+    current = ZOOM_TOGGLE_FACTOR
+  end
+  current = math.max(MIN_ZOOM, math.min(MAX_ZOOM, current))
+  hl.config({ cursor = { zoom_factor = current } })
+end
+
+hl.bind(mainMod .. " + equal", function()
+  zoom(0.5)
+end)
+hl.bind(mainMod .. " + minus", function()
+  zoom(-0.5)
+end)
+hl.bind(mainMod .. " + Z", zoom)
 
 ---- LAYOUT / WINDOWS ----
 hl.bind(mainMod .. " + h", hl.dsp.layout("preselect l"))
@@ -283,4 +309,12 @@ hl.window_rule({
   name  = "float-imv",
   match = { class = "imv" },
   float = true,
+})
+
+hl.window_rule({
+  name   = "float-ncmpcpp",
+  match  = { class = "ncmpcpp" },
+  float  = true,
+  center = true,
+  size   = "900 600",
 })

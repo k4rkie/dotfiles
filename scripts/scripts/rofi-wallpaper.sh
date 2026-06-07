@@ -34,6 +34,6 @@ if [[ -n "$chosen" ]]; then
         sed -i "/^background {/,/^}/s|path = .*|path = $abs|" "$HOME/.config/hypr/hyprlock.conf"
         pkill -USR2 hyprlock 2>/dev/null
 
-        notify-send "Wallpaper" "Set to $chosen"
+        notify-send "Wallpaper" "Set to $chosen" -i "$HOME/.local/share/noti-icons/image_icon.png"
     fi
 fi

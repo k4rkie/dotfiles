@@ -55,9 +55,6 @@ vim.opt.guicursor = {
   "o:block",
 }
 
--- colorscheme
--- vim.cmd("colorscheme vague")
-
 vim.api.nvim_set_hl(0, "TelescopeBorder", { link = "FloatBorder" })
 vim.api.nvim_set_hl(0, "TelescopePromptBorder", { link = "FloatBorder" })
 vim.api.nvim_set_hl(0, "TelescopeResultsBorder", { link = "FloatBorder" })
@@ -72,7 +69,7 @@ vim.api.nvim_set_hl(0, "TelescopePromptCounter", { bg = prompt_bg })
 
 
 -- Built-In tabline config
-vim.o.showtabline = 2
+vim.o.showtabline = 1
 
 -- set the tabline to a Lua function
 vim.o.tabline = "%!v:lua.tabline()"

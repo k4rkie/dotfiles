@@ -1,23 +1,23 @@
-@define-color center-bg alpha(#000000, 0.95);
-@define-color notification-bg alpha(#000000, 0.95);
+@define-color center-bg alpha(#000000, 0.98);
+@define-color notification-bg alpha(#000000, 0.98);
 @define-color center-notification-bg #050505;
-@define-color background alpha(#000000, 0.95);
+@define-color background alpha(#000000, 0.98);
 @define-color background-alt #050505;
 @define-color border #202020;
 @define-color text #888888;
 @define-color text-alt #686868;
-@define-color selected alpha(#4d60aa, 0.75);
+@define-color selected alpha(#4d60aa, 0.8);
 @define-color hover alpha(#888888, 0.1);
 @define-color urgent #888888;
 
 * {
   all: unset;
-  font-family: "IosevkaTerm Nerd Font";
+  font-family: "CaskaydiaCove Nerd Font";
   font-size: 14px;
 
-  --border-radius: 2px;
-  --border-radius-s: 2px;
-  --border-radius-xl: 2px;
+  --border-radius: 6px;
+  --border-radius-s: 6px;
+  --border-radius-xl: 6px;
   --shadow: 2px 4px 10px rgba(0, 0, 0, 0.15);
 }
 
