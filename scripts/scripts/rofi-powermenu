@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+set -e
+set -u
+
+# Icons (Nerd Font)
+shutdown=$(printf '\Uf0425')
+reboot=$(printf '\Uf0709')
+lock=$(printf '\Uf033e')
+suspend=$(printf '\Uf04b2')
+logout=$(printf '\Uf0343')
+yes=$(printf '\Uf012c')
+no=$(printf '\Uf0156')
+
+# System info
+uptime=$(uptime -p | sed 's/up //')
+host=$(hostname)
+
+# Theme path
+theme="$HOME/.config/rofi/powermenu.rasi"
+
+rofi_cmd() {
+    rofi -dmenu \
+        -p "Uptime: $uptime" \
+        -mesg "Uptime: $uptime" \
+        -theme "$theme" \
+        -window-title "powermenu"
+}
+
+confirm_cmd() {
+    rofi -theme-str 'window {location: center; anchor: center; fullscreen: false; width: 300px;}' \
+        -theme-str 'mainbox {children: [ "message", "listview" ];}' \
+        -theme-str 'listview {columns: 2; lines: 1;}' \
+        -dmenu \
+        -p 'Confirmation' \
+        -mesg 'Are you sure?' \
+        -theme "$theme" \
+        -window-title "powermenu-confirm"
+}
+
+confirm_exit() {
+    printf '%s\n%s\n' "$yes" "$no" | confirm_cmd
+}
+
+run_rofi() {
+    printf '%s\n%s\n%s\n%s\n%s\n' "$shutdown" "$reboot" "$lock" "$suspend" "$logout" | rofi_cmd
+}
+
+run_cmd() {
+    selected=$(confirm_exit)
+    if [ "$selected" = "$yes" ]; then
+        case "$1" in
+            --shutdown) systemctl poweroff ;;
+            --reboot)   systemctl reboot ;;
+            --suspend)  systemctl suspend ;;
+            --logout)   loginctl terminate-session "${XDG_SESSION_ID-}" ;;
+        esac
+    fi
+}
+
+chosen=$(run_rofi)
+case "$chosen" in
+    "$shutdown")
+        run_cmd --shutdown
+        ;;
+    "$reboot")
+        run_cmd --reboot
+        ;;
+    "$lock")
+        pidof hyprlock || hyprlock
+        ;;
+    "$suspend")
+        run_cmd --suspend
+        ;;
+    "$logout")
+        run_cmd --logout
+        ;;
+esac

@@ -3,6 +3,7 @@
     "button": false,
   },
   "terminal": {
+    "font_family": "IosevkaTerm Nerd Font",
     "font_size": 22.0,
     "button": false,
   },

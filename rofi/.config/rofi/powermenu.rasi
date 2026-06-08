@@ -1,0 +1,91 @@
+@import "~/.config/rofi/colors-rofi-dark.rasi"
+
+configuration {
+    show-icons:                 false;
+}
+
+* {
+    background-alt:  #151515;
+    font:                        "IosevkaTerm Nerd Font 20";
+    list-spacing:                15px;
+    elem-padding:                20px 6px 20px 0px;
+    elem-radius:                 4px;
+    elem-font:                   "IosevkaTerm Nerd Font 20";
+}
+
+window {
+    transparency:                "real";
+    location:                    east;
+    anchor:                      east;
+    fullscreen:                  false;
+    width:                       110px;
+    x-offset:                    -15px;
+    y-offset:                    0px;
+    enabled:                     true;
+    margin:                      0px;
+    padding:                     0px;
+    border-radius:               4px;
+    cursor:                      "default";
+    background-color:            @background;
+}
+
+mainbox {
+    enabled:                     true;
+    spacing:                     15px;
+    margin:                      0px;
+    padding:                     15px;
+    border:                      0px solid;
+    border-radius:               4px;
+    background-color:            transparent;
+    children:                    [ "listview" ];
+}
+
+listview {
+    enabled:                     true;
+    columns:                     1;
+    lines:                       5;
+    cycle:                       true;
+    dynamic:                     true;
+    scrollbar:                   false;
+    layout:                      vertical;
+    reverse:                     false;
+    fixed-height:                true;
+    fixed-columns:               true;
+    spacing:                     var(list-spacing);
+    margin:                      0px;
+    padding:                     0px;
+    border:                      0px solid;
+    border-radius:               4px;
+    background-color:            transparent;
+    text-color:                  @foreground;
+    cursor:                      "default";
+}
+
+element {
+    enabled:                     true;
+    spacing:                     0px;
+    margin:                      0px;
+    padding:                     var(elem-padding);
+    border:                      0px solid;
+    border-radius:               var(elem-radius);
+    background-color:            @background-alt;
+    text-color:                  @foreground;
+    cursor:                      pointer;
+    horizontal-align:            0.5;
+    vertical-align:              0.5;
+    children:                    [ "element-text" ];
+}
+
+element-text {
+    font:                        var(elem-font);
+    background-color:            transparent;
+    text-color:                  inherit;
+    cursor:                      inherit;
+    vertical-align:              0.5;
+    horizontal-align:            0.5;
+}
+
+element selected.normal {
+    background-color:            @selected-normal-background;
+    text-color:                  @background;
+}

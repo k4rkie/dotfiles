@@ -5,6 +5,8 @@
 # 1. Enable color support for prompt
 autoload -U colors && colors
 
+fastfetch
+
 # -------------------------------
 # 2. History Settings (smart and shared)
 # -------------------------------
@@ -132,6 +134,10 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME/bin:$PATH" ;;
 esac
 # pnpm end
+
+# rmpc completions
+# fpath=(~/.zsh/completions $fpath)
+# autoload -Uz compinit && compinit
 
 #nimble
 export PATH=/home/k4rkie/.nimble/bin:$PATH

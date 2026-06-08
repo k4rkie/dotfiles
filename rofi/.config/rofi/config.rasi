@@ -10,7 +10,7 @@ configuration {
 	window-format:              "{w} · {c} · {t}";
 }
 *{
-    font : "CaskaydiaCove Nerd Font 14";
+    font : "IosevkaTerm Nerd Font 14";
 }
 window {
     /* properties for window widget */
@@ -27,7 +27,7 @@ window {
     margin:                      0px;
     padding:                     6px;
     border:                      0px solid;
-    border-radius:               6px;
+    border-radius:               4px;
     cursor:                      "default";
 }
 /*****----- Listview -----*****/
@@ -46,6 +46,6 @@ listview {
     margin:                      0px;
     padding:                     2px;
     border:                      0px solid;
-    border-radius:               6px;
+    border-radius:               4px;
     cursor:                      "default";
 }

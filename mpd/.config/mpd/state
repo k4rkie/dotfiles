@@ -1,8 +1,9 @@
-sw_volume: 30
+sw_volume: 37
 audio_device_state:1:PipeWire
+audio_device_state:1:Visualizer feed
 state: pause
-current: 10
-time: 1391.166
+current: 9
+time: 2914.058
 random: 0
 repeat: 1
 single: 0

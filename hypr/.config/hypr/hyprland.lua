@@ -1,5 +1,4 @@
 -- Hyprland Lua Config (ported from hyprland.conf)
-
 local mainMod    = "SUPER"
 local terminal   = "kitty"
 local fileManage = "thunar"
@@ -60,23 +59,20 @@ hl.layer_rule({
 hl.layer_rule({
   name         = "animate-waybar",
   match        = { namespace = "waybar" },
-  blur         = true,
+  blur         = false,
   ignore_alpha = 0,
   animation    = "slide bottom"
 })
 hl.layer_rule({
-  name         = "animate-rofi",
-  match        = { namespace = "rofi" },
-  blur         = true,
-  ignore_alpha = 0,
-  animation    = "popin"
+  match     = { namespace = "rofi" },
+  animation = "popin"
 })
 
 ---- GENERAL ----
 hl.config({
   general = {
     gaps_in     = 4,
-    gaps_out    = 8,
+    gaps_out    = 10,
     border_size = 2,
     col         = {
       active_border   = "rgb(5f81a5)",
@@ -122,7 +118,7 @@ hl.animation({ leaf = "border", enabled = true, speed = 10, bezier = "default" }
 hl.animation({ leaf = "borderangle", enabled = true, speed = 8, bezier = "default" })
 hl.animation({ leaf = "fade", enabled = true, speed = 3, bezier = "snappy" })
 hl.animation({ leaf = "workspaces", enabled = true, speed = 2, bezier = "snappy", style = "slide" })
-hl.animation({ leaf = "global", enabled = true, speed = 5, bezier = "default" })
+hl.animation({ leaf = "global", enabled = true, speed = 5, bezier = "snappy" })
 hl.animation({ leaf = "layersIn", enabled = true, speed = 2, bezier = "snappy", style = "slide right" })
 hl.animation({ leaf = "layersOut", enabled = true, speed = 5, bezier = "snappy", style = "slide right" })
 
@@ -141,7 +137,7 @@ hl.on("hyprland.start", function()
   end
   hl.exec_cmd("swaybg -i " .. wall_path .. " -m fill")
   hl.exec_cmd("wlsunset -l 27.7006 -L 83.4484 -t 3800 -T 6500")
-  hl.exec_cmd("gsettings set org.gnome.desktop.interface font-name 'CaskaydiaCove Nerd Font 12'")
+  hl.exec_cmd("gsettings set org.gnome.desktop.interface font-name 'IosevkaTerm Nerd Font 12'")
   hl.exec_cmd("gsettings set org.gnome.desktop.interface gtk-theme 'Void'")
   hl.exec_cmd("gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'")
   hl.exec_cmd("sed -i 's/gtk-icon-theme-name=\"hicolor\"/gtk-icon-theme-name=\"Papirus-Dark\"/' \"${HOME}/.gtkrc-2.0\"")
@@ -176,7 +172,7 @@ hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("/opt/zen/zen"))
 hl.bind(mainMod .. " + SHIFT + F", hl.dsp.exec_cmd(fileManage))
 hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(menu))
-hl.bind(mainMod .. " + Escape", hl.dsp.exec_cmd("rofi -show powermenu -modi powermenu:~/scripts/rofi-power-menu"))
+hl.bind(mainMod .. " + Escape", hl.dsp.exec_cmd("~/scripts/rofi-powermenu"))
 hl.bind(mainMod .. " + P", hl.dsp.exec_cmd("hyprpicker -a"))
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("~/scripts/rofi-sessionizer.sh"))
 hl.bind(mainMod .. " + SHIFT + C", hl.dsp.exec_cmd("~/scripts/reload.sh"))
@@ -312,9 +308,9 @@ hl.window_rule({
 })
 
 hl.window_rule({
-  name   = "float-ncmpcpp",
-  match  = { class = "ncmpcpp" },
+  name   = "float-rmpc",
+  match  = { class = "rmpc" },
   float  = true,
   center = true,
-  size   = "900 600",
+  size   = "1200 800",
 })
