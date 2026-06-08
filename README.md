@@ -32,7 +32,7 @@
 | **editor** | Neovim |
 | **multiplexer** | Tmux |
 | **file manager** | Yazi (tui), Thunar (gui) |
-| **music** | MPD + ncmpcpp |
+| **music** | MPD + rmpc |
 | **pdf** | Zathura |
 | **system info** | Fastfetch |
 | **wallpaper** | Swaybg |
@@ -42,7 +42,7 @@
 | **gamma** | Wlsunset |
 | **browser** | Zen |
 | **gtk** | Void theme, Papirus-Dark icons |
-| **font** | Iosevka Term Nerd Font |
+| **font** | IosevkaTerm Nerd Font |
 
 ## scripts
 

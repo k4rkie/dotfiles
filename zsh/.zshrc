@@ -81,6 +81,8 @@ alias please='sudo $(fc -ln -1)'
 alias reload="source ~/.zshrc"
 alias air='~/go/bin/air'
 
+export QT_QPA_PLATFORMTHEME=qt5ct
+
 # -------------------------------
 #  PATH variables
 # -------------------------------

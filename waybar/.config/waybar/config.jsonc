@@ -59,12 +59,12 @@
   "memory": {
     "format": "mem:{}%",
     "tooltip": "false",
-    "on-click": "kitty btop"
+    "on-click": "kitty --class btop btop",
   },
   "cpu": {
     "format": "cpu:{usage}%",
     "tooltip": "false",
-    "on-click": "kitty btop"
+    "on-click": "kitty --class btop btop",
   },
   "pulseaudio": {
     "format": "vol:{volume}%",

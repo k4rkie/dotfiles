@@ -1,12 +1,12 @@
-sw_volume: 37
+sw_volume: 62
 audio_device_state:1:PipeWire
 audio_device_state:1:Visualizer feed
-state: pause
-current: 9
-time: 2914.058
+state: play
+current: 10
+time: 116.382
 random: 0
 repeat: 1
-single: 0
+single: oneshot
 consume: 0
 crossfade: 5
 mixrampdb: 0

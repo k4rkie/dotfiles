@@ -10,7 +10,7 @@ configuration {
 	window-format:              "{w} · {c} · {t}";
 }
 *{
-    font : "IosevkaTerm Nerd Font 14";
+    font : "IosevkaTerm Nerd Font 12";
 }
 window {
     /* properties for window widget */

@@ -6,8 +6,8 @@ return {
       options = {
         icons_enabled = true,
         theme = "base16",
-        component_separators = { left = '', right = '' },
-        section_separators = { left = '', right = '' },
+        component_separators = { left = '|', right = '|' },
+        section_separators = { left = '', right = '' },
         disabled_filetypes = {
           statusline = {},
           winbar = {},
@@ -38,8 +38,8 @@ return {
       sections = {
         lualine_a = { 'mode' },
         lualine_b = { 'diff', 'diagnostics' },
-        lualine_c = { 'filename' },
-        lualine_x = { 'filetype' },
+        lualine_c = { 'lsp_status' },
+        lualine_x = { 'filesize' },
         lualine_y = { 'progress' },
         lualine_z = { 'location' }
       },

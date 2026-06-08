@@ -73,9 +73,9 @@ hl.config({
   general = {
     gaps_in     = 4,
     gaps_out    = 10,
-    border_size = 2,
+    border_size = 0,
     col         = {
-      active_border   = "rgb(5f81a5)",
+      active_border   = "rgb(83a598)",
       inactive_border = "rgb(202020)",
     },
     layout      = "dwindle",
@@ -126,7 +126,6 @@ hl.animation({ leaf = "layersOut", enabled = true, speed = 5, bezier = "snappy",
 hl.on("hyprland.start", function()
   hl.exec_cmd("nm-applet")
   hl.exec_cmd("blueman-applet")
-  hl.exec_cmd("pkill dunst")
   hl.exec_cmd("swaync")
   hl.exec_cmd("swayosd-server")
   local wall_path = (io.open(os.getenv("HOME") .. "/.config/hypr/current_wallpaper", "r") or io.open("/dev/null")):read(
@@ -314,3 +313,29 @@ hl.window_rule({
   center = true,
   size   = "1200 800",
 })
+
+hl.window_rule({
+  name   = "float-btop",
+  match  = { class = "btop" },
+  float  = true,
+  center = true,
+  size   = "1200 800",
+})
+
+hl.window_rule({
+  name      = "force-current-ws",
+  match     = { class = "." },
+  workspace = "current"
+})
+
+hl.window_rule({
+  name      = "browser-on-1",
+  match     = { class = "^(zen|firefox|google-chrome)$" },
+  workspace = "1"
+})
+
+-- hl.window_rule({
+--   name      = "terminal-on-2",
+--   match     = { class = "^(kitty)$" },
+--   workspace = "2"
+-- })

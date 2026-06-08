@@ -2,7 +2,7 @@
     /* Base colors */
     background: #080808;          
     background-color: #080808;
-    foreground: #cdcdcd;         
+    foreground: #ddc7a1;         
     border-color: #080808;
     spacing: 2;
 
@@ -11,7 +11,7 @@
     active-foreground: #080808;
 
     normal-background: #080808;
-    normal-foreground: #cdcdcd;
+    normal-foreground: #ddc7a1;
 
     urgent-background: #d8647e;  /* red for urgent */
     urgent-foreground: #080808;
@@ -20,14 +20,14 @@
     selected-active-background: #7fa563;  /* same as active */
     selected-active-foreground: #080808;
 
-    selected-normal-background: #4e5687; /* slightly lighter for normal selection */
+    selected-normal-background: #83a598; /* slightly lighter for normal selection */
     selected-normal-foreground: #080808;
     selected-urgent-background: #d8647e;
     selected-urgent-foreground: #080808;
 
     /* Optional alternates for subtle row differences */
     alternate-normal-background: #080808;
-    alternate-normal-foreground: #cdcdcd;
+    alternate-normal-foreground: #ddc7a1;
     alternate-active-background: #7fa563;
     alternate-active-foreground: #080808;
     alternate-urgent-background: #d8647e;

@@ -6,11 +6,11 @@ configuration {
 
 * {
     background-alt:  #151515;
-    font:                        "IosevkaTerm Nerd Font 20";
+    font:                        "IosevkaTerm Nerd Font 18";
     list-spacing:                15px;
     elem-padding:                20px 6px 20px 0px;
     elem-radius:                 4px;
-    elem-font:                   "IosevkaTerm Nerd Font 20";
+    elem-font:                   "IosevkaTerm Nerd Font 18";
 }
 
 window {

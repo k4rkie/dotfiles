@@ -4,9 +4,9 @@
 @define-color background alpha(#000000, 0.98);
 @define-color background-alt #050505;
 @define-color border #202020;
-@define-color text #888888;
-@define-color text-alt #686868;
-@define-color selected alpha(#4d60aa, 0.8);
+@define-color text #ddc7a1;
+@define-color text-alt #A69B88;
+@define-color selected alpha(#7daea3, 0.8);
 @define-color hover alpha(#888888, 0.1);
 @define-color urgent #888888;
 
@@ -222,47 +222,3 @@
 .blank-window {
   background: transparent;
 }
-
-/* @keyframes slide-in { */
-/*   from { */
-/*     transform: translateX(100%); */
-/*     opacity: 0; */
-/*   } */
-/**/
-/*   to { */
-/*     transform: translateX(0); */
-/*     opacity: 1; */
-/*   } */
-/* } */
-/**/
-/* @keyframes slide-out { */
-/*   from { */
-/*     transform: translateX(0); */
-/*     opacity: 1; */
-/*   } */
-/**/
-/*   to { */
-/*     transform: translateX(100%); */
-/*     opacity: 0; */
-/*   } */
-/* } */
-/**/
-/* @keyframes cc-slide-in { */
-/*   from { */
-/*     transform: translateX(100%); */
-/*     opacity: 0; */
-/*   } */
-/**/
-/*   to { */
-/*     transform: translateX(0); */
-/*     opacity: 1; */
-/*   } */
-/* } */
-/**/
-/* .notification-row { */
-/*   animation: slide-in 0.3s cubic-bezier(0.16, 1, 0.3, 1); */
-/* } */
-/**/
-/* .notification-row:empty { */
-/*   animation: slide-out 0.2s ease; */
-/* } */

@@ -3,7 +3,7 @@
   border-radius: 0;
   min-height: 0;
   font-family: "IosevkaTerm Nerd Font";
-  font-size: 15px;
+  font-size: 14px;
   padding: 0px;
 }
 
@@ -69,7 +69,7 @@ tooltip {
 }
 
 #workspaces button.active {
-  background: #4e5687;
+  background: #83a598;
   color: #000000;
   /* background: transparent; */
   /* color: #4e5687; */
@@ -96,7 +96,7 @@ tooltip {
 }
 
 #custom-caffeine {
-  color: #dd9999;
+  color: #fb4934;
 }
 
 #custom-caffeine.inactive {
@@ -105,7 +105,7 @@ tooltip {
 }
 
 #battery {
-  color: #a1a1a1;
+  color: #ddc7a1;
 }
 
 #mpris {
@@ -124,12 +124,12 @@ tooltip {
 }
 
 #media {
-  color: #4e5687;
+  color: #83a598;
   margin: 4px 0px 4px 20px;
 }
 
 #custom-media-animation {
-  font-size: 15px;
+  font-size: 14px;
   margin-right: 10px;
 }
 

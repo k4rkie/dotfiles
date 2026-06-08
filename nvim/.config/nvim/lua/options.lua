@@ -69,7 +69,7 @@ vim.api.nvim_set_hl(0, "TelescopePromptCounter", { bg = prompt_bg })
 
 
 -- Built-In tabline config
-vim.o.showtabline = 1
+vim.o.showtabline = 2
 
 -- set the tabline to a Lua function
 vim.o.tabline = "%!v:lua.tabline()"
@@ -110,11 +110,11 @@ end
 
 vim.api.nvim_set_hl(0, "TabLineSel", {
   fg = "#000000",
-  bg = "#888888",
+  bg = "#7daea3",
   bold = true,
 })
 vim.api.nvim_set_hl(0, "TabLine", {
-  fg = "#a0a0a0",
+  fg = "#a89984",
   bg = "#000000",
 })
 
@@ -133,10 +133,10 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Define the colors
-vim.api.nvim_set_hl(0, "TodoComment", { fg = "#5f8787", bg = "#121212", bold = true })
-vim.api.nvim_set_hl(0, "FixmeComment", { fg = "#af5f5f", bg = "#121212", bold = true })
-vim.api.nvim_set_hl(0, "WarningComment", { fg = "#dfaf87", bg = "#121212", bold = true })
-vim.api.nvim_set_hl(0, "NoteComment", { fg = "#aaaaaa", bg = "#121212", bold = true })
+vim.api.nvim_set_hl(0, "TodoComment", { fg = "#83a598", bg = "#1a1a1a", bold = true })
+vim.api.nvim_set_hl(0, "FixmeComment", { fg = "#fb4934", bg = "#1a1a1a", bold = true })
+vim.api.nvim_set_hl(0, "WarningComment", { fg = "#fe8019", bg = "#1a1a1a", bold = true })
+vim.api.nvim_set_hl(0, "NoteComment", { fg = "#a89984", bg = "#1a1a1a", bold = true })
 
 -- Create a function to apply these patterns to any file you open
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
