@@ -4,8 +4,8 @@
 @define-color background alpha(#000000, 0.98);
 @define-color background-alt #050505;
 @define-color border #202020;
-@define-color text #ddc7a1;
-@define-color text-alt #A69B88;
+@define-color text #aaaaaa;
+@define-color text-alt #666666;
 @define-color selected alpha(#7daea3, 0.8);
 @define-color hover alpha(#888888, 0.1);
 @define-color urgent #888888;
@@ -15,9 +15,9 @@
   font-family: "IosevkaTerm Nerd Font";
   font-size: 14px;
 
-  --border-radius: 6px;
-  --border-radius-s: 6px;
-  --border-radius-xl: 6px;
+  --border-radius: 4px;
+  --border-radius-s: 4px;
+  --border-radius-xl: 4px;
   --shadow: 2px 4px 10px rgba(0, 0, 0, 0.15);
 }
 
@@ -36,7 +36,7 @@
 .notification-background .close-button {
   margin: 6px;
   padding: 2px;
-  border-radius: 2px;
+  border-radius: 4px;
   background: transparent;
   color: @text;
 }

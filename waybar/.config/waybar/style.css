@@ -8,7 +8,7 @@
 }
 
 window#waybar {
-  background: #000000;
+  background: rgba(0, 0, 0, 0.95);
   color: #5f8787;
   margin-left: 6px;
   margin-right: 6px;
@@ -55,15 +55,17 @@ tooltip {
 }
 
 #workspaces button {
-  color: #272420;
-  background: transparent;
+  color: #31443D;
+  background: #31443D;
   margin: 3px 2px;
+  border-radius: 4px;
   min-width: 12px;
-  padding: 0px 5px;
+  padding: 0px 4px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 #workspaces button.focused {
-  background: #c1c1c1;
+  background: transparent;
   color: #000000;
   border-radius: 2px;
 }
@@ -71,14 +73,12 @@ tooltip {
 #workspaces button.active {
   background: #83a598;
   color: #000000;
-  /* background: transparent; */
-  /* color: #4e5687; */
-  border-radius: 2px;
+  border-radius: 4px;
   font-weight: bold;
+  padding: 0px 14px;
 }
 
 #tray,
-#clock,
 #cpu {
   color: #5f8787;
 }
@@ -92,7 +92,8 @@ tooltip {
 }
 
 #clock {
-  color: #A0C2FF;
+  color: #d8a657;
+  margin-left: 8px;
 }
 
 #custom-caffeine {
@@ -125,7 +126,7 @@ tooltip {
 
 #media {
   color: #83a598;
-  margin: 4px 0px 4px 20px;
+  margin: 4px 0px 4px 6px;
 }
 
 #custom-media-animation {

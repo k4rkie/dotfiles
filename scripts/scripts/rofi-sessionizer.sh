@@ -2,6 +2,8 @@
 
 DIRS=(
     "$HOME"
+    "$HOME/learn"
+    "$HOME/k4rkie/CS"
     "$HOME/dev"
     "$HOME/dev/go"
     "$HOME/dev/Feriyo"

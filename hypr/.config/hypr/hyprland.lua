@@ -13,8 +13,9 @@ hl.monitor({
 }) ---- MISC (SWALLOW) ----
 hl.config({
   misc = {
-    enable_swallow = true,
-    swallow_regex  = "^(thunar|zen|zen-beta|firefox|google-chrome|chromium|nautilus|nemo)$",
+    enable_swallow             = true,
+    initial_workspace_tracking = false,
+    swallow_regex              = "^(thunar|zen|zen-beta|firefox|google-chrome|chromium|nautilus|nemo)$",
   },
 })
 
@@ -57,9 +58,9 @@ hl.layer_rule({
   animation    = "slide bottom"
 })
 hl.layer_rule({
-  name         = "animate-waybar",
+  name         = "blur&animate-waybar",
   match        = { namespace = "waybar" },
-  blur         = false,
+  blur         = true,
   ignore_alpha = 0,
   animation    = "slide bottom"
 })
@@ -71,28 +72,28 @@ hl.layer_rule({
 ---- GENERAL ----
 hl.config({
   general = {
-    gaps_in     = 4,
+    gaps_in     = 5,
     gaps_out    = 10,
     border_size = 0,
     col         = {
-      active_border   = "rgb(83a598)",
+      active_border   = "rgb(58796c)",
       inactive_border = "rgb(202020)",
     },
     layout      = "dwindle",
   },
   decoration = {
-    rounding         = 0,
-    active_opacity   = 1,
-    inactive_opacity = 1,
+    rounding         = 4,
+    active_opacity   = 0.95,
+    inactive_opacity = 0.90,
     shadow           = {
-      enabled      = false,
+      enabled      = true,
       range        = 12,
       render_power = 4,
       color        = "rgba(000000aa)",
     },
     blur             = {
       enabled    = true,
-      size       = 8,
+      size       = 10,
       passes     = 2,
       noise      = 0.01,
       contrast   = 0.95,
@@ -150,7 +151,8 @@ hl.on("hyprland.start", function()
 end)
 
 ---- MEDIA KEYS ----
-hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("swayosd-client --output-volume +2"), { locked = true, repeating = true })
+hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("swayosd-client --output-volume +2"),
+  { locked = true, repeating = true })
 hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("swayosd-client --output-volume -2"), { locked = true, repeating = true })
 hl.bind("XF86AudioMute", hl.dsp.exec_cmd("swayosd-client --output-volume mute-toggle"), { locked = true })
 hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("swayosd-client --brightness +2"), { locked = true, repeating = true })
@@ -165,9 +167,12 @@ hl.bind("Print", hl.dsp.exec_cmd("~/scripts/screenshot.sh"))
 hl.bind("SHIFT + Print", hl.dsp.exec_cmd("~/scripts/screenshot.sh region"))
 hl.bind("CTRL + Print", hl.dsp.exec_cmd("~/scripts/screenshot.sh window"))
 
+---- OCR (Tesseract) ---
+hl.bind(mainMod .. " + SHIFT + P", hl.dsp.exec_cmd("~/scripts/ocr-clip.sh"))
+
 ---- LAUNCHER / SESSION ----
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(terminal))
-hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("/opt/zen/zen"))
+hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("/opt/zen/zen-bin"))
 hl.bind(mainMod .. " + SHIFT + F", hl.dsp.exec_cmd(fileManage))
 hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(menu))
@@ -179,25 +184,24 @@ hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("killall -SIGUSR1 waybar"))
 hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("~/scripts/rofi-cliphist.sh"))
 hl.bind(mainMod .. " + period", hl.dsp.exec_cmd("~/scripts/rofi-emoji.sh"))
 hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("~/scripts/rofi-wallpaper.sh"))
-hl.bind(mainMod .. " + SHIFT + L", hl.dsp.exec_cmd("pidof hyprlock || hyprlock"))
 hl.bind(mainMod .. " + SHIFT + E",
   hl.dsp.exec_cmd("rofimoji --keybinding-copy Alt+Return --max-recent 3 --prompt \"Emoji\""))
 
 ---- FOCUS MOVEMENT ----
-hl.bind(mainMod .. " + j", hl.dsp.focus({ direction = "left" }))
-hl.bind(mainMod .. " + k", hl.dsp.focus({ direction = "down" }))
-hl.bind(mainMod .. " + l", hl.dsp.focus({ direction = "up" }))
-hl.bind(mainMod .. " + semicolon", hl.dsp.focus({ direction = "right" }))
+hl.bind(mainMod .. " + h", hl.dsp.focus({ direction = "left" }))
+hl.bind(mainMod .. " + j", hl.dsp.focus({ direction = "down" }))
+hl.bind(mainMod .. " + k", hl.dsp.focus({ direction = "up" }))
+hl.bind(mainMod .. " + l", hl.dsp.focus({ direction = "right" }))
 hl.bind(mainMod .. " + Left", hl.dsp.focus({ direction = "left" }))
 hl.bind(mainMod .. " + Down", hl.dsp.focus({ direction = "down" }))
 hl.bind(mainMod .. " + Up", hl.dsp.focus({ direction = "up" }))
 hl.bind(mainMod .. " + Right", hl.dsp.focus({ direction = "right" }))
 
 ---- MOVE WINDOW ----
-hl.bind(mainMod .. " + SHIFT + j", hl.dsp.window.move({ direction = "left" }))
-hl.bind(mainMod .. " + SHIFT + k", hl.dsp.window.move({ direction = "down" }))
-hl.bind(mainMod .. " + SHIFT + l", hl.dsp.window.move({ direction = "up" }))
-hl.bind(mainMod .. " + SHIFT + semicolon", hl.dsp.window.move({ direction = "right" }))
+hl.bind(mainMod .. " + SHIFT + h", hl.dsp.window.move({ direction = "left" }))
+hl.bind(mainMod .. " + SHIFT + j", hl.dsp.window.move({ direction = "down" }))
+hl.bind(mainMod .. " + SHIFT + k", hl.dsp.window.move({ direction = "up" }))
+hl.bind(mainMod .. " + SHIFT + l", hl.dsp.window.move({ direction = "right" }))
 hl.bind(mainMod .. " + SHIFT + Left", hl.dsp.window.move({ direction = "left" }))
 hl.bind(mainMod .. " + SHIFT + Down", hl.dsp.window.move({ direction = "down" }))
 hl.bind(mainMod .. " + SHIFT + Up", hl.dsp.window.move({ direction = "up" }))
@@ -234,8 +238,6 @@ end)
 hl.bind(mainMod .. " + Z", zoom)
 
 ---- LAYOUT / WINDOWS ----
-hl.bind(mainMod .. " + h", hl.dsp.layout("preselect l"))
-hl.bind(mainMod .. " + v", hl.dsp.layout("preselect d"))
 hl.bind(mainMod .. " + f", hl.dsp.window.fullscreen())
 hl.bind(mainMod .. " + G", hl.dsp.group.toggle())
 hl.bind(mainMod .. " + e", hl.dsp.layout("togglesplit"))
@@ -254,10 +256,10 @@ end
 hl.bind(mainMod .. " + R", hl.dsp.submap("resize"))
 
 hl.define_submap("resize", function()
-  hl.bind("j", hl.dsp.window.resize({ x = -5, y = 0, relative = true }), { repeating = true })
-  hl.bind("k", hl.dsp.window.resize({ x = 0, y = 5, relative = true }), { repeating = true })
-  hl.bind("l", hl.dsp.window.resize({ x = 0, y = -5, relative = true }), { repeating = true })
-  hl.bind("semicolon", hl.dsp.window.resize({ x = 5, y = 0, relative = true }), { repeating = true })
+  hl.bind("h", hl.dsp.window.resize({ x = -5, y = 0, relative = true }), { repeating = true })
+  hl.bind("j", hl.dsp.window.resize({ x = 0, y = 5, relative = true }), { repeating = true })
+  hl.bind("k", hl.dsp.window.resize({ x = 0, y = -5, relative = true }), { repeating = true })
+  hl.bind("l", hl.dsp.window.resize({ x = 5, y = 0, relative = true }), { repeating = true })
   hl.bind("Left", hl.dsp.window.resize({ x = -10, y = 0, relative = true }), { repeating = true })
   hl.bind("Down", hl.dsp.window.resize({ x = 0, y = 10, relative = true }), { repeating = true })
   hl.bind("Up", hl.dsp.window.resize({ x = 0, y = -10, relative = true }), { repeating = true })

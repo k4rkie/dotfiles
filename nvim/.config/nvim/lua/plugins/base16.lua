@@ -124,11 +124,11 @@ return {
       -- Gruvbox Material Dark Hard
 
       base00 = "#000000",
-      base01 = "#000000",
+      base01 = "#040404",
       base02 = "#2c2826",
       base03 = "#3c3733",
       base04 = "#a89984",
-      base05 = "#ddc7a1",
+      base05 = "#E9DFCD",
       base06 = "#ebdbb2",
       base07 = "#fbf1c7",
       base08 = "#ea6962",

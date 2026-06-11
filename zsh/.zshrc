@@ -76,9 +76,10 @@ alias ff="fastfetch"
 alias ..="cd .."
 alias mv="mv -i"
 
-alias sp="yay -Ss"
+alias sp="dnf search"
 alias please='sudo $(fc -ln -1)' 
 alias reload="source ~/.zshrc"
+alias install="sudo dnf install"
 alias air='~/go/bin/air'
 
 export QT_QPA_PLATFORMTHEME=qt5ct

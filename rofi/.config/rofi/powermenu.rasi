@@ -18,7 +18,7 @@ window {
     location:                    east;
     anchor:                      east;
     fullscreen:                  false;
-    width:                       110px;
+    width:                       105px;
     x-offset:                    -15px;
     y-offset:                    0px;
     enabled:                     true;

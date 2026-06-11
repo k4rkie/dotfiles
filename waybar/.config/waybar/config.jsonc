@@ -5,11 +5,11 @@
   "height": 18,
   "margin-bottom": 0,
   "modules-left": [
-    "hyprland/workspaces",
-    "group/media"
+    "group/media",
+    "clock"
   ],
   "modules-center": [
-    "clock"
+    "hyprland/workspaces"
   ],
   "modules-right": [
     "custom/caffeine",
@@ -54,6 +54,8 @@
       "1": "1",
       "2": "2",
       "3": "3",
+      "4": "4",
+      "5": "5",
     }
   },
   "memory": {

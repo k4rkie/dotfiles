@@ -15,4 +15,5 @@ return {
   require("plugins.luasnip"),
   require("plugins.compile-mode"),
   require("plugins.markdownpreview"),
+  require("plugins.terminal"),
 }
