@@ -25,12 +25,12 @@ return {
       -- base0D = "#888888",
       -- base0E = "#999999",
       -- base0F = "#444444",
-
+      --
       --Black Metal Venom
 
-      -- base00 = "#080808",
-      -- base01 = "#121212",
-      -- base02 = "#222222",
+      -- base00 = "#000000",
+      -- base01 = "#000000",
+      -- base02 = "#121212",
       -- base03 = "#333333",
       -- base04 = "#999999",
       -- base05 = "#c1c1c1",
@@ -47,23 +47,23 @@ return {
 
       --Black Metal Bathory
 
-      -- base00 = "#080808",
-      -- base01 = "#121212",
-      -- base02 = "#222222",
-      -- base03 = "#333333",
-      -- base04 = "#999999",
-      -- base05 = "#c1c1c1",
-      -- base06 = "#999999",
-      -- base07 = "#c1c1c1",
-      -- base08 = "#5f8787",
-      -- base09 = "#aaaaaa",
-      -- base0A = "#e78a53",
-      -- base0B = "#fbcb97",
-      -- base0C = "#aaaaaa",
-      -- base0D = "#888888",
-      -- base0E = "#999999",
-      -- base0F = "#444444",
-      --
+      base00 = "#000000",
+      base01 = "#000000",
+      base02 = "#121212",
+      base03 = "#333333",
+      base04 = "#999999",
+      base05 = "#c1c1c1",
+      base06 = "#999999",
+      base07 = "#c1c1c1",
+      base08 = "#5f8787",
+      base09 = "#aaaaaa",
+      base0A = "#e78a53",
+      base0B = "#fbcb97",
+      base0C = "#aaaaaa",
+      base0D = "#888888",
+      base0E = "#999999",
+      base0F = "#444444",
+
       --Black metal khold
 
       -- base00 = "#080808",
@@ -82,7 +82,7 @@ return {
       -- base0D = "#888888",
       -- base0E = "#999999",
       -- base0F = "#444444",
-
+      --
       -- Black Metal (Dark Funeral)
       --
       -- base00 = "#000000",
@@ -102,43 +102,24 @@ return {
       -- base0E = "#999999",
       -- base0F = "#444444",
 
-      -- Gruvbox Dark
+      -- Gruvbox Material Dark Hard
 
       -- base00 = "#000000",
       -- base01 = "#000000",
-      -- base02 = "#3c3836",
-      -- base03 = "#504945",
+      -- base02 = "#2c2826",
+      -- base03 = "#3c3733",
       -- base04 = "#a89984",
-      -- base05 = "#ebdbb2",
-      -- base06 = "#d5c4a1",
+      -- base05 = "#E9DFCD",
+      -- base06 = "#ebdbb2",
       -- base07 = "#fbf1c7",
-      -- base08 = "#fb4934",
-      -- base09 = "#fe8019",
-      -- base0A = "#fabd2f",
-      -- base0B = "#b8bb26",
-      -- base0C = "#8ec07c",
-      -- base0D = "#83a598",
-      -- base0E = "#d3869b",
-      -- base0F = "#d65d0e",
-
-      -- Gruvbox Material Dark Hard
-
-      base00 = "#000000",
-      base01 = "#040404",
-      base02 = "#2c2826",
-      base03 = "#3c3733",
-      base04 = "#a89984",
-      base05 = "#E9DFCD",
-      base06 = "#ebdbb2",
-      base07 = "#fbf1c7",
-      base08 = "#ea6962",
-      base09 = "#e78a4e",
-      base0A = "#d8a657",
-      base0B = "#a9b665",
-      base0C = "#89b482",
-      base0D = "#7daea3",
-      base0E = "#d3869b",
-      base0F = "#bd6f3e",
+      -- base08 = "#8f8680", -- warm gray: errors, diffs
+      -- base09 = "#9e948e", -- warm gray: numbers, constants
+      -- base0A = "#a69a88", -- warm tone: functions, types
+      -- base0B = "#94988c", -- cool gray: strings
+      -- base0C = "#8a8e8c", -- neutral gray: info, accents
+      -- base0D = "#8e908c", -- neutral gray: links, headings
+      -- base0E = "#968e92", -- mauve gray: keywords
+      -- base0F = "#807a76", -- dark gray: deprecated
     })
   end,
 }

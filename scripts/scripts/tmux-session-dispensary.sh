@@ -17,9 +17,9 @@ if [[ $# -eq 1 ]]; then
     selected=$1
 else
     selected=$({
-        fd . "${DIRS[@]}" --type=dir --max-depth=1 --full-path --base-directory "$HOME" | sed "s|^$HOME/||"
         tmux list-sessions -F "#S" 2>/dev/null
-    } | sort -u | fzf --color=bw --height=70% --margin=10%,20%,20%,20% --layout=reverse --info=hidden --scheme=path)
+        fd . "${DIRS[@]}" --type=dir --max-depth=1 --full-path --base-directory "$HOME" | sed "s|^$HOME/||"
+    } | grep -v '^$' | fzf --color=bw --height=70% --margin=10%,20%,20%,20% --layout=reverse --info=hidden --scheme=path)
 fi
 
 [[ ! $selected ]] && exit 0

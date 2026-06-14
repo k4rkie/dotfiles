@@ -56,6 +56,3 @@ for i = 1, 8 do
 end
 
 vim.keymap.set("n", "gx", [[:silent! execute '!xdg-open ' . shellescape(expand('<cfile>'), 1)<CR>]], { silent = false })
-
-vim.keymap.set('n', '<leader>cc', ':Compile ', { desc = "Open compile mode" })
-vim.keymap.set('n', '<leader>cr', ':Recompile', { desc = "Rerun the previous compile command" })

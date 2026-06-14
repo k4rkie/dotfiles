@@ -5,8 +5,8 @@
   "height": 18,
   "margin-bottom": 0,
   "modules-left": [
-    "group/media",
-    "clock"
+    "clock",
+    "group/media"
   ],
   "modules-center": [
     "hyprland/workspaces"
@@ -25,10 +25,10 @@
     "spacing": 4
   },
   "clock": {
-    "format": "{:%I:%M %p}",
+    "format": "󱑒 {:%I:%M %p}",
     "interval": 60,
     "tooltip": true,
-    "tooltip-format": "{:%A %d %B %H:%M}",
+    "tooltip-format": "󰨲 {:%A %B %d}",
     "on-click": "{calander}"
   },
   "hyprland/workspaces": {

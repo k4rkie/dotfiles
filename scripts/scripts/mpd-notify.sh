@@ -1,87 +1,40 @@
-#!/usr/bin/env python3
+#!/usr/bin/env bash
 
-import os
-import subprocess
-import time
+MUSIC_DIR="$HOME/Music"
+CACHE_DIR="$HOME/.cache/mpd-notify"
+mkdir -p "$CACHE_DIR"
+prev=""
 
-MUSIC_DIR = os.path.expanduser("~/Music")
-CACHE_DIR = os.path.expanduser("~/.cache/mpd-notify")
+while true; do
+    mpc idle player > /dev/null 2>&1
 
-os.makedirs(CACHE_DIR, exist_ok=True)
+    state=$(mpc status "%state%")
+    title=$(mpc current)
+    [ -z "$title" ] && continue
 
-def get_current():
-    try:
-        r = subprocess.run(["mpc", "current", "-f", "%file%"],
-                           capture_output=True, text=True, timeout=2)
-        return r.stdout.strip()
-    except:
-        return ""
+    key="$state:$title"
+    [ "$key" = "$prev" ] && continue
+    prev="$key"
 
-def find_song(rel):
-    for base in (MUSIC_DIR, "/var/lib/mpd/music"):
-        p = os.path.join(base, rel)
-        if os.path.isfile(p):
-            return p
-    return ""
-
-def extract(filepath):
-    try:
-        import mutagen
-        audio = mutagen.File(filepath, easy=False)
-
-        title = ""
-        artist = ""
-        album = ""
-        art = None
-
-        if audio is not None:
-            if "TIT2" in audio:
-                title = str(audio["TIT2"])
-            elif "title" in audio:
-                title = str(audio["title"][0])
-
-            if "TPE1" in audio:
-                artist = str(audio["TPE1"])
-            elif "artist" in audio:
-                artist = str(audio["artist"][0])
-
-            if "TALB" in audio:
-                album = str(audio["TALB"])
-            elif "album" in audio:
-                album = str(audio["album"][0])
-
-            for key in list(audio.keys()):
-                if key.startswith("APIC"):
-                    apic = audio[key]
-                    if hasattr(apic, "data") and len(apic.data) > 0:
-                        ext = ".jpg"
-                        if hasattr(apic, "mime"):
-                            ext = {"image/jpeg": ".jpg", "image/png": ".png"}.get(apic.mime, ".jpg")
-                        art = os.path.join(CACHE_DIR, f"cover{ext}")
-                        with open(art, "wb") as f:
-                            f.write(apic.data)
-                        break
-
-        if not title:
-            title = os.path.splitext(os.path.basename(filepath))[0]
-        return title, artist, album, art
-    except:
-        return os.path.splitext(os.path.basename(filepath))[0], "", "", None
-
-prev = ""
-while True:
-    rel = get_current()
-    if rel and rel != prev:
-        prev = rel
-        path = find_song(rel)
-        if path:
-            title, artist, album, art = extract(path)
-            if artist:
-                body = f"{artist} - {title}"
-            else:
-                body = title
-            cmd = ["notify-send", "Now Playing", body]
-            if art:
-                cmd.extend(["--icon", art])
-            subprocess.run(cmd, timeout=2)
-    time.sleep(1)
+    case "$state" in
+        playing)
+            rel=$(mpc current -f "%file%")
+            file="$MUSIC_DIR/$rel"
+            [ ! -f "$file" ] && file="/var/lib/mpd/music/$rel"
+            if [ -f "$file" ]; then
+                cover="$CACHE_DIR/cover.jpg"
+                ffmpeg -y -i "$file" -an -vcodec copy "$cover" 2>/dev/null
+                if [ -s "$cover" ]; then
+                    notify-send "Now Playing" "$title" --icon "$cover"
+                else
+                    notify-send "Now Playing" "$title"
+                fi
+            else
+                notify-send "Now Playing" "$title"
+            fi
+            ;;
+        paused)
+            notify-send "Music Paused" "$title" --icon "$cover"
+            ;;
+    esac
+done

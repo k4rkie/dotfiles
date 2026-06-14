@@ -3,7 +3,7 @@
     "button": false,
   },
   "terminal": {
-    "font_family": "IosevkaTerm Nerd Font",
+    "font_family": "FiraCode Nerd Font",
     "font_size": 20.0,
     "button": false,
   },
@@ -34,10 +34,10 @@
   "theme": {
     "mode": "dark",
     "light": "Ayu Light",
-    "dark": "Gruvbox Material Dark Hard",
+    "dark": "Base16 Black Metal (Bathory) Dark",
   },
   "theme_overrides": {
-    "Gruvbox Material Dark Hard": {
+    "Base16 Black Metal (Bathory) Dark": {
       "border": "#000000",
       "border.variant": "#000000",
     },
@@ -47,8 +47,8 @@
     "light": "Light Charmed Icons",
     "dark": "Warm Charmed Icons",
   },
-  "ui_font_family": "IosevkaTerm Nerd Font",
-  "buffer_font_family": "IosevkaTerm Nerd Font",
+  "ui_font_family": "FiraCode Nerd Font",
+  "buffer_font_family": "FiraCode Nerd Font",
   "ui_font_size": 20.0,
   "buffer_font_size": 20.0,
   "window_decorations": "server",

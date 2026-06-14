@@ -110,11 +110,11 @@ end
 
 vim.api.nvim_set_hl(0, "TabLineSel", {
   fg = "#000000",
-  bg = "#7daea3",
+  bg = "#888888",
   bold = true,
 })
 vim.api.nvim_set_hl(0, "TabLine", {
-  fg = "#a89984",
+  fg = "#c1c1c1",
   bg = "#000000",
 })
 

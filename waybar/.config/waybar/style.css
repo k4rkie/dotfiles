@@ -2,8 +2,8 @@
   border: none;
   border-radius: 0;
   min-height: 0;
-  font-family: "IosevkaTerm Nerd Font";
-  font-size: 14px;
+  font-family: "FiraCode Nerd Font";
+  font-size: 13.4px;
   padding: 0px;
 }
 
@@ -58,7 +58,7 @@ tooltip {
   color: #31443D;
   background: #31443D;
   margin: 3px 2px;
-  border-radius: 4px;
+  border-radius: 2px;
   min-width: 12px;
   padding: 0px 4px;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -73,9 +73,9 @@ tooltip {
 #workspaces button.active {
   background: #83a598;
   color: #000000;
-  border-radius: 4px;
+  border-radius: 2px;
   font-weight: bold;
-  padding: 0px 14px;
+  padding: 0px 12px;
 }
 
 #tray,
@@ -93,7 +93,7 @@ tooltip {
 
 #clock {
   color: #d8a657;
-  margin-left: 8px;
+  margin-left: 2px;
 }
 
 #custom-caffeine {
@@ -130,7 +130,7 @@ tooltip {
 }
 
 #custom-media-animation {
-  font-size: 14px;
+  font-size: 13.4px;
   margin-right: 10px;
 }
 

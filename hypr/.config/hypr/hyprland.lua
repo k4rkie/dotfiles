@@ -1,8 +1,8 @@
 -- Hyprland Lua Config (ported from hyprland.conf)
-local mainMod    = "SUPER"
-local terminal   = "kitty"
-local fileManage = "thunar"
-local menu       = "rofi -show"
+local mainMod     = "SUPER"
+local terminal    = "kitty"
+local fileManager = "thunar"
+local menu        = "rofi -show"
 
 ---- MONITORS ----
 hl.monitor({
@@ -83,8 +83,8 @@ hl.config({
   },
   decoration = {
     rounding         = 4,
-    active_opacity   = 0.95,
-    inactive_opacity = 0.90,
+    active_opacity   = 1,
+    inactive_opacity = 0.95,
     shadow           = {
       enabled      = true,
       range        = 12,
@@ -137,7 +137,7 @@ hl.on("hyprland.start", function()
   end
   hl.exec_cmd("swaybg -i " .. wall_path .. " -m fill")
   hl.exec_cmd("wlsunset -l 27.7006 -L 83.4484 -t 3800 -T 6500")
-  hl.exec_cmd("gsettings set org.gnome.desktop.interface font-name 'IosevkaTerm Nerd Font 12'")
+  hl.exec_cmd("gsettings set org.gnome.desktop.interface font-name 'FiraCode Nerd Font 11'")
   hl.exec_cmd("gsettings set org.gnome.desktop.interface gtk-theme 'Void'")
   hl.exec_cmd("gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'")
   hl.exec_cmd("sed -i 's/gtk-icon-theme-name=\"hicolor\"/gtk-icon-theme-name=\"Papirus-Dark\"/' \"${HOME}/.gtkrc-2.0\"")
@@ -148,6 +148,7 @@ hl.on("hyprland.start", function()
   hl.exec_cmd("waybar")
   hl.exec_cmd("wl-paste --type text --watch cliphist store")
   hl.exec_cmd("wl-paste --type image --watch cliphist store")
+  hl.exec_cmd("systemctl --user start hyprpolkitagent")
 end)
 
 ---- MEDIA KEYS ----
@@ -162,22 +163,17 @@ hl.bind("XF86AudioNext", hl.dsp.exec_cmd("mpc next"))
 hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("mpc prev"))
 hl.bind("XF86AudioStop", hl.dsp.exec_cmd("mpc stop"))
 
----- SCREENSHOTS ----
-hl.bind("Print", hl.dsp.exec_cmd("~/scripts/screenshot.sh"))
-hl.bind("SHIFT + Print", hl.dsp.exec_cmd("~/scripts/screenshot.sh region"))
-hl.bind("CTRL + Print", hl.dsp.exec_cmd("~/scripts/screenshot.sh window"))
-
----- OCR (Tesseract) ---
-hl.bind(mainMod .. " + SHIFT + P", hl.dsp.exec_cmd("~/scripts/ocr-clip.sh"))
+--- Utils menu ----
+hl.bind(mainMod .. " + SHIFT + U", hl.dsp.exec_cmd("rofi -show Utils -modi 'Utils:~/scripts/utils-menu.sh'"))
 
 ---- LAUNCHER / SESSION ----
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("/opt/zen/zen-bin"))
-hl.bind(mainMod .. " + SHIFT + F", hl.dsp.exec_cmd(fileManage))
+hl.bind(mainMod .. " + SHIFT + F", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + Escape", hl.dsp.exec_cmd("~/scripts/rofi-powermenu"))
-hl.bind(mainMod .. " + P", hl.dsp.exec_cmd("hyprpicker -a"))
+hl.bind(mainMod .. " + P", hl.dsp.exec_cmd("hyprpicker -a -n"))
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("~/scripts/rofi-sessionizer.sh"))
 hl.bind(mainMod .. " + SHIFT + C", hl.dsp.exec_cmd("~/scripts/reload.sh"))
 hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("killall -SIGUSR1 waybar"))

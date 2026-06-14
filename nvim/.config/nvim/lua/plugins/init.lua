@@ -13,7 +13,7 @@ return {
   require("plugins.rendermarkdown"),
   require("plugins.conform"),
   require("plugins.luasnip"),
-  require("plugins.compile-mode"),
   require("plugins.markdownpreview"),
   require("plugins.terminal"),
+  require("plugins.ibl"),
 }

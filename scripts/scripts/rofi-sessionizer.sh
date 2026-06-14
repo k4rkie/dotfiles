@@ -2,6 +2,7 @@
 
 DIRS=(
     "$HOME"
+    "$HOME/Documents/Braincache"
     "$HOME/learn"
     "$HOME/k4rkie/CS"
     "$HOME/dev"
@@ -10,7 +11,7 @@ DIRS=(
     "$HOME/dev/C"
     "$HOME/dev/C/graphics"
     "$HOME/dev/JS"
-    "$HOME/dotfiles/"
+    "$HOME/dotfile"
 )
 
 # 1. Get all folders from your DIRS
@@ -20,7 +21,7 @@ folder_list=$(fd . "${DIRS[@]}" --type=dir --max-depth=1 --full-path --base-dire
 session_list=$(tmux list-sessions -F "#S" 2>/dev/null)
 
 # 3. Combine them, remove duplicates, and pipe to Rofi
-selected=$(printf "%s\n%s" "$folder_list" "$session_list" | sort -u | rofi -dmenu -i -p "󱫋 Session")
+selected=$(printf "%s\n%s" "$session_list" "$folder_list" | grep -v '^$' | rofi -dmenu -i -p "󱫋 Session")
 
 [[ ! $selected ]] && exit 0
 
@@ -40,5 +41,4 @@ else
 fi
 
 # 5. Launch Kitty
-# ghostty -e tmux attach-session -t "$selected_name"
 kitty --detach tmux attach-session -t "$selected_name"

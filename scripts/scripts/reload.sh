@@ -5,6 +5,9 @@ hyprctl reload
 pkill -SIGUSR2 waybar
 killall swaync && swaync &
 
+pkill -f mpd-notify.sh
+~/scripts/mpd-notify.sh &
+
 killall swayosd-server && swayosd-server &
 killall hypridle && hypridle &
 
