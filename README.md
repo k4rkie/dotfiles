@@ -5,10 +5,10 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/OS-NixOS-5277C3?style=flat&logo=nixos&logoColor=white"/>
+  <img src="https://img.shields.io/badge/NixOS-5277C3?style=flat&logo=nixos&logoColor=white"/>
   <img src="https://img.shields.io/badge/WM-Hyprland-5f8787?style=flat"/>
-  <img src="https://img.shields.io/badge/Shell-Zsh-4EAA25?style=flat&logo=zsh&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Editor-Neovim-57A143?style=flat&logo=neovim&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Zsh-4EAA25?style=flat&logo=zsh&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Neovim-57A143?style=flat&logo=neovim&logoColor=white"/>
   <img src="https://img.shields.io/badge/GTK-Void-8A2BE2?style=flat"/>
 </p>
 
