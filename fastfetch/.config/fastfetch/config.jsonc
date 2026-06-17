@@ -32,7 +32,7 @@
     },
     {
       "type": "packages",
-      "format": "{} (pacman)",
+      "format": "{} (dnf)",
       "key": "pkgs  ",
       "keyColor": "33",
     },

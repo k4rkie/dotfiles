@@ -1,0 +1,2 @@
+outupt=$(cal)
+echo "$outupt"

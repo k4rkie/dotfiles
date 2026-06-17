@@ -8,7 +8,7 @@
 }
 
 window#waybar {
-  background: rgba(0, 0, 0, 0.95);
+  background: rgba(0, 0, 0, 0.90);
   color: #5f8787;
   margin-left: 6px;
   margin-right: 6px;
@@ -55,13 +55,13 @@ tooltip {
 }
 
 #workspaces button {
-  color: #31443D;
-  background: #31443D;
+  color: #151C1A;
+  background: #151C1A;
   margin: 3px 2px;
   border-radius: 2px;
   min-width: 12px;
   padding: 0px 4px;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 #workspaces button.focused {

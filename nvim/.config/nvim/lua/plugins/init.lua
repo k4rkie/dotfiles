@@ -15,5 +15,4 @@ return {
   require("plugins.luasnip"),
   require("plugins.markdownpreview"),
   require("plugins.terminal"),
-  require("plugins.ibl"),
 }

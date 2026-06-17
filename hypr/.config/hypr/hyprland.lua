@@ -10,15 +10,7 @@ hl.monitor({
   mode = "preferred",
   position = "auto",
   scale = "1",
-}) ---- MISC (SWALLOW) ----
-hl.config({
-  misc = {
-    enable_swallow             = true,
-    initial_workspace_tracking = false,
-    swallow_regex              = "^(thunar|zen|zen-beta|firefox|google-chrome|chromium|nautilus|nemo)$",
-  },
 })
-
 ---- INPUT ----
 hl.config({
   input = {
@@ -31,6 +23,7 @@ hl.config({
   },
 })
 
+---- GESTURE ----
 hl.gesture({
   fingers   = 3,
   direction = "horizontal",
@@ -113,15 +106,15 @@ hl.curve("snappy", { type = "bezier", points = { { 0.05, 0.9 }, { 0.1, 1.05 } } 
 hl.curve("smooth", { type = "bezier", points = { { 0.5, 0.0 }, { 0.5, 1.0 } } })
 
 ---- ANIMATIONS ----
-hl.animation({ leaf = "windows", enabled = true, speed = 3, bezier = "snappy", style = "popin" })
-hl.animation({ leaf = "windowsOut", enabled = true, speed = 3, bezier = "snappy", style = "popin" })
+hl.animation({ leaf = "windows", enabled = true, speed = 1.5, bezier = "snappy", style = "popin" })
+hl.animation({ leaf = "windowsOut", enabled = true, speed = 1.5, bezier = "snappy", style = "popin" })
 hl.animation({ leaf = "border", enabled = true, speed = 10, bezier = "default" })
 hl.animation({ leaf = "borderangle", enabled = true, speed = 8, bezier = "default" })
 hl.animation({ leaf = "fade", enabled = true, speed = 3, bezier = "snappy" })
-hl.animation({ leaf = "workspaces", enabled = true, speed = 2, bezier = "snappy", style = "slide" })
+hl.animation({ leaf = "workspaces", enabled = true, speed = 1.5, bezier = "snappy", style = "slide" })
 hl.animation({ leaf = "global", enabled = true, speed = 5, bezier = "snappy" })
-hl.animation({ leaf = "layersIn", enabled = true, speed = 2, bezier = "snappy", style = "slide right" })
-hl.animation({ leaf = "layersOut", enabled = true, speed = 5, bezier = "snappy", style = "slide right" })
+hl.animation({ leaf = "layersIn", enabled = true, speed = 1.8, bezier = "snappy", style = "slide right" })
+hl.animation({ leaf = "layersOut", enabled = true, speed = 3, bezier = "snappy", style = "slide right" })
 
 ---- AUTOSTART ----
 hl.on("hyprland.start", function()

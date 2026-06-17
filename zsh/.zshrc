@@ -144,3 +144,7 @@ esac
 
 #nimble
 export PATH=/home/k4rkie/.nimble/bin:$PATH
+
+
+# Added by Antigravity CLI installer
+export PATH="/home/k4rkie/.local/bin:$PATH"

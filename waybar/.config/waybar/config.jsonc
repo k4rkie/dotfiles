@@ -10,6 +10,7 @@
   ],
   "modules-center": [
     "hyprland/workspaces"
+    // "sway/workspaces"
   ],
   "modules-right": [
     "custom/caffeine",

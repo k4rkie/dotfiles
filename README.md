@@ -42,7 +42,7 @@
 | **gamma** | Wlsunset |
 | **browser** | Zen |
 | **gtk** | Void theme, Papirus-Dark icons |
-| **font** | IosevkaTerm Nerd Font |
+| **font** | FiraCode Nerd Font |
 
 ## scripts
 
