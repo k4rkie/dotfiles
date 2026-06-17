@@ -3,13 +3,13 @@
 hyprctl reload
 
 pkill -SIGUSR2 waybar
-killall swaync && swaync &
+pkill swaync; swaync &
 
 pkill -f mpd-notify.sh
 ~/scripts/mpd-notify.sh &
 
-killall swayosd-server && swayosd-server &
-killall hypridle && hypridle &
+pkill swayosd-server; swayosd-server &
+pkill hypridle; hypridle &
 
 pkill -USR1 hyprlock
 

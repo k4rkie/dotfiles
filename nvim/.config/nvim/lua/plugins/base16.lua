@@ -48,7 +48,7 @@ return {
       --Black Metal Bathory
 
       base00 = "#000000",
-      base01 = "#000000",
+      base01 = "#080808",
       base02 = "#121212",
       base03 = "#333333",
       base04 = "#999999",

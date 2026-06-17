@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Usage: ./gen-icon.sh <glyph> <name>
 # Example: ./gen-icon.sh 󰾪 caffeine-on
 
