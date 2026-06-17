@@ -80,7 +80,8 @@ alias please='sudo $(fc -ln -1)'
 alias reload="source ~/.zshrc"
 alias air='~/go/bin/air'
 
-alias switch='sudo nixos-rebuild switch'
+alias rebuild="sudo nixos-rebuild switch --flake ~/dotfiles/nixos-config#nixos"
+alias edit-nix="nvim ~/dotfiles/nixos-config/configuration.nix"
 
 # -------------------------------
 #  PATH variables
