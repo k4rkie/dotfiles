@@ -2,7 +2,6 @@
 
 DIRS=(
     "$HOME"
-    "$HOME/Documents/Braincache"
     "$HOME/learn"
     "$HOME/k4rkie/CS"
     "$HOME/dev"
@@ -11,7 +10,7 @@ DIRS=(
     "$HOME/dev/C"
     "$HOME/dev/C/graphics"
     "$HOME/dev/JS"
-    "$HOME/dotfile"
+    "$HOME/dotfiles"
 )
 
 # 1. Get all folders from your DIRS

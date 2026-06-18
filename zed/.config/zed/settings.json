@@ -1,9 +1,11 @@
 {
+  "use_system_path_prompts": false,
+  "use_system_prompts": false,
   "debugger": {
     "button": false,
   },
   "terminal": {
-    "font_family": "FiraCode Nerd Font",
+    "font_family": "IosevkaTerm Nerd Font",
     "font_size": 20.0,
     "button": false,
   },
@@ -47,8 +49,8 @@
     "light": "Light Charmed Icons",
     "dark": "Warm Charmed Icons",
   },
-  "ui_font_family": "FiraCode Nerd Font",
-  "buffer_font_family": "FiraCode Nerd Font",
+  "ui_font_family": "IosevkaTerm Nerd Font",
+  "buffer_font_family": "IosevkaTerm Nerd Font",
   "ui_font_size": 20.0,
   "buffer_font_size": 20.0,
   "window_decorations": "server",

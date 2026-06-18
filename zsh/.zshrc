@@ -66,8 +66,8 @@ PROMPT='%~ ${vcs_info_msg_0_}%k❯ '
 # -------------------------------
 # 6. Aliases
 # -------------------------------
-alias ls="ls -lh --color=auto -F"
-alias la="ls -lha --color=auto -F"
+alias ls="eza -lh  --icons=always --git --hyperlink"
+alias la="eza -lha --icons=always --git --hyperlink"
 
 alias nv="nvim"
 alias cl="clear"
@@ -80,8 +80,9 @@ alias please='sudo $(fc -ln -1)'
 alias reload="source ~/.zshrc"
 alias air='~/go/bin/air'
 
-alias rebuild="sudo nixos-rebuild switch --flake ~/dotfiles/nixos-config#nixos"
+alias rebuild="sudo nixos-rebuild switch --flake ~/dotfiles/nixos-config#nixxer"
 alias edit-nix="nvim ~/dotfiles/nixos-config/configuration.nix"
+alias add-pkgs="nvim ~/dotfiles/nixos-config/packages.nix"
 
 # -------------------------------
 #  PATH variables

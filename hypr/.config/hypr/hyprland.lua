@@ -4,9 +4,8 @@ local terminal    = "kitty"
 local fileManager = "thunar"
 local menu        = "rofi -show"
 
-hl.env("XCURSOR_THEME", "macOS")
+hl.env("XCURSOR_THEME", "Adwaita")
 hl.env("XCURSOR_SIZE", "24")
-hl.env("GTK_FONT_NAME", "IosevkaTerm Nerd Font 11.5")
 
 ---- MONITORS ----
 hl.monitor({
@@ -71,7 +70,7 @@ hl.config({
   general = {
     gaps_in     = 4,
     gaps_out    = 8,
-    border_size = 2,
+    border_size = 0,
     col         = {
       active_border   = "rgb(58796c)",
       inactive_border = "rgb(202020)",
@@ -83,7 +82,7 @@ hl.config({
     active_opacity   = 1,
     inactive_opacity = 0.95,
     shadow           = {
-      enabled      = false,
+      enabled      = true,
       range        = 12,
       render_power = 4,
       color        = "rgba(000000aa)",
@@ -135,7 +134,6 @@ hl.on("hyprland.start", function()
   hl.exec_cmd("swaybg -i " .. wall_path .. " -m fill")
   hl.exec_cmd("wlsunset -l 27.7006 -L 83.4484 -t 3800 -T 6500")
   hl.exec_cmd("gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'")
-  hl.exec_cmd("gsettings set org.gnome.desktop.interface font-name 'IosevkaTerm Nerd Font 11.5'")
   hl.exec_cmd("hypridle")
   hl.exec_cmd("hyprpolkitagent")
   hl.exec_cmd("~/scripts/mpd-notify.sh")
@@ -162,7 +160,7 @@ hl.bind(mainMod .. " + SHIFT + U", hl.dsp.exec_cmd("rofi -show Utils -modi 'Util
 
 ---- LAUNCHER / SESSION ----
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(terminal))
-hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("firefox"))
+hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("zen-beta"))
 hl.bind(mainMod .. " + SHIFT + F", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(menu))
@@ -170,7 +168,7 @@ hl.bind(mainMod .. " + Escape", hl.dsp.exec_cmd("~/scripts/rofi-powermenu"))
 hl.bind(mainMod .. " + P", hl.dsp.exec_cmd("hyprpicker -a -n"))
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("~/scripts/rofi-sessionizer.sh"))
 hl.bind(mainMod .. " + SHIFT + C", hl.dsp.exec_cmd("~/scripts/reload.sh"))
-hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("killall -SIGUSR1 waybar"))
+hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("pkill -SIGUSR1 waybar"))
 hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("~/scripts/rofi-cliphist.sh"))
 hl.bind(mainMod .. " + period", hl.dsp.exec_cmd("~/scripts/rofi-emoji.sh"))
 hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("~/scripts/rofi-wallpaper.sh"))

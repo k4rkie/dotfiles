@@ -2,19 +2,25 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  ...
+}:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ./packages.nix
+    ./stylix.nix
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "nixxer"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -40,104 +46,88 @@
   users.users."k4rkie" = {
     isNormalUser = true;
     description = "k4rkie";
-    extraGroups = [ "networkmanager" "wheel" "video" "input" "storage" "docker" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "video"
+      "input"
+      "storage"
+      "docker"
+    ];
     shell = pkgs.zsh;
-    packages = with pkgs; [];
+    packages = with pkgs; [ ];
   };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    vim
-    kitty
-    git
-    wget
-    curl
-    firefox
-    neovim
-    yazi
-    thunar
-    gvfs
-    tumbler
-    udisks2
-    xdg-user-dirs
-    waybar
-    rofi
-    wl-clipboard
-    cliphist
-    networkmanagerapplet
-    swaynotificationcenter
-    swayosd
-    swaybg
-    wlsunset
-    grim
-    slurp
-    fzf
-    fd
-    ripgrep
-    zoxide
-    fastfetch
-    bat
-    tmux
-    brightnessctl
-    acpi
-    btop
-    unzip
-    xdg-utils
-    pavucontrol
-    playerctl
-    docker-compose
-    nodejs
-    pnpm
-    opencode
-    bun
-    go
-    lazygit
-    lazydocker
-    python3
-    libnotify
-    apple-cursor
-    glib
-    gsettings-desktop-schemas
-    dart-sass
-    cliphist
-  ];
-
   services.gvfs.enable = true;
   services.udisks2.enable = true;
   services.devmon.enable = true;
+  services.mpd = {
+    enable = true;
+    user = "k4rkie";
+    musicDirectory = "/home/k4rkie/Music";
+    settings = {
+      audio_output = [
+        {
+          type = "pipewire";
+          name = "PipeWire";
+        }
+      ];
+    };
+  };
+
+  systemd.services.mpd.environment = {
+    PIPEWIRE_RUNTIME_DIR = "/run/user/1000";
+  };
+
   virtualisation.docker.enable = true;
   programs.zsh.enable = true;
 
   programs.dconf.enable = true;
 
   programs.hyprland.enable = true;
-  
-  services.greetd = {
-   enable = true;
-   settings = {
-    default_session = {
-     command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd /run/current-system/sw/bin/start-hyprland";
-     user = "greeter";
-    };
-   };
-  };
 
-  fonts.packages = with pkgs;[
-   nerd-fonts.fira-code
-   nerd-fonts.iosevka-term
-  ];
+  programs.nix-ld.enable = true;
+
+  programs.xfconf.enable = true;
+
+  services.greetd = {
+    enable = true;
+    settings = {
+      default_session = {
+        command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd /run/current-system/sw/bin/start-hyprland";
+        user = "greeter";
+      };
+    };
+  };
 
   services.pipewire = {
     enable = true;
     alsa.enable = true;
     pulse.enable = true;
   };
-  
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  nix.settings = {
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+    auto-optimise-store = true;
+  };
+
+  # Keep boot menu clean but still allow rollbacks
+  boot.loader.systemd-boot.configurationLimit = 10;
+
+  # Automatic garbage collection, clean snaps older than 30d
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
+
+  # Prevent unlimited generations per profile
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -153,8 +143,8 @@
   # services.openssh.enable = true;
 
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
+  networking.firewall.allowedTCPPorts = [ 53317 ];
+  networking.firewall.allowedUDPPorts = [ 53317 ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
