@@ -72,8 +72,8 @@ hl.layer_rule({
 ---- GENERAL ----
 hl.config({
   general = {
-    gaps_in     = 4,
-    gaps_out    = 8,
+    gaps_in     = 3,
+    gaps_out    = 6,
     border_size = 2,
     col         = {
       active_border   = "rgb(7aa2f7)",
@@ -92,7 +92,7 @@ hl.config({
       color        = "rgba(000000aa)",
     },
     blur             = {
-      enabled    = true,
+      enabled    = false,
       size       = 10,
       passes     = 2,
       noise      = 0.01,
@@ -173,6 +173,7 @@ hl.bind(mainMod .. " + P", hl.dsp.exec_cmd("hyprpicker -a -n"))
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("~/scripts/rofi-sessionizer.sh"))
 hl.bind(mainMod .. " + SHIFT + C", hl.dsp.exec_cmd("~/scripts/reload.sh"))
 hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("pkill -SIGUSR1 waybar"))
+
 hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("~/scripts/rofi-cliphist.sh"))
 hl.bind(mainMod .. " + period", hl.dsp.exec_cmd("~/scripts/rofi-emoji.sh"))
 hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("~/scripts/rofi-wallpaper.sh"))
@@ -280,12 +281,14 @@ hl.window_rule({
   name  = "float-pavucontrol",
   match = { class = "^(org.pulseaudio.pavucontrol)$" },
   float = true,
+  size  = "1000 650",
 })
 
 hl.window_rule({
   name  = "float-blueman",
   match = { class = "^(blueman-manager)$" },
   float = true,
+  size  = "1200 800",
 })
 
 hl.window_rule({

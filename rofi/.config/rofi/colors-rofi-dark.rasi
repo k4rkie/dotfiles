@@ -20,7 +20,7 @@
     selected-active-background: #7fa563;  /* same as active */
     selected-active-foreground: #080808;
 
-    selected-normal-background: #83a598; /* slightly lighter for normal selection */
+    selected-normal-background: #7aa2f7; /* slightly lighter for normal selection */
     selected-normal-foreground: #080808;
     selected-urgent-background: #d8647e;
     selected-urgent-foreground: #080808;
@@ -77,8 +77,9 @@
 }
 
 #element {
-    border-radius: 4px;
-    padding: 2px;
+    border-radius: 0px;
+    padding: 4px 8px;
+    margin: 4px;
 }
 
 #element-text, element-icon {

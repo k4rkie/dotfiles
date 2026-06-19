@@ -10,7 +10,6 @@
     git
     wget
     curl
-    firefox
     yazi
     thunar
     gvfs
@@ -87,9 +86,23 @@
     nil
     lua-language-server
     gopls
+    typescript-language-server
+    clang-tools
+    gnumake
 
     # utils
     tesseract
     hyprpicker
+
+    gimp
+    blender
+    kdePackages.kdenlive
+    audacity
+    mpv
+
+    blueman
+    imv
+    zathura
+    zathuraPkgs.zathura_pdf_poppler
   ];
 }

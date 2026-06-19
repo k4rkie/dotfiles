@@ -40,6 +40,8 @@ vim.opt.winborder = "single"
 
 vim.opt.scrolloff = 999
 
+vim.o.foldlevel = 99
+
 vim.diagnostic.config({
   virtual_text = { severity = vim.diagnostic.severity.ERROR },
   -- virtual_text = false,
@@ -60,7 +62,7 @@ vim.api.nvim_set_hl(0, "TelescopePromptBorder", { link = "FloatBorder" })
 vim.api.nvim_set_hl(0, "TelescopeResultsBorder", { link = "FloatBorder" })
 vim.api.nvim_set_hl(0, "TelescopePreviewBorder", { link = "FloatBorder" })
 
-local prompt_bg = "#0E0E17"
+local prompt_bg = "#0A0A0F"
 
 vim.api.nvim_set_hl(0, "TelescopePromptNormal", { bg = prompt_bg })
 vim.api.nvim_set_hl(0, "TelescopePromptTitle", { bg = prompt_bg })
@@ -109,17 +111,17 @@ function _G.tabline()
 end
 
 vim.api.nvim_set_hl(0, "TabLineSel", {
-  fg = "#0E0E17",
+  fg = "#0A0A0F",
   bg = "#7aa2f7",
   bold = true,
 })
 vim.api.nvim_set_hl(0, "TabLine", {
   fg = "#2f3549",
-  bg = "#0E0E17",
+  bg = "#0A0A0F",
 })
 
 vim.api.nvim_set_hl(0, "TabLineFill", {
-  bg = "#0E0E17",
+  bg = "#0A0A0F",
 })
 
 vim.api.nvim_create_autocmd("FileType", {

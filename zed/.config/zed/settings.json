@@ -5,7 +5,7 @@
     "button": false,
   },
   "terminal": {
-    "font_family": "IosevkaTerm Nerd Font",
+    "font_family": "JetBrainsMono Nerd Font",
     "font_size": 20.0,
     "button": false,
   },
@@ -36,12 +36,12 @@
   "theme": {
     "mode": "dark",
     "light": "Ayu Light",
-    "dark": "Base16 Black Metal (Bathory) Dark",
+    "dark": "Base16 Tokyodark Terminal",
   },
   "theme_overrides": {
-    "Base16 Black Metal (Bathory) Dark": {
-      "border": "#000000",
-      "border.variant": "#000000",
+    "Base16 Tokyo Night Terminal Dark": {
+      "border": "#00000000",
+      "border.variant": "#00000000",
     },
   },
   "icon_theme": {
@@ -49,8 +49,8 @@
     "light": "Light Charmed Icons",
     "dark": "Warm Charmed Icons",
   },
-  "ui_font_family": "IosevkaTerm Nerd Font",
-  "buffer_font_family": "IosevkaTerm Nerd Font",
+  "ui_font_family": "JetBrainsMono Nerd Font",
+  "buffer_font_family": "JetBrainsMono Nerd Font",
   "ui_font_size": 20.0,
   "buffer_font_size": 20.0,
   "window_decorations": "server",

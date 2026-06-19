@@ -1,12 +1,16 @@
 return {
-    {
-        "nvim-treesitter/nvim-treesitter",
-        build = ":TSUpdate",
-        config = function ()
-            require ( "nvim-treesitter.config" ).setup({
-                ensure_installed = { "typescript", "javascriptreact", "javascript", "jsx", "tsx"},
-                highlight = { enable = true, additional_vim_regex_highlighting = false },
-            })
-        end
-    }
+  {
+    "nvim-treesitter/nvim-treesitter",
+    branch = "main",
+    build = ":TSUpdate",
+    init = function()
+      vim.api.nvim_create_autocmd("FileType", {
+        callback = function()
+          pcall(vim.treesitter.start)
+          vim.wo.foldmethod = "expr"
+          vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+        end,
+      })
+    end,
+  }
 }

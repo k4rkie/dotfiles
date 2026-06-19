@@ -11,7 +11,7 @@ run_ocr() {
         notify-send "Tesseract" "No text found" -i "/home/k4rkie/.local/share/noti-icons/error.png"
     else
         echo "$TEXT" | wl-copy
-        notify-send "Tesseract" "Text copied to clipboard" -i "/home/k4rkie/.local/share/noti-icons/clippy.png"
+        notify-send "Tesseract" "Text copied to clipboard" -i "/home/k4rkie/.local/share/noti-icons/clipboard.png"
     fi
 }
 

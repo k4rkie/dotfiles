@@ -2,13 +2,13 @@
   border: none;
   border-radius: 0;
   min-height: 0;
-  font-family: "IosevkaTerm Nerd Font";
-  font-size: 13.4px;
+  font-family: "GeistMono Nerd Font";
+  font-size: 13px;
   padding: 0px;
 }
 
 window#waybar {
-  background: alpha(#0E0E17, 1);
+  background: #0A0A0F;
   color: #5f8787;
   margin-left: 6px;
   margin-right: 6px;
@@ -16,7 +16,7 @@ window#waybar {
 }
 
 window#waybar>box {
-  padding: 1px;
+  padding: 0px;
 }
 
 tooltip {
@@ -75,29 +75,36 @@ tooltip {
   color: #000000;
   border-radius: 2px;
   font-weight: bold;
-  padding: 0px 12px;
+  padding: 0px 14px;
+}
+
+#custom-os {
+  font-size: 16px;
+  margin: 0px 6px;
 }
 
 #tray,
 #cpu {
-  color: #5f8787;
+  color: #41a6b5;
 }
 
 #memory {
-  color: #ffa460;
+  color: #ff9e64;
 }
 
 #pulseaudio {
-  color: #94b978;
+  color: #94f978;
 }
 
 #clock {
-  color: #d8a657;
+  color: #ff9e64;
   margin-left: 2px;
 }
 
 #custom-caffeine {
+  font-size: 16px;
   color: #fb4934;
+  margin: 0px 10px;
 }
 
 #custom-caffeine.inactive {
@@ -130,7 +137,7 @@ tooltip {
 }
 
 #custom-media-animation {
-  font-size: 13.4px;
+  font-size: 12px;
   margin-right: 10px;
 }
 

@@ -5,19 +5,19 @@
   "height": 18,
   "margin-bottom": 0,
   "modules-left": [
+    "custom/os",
     "clock",
     "group/media"
   ],
   "modules-center": [
     "hyprland/workspaces"
-    // "sway/workspaces"
   ],
   "modules-right": [
-    "custom/caffeine",
     "memory",
     "cpu",
     "pulseaudio",
     "battery",
+    "custom/caffeine",
     "custom/notifications",
     "tray",
   ],
@@ -26,7 +26,7 @@
     "spacing": 4
   },
   "clock": {
-    "format": "󱑒 {:%I:%M %p}",
+    "format": "{:%I:%M %p}",
     "interval": 60,
     "tooltip": true,
     "tooltip-format": "󰨲 {:%A %B %d}",
@@ -100,8 +100,8 @@
     "tooltip-format-disconnected": "Disconnected",
     "on-click": "~/scripts/rofi-wifi-menu.sh"
   },
-  "custom/separator": {
-    "format": "|",
+  "custom/os": {
+    "format": "",
     "interval": "once",
     "tooltip": false
   },
