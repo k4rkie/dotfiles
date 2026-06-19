@@ -8,7 +8,7 @@
 }
 
 window#waybar {
-  background: rgba(0, 0, 0, 0.90);
+  background: alpha(#0E0E17, 1);
   color: #5f8787;
   margin-left: 6px;
   margin-right: 6px;
@@ -55,8 +55,8 @@ tooltip {
 }
 
 #workspaces button {
-  color: #151C1A;
-  background: #151C1A;
+  color: #2f3549;
+  background: #2f3549;
   margin: 3px 2px;
   border-radius: 2px;
   min-width: 12px;
@@ -71,7 +71,7 @@ tooltip {
 }
 
 #workspaces button.active {
-  background: #83a598;
+  background: #7aa2f5;
   color: #000000;
   border-radius: 2px;
   font-weight: bold;
@@ -125,7 +125,7 @@ tooltip {
 }
 
 #media {
-  color: #83a598;
+  color: #769bef;
   margin: 4px 0px 4px 6px;
 }
 
@@ -139,6 +139,6 @@ tooltip {
 }
 
 #custom-media-time {
-  color: rgba(50, 50, 50, 1);
+  color: #2f3549;
   font-size: 12px;
 }

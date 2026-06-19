@@ -45,6 +45,8 @@
     bat
     tmux
     brightnessctl
+    hypridle
+    hyprlock
     acpi
 
     # sys monitor
@@ -86,5 +88,8 @@
     lua-language-server
     gopls
 
+    # utils
+    tesseract
+    hyprpicker
   ];
 }

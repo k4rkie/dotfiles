@@ -1,12 +1,12 @@
-@define-color center-bg alpha(#000000, 0.98);
-@define-color notification-bg alpha(#000000, 0.98);
-@define-color center-notification-bg #050505;
-@define-color background alpha(#000000, 0.98);
-@define-color background-alt #050505;
-@define-color border #202020;
+@define-color center-bg alpha(#0E0E17, 0.96);
+@define-color notification-bg alpha(#0E0E17, 0.96);
+@define-color center-notification-bg #13131C;
+@define-color background alpha(#0E0E17, 0.98);
+@define-color background-alt #13131C;
+@define-color border alpha(#aaaaaa, 0.2);
 @define-color text #aaaaaa;
 @define-color text-alt #666666;
-@define-color selected alpha(#7daea3, 0.8);
+@define-color selected alpha(#7aa2f5, 0.9);
 @define-color hover alpha(#888888, 0.1);
 @define-color urgent #888888;
 

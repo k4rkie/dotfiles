@@ -161,14 +161,14 @@
     "exec": "/home/k4rkie/.config/waybar/custom_modules/media/media-now-playing.sh",
     "escape": true,
     "tooltip": false,
-    "on-click": "mpc toggle",
+    "on-click": "kitty --class rmpc rmpc",
     "on-click-middle": "mpc prev",
     "on-click-right": "mpc next",
   },
   "custom/media-animation": {
     "exec": "~/.config/waybar/custom_modules/media/media-animation.sh",
     "tooltip": false,
-    "on-click": "kitty --class rmpc rmpc"
+    "on-click": "mpc toggle",
   },
   "custom/media-time": {
     "exec": "~/.config/waybar/custom_modules/media/media-time.sh",

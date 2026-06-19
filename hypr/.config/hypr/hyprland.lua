@@ -40,12 +40,14 @@ hl.layer_rule({
   blur         = false,
   ignore_alpha = 0,
 })
+
 hl.layer_rule({
   name         = "blur-swaync-ctrl",
   match        = { namespace = "swaync-control-center" },
   blur         = false,
   ignore_alpha = 0,
 })
+
 hl.layer_rule({
   name         = "blur-swayosd",
   match        = { namespace = "swayosd" },
@@ -53,6 +55,7 @@ hl.layer_rule({
   ignore_alpha = 0,
   animation    = "slide bottom"
 })
+
 hl.layer_rule({
   name         = "blur&animate-waybar",
   match        = { namespace = "waybar" },
@@ -60,6 +63,7 @@ hl.layer_rule({
   ignore_alpha = 0,
   animation    = "slide bottom"
 })
+
 hl.layer_rule({
   match     = { namespace = "rofi" },
   animation = "popin"
@@ -70,19 +74,19 @@ hl.config({
   general = {
     gaps_in     = 4,
     gaps_out    = 8,
-    border_size = 0,
+    border_size = 2,
     col         = {
-      active_border   = "rgb(58796c)",
+      active_border   = "rgb(7aa2f7)",
       inactive_border = "rgb(202020)",
     },
     layout      = "dwindle",
   },
   decoration = {
-    rounding         = 4,
+    rounding         = 1,
     active_opacity   = 1,
-    inactive_opacity = 0.95,
+    inactive_opacity = 1,
     shadow           = {
-      enabled      = true,
+      enabled      = false,
       range        = 12,
       render_power = 4,
       color        = "rgba(000000aa)",
@@ -92,9 +96,9 @@ hl.config({
       size       = 10,
       passes     = 2,
       noise      = 0.01,
-      contrast   = 0.95,
-      brightness = 0.95,
-      vibrancy   = 0.8,
+      contrast   = 2.0,
+      brightness = 0.8,
+      vibrancy   = 2.0,
       special    = true,
       popups     = true,
     },
@@ -314,12 +318,13 @@ hl.window_rule({
 
 hl.window_rule({
   name      = "force-current-ws",
-  match     = { class = "." },
+  match     = { class = "*" },
   workspace = "current"
 })
 
 hl.window_rule({
   name      = "browser-on-1",
-  match     = { class = "^(zen|firefox|google-chrome)$" },
-  workspace = "1"
+  match     = { class = "^(zen-beta|firefox|google-chrome)$" },
+  opaque    = true,
+  workspace = "1",
 })

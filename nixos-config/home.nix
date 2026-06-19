@@ -5,9 +5,11 @@
     stateVersion = "26.05";
   };
 
-  gtk = {
-    enable = true;
-  };
-
   programs.home-manager.enable = true;
+  programs.kitty = {
+    enable = true;
+    settings = {
+      confirm_os_window_close = 0;
+    };
+  };
 }

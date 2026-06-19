@@ -1,5 +1,6 @@
 return {
   require("plugins.base16"),
+  -- require("plugins.tokyonight"),
   require("plugins.lualine"),
   require("plugins.treesitter"),
   require("plugins.autopairs"),
