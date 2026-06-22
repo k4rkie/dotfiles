@@ -72,9 +72,9 @@ hl.layer_rule({
 ---- GENERAL ----
 hl.config({
   general = {
-    gaps_in     = 3,
-    gaps_out    = 6,
-    border_size = 2,
+    gaps_in     = 7,
+    gaps_out    = 14,
+    border_size = 0,
     col         = {
       active_border   = "rgb(7aa2f7)",
       inactive_border = "rgb(202020)",
@@ -86,10 +86,10 @@ hl.config({
     active_opacity   = 1,
     inactive_opacity = 1,
     shadow           = {
-      enabled      = false,
+      enabled      = true,
       range        = 12,
       render_power = 4,
-      color        = "rgba(000000aa)",
+      color        = "rgba(000000bb)",
     },
     blur             = {
       enabled    = false,
@@ -331,3 +331,6 @@ hl.window_rule({
   opaque    = true,
   workspace = "1",
 })
+
+-- Workspacce rules
+hl.workspace_rule({ workspace = "7", gaps_in = 8, gaps_out = 100 })

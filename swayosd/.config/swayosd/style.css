@@ -2,6 +2,7 @@ window#osd {
   padding: 16px 20px;
   border-radius: 4px;
   background: alpha(#0A0A0F, 1);
+  border: 2px solid #101019;
 }
 
 window#osd #container {

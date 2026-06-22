@@ -5,6 +5,7 @@
     vim
     neovim
     zed-editor
+    obsidian
 
     kitty
     git

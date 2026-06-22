@@ -79,7 +79,7 @@
 #element {
     border-radius: 0px;
     padding: 4px 8px;
-    margin: 4px;
+    margin: 2px;
 }
 
 #element-text, element-icon {

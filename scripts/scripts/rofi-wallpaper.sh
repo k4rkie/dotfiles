@@ -1,26 +1,19 @@
 #!/usr/bin/env bash
 
 WALL_DIR="$HOME/Pictures/Wallhaven"
-THUMB_DIR="$HOME/.cache/wallpapers-thumbs"
-MONITOR="${1:-eDP-1}"
+ENTRIES_CACHE="$HOME/.cache/wallpapers-menu/entries"
 WALL_FILE="$HOME/.config/hypr/current_wallpaper"
 
-mkdir -p "$THUMB_DIR"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-entries=""
-while IFS= read -r img; do
-    name=$(basename "$img")
-    hash=$(sha1sum <<< "$img" | awk '{print $1}')
-    thumb="$THUMB_DIR/$hash.jpg"
+# First run: build cache synchronously (slow, unavoidable)
+if [[ ! -f "$ENTRIES_CACHE" ]]; then
+    "$SCRIPT_DIR/wallpaper-cache.sh"
+fi
 
-    if [[ ! -f "$thumb" ]]; then
-        magick "$img" -resize 300x "$thumb"
-    fi
-
-    entries+="$name\x00icon\x1f$thumb\n"
-done < <(find "$WALL_DIR" -maxdepth 1 -type f \( -iname '*.jpg' -o -iname '*.png' -o -iname '*.jpeg' \) | sort)
-
-chosen=$(printf "%b" "$entries" | rofi -dmenu -theme ~/.config/rofi/wallpaper.rasi -p "Wallpaper")
+# Show menu instantly from cache, regenerate in background after
+chosen=$(rofi -dmenu -theme ~/.config/rofi/wallpaper.rasi -p "Wallpaper" < "$ENTRIES_CACHE")
+("$SCRIPT_DIR/wallpaper-cache.sh" &) &>/dev/null
 
 if [[ -n "$chosen" ]]; then
     selected=$(find "$WALL_DIR" -maxdepth 1 -type f -name "$chosen" | head -1)

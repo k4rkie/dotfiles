@@ -23,15 +23,13 @@
 
     fonts = {
       monospace = {
-        # package = pkgs.nerd-fonts.iosevka-term;
-        # name = "IosevkaTerm Nerd Font";
         package = pkgs.nerd-fonts.geist-mono;
         name = "GeistMono Nerd Font";
       };
       sansSerif = config.stylix.fonts.monospace;
       serif = config.stylix.fonts.monospace;
       sizes = {
-        terminal = 16;
+        terminal = 15;
         applications = 12;
         desktop = 12;
         popups = 12;

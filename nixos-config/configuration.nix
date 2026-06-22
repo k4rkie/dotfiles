@@ -97,11 +97,16 @@
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd /run/current-system/sw/bin/start-hyprland";
+        command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --remember-session --asterisks --cmd /run/current-system/sw/bin/start-hyprland";
         user = "greeter";
       };
     };
   };
+
+  # Create cache directory for tuigreet to remember users
+  systemd.tmpfiles.rules = [
+    "d /var/cache/tuigreet 0755 greeter greeter - -"
+  ];
 
   services.pipewire = {
     enable = true;

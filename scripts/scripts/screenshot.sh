@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # 1. Give Rofi 0.2 seconds to completely disappear before capturing the screen
-sleep 0.2
+sleep 0.2 
 
 dir=$HOME/Pictures/Screenshots
 mkdir -p "$dir"
