@@ -66,17 +66,18 @@ hl.layer_rule({
 
 hl.layer_rule({
   match     = { namespace = "rofi" },
+  blur      = true,
   animation = "popin"
 })
 
 ---- GENERAL ----
 hl.config({
   general = {
-    gaps_in     = 7,
-    gaps_out    = 14,
+    gaps_in     = 6,
+    gaps_out    = 12,
     border_size = 0,
     col         = {
-      active_border   = "rgb(7aa2f7)",
+      active_border   = "rgb(7daea3)",
       inactive_border = "rgb(202020)",
     },
     layout      = "dwindle",
@@ -84,7 +85,7 @@ hl.config({
   decoration = {
     rounding         = 1,
     active_opacity   = 1,
-    inactive_opacity = 1,
+    inactive_opacity = 0.95,
     shadow           = {
       enabled      = true,
       range        = 12,

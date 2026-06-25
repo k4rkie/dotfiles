@@ -15,6 +15,9 @@ return {
         icons = { ' ', ' ', ' ', ' ', ' ', ' ' },
         position = 'inline',
       },
+      code = {
+        sign = false
+      }
     })
   end
 }

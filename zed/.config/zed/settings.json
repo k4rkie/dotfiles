@@ -36,7 +36,7 @@
   "theme": {
     "mode": "dark",
     "light": "Ayu Light",
-    "dark": "Base16 Tokyodark Terminal",
+    "dark": "Base16 Black Metal (Bathory) Dark",
   },
   "theme_overrides": {
     "Base16 Tokyodark Terminal": {

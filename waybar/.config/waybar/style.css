@@ -2,13 +2,13 @@
   border: none;
   border-radius: 0;
   min-height: 0;
-  font-family: "GeistMono Nerd Font";
+  font-family: "ZedMono Nerd Font";
   font-size: 13px;
   padding: 0px;
 }
 
 window#waybar {
-  background: #0A0A0F;
+  background: alpha(#030303, 0.95);
   color: #5f8787;
   margin-left: 6px;
   margin-right: 6px;
@@ -20,7 +20,7 @@ window#waybar>box {
 }
 
 tooltip {
-  background-color: #000000;
+  background-color: #030303;
 }
 
 #clock,
@@ -55,8 +55,8 @@ tooltip {
 }
 
 #workspaces button {
-  color: #2f3549;
-  background: #2f3549;
+  color: #121212;
+  background: #121212;
   margin: 3px 2px;
   border-radius: 2px;
   min-width: 12px;
@@ -66,13 +66,13 @@ tooltip {
 
 #workspaces button.focused {
   background: transparent;
-  color: #000000;
+  color: #030303;
   border-radius: 2px;
 }
 
 #workspaces button.active {
-  background: #7aa2f5;
-  color: #000000;
+  background: #7daea3;
+  color: #030303;
   border-radius: 2px;
   font-weight: bold;
   padding: 0px 14px;
@@ -103,7 +103,7 @@ tooltip {
 
 #custom-caffeine {
   font-size: 16px;
-  color: #fb4934;
+  color: #ab4642;
   margin: 0px 10px 0px 4px;
 }
 
@@ -132,7 +132,7 @@ tooltip {
 }
 
 #media {
-  color: #769bef;
+  color: #7daea3;
   margin: 4px 0px 4px 6px;
 }
 

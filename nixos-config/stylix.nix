@@ -2,11 +2,8 @@
   stylix = {
     enable = true;
     polarity = "dark";
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyodark-terminal.yaml";
-    override = {
-      base00 = "0A0A0F";
-      base01 = "101019";
-    };
+
+    base16Scheme = ./colors/bark.yaml;
 
     cursor = {
       package = pkgs.adwaita-icon-theme;
@@ -23,8 +20,8 @@
 
     fonts = {
       monospace = {
-        package = pkgs.nerd-fonts.geist-mono;
-        name = "GeistMono Nerd Font";
+        package = pkgs.nerd-fonts.zed-mono;
+        name = "ZedMono Nerd Font";
       };
       sansSerif = config.stylix.fonts.monospace;
       serif = config.stylix.fonts.monospace;

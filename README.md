@@ -22,12 +22,12 @@
 
 | component | tool |
 |-----------|------|
-| **wm** | Hyprland (lua config) |
+| **wm** | Hyprland  |
 | **bar** | Waybar |
 | **launcher** | Rofi |
 | **notifications** | Swaync |
 | **osd** | Swayosd |
-| **terminal** | Kitty + Ghostty |
+| **terminal** | Kitty |
 | **shell** | Zsh |
 | **editor** | Neovim |
 | **multiplexer** | Tmux |
@@ -41,8 +41,8 @@
 | **color picker** | Hyprpicker |
 | **gamma** | Wlsunset |
 | **browser** | Zen |
-| **gtk** | Void theme, Papirus-Dark icons |
-| **font** | IosevkaTerm Nerd Font |
+| **gtk** | Base16 Bark theme, Papirus-Dark icons |
+| **font** | ZedMono Nerd Font |
 
 ## scripts
 

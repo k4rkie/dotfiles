@@ -1,8 +1,8 @@
 window#osd {
   padding: 16px 20px;
   border-radius: 4px;
-  background: alpha(#0A0A0F, 1);
-  border: 2px solid #101019;
+  background: alpha(#030303, 1);
+  border: 2px solid #080808;
 }
 
 window#osd #container {
@@ -37,5 +37,5 @@ window#osd progress {
   min-height: inherit;
   border-radius: inherit;
   border: none;
-  background: #7aa2f5;
+  background: #5f8787;
 }

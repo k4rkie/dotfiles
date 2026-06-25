@@ -59,10 +59,10 @@ autoload -Uz vcs_info
 precmd() { vcs_info }
 
 # 3. Format the git output
-zstyle ':vcs_info:git:*' formats '(%b) '
+zstyle ':vcs_info:git:*' formats '(󰘬 %b) '
 
 # 4. Set the prompt (ensure you use single quotes here)
-PROMPT='%F{#8bb362}%~%f ${vcs_info_msg_0_}%k❯ '
+PROMPT='%F{#7daea3}%~%f ${vcs_info_msg_0_}%kλ '
 # -------------------------------
 # 6. Aliases
 # -------------------------------

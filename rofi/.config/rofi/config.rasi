@@ -10,7 +10,7 @@ configuration {
 	window-format:              "{w} · {c} · {t}";
 }
 *{
-    font : "GeistMono Nerd Font 12";
+    font : "ZedMono Nerd Font 12";
 }
 window {
     /* properties for window widget */

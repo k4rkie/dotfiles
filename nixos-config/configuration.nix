@@ -122,6 +122,10 @@
     auto-optimise-store = true;
   };
 
+  security.sudo.extraConfig = ''
+    Defaults pwfeedback
+  '';
+
   # Keep boot menu clean but still allow rollbacks
   boot.loader.systemd-boot.configurationLimit = 10;
 
@@ -131,6 +135,8 @@
     dates = "weekly";
     options = "--delete-older-than 30d";
   };
+
+  zramSwap.enable = true;
 
   # Prevent unlimited generations per profile
 
