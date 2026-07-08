@@ -9,7 +9,7 @@ DIRS=(
     "$HOME/dev/C"
     "$HOME/dev/C/graphics"
     "$HOME/dev/JS"
-    "$HOME/dotfiles/"
+    "$HOME/dotfiles"
 )
 
 if [[ $# -eq 1 ]]; then
@@ -35,13 +35,30 @@ else
     else
         full_path="$HOME/$selected"
     fi
+    full_path="${full_path%/}"
     
     selected_name=$(basename "$full_path" | tr . _)
     
     # Create the session if it doesn't exist
     if ! tmux has-session -t "$selected_name" 2>/dev/null; then
         tmux new-session -ds "$selected_name" -c "$full_path"
-        tmux select-window -t "$selected_name:1"
+
+        if [[ -f "$full_path/.tmux-windows" ]]; then
+            while IFS= read -r line; do
+                [[ -z "$line" || "$line" =~ ^[[:space:]]*# ]] && continue
+                if [[ "$line" == *:* ]]; then
+                    win_name="${line%%:*}"
+                    win_dir="${line#*:}"
+                    win_dir="${win_dir# }"
+                else
+                    win_name="$line"
+                    win_dir="."
+                fi
+                [[ "$win_dir" == "." ]] && win_path="$full_path" || win_path="$full_path/$win_dir"
+                tmux new-window -t "$selected_name" -n "$win_name" -c "$win_path"
+            done < "$full_path/.tmux-windows"
+            tmux kill-window -t "$selected_name:1"
+        fi
     fi
 fi
 

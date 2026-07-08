@@ -93,6 +93,11 @@
 
   programs.xfconf.enable = true;
 
+  programs.appimage = {
+    enable = true;
+    binfmt = true;
+  };
+
   services.greetd = {
     enable = true;
     settings = {

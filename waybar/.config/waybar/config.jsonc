@@ -6,8 +6,8 @@
   "margin-bottom": 0,
   "modules-left": [
     "custom/os",
-    "clock",
-    "group/media"
+    "clock"
+    // "group/media"
   ],
   "modules-center": [
     "hyprland/workspaces"
@@ -103,7 +103,8 @@
   "custom/os": {
     "format": "",
     "interval": "once",
-    "tooltip": false
+    "tooltip": true,
+    "tooltip-format": "NixOS, btw"
   },
   "custom/notifications": {
     "tooltip": true,
@@ -140,14 +141,6 @@
     "interval": 5,
     "signal": 8,
     "tooltip": false
-  },
-  "sway/window": {
-    "format": " > {}",
-    "max-length": 50,
-    "rewrite": {
-      "(.*) - Mozilla Firefox": "🌎 $1",
-      "(.*) - zsh": "> [$1]"
-    }
   },
   "group/media": {
     "orientation": "horizontal",

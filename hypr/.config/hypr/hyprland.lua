@@ -3,6 +3,7 @@ local mainMod     = "SUPER"
 local terminal    = "kitty"
 local fileManager = "thunar"
 local menu        = "rofi -show"
+local browser     = "appimage-run /home/k4rkie/Applications/helium-0.13.6.1-x86_64.AppImage"
 
 hl.env("XCURSOR_THEME", "Adwaita")
 hl.env("XCURSOR_SIZE", "24")
@@ -49,17 +50,17 @@ hl.layer_rule({
 })
 
 hl.layer_rule({
-  name         = "blur-swayosd",
+  name         = "no-blur-swayosd",
   match        = { namespace = "swayosd" },
-  blur         = true,
+  blur         = false,
   ignore_alpha = 0,
   animation    = "slide bottom"
 })
 
 hl.layer_rule({
-  name         = "blur&animate-waybar",
+  name         = "no-blur-waybar",
   match        = { namespace = "waybar" },
-  blur         = true,
+  blur         = false,
   ignore_alpha = 0,
   animation    = "slide bottom"
 })
@@ -67,17 +68,17 @@ hl.layer_rule({
 hl.layer_rule({
   match     = { namespace = "rofi" },
   blur      = true,
-  animation = "popin"
+  animation = "fade"
 })
 
 ---- GENERAL ----
 hl.config({
   general = {
-    gaps_in     = 6,
-    gaps_out    = 12,
-    border_size = 0,
+    gaps_in     = 5,
+    gaps_out    = 10,
+    border_size = 2,
     col         = {
-      active_border   = "rgb(7daea3)",
+      active_border   = "rgb(7D718F)",
       inactive_border = "rgb(202020)",
     },
     layout      = "dwindle",
@@ -87,21 +88,21 @@ hl.config({
     active_opacity   = 1,
     inactive_opacity = 0.95,
     shadow           = {
-      enabled      = true,
+      enabled      = false,
       range        = 12,
       render_power = 4,
       color        = "rgba(000000bb)",
     },
     blur             = {
-      enabled    = false,
-      size       = 10,
+      enabled    = true,
+      size       = 12,
       passes     = 2,
-      noise      = 0.01,
+      noise      = 0.02,
       contrast   = 2.0,
-      brightness = 0.8,
+      brightness = 0.5,
       vibrancy   = 2.0,
-      special    = true,
-      popups     = true,
+      special    = false,
+      popups     = false,
     },
   },
   animations = {
@@ -119,7 +120,7 @@ hl.animation({ leaf = "windowsOut", enabled = true, speed = 1.5, bezier = "snapp
 hl.animation({ leaf = "border", enabled = true, speed = 10, bezier = "default" })
 hl.animation({ leaf = "borderangle", enabled = true, speed = 8, bezier = "default" })
 hl.animation({ leaf = "fade", enabled = true, speed = 3, bezier = "snappy" })
-hl.animation({ leaf = "workspaces", enabled = true, speed = 1.5, bezier = "snappy", style = "slide" })
+hl.animation({ leaf = "workspaces", enabled = true, speed = 2, bezier = "snappy", style = "slide" })
 hl.animation({ leaf = "global", enabled = true, speed = 5, bezier = "snappy" })
 hl.animation({ leaf = "layersIn", enabled = true, speed = 1.8, bezier = "snappy", style = "slide right" })
 hl.animation({ leaf = "layersOut", enabled = true, speed = 6, bezier = "snappy", style = "slide right" })
@@ -165,7 +166,8 @@ hl.bind(mainMod .. " + SHIFT + U", hl.dsp.exec_cmd("rofi -show Utils -modi 'Util
 
 ---- LAUNCHER / SESSION ----
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(terminal))
-hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("zen-beta"))
+-- hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("zen-beta"))
+hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
 hl.bind(mainMod .. " + SHIFT + F", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(menu))
@@ -322,7 +324,7 @@ hl.window_rule({
 
 hl.window_rule({
   name      = "force-current-ws",
-  match     = { class = "*" },
+  match     = { class = ".*" },
   workspace = "current"
 })
 

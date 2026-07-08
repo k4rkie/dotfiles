@@ -2,38 +2,67 @@
 set -e
 set -u
 
+# Single self-contained theme
+theme="$HOME/.config/rofi/powermenu.rasi"
+
 # Icons (Nerd Font)
-shutdown=$(printf '\Uf0425')
-reboot=$(printf '\Uf0709')
-lock=$(printf '\Uf033e')
-suspend=$(printf '\Uf04b2')
-logout=$(printf '\Uf0343')
-yes=$(printf '\Uf012c')
-no=$(printf '\Uf0156')
+shutdown='󰐥'
+reboot='󰜉'
+lock='󰍁'
+suspend='󰤄'
+logout='󰍃'
+yes='󰄬'
+no='󰅖'
 
 # System info
-uptime=$(uptime -p | sed 's/up //')
-host=$(hostname)
+format_uptime() {
+    local input="$1"
+    local output=""
 
-# Theme path
-theme="$HOME/.config/rofi/powermenu.rasi"
+    # Extract days
+    if [[ "$input" =~ ([0-9]+)[[:space:]]+days? ]]; then
+        output="${BASH_REMATCH[1]}d "
+        input=$(echo "$input" | sed -E 's/[0-9]+[[:space:]]+days?[[:space:]]*//')
+    fi
+
+    # Extract hours and minutes from HH:MM
+    if [[ "$input" =~ ([0-9]+):([0-9]+) ]]; then
+        local h=$((10#${BASH_REMATCH[1]}))
+        local m=$((10#${BASH_REMATCH[2]}))
+        [ "$h" -gt 0 ] && output="${output}${h}h "
+        [ "$m" -gt 0 ] && output="${output}${m}m"
+    # Extract minutes only
+    elif [[ "$input" =~ ([0-9]+)[[:space:]]+min ]]; then
+        output="${output}${BASH_REMATCH[1]}m"
+    fi
+
+    # Trim trailing spaces
+    echo "$output" | sed 's/ *$//'
+}
+
+raw_uptime=$(uptime | sed -n 's/.*up \([^,]*\),.*/\1/p' | sed 's/  */ /g')
+uptime=$(format_uptime "$raw_uptime")
+host=$(hostname)
 
 rofi_cmd() {
     rofi -dmenu \
-        -p "Uptime: $uptime" \
+        -p "Goodbye ${USER}" \
         -mesg "Uptime: $uptime" \
         -theme "$theme" \
         -window-title "powermenu"
 }
 
 confirm_cmd() {
-    rofi -theme-str 'window {location: center; anchor: center; fullscreen: false; width: 300px;}' \
-        -theme-str 'mainbox {children: [ "message", "listview" ];}' \
-        -theme-str 'listview {columns: 2; lines: 1;}' \
-        -dmenu \
+    rofi -dmenu \
         -p 'Confirmation' \
         -mesg 'Are you sure?' \
         -theme "$theme" \
+        -theme-str 'window { fullscreen: false; width: 500px; background-color: @background; }' \
+        -theme-str 'mainbox { children: [ "message", "listview" ]; margin: 0px; padding: 30px; spacing: 30px; }' \
+        -theme-str 'message { margin: 0px; padding: 20px; }' \
+        -theme-str 'listview { columns: 2; lines: 1; spacing: 30px; }' \
+        -theme-str 'element { padding: 60px 10px; background-color: @background-alt; }' \
+        -theme-str 'element-text { font: var(confirm-element-text-font); }' \
         -window-title "powermenu-confirm"
 }
 
@@ -42,7 +71,8 @@ confirm_exit() {
 }
 
 run_rofi() {
-    printf '%s\n%s\n%s\n%s\n%s\n' "$shutdown" "$reboot" "$lock" "$suspend" "$logout" | rofi_cmd
+    # Order matches adi1090x type-4 style-2: lock, suspend, logout, reboot, shutdown
+    printf '%s\n%s\n%s\n%s\n%s\n' "$lock" "$suspend" "$logout" "$reboot" "$shutdown" | rofi_cmd
 }
 
 run_cmd() {

@@ -46,7 +46,17 @@
 
       # Shell Integration
       shell_integration = "enabled no-cursor";
+
+      # Keymaps
+      "map ctrl+f" = "launch --type=overlay zsh -ic \"~/scripts/tmux-session-dispensary.sh\"";
     };
+  };
+
+  programs.fzf = {
+    enable = true;
+    changeDirWidgetCommand = "fd --type d";
+    changeDirWidgetOptions = [ "--preview 'tree -C {} | head -200'" ];
+    defaultCommand = "fd --type f";
   };
 
   home.packages = with pkgs; [
@@ -59,6 +69,7 @@
     neovim
     zed-editor
     obsidian
+    vscode
 
     # --- Web & Communications ---
     localsend
@@ -80,7 +91,6 @@
     yazi
     lazygit
     lazydocker
-    fzf
     fd
     ripgrep
     zoxide
@@ -89,6 +99,9 @@
     eza
     btop
     unzip
+    tree
+    delta
+    jq
 
     # --- Language Runtimes & Compilers ---
     nodejs

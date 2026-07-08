@@ -3,12 +3,12 @@
   border-radius: 0;
   min-height: 0;
   font-family: "ZedMono Nerd Font";
-  font-size: 13px;
+  font-size: 14px;
   padding: 0px;
 }
 
 window#waybar {
-  background: alpha(#030303, 0.95);
+  background: #030303;
   color: #5f8787;
   margin-left: 6px;
   margin-right: 6px;
@@ -61,7 +61,7 @@ tooltip {
   border-radius: 2px;
   min-width: 12px;
   padding: 0px 4px;
-  transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 #workspaces button.focused {
@@ -71,7 +71,7 @@ tooltip {
 }
 
 #workspaces button.active {
-  background: #7daea3;
+  background: #7D718F;
   color: #030303;
   border-radius: 2px;
   font-weight: bold;
@@ -132,7 +132,7 @@ tooltip {
 }
 
 #media {
-  color: #7daea3;
+  color: #7D718F;
   margin: 4px 0px 4px 6px;
 }
 

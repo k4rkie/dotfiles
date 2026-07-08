@@ -10,6 +10,15 @@ return {
       vim.lsp.config.nil_ls = {
         cmd = { "nil" },
         filetypes = { "nix" },
+        settings = {
+          ["nil"] = {
+            nix = {
+              flake = {
+                autoArchive = false,
+              },
+            },
+          },
+        },
       }
       vim.lsp.enable("nil_ls")
 

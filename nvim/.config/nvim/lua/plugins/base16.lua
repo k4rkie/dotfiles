@@ -25,7 +25,7 @@ return {
       -- base0D = "#888888",
       -- base0E = "#999999",
       -- base0F = "#444444",
-      --
+
       --Black Metal Venom
 
       -- base00 = "#000000",
@@ -47,44 +47,64 @@ return {
 
       --Black Metal Bathory
 
-      -- base00 = "#000000",
+      base00 = "#000000",
+      base01 = "#121212",
+      base02 = "#222222",
+      base03 = "#333333",
+      base04 = "#999999",
+      base05 = "#c1c1c1",
+      base06 = "#999999",
+      base07 = "#c1c1c1",
+      base08 = "#5f8787",
+      base09 = "#aaaaaa",
+      base0A = "#e78a53",
+      base0B = "#fbcb97",
+      base0C = "#aaaaaa",
+      base0D = "#888888",
+      base0E = "#999999",
+      base0F = "#444444",
+
+
+      --Black Metal Bathory Tweaked
+
+      base00 = "#030303",
+      base01 = "#080808",
+      base02 = "#121212",
+      base03 = "#333333",
+      base04 = "#999999",
+      base05 = "#c1c1c1",
+      base06 = "#999999",
+      base07 = "#c1c1c1",
+      base08 = "#7D718F",
+      base09 = "#aaaaaa",
+      base0A = "#e78a53",
+      base0B = "#d9af82",
+      base0C = "#aaaaaa",
+      base0D = "#696969",
+      base0E = "#999999",
+      base0F = "#444444",
+
+      --Black metal khold
+
+      -- base00 = "#030303",
       -- base01 = "#080808",
       -- base02 = "#121212",
       -- base03 = "#333333",
       -- base04 = "#999999",
-      -- base05 = "#c1c1c1",
+      -- base05 = "#d1d1d1",
       -- base06 = "#999999",
-      -- base07 = "#c1c1c1",
-      -- base08 = "#5f8787",
-      -- base09 = "#aaaaaa",
-      -- base0A = "#e78a53",
-      -- base0B = "#fbcb97",
-      -- base0C = "#aaaaaa",
-      -- base0D = "#888888",
-      -- base0E = "#999999",
-      -- base0F = "#444444",
-      --
-      --Black metal khold
-
-      -- base00 = "#080808",
-      -- base01 = "#121212",
-      -- base02 = "#222222",
-      -- base03 = "#333333",
-      -- base04 = "#999999",
-      -- base05 = "#c1c1c1",
-      -- base06 = "#999999",
-      -- base07 = "#c1c1c1",
-      -- base08 = "#5f8787",
+      -- base07 = "#d1d1d1",
+      -- base08 = "#806D93",
       -- base09 = "#aaaaaa",
       -- base0A = "#974b46",
-      -- base0B = "#eceee3",
+      -- base0B = "#E3C5A5",
       -- base0C = "#aaaaaa",
-      -- base0D = "#888888",
-      -- base0E = "#999999",
+      -- base0D = "#696969",
+      -- base0E = "#aaaaaa",
       -- base0F = "#444444",
-      --
+
       -- Black Metal (Dark Funeral)
-      --
+
       -- base00 = "#000000",
       -- base01 = "#000000",
       -- base02 = "#222222",
@@ -142,22 +162,22 @@ return {
 
       -- Base16 Bark
 
-      base00 = "#030303",
-      base01 = "#080808",
-      base02 = "#2b2b2b",
-      base03 = "#505050",
-      base04 = "#b0b0b0",
-      base05 = "#d0d0d0",
-      base06 = "#e0e0e0",
-      base07 = "#fafafa",
-      base08 = "#ab4642",
-      base09 = "#dc9656",
-      base0A = "#f7ca88",
-      base0B = "#a1b56c",
-      base0C = "#86c1b9",
-      base0D = "#7cafc2",
-      base0E = "#ba8baf",
-      base0F = "#a16946",
+      -- base00 = "#030303",
+      -- base01 = "#080808",
+      -- base02 = "#2b2b2b",
+      -- base03 = "#505050",
+      -- base04 = "#b0b0b0",
+      -- base05 = "#d0d0d0",
+      -- base06 = "#e0e0e0",
+      -- base07 = "#fafafa",
+      -- base08 = "#ab4642",
+      -- base09 = "#dc9656",
+      -- base0A = "#f7ca88",
+      -- base0B = "#a1b56c",
+      -- base0C = "#86c1b9",
+      -- base0D = "#7cafc2",
+      -- base0E = "#ba8baf",
+      -- base0F = "#a16946",
 
     })
   end,

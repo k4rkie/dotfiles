@@ -10,9 +10,8 @@ return {
   require("plugins.colorhighlight"),
   require("plugins.telescope"),
   require("plugins.oil"),
-  -- require("plugins.rendermarkdown"),
+  require("plugins.rendermarkdown"),
   require("plugins.conform"),
   require("plugins.luasnip"),
-  require("plugins.markdownpreview"),
   require("plugins.terminal"),
 }

@@ -8,6 +8,8 @@ vim.keymap.set("n", "<leader>rr", ":restart<CR>", { desc = "Restart Nvim" })
 
 vim.keymap.set("n", "<C-e>", ":Oil<CR>", { desc = "Open oil in cwd" })
 
+vim.keymap.set("n", "<C-h>", ":%s/", { desc = "Open search and replace" })
+
 vim.keymap.set("n", "<A-l>", ":tabn<CR>", { desc = "Switch to next tab" })
 vim.keymap.set("n", "<A-h>", ":tabp<CR>", { desc = "Switch to pervious tab" })
 

@@ -32,10 +32,28 @@ if tmux has-session -t "$selected" 2>/dev/null; then
 else
     # It's a folder, so do the usual path logic
     full_path="$HOME/$selected"
+    full_path="${full_path%/}"
     selected_name=$(basename "$full_path" | tr . _)
     
     if ! tmux has-session -t "$selected_name" 2>/dev/null; then
         tmux new-session -ds "$selected_name" -c "$full_path"
+
+        if [[ -f "$full_path/.tmux-windows" ]]; then
+            while IFS= read -r line; do
+                [[ -z "$line" || "$line" =~ ^[[:space:]]*# ]] && continue
+                if [[ "$line" == *:* ]]; then
+                    win_name="${line%%:*}"
+                    win_dir="${line#*:}"
+                    win_dir="${win_dir# }"
+                else
+                    win_name="$line"
+                    win_dir="."
+                fi
+                [[ "$win_dir" == "." ]] && win_path="$full_path" || win_path="$full_path/$win_dir"
+                tmux new-window -t "$selected_name" -n "$win_name" -c "$win_path"
+            done < "$full_path/.tmux-windows"
+            tmux kill-window -t "$selected_name:1"
+        fi
     fi
 fi
 

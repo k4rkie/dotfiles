@@ -3,7 +3,7 @@
     enable = true;
     polarity = "dark";
 
-    base16Scheme = ./colors/bark.yaml;
+    base16Scheme = ./colors/black-metal-bathory-tweaked.yaml;
 
     cursor = {
       package = pkgs.adwaita-icon-theme;
@@ -20,16 +20,22 @@
 
     fonts = {
       monospace = {
-        package = pkgs.nerd-fonts.zed-mono;
-        name = "ZedMono Nerd Font";
+        # package = pkgs.nerd-fonts.iosevka-term;
+        # name = "IosevkaTerm Nerd Font";
+
+        # package = pkgs.nerd-fonts.jetbrains-mono;
+        # name = "JetBrainsMono Nerd Font";
+
+        package = pkgs.nerd-fonts.fira-code;
+        name = "FiraCode Nerd Font";
       };
       sansSerif = config.stylix.fonts.monospace;
       serif = config.stylix.fonts.monospace;
       sizes = {
-        terminal = 15;
-        applications = 12;
-        desktop = 12;
-        popups = 12;
+        terminal = 16;
+        applications = 13;
+        desktop = 13;
+        popups = 13;
       };
     };
   };

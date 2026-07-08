@@ -5,7 +5,6 @@
 # 1. Enable color support for prompt
 autoload -U colors && colors
 
-fastfetch
 
 # -------------------------------
 # 2. History Settings (smart and shared)
@@ -62,7 +61,7 @@ precmd() { vcs_info }
 zstyle ':vcs_info:git:*' formats '(󰘬 %b) '
 
 # 4. Set the prompt (ensure you use single quotes here)
-PROMPT='%F{#7daea3}%~%f ${vcs_info_msg_0_}%kλ '
+PROMPT='%F{#7D718F}%~%f ${vcs_info_msg_0_}%kλ '
 # -------------------------------
 # 6. Aliases
 # -------------------------------
@@ -148,3 +147,6 @@ export PATH=/home/k4rkie/.nimble/bin:$PATH
 
 # Added by Antigravity CLI installer
 export PATH="/home/k4rkie/.local/bin:$PATH"
+
+# Fzf bindings
+eval "$(fzf --zsh)"

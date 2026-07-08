@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
 
-# 1. Give Rofi 0.2 seconds to completely disappear before capturing the screen
-sleep 0.2 
-
 dir=$HOME/Pictures/Screenshots
 mkdir -p "$dir"
 file="$dir/screenshot_$(date +%F_%T).png"
 
-# 2. Extract the blocking logic into a separate function so we can background it easily
+# Background the actual capture so rofi can close immediately.
+# The delay inside the function lets rofi's fade-out animation finish
+# before grim grabs the screen. Increase this if you still see a ghost.
 capture_screenshot() {
+    sleep 0.6
+
     if [[ "$1" == "region" ]]; then
         grim -g "$(slurp)" "$file" || exit 1
     elif [[ "$1" == "window" ]]; then
@@ -20,5 +21,4 @@ capture_screenshot() {
     notify-send "Screenshot captured" "$(basename "$file")" -i "$file"
 }
 
-# 3. Call the function with your argument, redirect output, and push it to the background!
 capture_screenshot "$1" >/dev/null 2>&1 &
