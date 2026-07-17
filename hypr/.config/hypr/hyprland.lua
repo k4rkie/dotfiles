@@ -3,7 +3,7 @@ local mainMod     = "SUPER"
 local terminal    = "kitty"
 local fileManager = "thunar"
 local menu        = "rofi -show"
-local browser     = "appimage-run /home/k4rkie/Applications/helium-0.13.6.1-x86_64.AppImage"
+local browser     = "zen-beta"
 
 hl.env("XCURSOR_THEME", "Adwaita")
 hl.env("XCURSOR_SIZE", "24")
@@ -60,7 +60,7 @@ hl.layer_rule({
 hl.layer_rule({
   name         = "no-blur-waybar",
   match        = { namespace = "waybar" },
-  blur         = false,
+  blur         = true,
   ignore_alpha = 0,
   animation    = "slide bottom"
 })
@@ -74,8 +74,8 @@ hl.layer_rule({
 ---- GENERAL ----
 hl.config({
   general = {
-    gaps_in     = 5,
-    gaps_out    = 10,
+    gaps_in     = 6,
+    gaps_out    = 8,
     border_size = 2,
     col         = {
       active_border   = "rgb(7D718F)",
@@ -84,9 +84,9 @@ hl.config({
     layout      = "dwindle",
   },
   decoration = {
-    rounding         = 1,
-    active_opacity   = 1,
-    inactive_opacity = 0.95,
+    rounding         = 0,
+    active_opacity   = 0.95,
+    inactive_opacity = 0.90,
     shadow           = {
       enabled      = false,
       range        = 12,
@@ -166,7 +166,6 @@ hl.bind(mainMod .. " + SHIFT + U", hl.dsp.exec_cmd("rofi -show Utils -modi 'Util
 
 ---- LAUNCHER / SESSION ----
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(terminal))
--- hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("zen-beta"))
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
 hl.bind(mainMod .. " + SHIFT + F", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.window.close())

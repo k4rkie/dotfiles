@@ -26,16 +26,19 @@
         # package = pkgs.nerd-fonts.jetbrains-mono;
         # name = "JetBrainsMono Nerd Font";
 
-        package = pkgs.nerd-fonts.fira-code;
-        name = "FiraCode Nerd Font";
+        # package = pkgs.nerd-fonts.fira-code;
+        # name = "FiraCode Nerd Font";
+
+        package = pkgs.maple-mono.NF;
+        name = "Maple Mono NF";
       };
       sansSerif = config.stylix.fonts.monospace;
       serif = config.stylix.fonts.monospace;
       sizes = {
-        terminal = 16;
-        applications = 13;
-        desktop = 13;
-        popups = 13;
+        terminal = 18;
+        applications = 14;
+        desktop = 14;
+        popups = 14;
       };
     };
   };

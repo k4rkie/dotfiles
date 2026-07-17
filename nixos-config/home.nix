@@ -121,5 +121,7 @@
 
     # --- Misc Desktop Tools ---
     tesseract
+
+    quickshell
   ];
 }

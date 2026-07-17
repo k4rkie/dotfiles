@@ -2,21 +2,23 @@
   border: none;
   border-radius: 0;
   min-height: 0;
-  font-family: "ZedMono Nerd Font";
+  font-family: "IosevkaTerm Nerd Font";
   font-size: 14px;
   padding: 0px;
 }
 
 window#waybar {
-  background: #030303;
+  background: alpha( #030303, 0.95 );
   color: #5f8787;
   margin-left: 6px;
   margin-right: 6px;
   margin-bottom: 6px;
+  border-radius: 0px;
 }
 
 window#waybar>box {
   padding: 0px;
+  border-radius: 6px;
 }
 
 tooltip {
@@ -58,24 +60,30 @@ tooltip {
   color: #121212;
   background: #121212;
   margin: 3px 2px;
-  border-radius: 2px;
-  min-width: 12px;
+  border-radius: 3px;
+  min-width: 10px;
   padding: 0px 4px;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid transparent;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#workspaces button:hover {
+  background: #1a1a1a;
+  color: #5f8787;
 }
 
 #workspaces button.focused {
   background: transparent;
   color: #030303;
-  border-radius: 2px;
 }
 
 #workspaces button.active {
-  background: #7D718F;
+  background: #a2a59e;
   color: #030303;
-  border-radius: 2px;
   font-weight: bold;
-  padding: 0px 14px;
+  padding: 0px 10px;
+  min-width: 18px;
+  border: 1px solid #9a8ba8;
 }
 
 #custom-os {

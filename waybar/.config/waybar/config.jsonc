@@ -3,11 +3,10 @@
   "position": "bottom",
   "reload_style_on_change": true,
   "height": 18,
-  "margin-bottom": 0,
   "modules-left": [
     "custom/os",
-    "clock"
-    // "group/media"
+    "clock",
+    "group/media"
   ],
   "modules-center": [
     "hyprland/workspaces"
@@ -101,10 +100,11 @@
     "on-click": "~/scripts/rofi-wifi-menu.sh"
   },
   "custom/os": {
-    "format": "",
+    "format": "󱄅",
     "interval": "once",
     "tooltip": true,
-    "tooltip-format": "NixOS, btw"
+    "tooltip-format": "NixOS, btw",
+    "on-click": "xdg-open https://search.nixos.org/packages"
   },
   "custom/notifications": {
     "tooltip": true,
@@ -142,6 +142,25 @@
     "signal": 8,
     "tooltip": false
   },
+  "group/sysmon": {
+    "orientation": "horizontal",
+    "drawer": {
+      "transition-duration": 200,
+      "transition-left-to-right": true,
+      "children-class": "sysmon-child"
+    },
+    "modules": [
+      "custom/sysmon-icon",
+      "cpu",
+      "memory"
+    ]
+  },
+  "custom/sysmon-icon": {
+    "format": "",
+    "tooltip": true,
+    "tooltip-format": "System monitor"
+  },
+
   "group/media": {
     "orientation": "horizontal",
     "modules": [

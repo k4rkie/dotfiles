@@ -16,7 +16,7 @@ configuration {
 
     /* Fonts */
     font:                        "ZedMono Nerd Font 12";
-    prompt-font:                 "ZedMono Nerd Font Bold 72";
+    prompt-font:                 "ZedMono Nerd Font Bold 68";
     textbox-font:                "ZedMono Nerd Font 14";
     element-text-font:           "ZedMono Nerd Font 42";
     confirm-element-text-font:   "ZedMono Nerd Font 42";
