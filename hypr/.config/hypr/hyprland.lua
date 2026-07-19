@@ -88,9 +88,9 @@ hl.config({
     active_opacity   = 0.95,
     inactive_opacity = 0.90,
     shadow           = {
-      enabled      = false,
+      enabled      = true,
       range        = 12,
-      render_power = 4,
+      render_power = 3,
       color        = "rgba(000000bb)",
     },
     blur             = {
@@ -316,6 +316,14 @@ hl.window_rule({
 hl.window_rule({
   name   = "float-btop",
   match  = { class = "btop" },
+  float  = true,
+  center = true,
+  size   = "1200 800",
+})
+
+hl.window_rule({
+  name   = "center-file-picker-portal",
+  match  = { class = "xdg-desktop-portal-gtk" },
   float  = true,
   center = true,
   size   = "1200 800",

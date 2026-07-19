@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
-dir=$HOME/Pictures/Screenshots
-mkdir -p "$dir"
-file="$dir/screenshot_$(date +%F_%T).png"
+# Capture to /tmp first so a confirm menu can preview before saving.
+tmp_dir="/tmp/rofi-screenshots"
+mkdir -p "$tmp_dir"
+file="$tmp_dir/shot_$(date +%F_%H-%M-%S).png"
 
-# Background the actual capture so rofi can close immediately.
+# Background the actual capture so rofi (utils-menu) can close immediately.
 # The delay inside the function lets rofi's fade-out animation finish
 # before grim grabs the screen. Increase this if you still see a ghost.
 capture_screenshot() {
@@ -18,7 +19,8 @@ capture_screenshot() {
         grim "$file" || exit 1
     fi
 
-    notify-send "Screenshot captured" "$(basename "$file")" -i "$file"
+    # Hand off to the confirm menu (handles save / copy / discard / cleanup).
+    ~/scripts/rofi-screenshot-confirm.sh "$file" &
 }
 
 capture_screenshot "$1" >/dev/null 2>&1 &

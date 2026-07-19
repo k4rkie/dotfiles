@@ -91,6 +91,11 @@
 
   programs.nix-ld.enable = true;
 
+  programs.nh = {
+    enable = true;
+    flake = "/home/k4rkie/dotfiles/nixos-config";
+  };
+
   programs.xfconf.enable = true;
 
   programs.appimage = {

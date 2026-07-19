@@ -10,8 +10,7 @@
     stateVersion = "26.05";
   };
 
-  # Disable Stylix targets that you manage manually
-  stylix.targets.hyprland.enable = false;
+  # Disable Stylix targets that you manage manually stylix.targets.hyprland.enable = false;
   stylix.targets.waybar.enable = false;
   stylix.targets.neovim.enable = false;
 
@@ -102,6 +101,7 @@
     tree
     delta
     jq
+    wallust
 
     # --- Language Runtimes & Compilers ---
     nodejs

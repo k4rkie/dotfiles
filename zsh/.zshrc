@@ -79,7 +79,7 @@ alias please='sudo $(fc -ln -1)'
 alias reload="source ~/.zshrc"
 alias air='~/go/bin/air'
 
-alias rebuild="sudo nixos-rebuild switch --flake ~/dotfiles/nixos-config#nixxer"
+alias switch="nh os switch"
 alias edit-nix="nvim ~/dotfiles/nixos-config/configuration.nix"
 alias add-pkgs="nvim ~/dotfiles/nixos-config/packages.nix"
 

@@ -1,9 +1,27 @@
 #!/usr/bin/env bash
 
-MUSIC_DIR="$HOME/Music"
 CACHE_DIR="$HOME/.cache/mpd-notify"
 mkdir -p "$CACHE_DIR"
 prev=""
+
+fetch_cover() {
+    cover="$CACHE_DIR/cover.img"
+    if rmpc albumart --output "$cover" >/dev/null 2>&1 && [ -s "$cover" ]; then
+        return 0
+    fi
+    rm -f "$cover"
+    cover=""
+    return 1
+}
+
+notify() {
+    local summary="$1" body="$2"
+    if [ -n "$cover" ] && [ -s "$cover" ]; then
+        notify-send "$summary" "$body" --icon "$cover"
+    else
+        notify-send "$summary" "$body"
+    fi
+}
 
 while true; do
     mpc idle player > /dev/null 2>&1
@@ -18,23 +36,18 @@ while true; do
 
     case "$state" in
         playing)
-            rel=$(mpc current -f "%file%")
-            file="$MUSIC_DIR/$rel"
-            [ ! -f "$file" ] && file="/var/lib/mpd/music/$rel"
-            if [ -f "$file" ]; then
-                cover="$CACHE_DIR/cover.jpg"
-                ffmpeg -y -i "$file" -an -vcodec copy "$cover" 2>/dev/null
-                if [ -s "$cover" ]; then
-                    notify-send "Now Playing" "$title" --icon "$cover"
-                else
-                    notify-send "Now Playing" "$title"
-                fi
+            if fetch_cover; then
+                notify "Now Playing" "$title"
             else
-                notify-send "Now Playing" "$title"
+                notify "Now Playing" "$title"
             fi
             ;;
         paused)
-            notify-send "Music Paused" "$title" --icon "$cover"
+            if fetch_cover; then
+                notify "Music Paused" "$title"
+            else
+                notify "Music Paused" "$title"
+            fi
             ;;
     esac
 done

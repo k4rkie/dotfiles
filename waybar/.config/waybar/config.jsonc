@@ -4,7 +4,6 @@
   "reload_style_on_change": true,
   "height": 18,
   "modules-left": [
-    "custom/os",
     "clock",
     "group/media"
   ],
@@ -16,7 +15,7 @@
     "cpu",
     "pulseaudio",
     "battery",
-    "custom/caffeine",
+    // "custom/caffeine",
     "custom/notifications",
     "tray",
   ],
