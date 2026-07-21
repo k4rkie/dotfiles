@@ -19,7 +19,7 @@ exec --no-startup-id nm-applet
 exec_always --no-startup-id blueman-applet
 exec --no-startup-id swaync
 exec --no-startup-id swayosd-server
-exec_always --no-startup-id swaybg -i "$(cat ~/.config/hypr/current_wallpaper 2>/dev/null || echo '/home/k4rkie/Pictures/Wallhaven/sea_sky_clouds_sand_beach_beacon_sunset_purple.jpg')" -m fill
+exec_always --no-startup-id swaybg -i "$(awk -F'\"' '/return/ {print $2}' ~/.config/hypr/modules/wallpaper.lua 2>/dev/null || echo '/home/k4rkie/Pictures/Wallhaven/sea_sky_clouds_sand_beach_beacon_sunset_purple.jpg')" -m fill
 exec_always --no-startup-id wlsunset -l 27.7006 -L 83.4484 -t 3800 -T 6500
 exec_always --no-startup-id gsettings set org.gnome.desktop.interface font-name 'FiraCode Nerd Font 11'
 exec_always --no-startup-id gsettings set org.gnome.desktop.interface gtk-theme 'Void'

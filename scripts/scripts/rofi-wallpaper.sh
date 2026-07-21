@@ -2,8 +2,6 @@
 
 WALL_DIR="$HOME/Pictures/Wallhaven"
 ENTRIES_CACHE="$HOME/.cache/wallpapers-menu/entries"
-WALL_FILE="$HOME/.config/hypr/current_wallpaper"
-
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 # First run: build cache synchronously (slow, unavoidable)
@@ -22,7 +20,11 @@ if [[ -n "$chosen" ]]; then
         swaybg -i "$selected" -m fill &
 
         abs=$(realpath "$selected")
-        echo "$abs" > "$WALL_FILE"
+        cat <<EOF > "$HOME/.config/hypr/modules/wallpaper.lua"
+-- Current wallpaper path. Set by ~/scripts/rofi-wallpaper.sh
+-- Read by modules/autostart.lua at hyprland start.
+return "$abs"
+EOF
 
         sed -i "/^background {/,/^}/s|path = .*|path = $abs|" "$HOME/.config/hypr/hyprlock.conf"
         pkill -USR2 hyprlock 2>/dev/null

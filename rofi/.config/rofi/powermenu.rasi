@@ -8,7 +8,7 @@ configuration {
     foreground:                  rgba(193, 193, 193, 100%);
     selected:                    rgba(125, 113, 143, 100%);
 
-    background-window:           rgba(8, 8, 8, 10%);
+    background-window:           rgba(8, 8, 8, 40%);
     background-normal:           rgba(193, 193, 193, 5%);
     background-selected:         var(selected);
     foreground-normal:           var(foreground);
