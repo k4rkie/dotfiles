@@ -65,6 +65,14 @@ hl.window_rule({
 })
 
 hl.window_rule({
+  name   = "float-satty",
+  match  = { class = "com.gabm.satty" },
+  float  = true,
+  center = true,
+  size   = "1250 800",
+})
+
+hl.window_rule({
   name      = "force-current-ws",
   match     = { class = ".*" },
   workspace = "current",
@@ -79,3 +87,4 @@ hl.window_rule({
 
 -- Workspace rules
 hl.workspace_rule({ workspace = "7", gaps_in = 8, gaps_out = 100 })
+

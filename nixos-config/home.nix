@@ -121,6 +121,7 @@
 
     # --- Misc Desktop Tools ---
     tesseract
+    satty
 
     quickshell
   ];

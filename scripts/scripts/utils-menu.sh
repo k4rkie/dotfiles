@@ -3,22 +3,22 @@
 if [ $# -eq 0 ]; then
   echo -e "\0prompt\x1fUtils\n"
   echo -e "\0no-custom\x1ftrue\n"
-  echo -e "Screenshot Full\n"
-  echo -e "Screenshot Region\n"
-  echo -e "Screenshot Window\n"
-  echo -e "Tessaract (OCR)\n"
+  echo -e " Screenshot Full\n"
+  echo -e "󰩬 Screenshot Region\n"
+  echo -e " Screenshot Window\n"
+  echo -e "󱉶 Tessaract (OCR)\n"
 else
   case "$1" in
-    "Screenshot Full")
+    " Screenshot Full")
       ~/scripts/screenshot.sh
       ;;
-    "Screenshot Region")
+    "󰩬 Screenshot Region")
       ~/scripts/screenshot.sh region
       ;;
-    "Screenshot Window")
+    " Screenshot Window")
       ~/scripts/screenshot.sh window
       ;;
-    "Tessaract (OCR)")
+    "󱉶 Tessaract (OCR)")
       ~/scripts/ocr-clip.sh
       ;;
   esac
