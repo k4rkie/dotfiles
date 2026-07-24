@@ -4,11 +4,10 @@
   "reload_style_on_change": true,
   "height": 18,
   "modules-left": [
-    "clock",
-    "group/media"
+    "hyprland/workspaces",
   ],
   "modules-center": [
-    "hyprland/workspaces"
+    "clock",
   ],
   "modules-right": [
     "memory",
@@ -24,7 +23,7 @@
     "spacing": 4
   },
   "clock": {
-    "format": "{:%I:%M %p}",
+    "format": "󱦟 {:%I:%M %p}",
     "interval": 60,
     "tooltip": true,
     "tooltip-format": "󰨲 {:%A %B %d}",
@@ -58,18 +57,18 @@
     }
   },
   "memory": {
-    "format": "mem:{}%",
+    "format": " {}%",
     "tooltip": "false",
     "on-click": "kitty --class btop btop",
   },
   "cpu": {
-    "format": "cpu:{usage}%",
+    "format": " {usage}%",
     "tooltip": "false",
     "on-click": "kitty --class btop btop",
   },
   "pulseaudio": {
-    "format": "vol:{volume}%",
-    "format-muted": "vol: {volume}%",
+    "format": "󰕾 {volume}%",
+    "format-muted": "  {volume}%",
     "scroll-step": 1,
     "on-click": "pavucontrol"
   },
@@ -78,10 +77,10 @@
       "warning": 30,
       "critical": 15
     },
-    "format": "bat:{capacity}%",
-    "format-charging": "pow:{capacity}%",
-    "format-plugged": "pow:{capacity}%",
-    "format-full": "pow:{capacity}%",
+    "format": " {capacity}%",
+    "format-charging": " {capacity}%",
+    "format-plugged": " {capacity}%",
+    "format-full": " {capacity}%",
   },
   "custom/recording": {
     "exec": "/home/k4rkie/scripts/wf-status.sh",

@@ -545,7 +545,7 @@ Item {
         anchors.centerIn: parent
         text:             "󰺝 clipboard is empty.."
         font.pixelSize:   14; font.bold: true
-        font.family:      "JetBrainsMono Nerd Font"
+        font.family:      "Maple Mono NF"
         color:            PanelColors.textDim
         visible:          root.filteredClipboard.length === 0 && !clipboardProc.running
     }

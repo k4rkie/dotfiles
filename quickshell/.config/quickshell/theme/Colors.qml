@@ -121,8 +121,7 @@ Singleton {
     readonly property color orangeA200: "#ffab40"
     readonly property color orangeA400: "#ff9100"
     readonly property color orangeA700: "#ff6d00"
-
-    readonly property color deepOrange50:   "#fbe9e7"
+readonly property color deepOrange50:   "#fbe9e7"
     readonly property color deepOrange100:  "#ffccbc"
     readonly property color deepOrange200:  "#ffab91"
     readonly property color deepOrange300:  "#ff8a65"

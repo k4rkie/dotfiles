@@ -20,6 +20,13 @@
   "hide-on-clear": false,
   "hide-on-action": false,
   "script-fail-notify": true,
+  "scripts": {
+    "notification-sound": {
+      "exec": "pw-play ~/.config/swaync/sounds/notification.mp3",
+      "app-name": ".*",
+      "run-on": "receive"
+    }
+  },
   "widgets": [
     "dnd",
     "notifications"

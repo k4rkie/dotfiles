@@ -23,6 +23,13 @@ hl.gesture({
   action    = "workspace",
 })
 
+-- hl.gesture({
+--   fingers = 3,
+--   direction = "vertical",
+--   action = function()
+--     hl.exec_cmd("quickshell ipc call launcher toggle")
+--   end
+-- })
+
 hl.env("XCURSOR_THEME", "Adwaita")
 hl.env("XCURSOR_SIZE", "24")
-

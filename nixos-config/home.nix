@@ -39,9 +39,9 @@
       cursor_blink_interval = 0;
 
       # Cursor Trail
-      cursor_trail = 10;
-      cursor_trail_start_threshold = 0;
-      cursor_trail_decay = "0.05 0.20";
+      # cursor_trail = 10;
+      # cursor_trail_start_threshold = 0;
+      # cursor_trail_decay = "0.05 0.20";
 
       # Shell Integration
       shell_integration = "enabled no-cursor";

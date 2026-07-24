@@ -34,6 +34,7 @@ hl.layer_rule({
   blur      = true,
   animation = "fade",
 })
+
 hl.layer_rule({
   match     = { namespace = "quickshell" },
   animation = "slide bottom",

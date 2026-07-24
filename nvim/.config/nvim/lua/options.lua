@@ -153,7 +153,3 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 
 -- Disable logging the diagnostics
 vim.lsp.log.set_level("OFF")
-
--- Minimal separator between line numbers/signs and editor text
-vim.api.nvim_set_hl(0, "LineNrSeparator", { fg = "#555555" })
-vim.opt.statuscolumn = "%s%{printf('%3d', v:relnum ? v:relnum : v:lnum)}%#LineNrSeparator# │ "

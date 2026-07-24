@@ -2,28 +2,37 @@
 hl.config({
   general    = {
     gaps_in     = 4,
-    gaps_out    = 10,
-    border_size = 0,
+    gaps_out    = 8,
+    border_size = 2,
     col         = {
-      active_border   = "rgb(7D718F)",
+      active_border   = "rgb(7D71aF)",
       inactive_border = "rgb(202020)",
     },
-    layout      = "dwindle",
+    layout      = "scrolling",
+    hl.config({
+      scrolling = {
+        column_width = 0.8,
+        focus_fit_method = 1
+      }
+    })
   },
   decoration = {
-    rounding         = 2,
-    active_opacity   = 0.92,
+
+    rounding         = 0,
+    active_opacity   = 0.94,
     inactive_opacity = 0.88,
+
     shadow           = {
-      enabled      = true,
-      range        = 13,
+      enabled      = false,
+      range        = 10,
       render_power = 3,
-      color        = "rgba(000000bb)",
+      color        = "rgba(00000099)",
     },
+
     blur             = {
       enabled           = true,
-      size              = 4,
-      passes            = 4,
+      size              = 6,
+      passes            = 3,
       ignore_opacity    = true,
 
       noise             = 0.08,
@@ -56,11 +65,12 @@ hl.curve("smooth", { type = "bezier", points = { { 0.5, 0.0 }, { 0.5, 1.0 } } })
 
 -- Animation overrides
 hl.animation({ leaf = "windows", enabled = true, speed = 1.5, bezier = "snappy", style = "popin" })
-hl.animation({ leaf = "windowsOut", enabled = true, speed = 1.5, bezier = "snappy", style = "popin" })
-hl.animation({ leaf = "border", enabled = true, speed = 10, bezier = "default" })
-hl.animation({ leaf = "borderangle", enabled = true, speed = 8, bezier = "default" })
-hl.animation({ leaf = "fade", enabled = true, speed = 3, bezier = "snappy" })
-hl.animation({ leaf = "workspaces", enabled = true, speed = 2, bezier = "snappy", style = "slide" })
-hl.animation({ leaf = "global", enabled = true, speed = 5, bezier = "snappy" })
+hl.animation({ leaf = "windowsIn", enabled = true, speed = 1.2, bezier = "snappy", style = "popin" })
+hl.animation({ leaf = "windowsOut", enabled = true, speed = 1.2, bezier = "snappy", style = "popin" })
+hl.animation({ leaf = "border", enabled = true, speed = 1.8, bezier = "default" })
+hl.animation({ leaf = "borderangle", enabled = true, speed = 1.8, bezier = "default" })
+hl.animation({ leaf = "fade", enabled = true, speed = 1.8, bezier = "snappy" })
+hl.animation({ leaf = "workspaces", enabled = true, speed = 1.4, bezier = "snappy", style = "slide" })
+hl.animation({ leaf = "global", enabled = true, speed = 1.5, bezier = "snappy" })
 hl.animation({ leaf = "layersIn", enabled = true, speed = 1.8, bezier = "snappy", style = "slide right" })
-hl.animation({ leaf = "layersOut", enabled = true, speed = 6, bezier = "snappy", style = "slide right" })
+hl.animation({ leaf = "layersOut", enabled = true, speed = 1.8, bezier = "snappy", style = "slide right" })
