@@ -7,9 +7,11 @@ hl.on("hyprland.start", function()
   hl.exec_cmd("hyprpolkitagent")
 
   -- --- shell/bar/notifications/OSD ---
+  hl.exec_cmd("quickshell")
   hl.exec_cmd("waybar")
   hl.exec_cmd("swaync")
   hl.exec_cmd("swayosd-server")
+  hl.exec_cmd("awww-daemon")
 
   -- --- idle/notification helpers ---
   hl.exec_cmd("hypridle")
@@ -24,7 +26,6 @@ hl.on("hyprland.start", function()
   if not ok or type(wall_path) ~= "string" or wall_path == "" then
     wall_path = "/home/k4rkie/Pictures/Wallhaven/sea_sky_clouds_sand_beach_beacon_sunset_purple.jpg"
   end
-  hl.exec_cmd("swaybg -i " .. wall_path .. " -m fill")
+  hl.exec_cmd("sleep 0.5 && awww img " .. wall_path .. " --transition-type none")
   hl.exec_cmd("wlsunset -l 27.7006 -L 83.4484 -t 3800 -T 6500")
 end)
-

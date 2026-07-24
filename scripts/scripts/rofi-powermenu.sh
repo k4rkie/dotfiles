@@ -49,7 +49,7 @@ rofi_cmd() {
         -p "Goodbye ${USER}" \
         -mesg "Uptime: $uptime" \
         -theme "$theme" \
-        -window-title "powermenu"
+        -window-title "powermenu" 
 }
 
 confirm_cmd() {
@@ -63,7 +63,7 @@ confirm_cmd() {
         -theme-str 'listview { columns: 2; lines: 1; spacing: 30px; }' \
         -theme-str 'element { padding: 60px 10px; background-color: @background-alt; }' \
         -theme-str 'element-text { font: var(confirm-element-text-font); }' \
-        -window-title "powermenu-confirm"
+        -window-title "powermenu-confirm" 
 }
 
 confirm_exit() {

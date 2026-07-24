@@ -15,9 +15,9 @@
     "cpu",
     "pulseaudio",
     "battery",
-    // "custom/caffeine",
+    "custom/caffeine",
     "custom/notifications",
-    "tray",
+    "tray"
   ],
   "tray": {
     "icon-size": 18,
@@ -28,7 +28,7 @@
     "interval": 60,
     "tooltip": true,
     "tooltip-format": "󰨲 {:%A %B %d}",
-    "on-click": "{calander}"
+    "on-click": "gsimplecal"
   },
   "hyprland/workspaces": {
     "format": "{icon}",
@@ -141,25 +141,10 @@
     "signal": 8,
     "tooltip": false
   },
-  "group/sysmon": {
-    "orientation": "horizontal",
-    "drawer": {
-      "transition-duration": 200,
-      "transition-left-to-right": true,
-      "children-class": "sysmon-child"
-    },
-    "modules": [
-      "custom/sysmon-icon",
-      "cpu",
-      "memory"
-    ]
+  "custom/separator": {
+    "format": "/",
+    "tooltip": false,
   },
-  "custom/sysmon-icon": {
-    "format": "",
-    "tooltip": true,
-    "tooltip-format": "System monitor"
-  },
-
   "group/media": {
     "orientation": "horizontal",
     "modules": [

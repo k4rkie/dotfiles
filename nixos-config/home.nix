@@ -102,6 +102,10 @@
     delta
     jq
     wallust
+    awww
+    ffmpeg
+    yt-dlp
+    woomer
 
     # --- Language Runtimes & Compilers ---
     nodejs
@@ -124,5 +128,10 @@
     satty
 
     quickshell
+
+    rofimoji
+
+    qalculate-gtk
+    gsimplecal
   ];
 }

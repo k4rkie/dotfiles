@@ -6,7 +6,7 @@
   },
   "terminal": {
     "font_family": "Maple Mono NF",
-    "font_size": 20.0,
+    "font_size": 22.0,
     "button": false,
   },
   "agent": {
@@ -51,8 +51,8 @@
   },
   "ui_font_family": "Maple Mono NF",
   "buffer_font_family": "Maple Mono NF",
-  "ui_font_size": 20.0,
-  "buffer_font_size": 20.0,
+  "ui_font_size": 22.0,
+  "buffer_font_size": 22.0,
   "window_decorations": "server",
   "toolbar": {
     "code_actions": false,

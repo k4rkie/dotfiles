@@ -79,9 +79,11 @@ alias please='sudo $(fc -ln -1)'
 alias reload="source ~/.zshrc"
 alias air='~/go/bin/air'
 
-alias switch="nh os switch"
+alias switch="sudo nixos-rebuild switch --flake ~/dotfiles/nixos-config#nixxer"
 alias edit-nix="nvim ~/dotfiles/nixos-config/configuration.nix"
 alias add-pkgs="nvim ~/dotfiles/nixos-config/packages.nix"
+
+alias ytd='yt-dlp --cookies-from-browser firefox --extractor-args "youtube:player_client=web_safari" -f "bestvideo[height<=1080]+bestaudio/best" --remux-video mp4 --embed-metadata -o "%(uploader)s - %(title)s.%(ext)s"'
 
 # -------------------------------
 #  PATH variables

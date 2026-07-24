@@ -1,16 +1,14 @@
 @import "~/.config/rofi/colors-rofi-dark.rasi"
 configuration {
-	modi:                       "drun";
+	  modi:                       "drun";
     show-icons:                 true;
     icon-theme:                 "Papirus-Dark";
-    display-drun:               "Apps";
-    display-run:                "Run";
-    run-shell-command: "/usr/bin/zsh -c '{cmd}'";
-	drun-display-format:        "{name} [<span weight='light' size='small'><i>({generic})</i></span>]";
-	window-format:              "{w} · {c} · {t}";
+    display-drun:               "  Apps";
+    display-filebrowser:        "  Files";
+    drun-display-format:        "{name}";
 }
 *{
-    font : "ZedMono Nerd Font 12";
+    font : "ZedMono Nerd Font 13.5";
 }
 window {
     /* properties for window widget */
@@ -26,15 +24,16 @@ window {
     enabled:                     true;
     margin:                      0px;
     padding:                     6px;
-    border:                      0px solid;
-    border-radius:               4px;
+    border:                      2px solid;
+    border-color:                #7b708e;
+    border-radius:               2px;
     cursor:                      "default";
 }
 /*****----- Listview -----*****/
 listview {
     enabled:                     true;
     columns:                     1;
-    lines:                       5;
+    lines:                       6;
     cycle:                       true;
     dynamic:                     true;
     scrollbar:                   false;
@@ -48,4 +47,9 @@ listview {
     border:                      0px solid;
     border-radius:               4px;
     cursor:                      "default";
+}
+
+entry {
+    placeholder: "Search...";
+    placeholder-color: #6c708688;
 }

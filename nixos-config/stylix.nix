@@ -20,15 +20,6 @@
 
     fonts = {
       monospace = {
-        # package = pkgs.nerd-fonts.iosevka-term;
-        # name = "IosevkaTerm Nerd Font";
-
-        # package = pkgs.nerd-fonts.jetbrains-mono;
-        # name = "JetBrainsMono Nerd Font";
-
-        # package = pkgs.nerd-fonts.fira-code;
-        # name = "FiraCode Nerd Font";
-
         package = pkgs.maple-mono.NF;
         name = "Maple Mono NF";
       };

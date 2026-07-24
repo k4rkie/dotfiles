@@ -4,7 +4,7 @@
     "source": "~/.config/fastfetch/nixos.png",
     "type": "kitty-direct",
   "height": 8,
-  "width": 16,
+  "width": 18,
   "padding": {
     "top": 1,
     "left": 2

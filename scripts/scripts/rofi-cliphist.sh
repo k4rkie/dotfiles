@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-selection=$(cliphist list | rofi -dmenu -p "Clipboard" -display-columns 2 \
+selection=$(cliphist list | rofi -dmenu -p "  Clipboard" -display-columns 2 \
   -kb-custom-1 "Alt+d")
 
 case $? in

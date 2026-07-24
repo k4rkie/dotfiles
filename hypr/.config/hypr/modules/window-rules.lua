@@ -65,6 +65,14 @@ hl.window_rule({
 })
 
 hl.window_rule({
+  name   = "float-qalculate",
+  match  = { class = "qalculate-gtk" },
+  float  = true,
+  center = true,
+  size   = "1250 800",
+})
+
+hl.window_rule({
   name   = "float-satty",
   match  = { class = "com.gabm.satty" },
   float  = true,
@@ -85,6 +93,11 @@ hl.window_rule({
   workspace = "1",
 })
 
+hl.window_rule({
+  name   = "mpv",
+  match  = { class = "mpv" },
+  opaque = true,
+})
+
 -- Workspace rules
 hl.workspace_rule({ workspace = "7", gaps_in = 8, gaps_out = 100 })
-

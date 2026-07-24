@@ -16,8 +16,7 @@ chosen=$(rofi -dmenu -theme ~/.config/rofi/wallpaper.rasi -p "Wallpaper" < "$ENT
 if [[ -n "$chosen" ]]; then
     selected=$(find "$WALL_DIR" -maxdepth 1 -type f -name "$chosen" | head -1)
     if [[ -n "$selected" ]]; then
-        killall swaybg 2>/dev/null
-        swaybg -i "$selected" -m fill &
+        awww img "$selected" --transition-type random
 
         abs=$(realpath "$selected")
         cat <<EOF > "$HOME/.config/hypr/modules/wallpaper.lua"

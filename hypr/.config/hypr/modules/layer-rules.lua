@@ -22,7 +22,7 @@ hl.layer_rule({
 })
 
 hl.layer_rule({
-  name         = "no-blur-waybar",
+  name         = "blur-waybar",
   match        = { namespace = "waybar" },
   blur         = true,
   ignore_alpha = 0,
@@ -33,4 +33,8 @@ hl.layer_rule({
   match     = { namespace = "rofi" },
   blur      = true,
   animation = "fade",
+})
+hl.layer_rule({
+  match     = { namespace = "quickshell" },
+  animation = "slide bottom",
 })

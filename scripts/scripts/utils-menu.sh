@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [ $# -eq 0 ]; then
-  echo -e "\0prompt\x1fUtils\n"
+  echo -e "\0prompt\x1f  Utils\n"
   echo -e "\0no-custom\x1ftrue\n"
   echo -e " Screenshot Full\n"
   echo -e "󰩬 Screenshot Region\n"

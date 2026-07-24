@@ -11,6 +11,8 @@
 window {
     location:           center;
     width:              780px;
+    border:             2px solid;
+    border-color:       #7b708e;
     border-radius:      4px;
     background-color:   @background;
     padding:            12px;
