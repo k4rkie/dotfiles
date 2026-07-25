@@ -88,6 +88,10 @@
   programs.dconf.enable = true;
 
   programs.hyprland.enable = true;
+  programs.sway = {
+    enable = true;
+    extraPackages = [ ]; # using my own packages from packages.nix
+  };
 
   programs.nix-ld.enable = true;
 

@@ -71,7 +71,7 @@ vim.api.nvim_set_hl(0, "TelescopePromptCounter", { bg = prompt_bg })
 
 
 -- Built-In tabline config
-vim.o.showtabline = 2
+vim.o.showtabline = 0
 
 -- set the tabline to a Lua function
 vim.o.tabline = "%!v:lua.tabline()"

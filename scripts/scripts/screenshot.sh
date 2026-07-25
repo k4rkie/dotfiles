@@ -16,7 +16,7 @@ capture_screenshot() {
         fi
     elif [[ "$1" == "window" ]]; then
         sleep 0.3 # Small delay to let rofi close and focus return to underlying window
-        grim -t ppm -g "$(hyprctl activewindow -j | jq -r '"\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"')" "$tmp" && satty --filename "$tmp" &
+        grim -t ppm -g "$(swaymsg -t get_tree | jq -r '.. | select(.focused? == true) | .rect | "\(.x),\(.y) \(.width)x\(.height)"')" "$tmp" && satty --filename "$tmp" &
     else
         sleep 0.3 # Small delay to let rofi fade out completely
         grim -t ppm "$tmp" && satty --filename "$tmp" &

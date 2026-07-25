@@ -90,9 +90,9 @@ PanelWindow {
     // ── Panel width ───────────────────────────────────────────────────────
     readonly property int panelWidth: {
         if (wallpaperMode) return 900
-        if (clipboardMode) return 600
+        if (clipboardMode) return 480
         if (emojiMode)     return 400
-        return isGridView  ? 740 : 600
+        return isGridView  ? 740 : 480
     }
 
     // ── App filter ────────────────────────────────────────────────────────
@@ -157,7 +157,7 @@ PanelWindow {
     Connections {
         target: LauncherState
         function onVisibleChanged() {
-            root.animState = LauncherState.visible ? "open" : "closing"
+            root.animState = LauncherState.visible ? "open" : "closed"
             if (LauncherState.visible) {
                 appView.closeHiddenMenu()
                 if (root.appModeActive) filterTimer.restart()
@@ -251,12 +251,8 @@ PanelWindow {
         radius: 4
         color:        PanelColors.popupBackground
         Behavior on color { ColorAnimation { duration: PanelColors.transitionDuration } }
-        border.color: PanelColors.rowBackground
-        Behavior on border.color { ColorAnimation { duration: PanelColors.transitionDuration } }
-        border.width: 4
-
-        opacity:   0.0
-        transform: Translate { id: panelSlide; y: 28 }
+        border.color: "#7b708e"
+        border.width: 2
 
         HoverHandler {
             onHoveredChanged: {
@@ -266,51 +262,6 @@ PanelWindow {
                 }
             }
         }
-
-        states: [
-            State {
-                name: "open";    when: root.animState === "open"
-                PropertyChanges { target: panel;      opacity: 1.0 }
-                PropertyChanges { target: panelSlide; y: 0         }
-            },
-            State {
-                name: "closing"; when: root.animState === "closing"
-                PropertyChanges { target: panel;      opacity: 0.0 }
-                PropertyChanges { target: panelSlide; y: 28        }
-            }
-        ]
-
-        transitions: [
-            Transition {
-                to: "open"
-                SequentialAnimation {
-                    // Snap width and height to their current binding values
-                    // before the panel becomes visible. This prevents the
-                    // morph animation when reopening after a different-sized
-                    // mode was last active (e.g. wallpaper 900px → normal 600px).
-                    PropertyAction  { target: panel;      property: "width"   }
-                    PropertyAction  { target: panel;      property: "height"  }
-                    PropertyAction  { target: panelSlide; property: "y";       value: 28  }
-                    PropertyAction  { target: panel;      property: "opacity"; value: 0.0 }
-                    ParallelAnimation {
-                        NumberAnimation { target: panelSlide; property: "y";       to: 0;   duration: 280; easing.type: Easing.OutExpo  }
-                        NumberAnimation { target: panel;      property: "opacity"; to: 1.0; duration: 200; easing.type: Easing.OutCubic }
-                    }
-                }
-            },
-            Transition {
-                to: "closing"
-                SequentialAnimation {
-                    ParallelAnimation {
-                        NumberAnimation { target: panelSlide; property: "y";       to: 28;  duration: 180; easing.type: Easing.InCubic }
-                        NumberAnimation { target: panel;      property: "opacity"; to: 0.0; duration: 150; easing.type: Easing.InCubic }
-                    }
-                    // animState "closed" triggers _switchMode(all false) via onAnimStateChanged,
-                    // so modes are cleared only after the panel is invisible.
-                    ScriptAction { script: root.animState = "closed" }
-                }
-            }
-        ]
 
         Column {
             id: panelColumn

@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }:
 {
@@ -37,11 +38,6 @@
       # Cursor Appearance
       cursor_shape = "block";
       cursor_blink_interval = 0;
-
-      # Cursor Trail
-      # cursor_trail = 10;
-      # cursor_trail_start_threshold = 0;
-      # cursor_trail_decay = "0.05 0.20";
 
       # Shell Integration
       shell_integration = "enabled no-cursor";
@@ -133,5 +129,15 @@
 
     qalculate-gtk
     gsimplecal
+    libinput-gestures
   ];
+
+  systemd.user.services.libinput-gestures = {
+    Unit.Description = "libinput-gestures";
+    Service = {
+      ExecStart = "${pkgs.libinput-gestures}/bin/libinput-gestures";
+      Restart = "always";
+    };
+    Install.WantedBy = [ "graphical-session.target" ];
+  };
 }

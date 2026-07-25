@@ -4,14 +4,23 @@ set $mod Mod4
 
 font pango:FiraCode Nerd Font 11
 
+# Cursor theme
+seat seat0 xcursor_theme Adwaita 24
+
 # Input
 input * {
     xkb_options caps:escape
 }
 
 input "type:touchpad" {
+    tap enabled
+    tap_button_map lrm
     natural_scroll enabled
     drag_lock enabled
+    dwt enabled
+    click_method clickfinger
+    scroll_method two_finger
+    middle_emulation enabled
 }
 
 # Autostart
@@ -29,6 +38,8 @@ exec_always --no-startup-id sed -i 's/gtk-icon-theme-name="hicolor"/gtk-icon-the
 exec --no-startup-id ~/scripts/mpd-notify.sh
 exec --no-startup-id wl-paste --type text --watch cliphist store
 exec --no-startup-id wl-paste --type image --watch cliphist store
+exec --no-startup-id hypridle
+exec --no-startup-id quickshell
 
 bar {
     swaybar_command waybar
@@ -52,19 +63,20 @@ bindsym $mod+Shift+u exec rofi -show Utils -modi 'Utils:~/scripts/utils-menu.sh'
 
 # Launcher / Session
 bindsym $mod+Return exec kitty
-bindsym $mod+b exec /opt/zen/zen-bin
+bindsym $mod+b exec zen-beta
 bindsym $mod+Shift+f exec thunar
 bindsym $mod+Shift+q kill
-bindsym $mod+d exec rofi -show
-bindsym $mod+Escape exec ~/scripts/rofi-powermenu
+bindsym $mod+d exec "quickshell ipc call launcher toggle"
+bindsym $mod+v exec "quickshell ipc call launcher openClipboard"
+bindsym $mod+w exec "quickshell ipc call launcher openWallpaper"
+bindsym $mod+Shift+e exec "quickshell ipc call launcher openEmoji"
+bindsym $mod+Escape exec ~/scripts/rofi-powermenu.sh
 bindsym $mod+p exec hyprpicker -a -n
 bindsym $mod+Shift+s exec ~/scripts/rofi-sessionizer.sh
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+w exec killall -SIGUSR1 waybar
-bindsym $mod+v exec ~/scripts/rofi-cliphist.sh
 bindsym $mod+period exec ~/scripts/rofi-emoji.sh
-bindsym $mod+w exec ~/scripts/rofi-wallpaper.sh
-bindsym $mod+Shift+e exec rofimoji --keybinding-copy Alt+Return --max-recent 3 --prompt "Emoji"
+bindsym $mod+Control+l exec hyprlock
 
 # Focus movement (h left, j down, k up, l right)
 bindsym $mod+h focus left
@@ -147,21 +159,23 @@ bindsym $mod+r mode "resize"
 for_window [app_id="pavucontrol"] floating enable, move position center
 for_window [app_id="blueman-manager"] floating enable, move position center
 for_window [app_id="qalculate-gtk"] floating enable, move position center
+for_window [app_id="xdg-desktop-portal-gtk"] floating enable, move position center
+for_window [app_id="com.gabm.satty"] floating enable, move position center
 for_window [app_id="imv"] floating enable, move position center
 for_window [app_id="rmpc"] floating enable, move position center
 for_window [app_id="btop"] floating enable, move position center
 
 
 # Gaps
-gaps inner 4
-gaps outer 8
+gaps inner 0
+gaps outer 0
 
 # Borders
-default_border pixel 0
-default_floating_border pixel 0
+default_border pixel 2
+default_floating_border pixel 2
 
-# Colors
-client.focused #58796c #58796c #111111 #58796c #58796c
+# Colors (matches Hyprland: active=#d9af82, inactive=#202020)
+client.focused #d9af82 #d9af82 #111111 #d9af82 #d9af82
 client.focused_inactive #202020 #202020 #888888 #202020 #202020
 client.unfocused #202020 #202020 #888888 #202020 #202020
 

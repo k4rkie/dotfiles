@@ -26,7 +26,7 @@
       sansSerif = config.stylix.fonts.monospace;
       serif = config.stylix.fonts.monospace;
       sizes = {
-        terminal = 18;
+        terminal = 16;
         applications = 14;
         desktop = 14;
         popups = 14;
