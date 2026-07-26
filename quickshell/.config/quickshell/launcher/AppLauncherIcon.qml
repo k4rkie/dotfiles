@@ -226,7 +226,7 @@ Item {
     Rectangle {
         anchors.fill:    parent
         anchors.margins: root.launcherIsGridView ? 8 : 0
-        radius: 4
+        radius: 2
         color: (root.launcherSelectedIdx === root.delegateIndex || root._isHovered || ctxMenu.isOpen)
                    ? Qt.rgba(1, 1, 1, 0.08)
                    : "transparent"
@@ -373,7 +373,7 @@ Item {
             width:          parent.width
             implicitHeight: menuCol.implicitHeight + padding * 2
             height:         implicitHeight
-            radius: 4
+            radius: 2
             color:          PanelColors.popupBackground
             border.color:   PanelColors.border
             border.width:   2
@@ -426,7 +426,7 @@ Item {
 
                         Rectangle {
                             anchors.fill: parent
-                            radius: 4
+                            radius: 2
                             color: rowMouse.containsMouse
                                 ? Qt.lighter(PanelColors.rowBackground, 1.15)
                                 : PanelColors.rowBackground

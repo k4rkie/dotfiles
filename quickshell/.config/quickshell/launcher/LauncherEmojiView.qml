@@ -131,7 +131,7 @@ Item {
 
             Rectangle {
                 anchors { fill: parent; margins: 2 }
-                radius: 4
+                radius: 2
                 // No Behavior here — animating color on 50+ cells simultaneously
                 // (during scroll or keyboard navigation) causes significant frame drops.
                 color:        emojiMouse.containsMouse || index === grid.currentIndex

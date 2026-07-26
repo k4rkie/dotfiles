@@ -2,12 +2,16 @@ return {
   'nvim-lualine/lualine.nvim',
   dependencies = { 'nvim-tree/nvim-web-devicons' },
   config = function()
+    local base16 = require('lualine.themes.base16')
+    local c = '#7D718F'
+    base16.normal.a = { bg = c, fg = '#030303' }
+    base16.normal.z = { bg = c, fg = '#030303' }
     require('lualine').setup {
       options = {
         icons_enabled = true,
-        theme = "base16",
-        component_separators = { left = '|', right = '|' },
-        section_separators = { left = '', right = '' },
+        theme = base16,
+        component_separators = { left = '', right = '' },
+        section_separators = { left = '', right = '' },
         disabled_filetypes = {
           statusline = {},
           winbar = {},
@@ -37,7 +41,7 @@ return {
       },
       sections = {
         lualine_a = { 'mode' },
-        lualine_b = { 'diff', 'diagnostics' },
+        lualine_b = { 'diagnostics' },
         lualine_c = { 'filename' },
         lualine_x = { 'filesize' },
         lualine_y = { 'lsp_status' },

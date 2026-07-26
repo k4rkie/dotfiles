@@ -211,7 +211,7 @@ Item {
         anchors.centerIn: parent
         width:  320
         height: confirmCol.implicitHeight + 32
-        radius: 4
+        radius: 2
         color:  PanelColors.popupBackground
         border.color: PanelColors.border
         border.width: 2
@@ -257,7 +257,7 @@ Item {
                 Rectangle {
                     width:  130
                     height: 34
-                    radius: 4
+                    radius: 2
                     color:  cancelMouse.containsMouse
                                 ? Qt.lighter(PanelColors.rowBackground, 1.15)
                                 : PanelColors.rowBackground
@@ -285,7 +285,7 @@ Item {
                 Rectangle {
                     width:  130
                     height: 34
-                    radius: 4
+                    radius: 2
                     color:  deleteAllMouse.containsMouse
                                 ? PanelColors.error
                                 : PanelColors.rowBackground
@@ -349,7 +349,7 @@ Item {
             onModelDataChanged: isDeletingItem = false
 
             width:  list.width
-            height: isDeletingItem ? 0 : (isImg ? list.imageRowH : rowText.implicitHeight + 20)
+            height: isDeletingItem ? 0 : (isImg ? list.imageRowH : rowText.implicitHeight + 14)
             clip:   true
 
             Behavior on height { NumberAnimation { duration: 250; easing.type: Easing.InOutQuad } }
@@ -374,7 +374,7 @@ Item {
             Item {
                 id: contentItem
                 width: parent.width
-                height: isImg ? list.imageRowH : rowText.implicitHeight + 20
+                height: isImg ? list.imageRowH : rowText.implicitHeight + 14
 
                 x: delegateItem.isDeletingItem ? -width : 0
                 opacity: delegateItem.isDeletingItem ? 0 : 1
@@ -385,7 +385,7 @@ Item {
                 Rectangle {
                     id: rowRect
                     anchors { fill: parent; leftMargin: 4; rightMargin: 4 }
-                    radius: 4
+                    radius: 2
                     color: isSelected
                                ? Qt.rgba(1, 1, 1, 0.10)
                                : rowHover.containsMouse
@@ -414,7 +414,7 @@ Item {
                         Rectangle {
                             anchors.fill: parent
                             color:        PanelColors.rowBackground
-                            radius: 4
+                            radius: 2
                             visible:      clipImg.status !== Image.Ready
                         }
 
@@ -479,7 +479,7 @@ Item {
                         visible: rowHover.containsMouse || deleteBtnMouse.containsMouse
                         width:   26
                         height:  26
-                        radius: 4
+                        radius: 2
                         anchors {
                             right:          parent.right
                             rightMargin:    6

@@ -24,7 +24,7 @@ vim.opt.scrolloff = 8
 vim.opt.sidescrolloff = 8
 
 vim.opt.cursorline = true
-vim.opt.signcolumn = "yes"
+vim.opt.signcolumn = "number"
 
 vim.opt.splitright = true
 vim.opt.splitbelow = true
@@ -152,4 +152,4 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 })
 
 -- Disable logging the diagnostics
-vim.lsp.log.set_level("OFF")
+-- vim.lsp.log.set_level("OFF")

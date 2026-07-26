@@ -248,10 +248,10 @@ PanelWindow {
         x: Math.round((parent.width  - width)  / 2)
         y: Math.round((parent.height - height) / 2)
 
-        radius: 4
+        radius: 2
         color:        PanelColors.popupBackground
         Behavior on color { ColorAnimation { duration: PanelColors.transitionDuration } }
-        border.color: "#7b708e"
+        border.color: "#7d718f"
         border.width: 2
 
         HoverHandler {
@@ -268,7 +268,7 @@ PanelWindow {
             anchors { top: parent.top; left: parent.left; right: parent.right; topMargin: 14; leftMargin: 10; rightMargin: 10; bottomMargin: 10 }
             spacing: 8
 
-            readonly property int rowH:    42
+            readonly property int rowH:    36
             readonly property int maxRows: 6
 
             // ── Search bar ────────────────────────────────────────────────
@@ -428,7 +428,7 @@ PanelWindow {
                 id:    clipboardView
                 width: parent.width
 
-                height:  root.clipboardMode ? 360 : 0
+                height:  root.clipboardMode ? 260 : 0
                 clip:    true
                 visible: height > 0
                 opacity: root.clipboardMode ? 1.0 : 0.0
@@ -552,7 +552,7 @@ PanelWindow {
                             width: 136; height: 132
                             Rectangle {
                                 anchors { fill: parent; margins: 8 }
-                                radius: 4
+                                radius: 2
                                 color: gridHiddenHover.containsMouse || hiddenAppsView.selectedIndex === index
                                        ? Qt.rgba(1,1,1,0.08) : "transparent"
                                 Behavior on color { ColorAnimation { duration: 150 } }
@@ -607,7 +607,7 @@ PanelWindow {
                             width: ListView.view.width; height: 44
                             Rectangle {
                                 anchors { fill: parent; leftMargin: 4; rightMargin: 4 }
-                                radius: 4
+                                radius: 2
                                 color: hiddenRowHover.containsMouse || hiddenAppsView.selectedIndex === index
                                        ? PanelColors.rowBackground : "transparent"
                                 Behavior on color { ColorAnimation { duration: 120 } }
@@ -712,7 +712,7 @@ PanelWindow {
                 Repeater {
                     model: root.totalPages
                     Rectangle {
-                        width: 8; height: 8; radius: 4
+                        width: 8; height: 8; radius: 2
                         color: index === root.currentPage ? PanelColors.launcher : PanelColors.border
                         Behavior on color { ColorAnimation { duration: 150 } }
                         MouseArea {

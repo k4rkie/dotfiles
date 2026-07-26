@@ -4,10 +4,12 @@
   "reload_style_on_change": true,
   "height": 18,
   "modules-left": [
-    "hyprland/workspaces",
+    "custom/os",
+    "clock",
+    "group/media"
   ],
   "modules-center": [
-    "clock",
+    "hyprland/workspaces",
   ],
   "modules-right": [
     "memory",
@@ -46,21 +48,21 @@
     "all-outputs": false,
     "format-icons": {
       // 1-10
-      "1": "A",
-      "2": "B",
-      "3": "C",
-      "4": "D",
-      "5": "E",
-      "6": "F",
-      "7": "G",
-      "8": "H",
-      "9": "I",
-      "10": "J"
+      "1": "1",
+      "2": "2",
+      "3": "3",
+      "4": "4",
+      "5": "5",
+      "6": "6",
+      "7": "7",
+      "8": "8",
+      "9": "9",
+      "10":"10"
     },
     "persistent-workspaces": {
-      "1": "A",
-      "2": "B",
-      "3": "C",
+      "1": "1",
+      "2": "2",
+      "3": "3",
     }
   },
   "memory": {
@@ -107,9 +109,8 @@
   "custom/os": {
     "format": "󱄅",
     "interval": "once",
-    "tooltip": true,
-    "tooltip-format": "NixOS, btw",
-    "on-click": "xdg-open https://search.nixos.org/packages"
+    "tooltip": false,
+    "on-click": "quickshell ipc call launcher toggle"
   },
   "custom/notifications": {
     "tooltip": true,

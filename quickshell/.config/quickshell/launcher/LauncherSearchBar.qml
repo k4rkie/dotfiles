@@ -30,8 +30,8 @@ Rectangle {
     function clear()            { input.text = "" }
 
     // ── Appearance ────────────────────────────────────────────────────────
-    height: 42
-    radius: 4
+    height: 36
+    radius: 2
     color:  PanelColors.textBox
     Behavior on color { ColorAnimation { duration: PanelColors.transitionDuration } }
 
@@ -56,7 +56,7 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
             height: 26
             width:  pillLabel.implicitWidth + 16
-            radius: 4
+            radius: 2
             color:  PanelColors.rowBackground
             Behavior on color { ColorAnimation { duration: PanelColors.transitionDuration } }
 
@@ -79,7 +79,7 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
             height: 26
             width:  rightPillLabel.implicitWidth + 16
-            radius: 4
+            radius: 2
             color:  (rightPillMouse.containsMouse && !root.rightPillDisabled)
                         ? (root.rightPillDestructive ? PanelColors.error
                                                      : Qt.lighter(PanelColors.rowBackground, 1.15))

@@ -9,6 +9,7 @@ DIRS=(
     "$HOME/dev/C"
     "$HOME/dev/C/graphics"
     "$HOME/dev/JS"
+    "$HOME/dev/Rust"
     "$HOME/dotfiles"
 )
 
@@ -18,7 +19,7 @@ else
     selected=$({
         tmux list-sessions -F "#S" 2>/dev/null
         fd . "${DIRS[@]}" --type=dir --max-depth=1 --full-path --base-directory "$HOME" | sed "s|^$HOME/||"
-    } | grep -v '^$' | fzf --color=bw --height=70% --margin=10%,20%,20%,20% --layout=reverse --info=hidden --scheme=path)
+    } | grep -v '^$' | fzf --color=bw --height=100% --margin=25%,25%,25%,25% --layout=reverse --info=right --scheme=path --border=sharp --color=base16 --no-scrollbar --gutter=' ')
 fi
 
 [[ ! $selected ]] && exit 0

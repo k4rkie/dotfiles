@@ -1,14 +1,14 @@
 -- General layout, decoration (opacity/blur/shadow), animations + curves.
 hl.config({
   general    = {
-    gaps_in     = 0,
-    gaps_out    = 0,
+    gaps_in     = 3.5,
+    gaps_out    = 8,
     border_size = 2,
     col         = {
-      active_border   = "rgb(d9af82)",
+      active_border   = "rgb(7D718F)",
       inactive_border = "rgb(202020)",
     },
-    layout      = "master",
+    layout      = "scrolling",
     hl.config({
       scrolling = {
         column_width = 0.8,
@@ -32,7 +32,7 @@ hl.config({
     blur             = {
       enabled           = true,
       size              = 6,
-      passes            = 1,
+      passes            = 2,
       ignore_opacity    = true,
 
       noise             = 0.08,
@@ -48,7 +48,7 @@ hl.config({
     },
   },
   animations = {
-    enabled = true,
+    enabled = false,
   },
   misc       = {
     force_default_wallpaper = 0,
@@ -64,13 +64,12 @@ hl.curve("snappy", { type = "bezier", points = { { 0.05, 0.9 }, { 0.1, 1.05 } } 
 hl.curve("smooth", { type = "bezier", points = { { 0.5, 0.0 }, { 0.5, 1.0 } } })
 
 -- Animation overrides
-hl.animation({ leaf = "windows", enabled = true, speed = 1.4, bezier = "smooth", style = "popin" })
-hl.animation({ leaf = "windowsIn", enabled = true, speed = 1.4, bezier = "smooth", style = "popin" })
-hl.animation({ leaf = "windowsOut", enabled = true, speed = 1.4, bezier = "smooth", style = "popin" })
+hl.animation({ leaf = "windowsIn", enabled = true, speed = 1, bezier = "smooth", style = "popin" })
+hl.animation({ leaf = "windowsOut", enabled = true, speed = 1.2, bezier = "smooth", style = "popin" })
 hl.animation({ leaf = "border", enabled = true, speed = 1.8, bezier = "default" })
 hl.animation({ leaf = "borderangle", enabled = true, speed = 1.8, bezier = "default" })
 hl.animation({ leaf = "fade", enabled = true, speed = 1.2, bezier = "smooth" })
-hl.animation({ leaf = "workspaces", enabled = false, speed = 1.2, bezier = "smooth", style = "slide" })
+hl.animation({ leaf = "workspaces", enabled = true, speed = 1, bezier = "smooth", style = "slide" })
 hl.animation({ leaf = "global", enabled = true, speed = 1.5, bezier = "smooth" })
 hl.animation({ leaf = "layersIn", enabled = true, speed = 1.8, bezier = "smooth", style = "slide right" })
 hl.animation({ leaf = "layersOut", enabled = true, speed = 1.5, bezier = "smooth", style = "slide right" })

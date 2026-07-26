@@ -9,7 +9,7 @@ Item {
     signal dismissed()
 
     // ── Layout constants ─────────────────────────────────────────────────
-    readonly property int  rowHeight:    44
+    readonly property int  rowHeight:    36
     readonly property int  rowRadius:    4
     readonly property int  rowSpacing:   2
     readonly property int  fontSizeRow:  16

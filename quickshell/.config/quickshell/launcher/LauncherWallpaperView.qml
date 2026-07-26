@@ -279,7 +279,7 @@ Item {
 
             Rectangle {
                 anchors { fill: parent; margins: 4 }
-                radius: 4
+                radius: 2
                 color:  isHovered || isSelected ? Qt.rgba(1, 1, 1, 0.10) : "transparent"
                 Behavior on color { ColorAnimation { duration: 120 } }
 
@@ -297,7 +297,7 @@ Item {
                         Rectangle {
                             anchors.fill: parent
                             color:        PanelColors.rowBackground
-                            radius: 4
+                            radius: 2
                             visible:      thumbImg.status !== Image.Ready
                         }
 
@@ -320,7 +320,7 @@ Item {
                         Rectangle {
                             anchors.fill: parent
                             color:        "transparent"
-                            radius: 4
+                            radius: 2
                             border.color: isHovered || isSelected ? PanelColors.launcher : PanelColors.border
                             border.width: 2
                             Behavior on border.color { ColorAnimation { duration: 120 } }
@@ -336,7 +336,7 @@ Item {
                             }
                             width:  badgeLabel.implicitWidth + 10
                             height: 20
-                            radius: 4
+                            radius: 2
                             color:  PanelColors.rowBackground
 
                             Text {
