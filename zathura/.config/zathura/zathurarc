@@ -1,8 +1,8 @@
 set recolor true
-set recolor-lightcolor "#040408"
+set recolor-lightcolor "#030303"
 set recolor-darkcolor "#aaaaaa"
 
-set statusbar-bg "#040408"
+set statusbar-bg "#030303"
 set statusbar-fg "#aaaaaa"
 
 set font "Maple Mono NF 12"

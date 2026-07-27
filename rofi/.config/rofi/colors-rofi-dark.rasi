@@ -1,37 +1,37 @@
 * {
     /* Base colors */
-    background: #040408;          
-    background-color: #040408;
+    background: #030303;          
+    background-color: #030303;
     foreground: #c1c1c1;         
-    border-color: #040408;
+    border-color: #030303;
     spacing: 2;
 
     /* States */
     active-background: #7fa563;   /* subtle green accent */
-    active-foreground: #040408;
+    active-foreground: #030303;
 
-    normal-background: #040408;
+    normal-background: #030303;
     normal-foreground: #c1c1c1;
 
     urgent-background: #d8647e;  /* red for urgent */
-    urgent-foreground: #040408;
+    urgent-foreground: #030303;
 
     /* Selected (highlighted) entries */
     selected-active-background: #7fa563;  /* same as active */
-    selected-active-foreground: #040408;
+    selected-active-foreground: #030303;
 
-    selected-normal-background: #7d718f; /* slightly lighter for normal selection */
-    selected-normal-foreground: #040408;
+    selected-normal-background: #686868; /* slightly lighter for normal selection */
+    selected-normal-foreground: #030303;
     selected-urgent-background: #d8647e;
-    selected-urgent-foreground: #040408;
+    selected-urgent-foreground: #030303;
 
     /* Optional alternates for subtle row differences */
-    alternate-normal-background: #040408;
+    alternate-normal-background: #030303;
     alternate-normal-foreground: #c1c1c1;
     alternate-active-background: #7fa563;
-    alternate-active-foreground: #040408;
+    alternate-active-foreground: #030303;
     alternate-urgent-background: #d8647e;
-    alternate-urgent-foreground: #040408;
+    alternate-urgent-foreground: #030303;
 
 }
 
@@ -77,7 +77,7 @@
 }
 
 #element {
-    border-radius: 2px;
+    border-radius: 0px;
     padding: 4px 8px;
     margin: 2px;
 }

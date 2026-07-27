@@ -2,6 +2,7 @@
 // Images dir : ~/Pictures/Wallpapers  (.jpg .jpeg .png .webp .gif .jxl .bmp .tiff .tga .webp .avif .pnm .farbfeld .svg)
 // Videos dir : ~/Videos/Wallpapers    (.mp4 .mkv .webm .mov .avi .flv .wmv .ts .m4v .ogv)
 // Thumbnails  : cached in ~/.cache/quickshell/wallpaper-thumbs/ via ffmpeg
+// Lockscreen  : current frame cached at ~/.cache/quickshell/lockscreen.png
 // Daemon      : awww-daemon for images/gifs; mpvpaper for videos (ALL outputs)
 // State       : last wallpaper persisted to ~/.cache/quickshell/last-wallpaper for restore on login
 
@@ -211,8 +212,11 @@ Item {
         command: ["true"]
 
         function apply(path, mediaType) {
-            var p    = path.replace(/'/g, "'\\''")
-            var lock = "\"$HOME/.config/quickshell/lockscreen/wallpaper.png\""
+            var p        = path.replace(/'/g, "'\\''")
+            var home     = Quickshell.env("HOME")
+            var cacheDir = home + "/.cache/quickshell"
+            var lockImg  = cacheDir + "/lockscreen.png"
+            var lock     = "\"" + lockImg + "\""
             var script
 
             if (mediaType === "video") {
@@ -220,8 +224,8 @@ Item {
                     "pkill -x awww-daemon 2>/dev/null; " +
                     "pkill -x mpvpaper 2>/dev/null; " +
                     "while pgrep -x 'mpvpaper|awww-daemon' > /dev/null; do sleep 0.05; done; " +
-                    "mkdir -p \"$HOME/.cache/quickshell\"; " +
-                    "echo 'video:" + p + "' > \"$HOME/.cache/quickshell/last-wallpaper\"; " +
+                    "mkdir -p \"" + cacheDir + "\"; " +
+                    "echo 'video:" + p + "' > \"" + cacheDir + "/last-wallpaper\"; " +
                     // Extract frame at 1s → lockscreen wallpaper (runs in background, non-blocking)
                     "ffmpeg -y -ss 00:00:01 -i '" + p + "' -vframes 1 " + lock + " >/dev/null 2>&1 & " +
                     "mpvpaper -f -p -o '--loop-file=inf --no-audio --hwdec=auto' ALL '" + p + "'"
@@ -232,10 +236,19 @@ Item {
                     "awww query >/dev/null 2>&1 || { awww-daemon &>/dev/null & " +
                     "for i in $(seq 1 20); do sleep 0.1 && awww query >/dev/null 2>&1 && break; done; }; " +
                     "awww img \"$p\" --transition-type random; " +
-                    "mkdir -p \"$HOME/.cache/quickshell\"; " +
-                    "echo \"$p\" > \"$HOME/.cache/quickshell/last-wallpaper\"; " +
+                    "mkdir -p \"" + cacheDir + "\"; " +
+                    "cp -f \"$p\" " + lock + "; " +
+                    "echo \"$p\" > \"" + cacheDir + "/last-wallpaper\"; " +
                     "notify-send \"Wallpaper\" \"Set to $(basename \"$p\")\" -i \"$HOME/.local/share/noti-icons/image_icon.png\""
             }
+
+            // Persist current wallpaper: hyprlock reads the rendered frame,
+            // autostart/sway read ~/.cache/quickshell/last-wallpaper.
+            var lockFile  = home + "/.config/hypr/hyprlock.conf"
+
+            script += "; " +
+                "sed -i '/^background {/,/^}/s|path = .*|path = " + lockImg.replace(/\\/g, "\\\\").replace(/&/g, "\\&") + "|' \"" + lockFile + "\"\n" +
+                "pkill -USR2 hyprlock 2>/dev/null"
 
             wallpaperSetProc.command = ["bash", "-c", script]
             wallpaperSetProc.running = false

@@ -33,7 +33,7 @@
       confirm_os_window_close = 0;
 
       # Text & Layout
-      window_padding_width = 4;
+      window_padding_width = 0;
 
       # Cursor Appearance
       cursor_shape = "block";
@@ -65,6 +65,7 @@
     zed-editor
     obsidian
     vscode
+    foot
 
     # --- Web & Communications ---
     localsend
@@ -80,6 +81,7 @@
     zathuraPkgs.zathura_pdf_poppler
     rmpc
     zscroll
+    librewolf
 
     # --- Terminal Utilities & Navigation ---
     tmux
@@ -101,7 +103,6 @@
     awww
     ffmpeg
     yt-dlp
-    woomer
 
     # --- Language Runtimes & Compilers ---
     nodejs

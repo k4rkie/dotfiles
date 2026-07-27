@@ -20,16 +20,19 @@
 
     fonts = {
       monospace = {
-        package = pkgs.maple-mono.NF;
-        name = "Maple Mono NF";
+        # package = pkgs.maple-mono.NF;
+        # name = "Maple Mono NF";
+
+        package = pkgs.nerd-fonts.fira-code;
+        name = "FiraCode Nerd Font";
       };
       sansSerif = config.stylix.fonts.monospace;
       serif = config.stylix.fonts.monospace;
       sizes = {
-        terminal = 16;
-        applications = 14;
-        desktop = 14;
-        popups = 14;
+        terminal = 18;
+        applications = 15;
+        desktop = 15;
+        popups = 15;
       };
     };
   };

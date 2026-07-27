@@ -19,21 +19,21 @@ Singleton {
     readonly property color lightTextDim:          Colors.blueGrey400
 
     // Base16 Black Metal Bathory Tweaked
-    readonly property color base00: "#040408"
-    readonly property color base01: "#080810"
-    readonly property color base02: "#141416"
-    readonly property color base03: "#363638"
-    readonly property color base04: "#959599"
-    readonly property color base05: "#c1c1c9"
-    readonly property color base06: "#959599"
-    readonly property color base07: "#c1c191"
-    readonly property color base08: "#7D719d"
-    readonly property color base09: "#aaaaad"
+    readonly property color base00: "#030303"
+    readonly property color base01: "#080808"
+    readonly property color base02: "#121212"
+    readonly property color base03: "#333333"
+    readonly property color base04: "#999999"
+    readonly property color base05: "#c1c1c1"
+    readonly property color base06: "#999999"
+    readonly property color base07: "#c1c1c1"
+    readonly property color base08: "#696969"
+    readonly property color base09: "#aaaaaa"
     readonly property color base0A: "#e78a53"
-    readonly property color base0B: "#CE985F"
-    readonly property color base0C: "#aaaaad"
+    readonly property color base0B: "#d9af82"
+    readonly property color base0C: "#aaaaaa"
     readonly property color base0D: "#696969"
-    readonly property color base0E: "#959599"
+    readonly property color base0E: "#999999"
     readonly property color base0F: "#444444"
 
     // Surfaces
@@ -68,7 +68,7 @@ Singleton {
     readonly property color textMain:          base05
     readonly property color textDim:           base04
     readonly property color textAccent:        base07
-    readonly property color textBox:           base01
+    readonly property color textBox:           base00
     readonly property color textBoxDim:        base03
 
     // Status

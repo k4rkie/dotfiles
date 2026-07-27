@@ -96,10 +96,12 @@ case "$chosen" in
         run_cmd --reboot
         ;;
     "$lock")
-        pidof swaylock || pidof hyprlock || swaylock -f
+        pidof hyprlock || hyprlock
         ;;
     "$suspend")
-        swaylock -f; sleep 0.5; run_cmd --suspend
+        if [ "$(confirm_exit)" = "$yes" ]; then
+            systemctl suspend
+        fi
         ;;
     "$logout")
         run_cmd --logout

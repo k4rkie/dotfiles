@@ -2,43 +2,33 @@
   border: none;
   border-radius: 0;
   min-height: 0;
-  font-family: "Maple Mono NF";
-  font-size: 13px;
+  font-family: "FiraCode Nerd Font";
+  font-size: 14px;
   padding: 0px;
 }
 
 window#waybar {
-  background: #040408;
-  color: #5f8787;
-  border-radius: 0px;
-  border: 3px solid #7c708e;
-  border-bottom: 0px;
+  background: #030303;
+  color: #aaaaaa;
 }
 
 window#waybar>box {
-  padding: 4px 6px 0px 6px;
+  padding: 4px 8px 2px 8px;
 }
 
 tooltip {
-  background-color: #040408;
+  background-color: #030303;
 }
 
 #clock,
-#tray,
 #cpu,
 #memory,
 #battery,
 #network,
-#custom-separator,
-#window,
 #pulseaudio,
-#custom-caffeine,
-#custom-os,
-#media,
 #custom-notifications {
-  margin: 2px 2px;
+  margin: 0px 4px;
   padding: 0px 4px;
-  background-color: #101016;
   border-radius: 2px;
 }
 
@@ -60,12 +50,12 @@ tooltip {
 }
 
 #workspaces button {
-  color: transparent;
-  background: #111118;
-  margin: 4px 2px;
+  color: #444444;
+  background: transparent;
+  margin: 2px 2px;
   border-radius: 2px;
-  min-width: 8px;
-  padding: 0px 8px;
+  min-width: 10px;
+  padding: 0px 4px;
 }
 
 #workspaces button.empty {
@@ -73,60 +63,28 @@ tooltip {
 }
 
 #workspaces button.active {
-  background: #d9af82;
-  color: #040408;
+  background: transparent;
+  color: #a1a1a1;
   font-weight: bold;
-  padding: 0px 12px;
-  min-width: 18px;
 }
 
 #workspaces button.urgent {
   background-color: #ad401f;
-  color: #040408;
+  color: #030303;
 }
 
-#custom-os {
-  color: #d8ad81;
-  font-size: 18px;
-  padding-right: 10px
-}
-
+#custom-tag,
 #tray,
+#memory,
+#pulseaudio,
+#clock,
+#custom-caffeine,
+#custom-caffeine.inactive, 
+#battery,
+#custom-notifications,
+#media,
 #cpu {
-  color: #41a6b5;
-}
-
-#memory {
-  color: #ff9e64;
-}
-
-#pulseaudio {
-  color: #94f978;
-}
-
-#clock {
-  color: #94f978;
-}
-
-#custom-caffeine {
-  color: #ab4642;
-}
-
-#custom-caffeine.inactive {
-  color: #5f8787;
-}
-
-#battery {
-  color: #ddc781;
-}
-
-#custom-notifications {
-  color: #c1c1c1;
-  padding: 0px 11px;
-}
-
-#media {
-  color: #41a6b5;
+  color: #a1a1a1;
 }
 
 #custom-media-animation {
@@ -139,6 +97,21 @@ tooltip {
 }
 
 #custom-media-time {
-  color: #2f3549;
+  color: #a1a1a1;
   font-size: 12px;
 }
+
+#tray,
+#custom-notifications,
+#custom-caffeine {
+  margin: 0px 4px;
+}
+#custom-caffeine {
+  font-size: 16px;
+}
+
+#custom-separator{
+  opacity:0.4;
+  margin: 0px 6px 0px 2px;
+}
+

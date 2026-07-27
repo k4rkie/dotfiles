@@ -2,22 +2,22 @@
   "layer": "top",
   "position": "bottom",
   "reload_style_on_change": true,
-  "margin-right": 8,
-  "margin-left": 8,
+  // "margin-right": 130,
+  // "margin-left": 130,
   "height": 18,
   "modules-left": [
-    "custom/os",
-    "clock",
-    "group/media"
+    "custom/tag",
+    "ext/workspaces",
   ],
   "modules-center": [
-    "ext/workspaces",
+    "clock",
   ],
   "modules-right": [
     "memory",
     "cpu",
     "pulseaudio",
     "battery",
+    "custom/separator",
     "custom/caffeine",
     "custom/notifications",
     "tray"
@@ -27,7 +27,7 @@
     "spacing": 4
   },
   "clock": {
-    "format": "󱦟 {:%I:%M %p}",
+    "format": "{:%I:%M %p}",
     "interval": 60,
     "tooltip": true,
     "tooltip-format": "<big>{calendar}</big>",
@@ -46,21 +46,33 @@
     "format": "{icon}",
     "ignore-hidden": true,
     "on-click": "activate",
-    "sort-by-id": true
+    "sort-by-id": true,
+    "format-icons": {
+      "1": "I",
+      "2": "II",
+      "3": "III",
+      "4": "IV",
+      "5": "V",
+      "6": "VI",
+      "7": "VII",
+      "8": "VIII",
+      "9": "IX",
+      "10": "X"
+    }
   },
   "memory": {
-    "format": " {}%",
+    "format": "mem:{}%",
     "tooltip": "false",
     "on-click": "kitty --class btop btop",
   },
   "cpu": {
-    "format": " {usage}%",
+    "format": "cpu:{usage}%",
     "tooltip": "false",
     "on-click": "kitty --class btop btop",
   },
   "pulseaudio": {
-    "format": "󰕾 {volume}%",
-    "format-muted": "  {volume}%",
+    "format": "vol:{volume}%",
+    "format-muted": "volx:{volume}%",
     "scroll-step": 1,
     "on-click": "pavucontrol"
   },
@@ -69,10 +81,10 @@
       "warning": 30,
       "critical": 15
     },
-    "format": " {capacity}%",
-    "format-charging": " {capacity}%",
-    "format-plugged": " {capacity}%",
-    "format-full": " {capacity}%",
+    "format": "bat:{capacity}%",
+    "format-charging": "pow{capacity}%",
+    "format-plugged": "pow:{capacity}%",
+    "format-full": "pow:{capacity}%",
   },
   "custom/recording": {
     "exec": "/home/k4rkie/scripts/wf-status.sh",
@@ -89,11 +101,10 @@
     "tooltip-format-disconnected": "Disconnected",
     "on-click": "~/scripts/rofi-wifi-menu.sh"
   },
-  "custom/os": {
-    "format": "󱄅",
+  "custom/tag": {
+    "format": "tag :",
     "interval": "once",
     "tooltip": false,
-    "on-click": "quickshell ipc call launcher toggle"
   },
   "custom/notifications": {
     "tooltip": true,
@@ -132,7 +143,7 @@
     "tooltip": false
   },
   "custom/separator": {
-    "format": "/",
+    "format": "|",
     "tooltip": false,
   },
   "group/media": {

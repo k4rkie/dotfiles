@@ -10,8 +10,8 @@
     "button": false,
   },
   "terminal": {
-    "font_family": "Maple Mono NF",
-    "font_size": 24.0,
+    "font_family": "FiraCode Nerd Font",
+    "font_size": 22.0,
     "button": false,
   },
   "agent": {
@@ -41,12 +41,12 @@
   "theme": {
     "mode": "dark",
     "light": "Ayu Light",
-    "dark": "Base16 Black Metal (Mayhem)",
+    "dark": "Base16 Black Metal (Bathory Tweaked)",
   },
   "theme_overrides": {
-    "Base16 Black Metal": {
-      // "border": "#00000000",
-      // "border.variant": "#00000000",
+    "Base16 Black Metal (Bathory Tweaked)": {
+      "border": "#00000000",
+      "border.variant": "#00000000",
     },
   },
   "icon_theme": {
@@ -54,9 +54,9 @@
     "light": "Light Charmed Icons",
     "dark": "Warm Charmed Icons",
   },
-  "ui_font_family": "Maple Mono NF",
-  "buffer_font_family": "Maple Mono NF",
-  "ui_font_size": 24.0,
+  "ui_font_family": "FiraCode Nerd Font",
+  "buffer_font_family": "FiraCode Nerd Font",
+  "ui_font_size": 20.0,
   "buffer_font_size": 24.0,
   "window_decorations": "server",
   "toolbar": {

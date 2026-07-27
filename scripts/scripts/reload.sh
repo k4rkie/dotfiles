@@ -8,7 +8,7 @@ if pgrep -x Hyprland >/dev/null; then
 elif pgrep -x mango >/dev/null; then
   mmsg dispatch reload_config
   # swayidle is exec-once, handled by mango on reload
-  pkill -f swaylock 2>/dev/null
+  pkill hyprlock 2>/dev/null
 fi
 
 pkill -SIGUSR2 waybar

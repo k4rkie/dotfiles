@@ -325,7 +325,6 @@ Item {
                         anchors.verticalCenter: parent.verticalCenter
                         text:  listDelegate.entry ? listDelegate.entry.name : ""
                         font.pixelSize: 17
-                        font.bold: true
                         font.family:    "JetBrainsMono Nerd Font"
                         color: listDelegate.isSelected ? PanelColors.pillForeground : PanelColors.textMain
                         Behavior on color { ColorAnimation { duration: 120 } }

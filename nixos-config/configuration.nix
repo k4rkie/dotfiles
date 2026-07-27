@@ -87,7 +87,6 @@
 
   programs.dconf.enable = true;
 
-  programs.hyprland.enable = true;
   programs.mango.enable = true;
 
   programs.nix-ld.enable = true;

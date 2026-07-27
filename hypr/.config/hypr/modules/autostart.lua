@@ -22,10 +22,7 @@ hl.on("hyprland.start", function()
   hl.exec_cmd("wl-paste --type image --watch cliphist store")
 
   -- --- wallpaper + gamma ---
-  local ok, wall_path = pcall(require, "modules.wallpaper")
-  if not ok or type(wall_path) ~= "string" or wall_path == "" then
-    wall_path = "/home/k4rkie/Pictures/Wallhaven/sea_sky_clouds_sand_beach_beacon_sunset_purple.jpg"
-  end
-  hl.exec_cmd("sleep 0.5 && awww img " .. wall_path .. " --transition-type none")
+  -- Wallpaper state lives in ~/.cache/quickshell/last-wallpaper.
+  hl.exec_cmd("sleep 0.5 && ~/scripts/wallpaper-restore.sh")
   hl.exec_cmd("wlsunset -l 27.7006 -L 83.4484 -t 3800 -T 6500")
 end)

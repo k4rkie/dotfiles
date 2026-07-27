@@ -14,6 +14,8 @@
     "context": "Workspace || (Editor && vim_mode == normal)",
     "bindings": {
       "ctrl-b": "workspace::ToggleRightDock",
+      "space p p": "projects::OpenRecent",
+      "space o o": "workspace::Open",
     },
   },
 

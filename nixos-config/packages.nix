@@ -29,7 +29,6 @@
     # --- Hyprland / Wayland Session Essentials ---
     waybar
     rofi
-    hypridle
     hyprlock
     hyprpicker
     wl-clipboard
@@ -42,7 +41,6 @@
     slurp
     libnotify
     swayidle
-    swaylock-effects
 
     # --- System/GTK Foundation libraries ---
     glib

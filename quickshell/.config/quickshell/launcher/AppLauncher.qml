@@ -72,11 +72,11 @@ PanelWindow {
     }
 
     function _pillText() {
-        if (wallpaperMode) return "󰸉 Wallpaper"
-        if (clipboardMode) return "󰅌 Clipboard"
-        if (emojiMode)     return "󰞅 Emoji"
-        if (hiddenMode)    return " Hidden"
-        return ""
+        if (wallpaperMode) return "󰸉 Wallpaper :"
+        if (clipboardMode) return "󰅌 Clipboard:"
+        if (emojiMode)     return "󰞅 Emoji :"
+        if (hiddenMode)    return " Hidden :"
+        return " Apps :"
     }
 
     function _placeholder() {
@@ -251,7 +251,7 @@ PanelWindow {
         radius: 2
         color:        PanelColors.popupBackground
         Behavior on color { ColorAnimation { duration: PanelColors.transitionDuration } }
-        border.color: "#7d718f"
+        border.color: "#696969"
         border.width: 2
 
         HoverHandler {
