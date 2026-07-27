@@ -16,23 +16,30 @@ DIRS=(
 # 1. Get all folders from your DIRS
 folder_list=$(fd . "${DIRS[@]}" --type=dir --max-depth=1 --full-path --base-directory "$HOME" | sed "s|^$HOME/||")
 
-# 2. Get all currently active tmux sessions
-session_list=$(tmux list-sessions -F "#S" 2>/dev/null)
+# 2. Get all active tmux sessions and append ' *' to their names
+session_list=$(tmux list-sessions -F "#S *" 2>/dev/null)
 
 # 3. Combine them, remove duplicates, and pipe to Rofi
 selected=$(printf "%s\n%s" "$session_list" "$folder_list" | grep -v '^$' | rofi -dmenu -i -p " 󱫋 Session")
 
 [[ ! $selected ]] && exit 0
 
+# Strip trailing asterisk and spaces to resolve original session/folder name
+target="${selected% \*}"
+target="${target%\*}"
+
 # 4. Logic: Is it a session or a folder?
-# Check if it's an existing session first
-if tmux has-session -t "$selected" 2>/dev/null; then
-    selected_name="$selected"
-    # We don't need to 'create' anything, just attach
+if tmux has-session -t "$target" 2>/dev/null; then
+    selected_name="$target"
 else
-    # It's a folder, so do the usual path logic
-    full_path="$HOME/$selected"
+    # It's a folder, calculate the full path
+    if [[ "$target" == /* ]]; then
+        full_path="$target"
+    else
+        full_path="$HOME/$target"
+    fi
     full_path="${full_path%/}"
+    
     selected_name=$(basename "$full_path" | tr . _)
     
     if ! tmux has-session -t "$selected_name" 2>/dev/null; then

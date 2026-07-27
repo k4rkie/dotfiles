@@ -1,9 +1,9 @@
 -- General layout, decoration (opacity/blur/shadow), animations + curves.
 hl.config({
   general    = {
-    gaps_in     = 3.5,
+    gaps_in     = 4,
     gaps_out    = 8,
-    border_size = 2,
+    border_size = 3,
     col         = {
       active_border   = "rgb(7D718F)",
       inactive_border = "rgb(202020)",
@@ -20,11 +20,11 @@ hl.config({
 
     rounding         = 0,
     active_opacity   = 1,
-    inactive_opacity = 0.96,
+    inactive_opacity = 0.95,
 
     shadow           = {
-      enabled      = false,
-      range        = 10,
+      enabled      = true,
+      range        = 12,
       render_power = 3,
       color        = "rgba(00000099)",
     },
@@ -32,13 +32,13 @@ hl.config({
     blur             = {
       enabled           = true,
       size              = 6,
-      passes            = 2,
+      passes            = 3,
       ignore_opacity    = true,
 
       noise             = 0.08,
       contrast          = 4.0,
 
-      brightness        = 0.4,
+      brightness        = 0.5,
       vibrancy          = 2.8,
       special           = false,
       popups            = false,

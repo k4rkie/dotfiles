@@ -129,15 +129,5 @@
 
     qalculate-gtk
     gsimplecal
-    libinput-gestures
   ];
-
-  systemd.user.services.libinput-gestures = {
-    Unit.Description = "libinput-gestures";
-    Service = {
-      ExecStart = "${pkgs.libinput-gestures}/bin/libinput-gestures";
-      Restart = "always";
-    };
-    Install.WantedBy = [ "graphical-session.target" ];
-  };
 }

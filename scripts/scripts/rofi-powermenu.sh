@@ -96,10 +96,10 @@ case "$chosen" in
         run_cmd --reboot
         ;;
     "$lock")
-        pidof hyprlock || hyprlock
+        pidof swaylock || pidof hyprlock || swaylock -f
         ;;
     "$suspend")
-        run_cmd --suspend
+        swaylock -f; sleep 0.5; run_cmd --suspend
         ;;
     "$logout")
         run_cmd --logout

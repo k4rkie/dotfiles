@@ -232,13 +232,8 @@ Item {
                     "awww query >/dev/null 2>&1 || { awww-daemon &>/dev/null & " +
                     "for i in $(seq 1 20); do sleep 0.1 && awww query >/dev/null 2>&1 && break; done; }; " +
                     "awww img \"$p\" --transition-type random; " +
-                    "cat <<EOF > \"$HOME/.config/hypr/modules/wallpaper.lua\"\n" +
-                    "-- Current wallpaper path. Set by quickshell\n" +
-                    "-- Read by modules/autostart.lua at hyprland start.\n" +
-                    "return \"$p\"\n" +
-                    "EOF\n" +
-                    "sed -i \"/^background {/,/^}/s|path = .*|path = $p|\" \"$HOME/.config/hypr/hyprlock.conf\"; " +
-                    "pkill -USR2 hyprlock 2>/dev/null; " +
+                    "mkdir -p \"$HOME/.cache/quickshell\"; " +
+                    "echo \"$p\" > \"$HOME/.cache/quickshell/last-wallpaper\"; " +
                     "notify-send \"Wallpaper\" \"Set to $(basename \"$p\")\" -i \"$HOME/.local/share/noti-icons/image_icon.png\""
             }
 

@@ -18,6 +18,11 @@
       url = "github:0xc000022070/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    mangowm = {
+      url = "github:mangowm/mango";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -27,6 +32,7 @@
       home-manager,
       stylix,
       zen-browser,
+      mangowm,
       ...
     }:
     {
@@ -38,6 +44,7 @@
         modules = [
           stylix.nixosModules.stylix
           home-manager.nixosModules.home-manager
+          mangowm.nixosModules.mango
           ./hardware-configuration.nix
           ./configuration.nix
           {

@@ -62,7 +62,7 @@ vim.api.nvim_set_hl(0, "TelescopePromptBorder", { link = "FloatBorder" })
 vim.api.nvim_set_hl(0, "TelescopeResultsBorder", { link = "FloatBorder" })
 vim.api.nvim_set_hl(0, "TelescopePreviewBorder", { link = "FloatBorder" })
 
-local prompt_bg = "#030303"
+local prompt_bg = "#040408"
 
 vim.api.nvim_set_hl(0, "TelescopePromptNormal", { bg = prompt_bg })
 vim.api.nvim_set_hl(0, "TelescopePromptTitle", { bg = prompt_bg })
@@ -111,17 +111,17 @@ function _G.tabline()
 end
 
 vim.api.nvim_set_hl(0, "TabLineSel", {
-  fg = "#030303",
-  bg = "#888888",
+  fg = "#040408",
+  bg = "#888889",
   bold = true,
 })
 vim.api.nvim_set_hl(0, "TabLine", {
-  fg = "#555555",
-  bg = "#030303",
+  fg = "#555556",
+  bg = "#040408",
 })
 
 vim.api.nvim_set_hl(0, "TabLineFill", {
-  bg = "#030303",
+  bg = "#040408",
 })
 
 vim.api.nvim_create_autocmd("FileType", {

@@ -41,6 +41,8 @@
     grim
     slurp
     libnotify
+    swayidle
+    swaylock-effects
 
     # --- System/GTK Foundation libraries ---
     glib

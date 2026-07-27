@@ -2,6 +2,8 @@
   "layer": "top",
   "position": "bottom",
   "reload_style_on_change": true,
+  "margin-right": 8,
+  "margin-left": 8,
   "height": 18,
   "modules-left": [
     "custom/os",
@@ -9,7 +11,7 @@
     "group/media"
   ],
   "modules-center": [
-    "hyprland/workspaces",
+    "ext/workspaces",
   ],
   "modules-right": [
     "memory",
@@ -40,30 +42,11 @@
       }
     }
   },
-  "hyprland/workspaces": {
+  "ext/workspaces": {
     "format": "{icon}",
-    "separate-outputs": false,
-    "active-only": false,
-    // turn on true to show same all workspaces on each monitor
-    "all-outputs": false,
-    "format-icons": {
-      // 1-10
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6",
-      "7": "7",
-      "8": "8",
-      "9": "9",
-      "10":"10"
-    },
-    "persistent-workspaces": {
-      "1": "1",
-      "2": "2",
-      "3": "3",
-    }
+    "ignore-hidden": true,
+    "on-click": "activate",
+    "sort-by-id": true
   },
   "memory": {
     "format": " {}%",

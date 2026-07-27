@@ -1,37 +1,37 @@
 * {
     /* Base colors */
-    background: #080808;          
-    background-color: #080808;
+    background: #040408;          
+    background-color: #040408;
     foreground: #c1c1c1;         
-    border-color: #080808;
+    border-color: #040408;
     spacing: 2;
 
     /* States */
     active-background: #7fa563;   /* subtle green accent */
-    active-foreground: #080808;
+    active-foreground: #040408;
 
-    normal-background: #080808;
+    normal-background: #040408;
     normal-foreground: #c1c1c1;
 
     urgent-background: #d8647e;  /* red for urgent */
-    urgent-foreground: #080808;
+    urgent-foreground: #040408;
 
     /* Selected (highlighted) entries */
     selected-active-background: #7fa563;  /* same as active */
-    selected-active-foreground: #080808;
+    selected-active-foreground: #040408;
 
     selected-normal-background: #7d718f; /* slightly lighter for normal selection */
-    selected-normal-foreground: #080808;
+    selected-normal-foreground: #040408;
     selected-urgent-background: #d8647e;
-    selected-urgent-foreground: #080808;
+    selected-urgent-foreground: #040408;
 
     /* Optional alternates for subtle row differences */
-    alternate-normal-background: #080808;
+    alternate-normal-background: #040408;
     alternate-normal-foreground: #c1c1c1;
     alternate-active-background: #7fa563;
-    alternate-active-foreground: #080808;
+    alternate-active-foreground: #040408;
     alternate-urgent-background: #d8647e;
-    alternate-urgent-foreground: #080808;
+    alternate-urgent-foreground: #040408;
 
 }
 
