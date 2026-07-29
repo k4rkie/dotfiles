@@ -137,7 +137,7 @@ Item {
             width:          parent.width
             implicitHeight: hiddenMenuCol.implicitHeight + 24
             height:         implicitHeight
-            radius: 2
+            radius: 0
             color:          PanelColors.popupBackground
             border.color:   PanelColors.border
             border.width:   2
@@ -173,11 +173,11 @@ Item {
                         required property var modelData
                         width: hiddenMenuCol.width; height: 34
                         Rectangle {
-                            anchors.fill: parent; radius: 2
+                            anchors.fill: parent; radius: 0
                             color: hRow.containsMouse ? Qt.lighter(PanelColors.rowBackground, 1.15) : PanelColors.rowBackground
                             Behavior on color { ColorAnimation { duration: 100 } }
                             Rectangle {
-                                width: 3; height: parent.height - 10; radius: 2
+                                width: 3; height: parent.height - 10; radius: 0
                                 anchors { left: parent.left; leftMargin: 4; verticalCenter: parent.verticalCenter }
                                 color: PanelColors.textDim
                             }
@@ -241,7 +241,7 @@ Item {
         // Command fallback — grid
         Rectangle {
             visible: root.filteredApps.length === 0 && root.searchText.trim() !== ""
-            x: 4; y: 4; width: 136; height: 132; radius: 2
+            x: 4; y: 4; width: 136; height: 132; radius: 0
             color: Qt.rgba(1, 1, 1, 0.08)
             Column {
                 anchors.centerIn: parent; spacing: 8
@@ -302,7 +302,7 @@ Item {
 
             Rectangle {
                 anchors { fill: parent; leftMargin: 4; rightMargin: 4 }
-                radius: 2
+                radius: 0
                 color: listDelegate.isSelected
                            ? PanelColors.launcher
                            : listRowHover.containsMouse
@@ -428,7 +428,7 @@ Item {
                     width:          parent.width
                     implicitHeight: listCtxCol.implicitHeight + padding * 2
                     height:         implicitHeight
-                    radius: 2
+                    radius: 0
                     color:          PanelColors.popupBackground
                     border.color:   PanelColors.border
                     border.width:   2
@@ -477,14 +477,14 @@ Item {
 
                                 Rectangle {
                                     anchors.fill: parent
-                                    radius: 2
+                                    radius: 0
                                     color: listCtxRowMouse.containsMouse
                                         ? Qt.lighter(PanelColors.rowBackground, 1.15)
                                         : PanelColors.rowBackground
                                     Behavior on color { ColorAnimation { duration: 100 } }
 
                                     Rectangle {
-                                        width: 3; height: parent.height - 10; radius: 2
+                                        width: 3; height: parent.height - 10; radius: 0
                                         anchors { left: parent.left; leftMargin: 4; verticalCenter: parent.verticalCenter }
                                         color: PanelColors.textDim
                                     }
@@ -544,7 +544,7 @@ Item {
 
             Rectangle {
                 anchors { fill: parent; leftMargin: 4; rightMargin: 4 }
-                radius: 2
+                radius: 0
                 color: fallbackHover.containsMouse ? PanelColors.rowBackground : Qt.rgba(1, 1, 1, 0.08)
                 Behavior on color { ColorAnimation { duration: 120 } }
 

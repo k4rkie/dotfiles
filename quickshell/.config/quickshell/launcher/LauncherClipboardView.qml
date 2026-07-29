@@ -211,7 +211,7 @@ Item {
         anchors.centerIn: parent
         width:  320
         height: confirmCol.implicitHeight + 32
-        radius: 2
+        radius: 0
         color:  PanelColors.popupBackground
         border.color: PanelColors.border
         border.width: 2
@@ -257,7 +257,7 @@ Item {
                 Rectangle {
                     width:  130
                     height: 34
-                    radius: 2
+                    radius: 0
                     color:  cancelMouse.containsMouse
                                 ? Qt.lighter(PanelColors.rowBackground, 1.15)
                                 : PanelColors.rowBackground
@@ -285,7 +285,7 @@ Item {
                 Rectangle {
                     width:  130
                     height: 34
-                    radius: 2
+                    radius: 0
                     color:  deleteAllMouse.containsMouse
                                 ? PanelColors.error
                                 : PanelColors.rowBackground
@@ -385,7 +385,7 @@ Item {
                 Rectangle {
                     id: rowRect
                     anchors { fill: parent; leftMargin: 4; rightMargin: 4 }
-                    radius: 2
+                    radius: 0
                     color: isSelected
                                ? Qt.rgba(1, 1, 1, 0.10)
                                : rowHover.containsMouse
@@ -395,7 +395,7 @@ Item {
 
                     // Left accent bar
                     Rectangle {
-                        width: 3; height: parent.height - 12; radius: 2
+                        width: 3; height: parent.height - 12; radius: 0
                         anchors { left: parent.left; leftMargin: 4; verticalCenter: parent.verticalCenter }
                         color:   PanelColors.launcher
                         visible: isSelected
@@ -414,7 +414,7 @@ Item {
                         Rectangle {
                             anchors.fill: parent
                             color:        PanelColors.rowBackground
-                            radius: 2
+                            radius: 0
                             visible:      clipImg.status !== Image.Ready
                         }
 
@@ -449,7 +449,7 @@ Item {
                             border.width: 3
                             width:  clipImg.paintedWidth + (border.width * 2)
                             height: clipImg.paintedHeight + (border.width * 2)
-                            radius:       border.width
+                            radius:       0
                             visible:      clipImg.status === Image.Ready
                             Behavior on border.color { ColorAnimation { duration: 120 } }
                         }
@@ -479,7 +479,7 @@ Item {
                         visible: rowHover.containsMouse || deleteBtnMouse.containsMouse
                         width:   26
                         height:  26
-                        radius: 2
+                        radius: 0
                         anchors {
                             right:          parent.right
                             rightMargin:    6

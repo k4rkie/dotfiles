@@ -2,12 +2,10 @@
   "layer": "top",
   "position": "bottom",
   "reload_style_on_change": true,
-  // "margin-right": 130,
-  // "margin-left": 130,
   "height": 18,
   "modules-left": [
     "custom/tag",
-    "ext/workspaces",
+    "ext/workspaces"
   ],
   "modules-center": [
     "clock",
@@ -17,8 +15,8 @@
     "cpu",
     "pulseaudio",
     "battery",
-    "custom/separator",
     "custom/caffeine",
+    "custom/separator",
     "custom/notifications",
     "tray"
   ],
@@ -27,7 +25,8 @@
     "spacing": 4
   },
   "clock": {
-    "format": "{:%I:%M %p}",
+    "format": "{:%a %b-%d, %I:%M %p}",
+    // "format": "{:%I:%M %p}",
     "interval": 60,
     "tooltip": true,
     "tooltip-format": "<big>{calendar}</big>",
@@ -35,10 +34,10 @@
     "calendar": {
         "mode": "month",
         "format": {
-          "months": "<span color='#ab4642'><b>{}</b></span>",
+          "months": "<span color='#c1c2c2'><b>{}</b></span>",
           "days": "<span color='#c1c1c1'><b>{}</b></span>",
-          "weekdays": "<span color='#94f978'><b>{}</b></span>",
-          "today": "<span color='#ff9e64'><b><u>{}</u></b></span>"
+          "weekdays": "<span color='#c1c1c1'><b>{}</b></span>",
+          "today": "<span color='#d9af82'><b><u>{}</u></b></span>"
       }
     }
   },
@@ -57,18 +56,17 @@
       "7": "VII",
       "8": "VIII",
       "9": "IX",
-      "10": "X"
     }
   },
   "memory": {
     "format": "mem:{}%",
     "tooltip": "false",
-    "on-click": "kitty --class btop btop",
+    "on-click": "foot -a btop btop",
   },
   "cpu": {
     "format": "cpu:{usage}%",
     "tooltip": "false",
-    "on-click": "kitty --class btop btop",
+    "on-click": "foot -a btop btop",
   },
   "pulseaudio": {
     "format": "vol:{volume}%",
@@ -82,7 +80,7 @@
       "critical": 15
     },
     "format": "bat:{capacity}%",
-    "format-charging": "pow{capacity}%",
+    "format-charging": "pow:{capacity}%",
     "format-plugged": "pow:{capacity}%",
     "format-full": "pow:{capacity}%",
   },
@@ -158,7 +156,7 @@
     "exec": "/home/k4rkie/.config/waybar/custom_modules/media/media-now-playing.sh",
     "escape": true,
     "tooltip": false,
-    "on-click": "kitty --class rmpc rmpc",
+    "on-click": "kitty -a rmpc rmpc",
     "on-click-middle": "mpc prev",
     "on-click-right": "mpc next",
   },
@@ -172,5 +170,5 @@
     "escape": true,
     "interval": 1,
     "tooltip": false,
-  }
+  },
 }

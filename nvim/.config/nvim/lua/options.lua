@@ -44,11 +44,32 @@ vim.o.foldlevel = 99
 
 vim.diagnostic.config({
   virtual_text = { severity = vim.diagnostic.severity.ERROR },
-  -- virtual_text = false,
   signs = false,
   underline = { severity = vim.diagnostic.severity.ERROR },
-  -- underline = false,
 })
+-- Define explicit colors for LSP diagnostics
+-- ColorScheme autocmd ensures these survive async colorscheme loads (base16)
+local function set_diagnostic_hl()
+  local set_hl = vim.api.nvim_set_hl
+
+  set_hl(0, "DiagnosticError", { fg = "#FF5555", bold = true })
+  set_hl(0, "DiagnosticWarn", { fg = "#E5C07B" })
+  set_hl(0, "DiagnosticInfo", { fg = "#E5C07B" })
+  set_hl(0, "DiagnosticHint", { fg = "#E5C07B" })
+
+  set_hl(0, "DiagnosticVirtualTextError", { fg = "#FF5555" })
+  set_hl(0, "DiagnosticVirtualTextWarn", { fg = "#E5C07B" })
+  set_hl(0, "DiagnosticVirtualTextInfo", { fg = "#E5C07B" })
+  set_hl(0, "DiagnosticVirtualTextHint", { fg = "#E5C07B" })
+end
+
+vim.api.nvim_create_autocmd("ColorScheme", {
+  group = vim.api.nvim_create_augroup("UserDiagnosticHL", { clear = true }),
+  pattern = "*",
+  callback = set_diagnostic_hl,
+})
+
+vim.schedule(set_diagnostic_hl)
 
 vim.opt.guicursor = {
   "n-v-c:block",

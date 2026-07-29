@@ -63,6 +63,7 @@
     # --- Editors & Notes ---
     neovim
     zed-editor
+    emacs
     obsidian
     vscode
     foot
@@ -81,7 +82,7 @@
     zathuraPkgs.zathura_pdf_poppler
     rmpc
     zscroll
-    librewolf
+    firefox
 
     # --- Terminal Utilities & Navigation ---
     tmux
@@ -96,6 +97,7 @@
     eza
     btop
     unzip
+    file
     tree
     delta
     jq
@@ -119,16 +121,17 @@
     typescript-language-server
     clang-tools
     gnumake
+    cmake
 
-    # --- Misc Desktop Tools ---
+    # --- Misc Tools ---
     tesseract
     satty
-
+    cava
+    impala
+    cmatrix
+    cbonsai
     quickshell
-
-    rofimoji
-
     qalculate-gtk
-    gsimplecal
+    iwd
   ];
 }

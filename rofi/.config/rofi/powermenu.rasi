@@ -6,9 +6,9 @@ configuration {
     background:                  rgba(8, 8, 8, 100%);
     background-alt:              rgba(21, 21, 21, 100%);
     foreground:                  rgba(193, 193, 193, 100%);
-    selected:                    rgba(125, 113, 143, 100%);
+    selected:                    #a1a1a1;
 
-    background-window:           rgba(5, 5, 5, 90%);
+    background-window:           rgba(5, 5, 5, 80%);
     background-normal:           rgba(193, 193, 193, 5%);
     background-selected:         var(selected);
     foreground-normal:           var(foreground);

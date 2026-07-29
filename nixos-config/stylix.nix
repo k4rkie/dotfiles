@@ -20,11 +20,8 @@
 
     fonts = {
       monospace = {
-        # package = pkgs.maple-mono.NF;
-        # name = "Maple Mono NF";
-
-        package = pkgs.nerd-fonts.fira-code;
-        name = "FiraCode Nerd Font";
+        package = pkgs.maple-mono.NF;
+        name = "Maple Mono NF";
       };
       sansSerif = config.stylix.fonts.monospace;
       serif = config.stylix.fonts.monospace;

@@ -1,1 +1,12 @@
 themes/
+
+# Emacs runtime files
+emacs/.config/emacs/elpa/
+emacs/.config/emacs/eln-cache/
+emacs/.config/emacs/auto-save-list/
+emacs/.config/emacs/transient/
+emacs/.config/emacs/history
+emacs/.config/emacs/places
+emacs/.config/emacs/recentf
+emacs/.config/emacs/custom.el
+emacs/.config/emacs/**/*.elc

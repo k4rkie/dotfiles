@@ -27,7 +27,7 @@ Singleton {
     readonly property color base05: "#c1c1c1"
     readonly property color base06: "#999999"
     readonly property color base07: "#c1c1c1"
-    readonly property color base08: "#696969"
+    readonly property color base08: "#a1a1a1"
     readonly property color base09: "#aaaaaa"
     readonly property color base0A: "#e78a53"
     readonly property color base0B: "#d9af82"

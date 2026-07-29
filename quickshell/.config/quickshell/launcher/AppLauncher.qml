@@ -89,7 +89,7 @@ PanelWindow {
 
     // ── Panel width ───────────────────────────────────────────────────────
     readonly property int panelWidth: {
-        if (wallpaperMode) return 900
+        if (wallpaperMode) return 675
         if (clipboardMode) return 480
         if (emojiMode)     return 400
         return isGridView  ? 740 : 480
@@ -248,10 +248,10 @@ PanelWindow {
         x: Math.round((parent.width  - width)  / 2)
         y: Math.round((parent.height - height) / 2)
 
-        radius: 2
+        radius: 0
         color:        PanelColors.popupBackground
         Behavior on color { ColorAnimation { duration: PanelColors.transitionDuration } }
-        border.color: "#696969"
+        border.color: "#090909"
         border.width: 2
 
         HoverHandler {
@@ -444,7 +444,7 @@ PanelWindow {
 
                 mediaFilter: root.wallpaperMediaFilter
 
-                height:  root.wallpaperMode ? 328 : 0
+                height:  root.wallpaperMode ? wallpaperView.preferredHeight : 0
                 clip:    true
                 visible: height > 0
                 opacity: root.wallpaperMode ? 1.0 : 0.0
@@ -462,7 +462,7 @@ PanelWindow {
                 // the GridView is simultaneously populating delegates forces a
                 // full relayout every frame and causes lag. The opacity fade
                 // provides sufficient open/close visual polish.
-                height:  root.emojiMode ? 336 : 0
+                height:  root.emojiMode ? emojiView.preferredHeight : 0
                 clip:    true
                 visible: height > 0
                 opacity: root.emojiMode ? 1.0 : 0.0
@@ -552,7 +552,7 @@ PanelWindow {
                             width: 136; height: 132
                             Rectangle {
                                 anchors { fill: parent; margins: 8 }
-                                radius: 2
+                                radius: 0
                                 color: gridHiddenHover.containsMouse || hiddenAppsView.selectedIndex === index
                                        ? Qt.rgba(1,1,1,0.08) : "transparent"
                                 Behavior on color { ColorAnimation { duration: 150 } }
@@ -607,7 +607,7 @@ PanelWindow {
                             width: ListView.view.width; height: 44
                             Rectangle {
                                 anchors { fill: parent; leftMargin: 4; rightMargin: 4 }
-                                radius: 2
+                                radius: 0
                                 color: hiddenRowHover.containsMouse || hiddenAppsView.selectedIndex === index
                                        ? PanelColors.rowBackground : "transparent"
                                 Behavior on color { ColorAnimation { duration: 120 } }
@@ -712,7 +712,7 @@ PanelWindow {
                 Repeater {
                     model: root.totalPages
                     Rectangle {
-                        width: 8; height: 8; radius: 2
+                        width: 8; height: 8; radius: 0
                         color: index === root.currentPage ? PanelColors.launcher : PanelColors.border
                         Behavior on color { ColorAnimation { duration: 150 } }
                         MouseArea {

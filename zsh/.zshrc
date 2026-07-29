@@ -61,7 +61,7 @@ precmd() { vcs_info }
 zstyle ':vcs_info:git:*' formats '(󰘬 %b) '
 
 # 4. Set the prompt (ensure you use single quotes here)
-PROMPT='%F{#7D718F}%~%f ${vcs_info_msg_0_}%kλ '
+PROMPT='%F{#7D718F}%~%f ${vcs_info_msg_0_}%k-> '
 # -------------------------------
 # 6. Aliases
 # -------------------------------

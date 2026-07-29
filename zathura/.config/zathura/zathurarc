@@ -5,4 +5,9 @@ set recolor-darkcolor "#aaaaaa"
 set statusbar-bg "#030303"
 set statusbar-fg "#aaaaaa"
 
+set selection-clipboard clipboard
+
+set default-bg "#030303"
+set default-fg "#aaaaaa"
+
 set font "Maple Mono NF 12"

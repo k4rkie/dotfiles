@@ -101,13 +101,16 @@ Item {
         }
     }
 
+    // Height that fits exactly 5 full rows — used by AppLauncher to size the panel
+    readonly property int preferredHeight: grid.cellSz * 5
+
     // ── Grid ─────────────────────────────────────────────────────────────
     GridView {
         id:           grid
         anchors.fill: parent
         clip:         true
 
-        readonly property int cols:   9
+        readonly property int cols:  8 
         readonly property int cellSz: Math.floor(width / cols)
         cellWidth:  cellSz
         cellHeight: cellSz
@@ -131,7 +134,7 @@ Item {
 
             Rectangle {
                 anchors { fill: parent; margins: 2 }
-                radius: 2
+                radius: 0
                 // No Behavior here — animating color on 50+ cells simultaneously
                 // (during scroll or keyboard navigation) causes significant frame drops.
                 color:        emojiMouse.containsMouse || index === grid.currentIndex

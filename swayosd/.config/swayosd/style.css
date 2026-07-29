@@ -1,8 +1,8 @@
 window#osd {
   padding: 16px 20px;
-  border-radius: 4px;
+  border-radius: 0px;
   background: alpha(#030303, 1);
-  border: 2px solid #060606;
+  border: 3px solid #090909;
 }
 
 window#osd #container {

@@ -109,7 +109,7 @@ Item {
         command: [
             "bash", "-c",
             // Images (awww-supported formats)
-            "find \"$HOME/Pictures/Wallhaven\" -type f \\( " +
+            "find \"$HOME/Pictures/Wallpapers\" -type f \\( " +
             "-iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' " +
             "-o -iname '*.gif' -o -iname '*.jxl' -o -iname '*.bmp' -o -iname '*.tiff' " +
             "-o -iname '*.tga' -o -iname '*.avif' -o -iname '*.pnm' -o -iname '*.svg' \\) " +
@@ -259,13 +259,16 @@ Item {
     // ── Wallpaper model ───────────────────────────────────────────────────
     ListModel { id: wallpaperModel }
 
+    // Height that fits exactly `rows` full rows — used by AppLauncher to size the panel
+    readonly property int preferredHeight: wallpaperGrid.cellHeight * 2
+
     // ── Grid ─────────────────────────────────────────────────────────────
     GridView {
         id:           wallpaperGrid
         anchors.fill: parent
         clip:         true
 
-        readonly property int cols:   4
+        readonly property int cols:   3
         readonly property int thumbW: Math.floor(width / cols)
         readonly property int thumbH: Math.floor(thumbW * 0.60)
         readonly property int labelH: 22
@@ -287,7 +290,7 @@ Item {
 
             Rectangle {
                 anchors { fill: parent; margins: 4 }
-                radius: 2
+                radius: 0
                 color:  isHovered || isSelected ? Qt.rgba(1, 1, 1, 0.10) : "transparent"
                 Behavior on color { ColorAnimation { duration: 120 } }
 
@@ -305,7 +308,7 @@ Item {
                         Rectangle {
                             anchors.fill: parent
                             color:        PanelColors.rowBackground
-                            radius: 2
+                            radius: 0
                             visible:      thumbImg.status !== Image.Ready
                         }
 
@@ -328,7 +331,7 @@ Item {
                         Rectangle {
                             anchors.fill: parent
                             color:        "transparent"
-                            radius: 2
+                            radius: 0
                             border.color: isHovered || isSelected ? PanelColors.launcher : PanelColors.border
                             border.width: 2
                             Behavior on border.color { ColorAnimation { duration: 120 } }
@@ -344,7 +347,7 @@ Item {
                             }
                             width:  badgeLabel.implicitWidth + 10
                             height: 20
-                            radius: 2
+                            radius: 0
                             color:  PanelColors.rowBackground
 
                             Text {

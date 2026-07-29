@@ -1,0 +1,9 @@
+[indicator]
+current = { fg = "#030303", bg = "#a1a1a1" }
+parent = { fg = "#030303", bg = "#a1a1a1" }
+preview = { fg = "#030303", bg = "#a1a1a1" }
+padding = { open = "▐", close = "▌" }
+
+[tabs]
+inactive = { fg = "#a1a1a1", bg = "#121212", bold = false }
+active = {fg = "#030303", bg = "#a1a1a1", bold = false }

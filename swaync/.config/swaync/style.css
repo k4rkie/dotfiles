@@ -15,9 +15,9 @@
   font-family: "ZedMono Nerd Font";
   font-size: 14px;
 
-  --border-radius: 4px;
-  --border-radius-s: 4px;
-  --border-radius-xl: 4px;
+  --border-radius: 0px;
+  --border-radius-s: 0px;
+  --border-radius-xl: 0px;
   --shadow: 2px 4px 10px rgba(0, 0, 0, 0.15);
 }
 
@@ -27,7 +27,7 @@
 
 .notification-background {
   background: @notification-bg;
-  border: 1px solid @border;
+  border: 2px solid @border;
   border-radius: var(--border-radius);
   margin: 14px 14px 0px 14px;
   padding: 0;
@@ -120,9 +120,9 @@
 
 .control-center {
   background: @center-bg;
-  border: 1px solid @border;
+  border: 2px solid @border;
   border-radius: var(--border-radius);
-  margin: 16px;
+  margin: 10px;
   padding: 5px 5px 0 5px;
   animation: cc-slide-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -133,7 +133,7 @@
 
 .control-center .notification-background {
   background: @center-notification-bg;
-  border: 1px solid @border;
+  border: 2px solid @border;
   box-shadow: var(--shadow);
 }
 
@@ -155,7 +155,7 @@
   color: @text;
   font-weight: bold;
   background: @background-alt;
-  border: 1px solid @border;
+  border: 2px solid @border;
   border-radius: var(--border-radius);
   padding: 4px 8px;
 }
@@ -189,7 +189,7 @@
   padding: 10px 15px;
   border-radius: var(--border-radius);
   background: @background-alt;
-  border: 1px solid @border;
+  border: 2px solid @border;
   box-shadow: var(--shadow);
   color: @text;
 }

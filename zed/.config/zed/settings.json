@@ -1,5 +1,16 @@
 {
+  "restore_on_startup": "launchpad",
+  "session": {
+    "trust_all_worktrees": true
+  },
+  "which_key": {
+    "enabled": true
+  },
+  "snippet_sort_order": "inline",
+  "drop_target_size": 0.2,
+  "relative_line_numbers": "enabled",
   "vim": {
+    "toggle_relative_line_numbers": true,
     "cursor_shape": {
       "insert": "block",
     },
@@ -10,7 +21,7 @@
     "button": false,
   },
   "terminal": {
-    "font_family": "FiraCode Nerd Font",
+    "font_family": "Maple Mono NF",
     "font_size": 22.0,
     "button": false,
   },
@@ -54,9 +65,9 @@
     "light": "Light Charmed Icons",
     "dark": "Warm Charmed Icons",
   },
-  "ui_font_family": "FiraCode Nerd Font",
-  "buffer_font_family": "FiraCode Nerd Font",
-  "ui_font_size": 20.0,
+  "ui_font_family": "Maple Mono NF",
+  "buffer_font_family": "Maple Mono NF",
+  "ui_font_size": 22.0,
   "buffer_font_size": 24.0,
   "window_decorations": "server",
   "toolbar": {
@@ -83,6 +94,9 @@
     "min_line_number_digits": 0,
   },
   "scrollbar": {
+    "axes": {
+      "horizontal": false
+    },
     "show": "never",
   },
   "status_bar": {
