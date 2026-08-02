@@ -64,5 +64,10 @@ else
     fi
 fi
 
-# 5. Launch Kitty
+# 5. Launch emacsclient
+
+# kitty
+# kitty --detach tmux attach-session -t "$selected_name" 
+
+# foot
 foot tmux attach-session -t "$selected_name" &

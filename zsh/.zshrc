@@ -68,7 +68,7 @@ PROMPT='%F{#7D718F}%~%f ${vcs_info_msg_0_}%k-> '
 alias ls="eza -lh  --icons=always --git --hyperlink"
 alias la="eza -lha --icons=always --git --hyperlink"
 
-alias nv="nvim"
+alias vi="nvim"
 alias cl="clear"
 alias ff="fastfetch"
 

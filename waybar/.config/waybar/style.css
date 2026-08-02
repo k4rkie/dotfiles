@@ -3,7 +3,7 @@
   border-radius: 0;
   min-height: 0;
   font-family: "Maple Mono NF";
-  font-size: 14.5px;
+  font-size: 14.9px;
   padding: 0px;
 }
 
@@ -54,8 +54,7 @@ tooltip {
   color: #444444;
   background: transparent;
   margin: 2px 2px;
-  border-radius: 2px;
-  min-width: 10px;
+  min-width: 18px;
   padding: 0px 4px;
 }
 
@@ -66,7 +65,7 @@ tooltip {
 #workspaces button.active {
   background: transparent;
   color: #a1a1a1;
-  font-weight: bold;
+  border-bottom: 2px solid #a1a1a1;
 }
 
 #workspaces button.urgent {

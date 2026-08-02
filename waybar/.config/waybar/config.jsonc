@@ -79,10 +79,10 @@
       "warning": 30,
       "critical": 15
     },
-    "format": "bat:{capacity}%",
-    "format-charging": "pow:{capacity}%",
-    "format-plugged": "pow:{capacity}%",
-    "format-full": "pow:{capacity}%",
+    "format": "󱊣 bat:{capacity}%",
+    "format-charging": " bat:{capacity}%",
+    "format-plugged": " bat:{capacity}%",
+    "format-full": " bat:{capacity}%",
   },
   "custom/recording": {
     "exec": "/home/k4rkie/scripts/wf-status.sh",

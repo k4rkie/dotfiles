@@ -65,7 +65,11 @@ return {
         fuzzy = { implementation = "lua" },
         completion = {
           menu = {
+            border = "single",
+            min_width = 15,
+            max_height = 8,
             scrollbar = false,
+            winhighlight = "Normal:BlinkCmpMenu,FloatBorder:BlinkCmpMenuBorder,CursorLine:BlinkCmpMenuSelection,Search:None",
           },
         },
       })

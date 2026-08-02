@@ -6,7 +6,7 @@ vim.keymap.set("n", "<leader>qq", ":bd<CR>", { desc = "Close current buffer" })
 
 vim.keymap.set("n", "<leader>rr", ":restart<CR>", { desc = "Restart Nvim" })
 
-vim.keymap.set("n", "<C-e>", ":Oil<CR>", { desc = "Open oil in cwd" })
+vim.keymap.set("n", "<C-e>", ":Oil --float<CR>", { desc = "Open oil in cwd" })
 
 vim.keymap.set("n", "<C-h>", ":%s/", { desc = "Open search and replace" })
 
@@ -24,6 +24,7 @@ vim.keymap.set("v", "<C-k>", ":m '<-2<CR>gv=gv")
 
 -- Telescope
 local builtin = require("telescope.builtin")
+vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope find files" })
 vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Telescope live grep" })
 vim.keymap.set("n", "<leader>gb", builtin.current_buffer_fuzzy_find, { desc = "Telescope fuzzy search current buffer" })
 vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })
@@ -36,9 +37,9 @@ vim.keymap.set("n", "<leader>nv", function()
   }
 end, { desc = "Telescope open nvim config directory" })
 
-vim.keymap.set("n", "<leader>ff", function()
+vim.keymap.set("n", "<leader>rf", function()
   require("telescope").extensions["recent-files"].recent_files({})
-end, { noremap = true, silent = true }, { desc = "Telescope find files" })
+end, { noremap = true, silent = true }, { desc = "Telescope find recent files" })
 
 -- Lsp
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -46,7 +47,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
     local opts = { buffer = event.buf }
 
     vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-    vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+    vim.keymap.set("n", "K", function()
+      if not vim.diagnostic.open_float({ scope = "cursor", focusable = false }) then
+        vim.lsp.buf.hover()
+      end
+    end, opts)
     vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
   end,
 })

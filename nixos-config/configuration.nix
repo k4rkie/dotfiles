@@ -30,6 +30,9 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
+  networking.wireless.iwd.enable = true;
+  networking.networkmanager.wifi.backend = "iwd";
+
   # Set your time zone.
   time.timeZone = "Asia/Kathmandu";
 

@@ -38,14 +38,28 @@ vim.opt.cmdheight = 0
 
 vim.opt.winborder = "single"
 
-vim.opt.scrolloff = 999
+-- vim.opt.scrolloff = 999
 
 vim.o.foldlevel = 99
 
 vim.diagnostic.config({
-  virtual_text = { severity = vim.diagnostic.severity.ERROR },
+  virtual_text = {
+    severity = vim.diagnostic.severity.ERROR,
+    format = function(d)
+      local msg = d.message:gsub("\n", " ")
+      if #msg > 80 then
+        return msg:sub(1, 80) .. "…"
+      end
+      return msg
+    end,
+  },
   signs = false,
   underline = { severity = vim.diagnostic.severity.ERROR },
+  float = {
+    border = "single",
+    focusable = false,
+    scope = "cursor",
+  },
 })
 -- Define explicit colors for LSP diagnostics
 -- ColorScheme autocmd ensures these survive async colorscheme loads (base16)
@@ -83,6 +97,14 @@ vim.api.nvim_set_hl(0, "TelescopePromptBorder", { link = "FloatBorder" })
 vim.api.nvim_set_hl(0, "TelescopeResultsBorder", { link = "FloatBorder" })
 vim.api.nvim_set_hl(0, "TelescopePreviewBorder", { link = "FloatBorder" })
 
+vim.api.nvim_set_hl(0, "BlinkCmpMenu", { fg = "#c1c1c1", bg = "#030303" })
+vim.api.nvim_set_hl(0, "BlinkCmpMenuBorder", { fg = "#c1c1c1" })
+vim.api.nvim_set_hl(0, "BlinkCmpMenuSelection", { bg = "#2b2b2b", bold = true })
+vim.api.nvim_set_hl(0, "BlinkCmpLabel", { fg = "#c1c1c1" })
+vim.api.nvim_set_hl(0, "BlinkCmpLabelMatch", { fg = "#e3c5a5" })
+vim.api.nvim_set_hl(0, "BlinkCmpLabelDescription", { fg = "#999999" })
+vim.api.nvim_set_hl(0, "BlinkCmpSource", { fg = "#696969" })
+
 local prompt_bg = "#030303"
 
 vim.api.nvim_set_hl(0, "TelescopePromptNormal", { bg = prompt_bg })
@@ -90,60 +112,6 @@ vim.api.nvim_set_hl(0, "TelescopePromptTitle", { bg = prompt_bg })
 vim.api.nvim_set_hl(0, "TelescopePromptPrefix", { bg = prompt_bg })
 vim.api.nvim_set_hl(0, "TelescopePromptCounter", { bg = prompt_bg })
 
-
--- Built-In tabline config
-vim.o.showtabline = 0
-
--- set the tabline to a Lua function
-vim.o.tabline = "%!v:lua.tabline()"
-
-function _G.tabline()
-  local s = ""
-  for i = 1, vim.fn.tabpagenr("$") do
-    local buflist = vim.fn.tabpagebuflist(i)
-    local winnr = vim.fn.tabpagewinnr(i)
-    local buf = buflist[winnr]
-    local bufname = vim.fn.bufname(buf)
-    -- placeholder for unnamed buffers
-    if bufname == "" then
-      bufname = "[No Name]"
-    end
-    -- filename only
-    bufname = vim.fn.fnamemodify(bufname, ":t")
-    -- show [+] if the buffer is modified
-    if vim.fn.getbufvar(buf, "&mod") == 1 then
-      bufname = bufname .. " [+]"
-    end
-    -- highlight current tab
-    if i == vim.fn.tabpagenr() then
-      s = s .. "%#TabLineSel#"
-    else
-      s = s .. "%#TabLine#"
-    end
-    -- make tab clickable
-    s = s .. "%" .. i .. "T"
-
-    -- add filename
-    s = s .. " " .. bufname .. " "
-  end
-  -- fill the rest
-  s = s .. "%#TabLineFill#"
-  return s
-end
-
-vim.api.nvim_set_hl(0, "TabLineSel", {
-  fg = "#030303",
-  bg = "#888889",
-  bold = true,
-})
-vim.api.nvim_set_hl(0, "TabLine", {
-  fg = "#555556",
-  bg = "#030303",
-})
-
-vim.api.nvim_set_hl(0, "TabLineFill", {
-  bg = "#030303",
-})
 
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "*",

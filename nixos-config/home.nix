@@ -11,6 +11,8 @@
     stateVersion = "26.05";
   };
 
+  programs.home-manager.enable = true;
+
   # Disable Stylix targets that you manage manually stylix.targets.hyprland.enable = false;
   stylix.targets.waybar.enable = false;
   stylix.targets.neovim.enable = false;
@@ -26,27 +28,6 @@
     };
   };
 
-  programs.home-manager.enable = true;
-  programs.kitty = {
-    enable = true;
-    settings = {
-      confirm_os_window_close = 0;
-
-      # Text & Layout
-      window_padding_width = 0;
-
-      # Cursor Appearance
-      cursor_shape = "block";
-      cursor_blink_interval = 0;
-
-      # Shell Integration
-      shell_integration = "enabled no-cursor";
-
-      # Keymaps
-      "map ctrl+f" = "launch --type=overlay zsh -ic \"~/scripts/tmux-session-dispensary.sh\"";
-    };
-  };
-
   programs.fzf = {
     enable = true;
     changeDirWidgetCommand = "fd --type d";
@@ -55,6 +36,9 @@
   };
 
   home.packages = with pkgs; [
+    kitty
+    brave
+
     clang
     tree-sitter
     prettier
@@ -63,7 +47,6 @@
     # --- Editors & Notes ---
     neovim
     zed-editor
-    emacs
     obsidian
     vscode
     foot
@@ -82,7 +65,6 @@
     zathuraPkgs.zathura_pdf_poppler
     rmpc
     zscroll
-    firefox
 
     # --- Terminal Utilities & Navigation ---
     tmux
@@ -133,5 +115,6 @@
     quickshell
     qalculate-gtk
     iwd
+    sway-audio-idle-inhibit
   ];
 }
