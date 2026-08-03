@@ -6,14 +6,11 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/NixOS-5277C3?style=flat&logo=nixos&logoColor=white"/>
-  <img src="https://img.shields.io/badge/WM-Hyprland-5f8787?style=flat"/>
-  <img src="https://img.shields.io/badge/Zsh-4EAA25?style=flat&logo=zsh&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Neovim-57A143?style=flat&logo=neovim&logoColor=white"/>
-  <img src="https://img.shields.io/badge/GTK-Void-8A2BE2?style=flat"/>
+  <img src="https://img.shields.io/badge/WM-MangoWM-5f8787?style=flat"/>
 </p>
 
 <p align="center">
-  managed with <b>GNU Stow</b>
+  managed with <b>Home Manager</b>
 </p>
 
 ---
@@ -22,12 +19,12 @@
 
 | component | tool |
 |-----------|------|
-| **wm** | Hyprland  |
+| **wm** | Mango  |
 | **bar** | Waybar |
 | **launcher** | Rofi |
 | **notifications** | Swaync |
 | **osd** | Swayosd |
-| **terminal** | Kitty |
+| **terminal** | foot |
 | **shell** | Zsh |
 | **editor** | Neovim |
 | **multiplexer** | Tmux |
@@ -35,29 +32,28 @@
 | **music** | MPD + rmpc |
 | **pdf** | Zathura |
 | **system info** | Fastfetch |
-| **wallpaper** | Swaybg |
-| **idle / lock** | Hypridle + Hyprlock |
+| **wallpaper** | awww |
+| **idle / lock** | swayidle + Hyprlock |
 | **clipboard** | Cliphist |
 | **color picker** | Hyprpicker |
 | **gamma** | Wlsunset |
 | **browser** | Zen |
 | **gtk** | Base16 Bark theme, Papirus-Dark icons |
-| **font** | ZedMono Nerd Font |
+| **font** | Monasevka Code|
 
 ## scripts
 
 Custom scripts under `scripts/` for:
 - **rofi** — clipboard history, emoji picker, wallpaper setter, wifi menu, powermenu, sessionizer
 - **media** — screenshot (full/region/window), screen recording, volume/brightness with swayosd
-- **misc** — mpd notifications, caffeine toggle, accent color setter, gdm wallpaper, reload workflows
+- **misc** — mpd notifications, caffeine toggle, reload workflows
 
 ## install
 
 ```bash
 git clone https://github.com/k4rkie/dotfiles.git ~/dotfiles
-cd ~/dotfiles
-
-# stow what you want
-stow hypr waybar rofi kitty nvim zsh tmux yazi scripts
+sudo nixos-rebuild switch --flake ~/dotfiles/nixos-config#nixxer
 ```
+
+Home Manager symlinks everything into `~/.config` via out-of-store symlinks
 
