@@ -23,6 +23,11 @@
       url = "github:mangowm/mango";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    toofan = {
+      url = "github:vyrx-dev/toofan";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -33,6 +38,7 @@
       stylix,
       zen-browser,
       mangowm,
+      toofan,
       ...
     }:
     {
@@ -51,6 +57,7 @@
             # use same system pkgs and store in the nix/store
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = { inherit toofan; };
 
             # Per-user Home Manager config
             home-manager.users.k4rkie = import ./home.nix;

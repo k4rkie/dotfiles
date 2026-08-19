@@ -72,11 +72,11 @@ PanelWindow {
     }
 
     function _pillText() {
-        if (wallpaperMode) return "󰸉 Wallpaper :"
-        if (clipboardMode) return "󰅌 Clipboard:"
-        if (emojiMode)     return "󰞅 Emoji :"
-        if (hiddenMode)    return " Hidden :"
-        return " Apps :"
+        if (wallpaperMode) return "󰸉  Wallpaper :"
+        if (clipboardMode) return "󰅌  Clipboard:"
+        if (emojiMode)     return "󰞅  Emoji :"
+        if (hiddenMode)    return "  Hidden :"
+        return "  Apps :"
     }
 
     function _placeholder() {

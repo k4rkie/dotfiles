@@ -1,5 +1,6 @@
 return {
   require("plugins.base16"),
+  require("plugins.snacks"),
   require("plugins.lualine"),
   require("plugins.treesitter"),
   require("plugins.autopairs"),
@@ -8,7 +9,6 @@ return {
   require("plugins.surround"),
   require("plugins.webdevicons"),
   require("plugins.colorhighlight"),
-  require("plugins.telescope"),
   require("plugins.oil"),
   require("plugins.rendermarkdown"),
   require("plugins.conform"),

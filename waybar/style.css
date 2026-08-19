@@ -3,7 +3,7 @@
   border-radius: 0;
   min-height: 0;
   font-family: "Maple Mono NF";
-  font-size: 14.9px;
+  font-size: 14.5px;
   padding: 0px;
 }
 
@@ -13,7 +13,7 @@ window#waybar {
 }
 
 window#waybar>box {
-  padding: 1px 8px;
+  padding: 1px 0px;
 }
 
 tooltip {
@@ -27,6 +27,7 @@ tooltip {
 #network,
 #pulseaudio,
 #custom-caffeine,
+#media,
 #custom-notifications {
   margin: 0px 4px;
   padding: 0px 4px;
@@ -47,7 +48,7 @@ tooltip {
 }
 
 #workspaces {
-  padding-left: 2px;
+  padding-left: 0px;
 }
 
 #workspaces button {
@@ -63,9 +64,8 @@ tooltip {
 }
 
 #workspaces button.active {
-  background: transparent;
-  color: #a1a1a1;
-  border-bottom: 2px solid #a1a1a1;
+  background: #a1a1a1;
+  color: #030303;
 }
 
 #workspaces button.urgent {
@@ -98,7 +98,7 @@ tooltip {
 }
 
 #custom-media-time {
-  color: #a1a1a1;
+  color: #404040;
   font-size: 12px;
 }
 
@@ -111,4 +111,3 @@ tooltip {
   opacity:0.4;
   margin: 0px 2px;
 }
-

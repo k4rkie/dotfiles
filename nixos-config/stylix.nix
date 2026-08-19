@@ -15,20 +15,20 @@
 
     icons = {
       enable = true;
-      package = pkgs.papirus-icon-theme;
+      package = pkgs.papirus-icon-theme.override { color = "nordic"; };
       dark = "Papirus-Dark";
       light = "Papirus";
     };
 
     fonts = {
       monospace = {
-        # package = pkgs.maple-mono.NF;
-        # name = "Maple Mono NF";
+        package = pkgs.maple-mono.NF;
+        name = "Maple Mono NF";
 
-        package = pkgs.runCommand "Monasekva Code Nerd Font" { } ''
-          install -Dm644 ${./fonts/MonasevkaCodeNerdFont-Regular.ttf} $out/share/fonts/truetype/MonasevkaCodeNerdFont-Regular.ttf
-        '';
-        name = "Monasevka Code Nerd Font";
+        # package = pkgs.runCommand "Monasekva Code Nerd Font" { } ''
+        #   install -Dm644 ${./fonts/MonasevkaCodeNerdFont-Regular.ttf} $out/share/fonts/truetype/MonasevkaCodeNerdFont-Regular.ttf
+        # '';
+        # name = "Monasevka Code Nerd Font";
       };
       sansSerif = config.stylix.fonts.monospace;
       serif = config.stylix.fonts.monospace;

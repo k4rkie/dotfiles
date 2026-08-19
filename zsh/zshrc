@@ -77,7 +77,6 @@ alias mv="mv -i"
 
 alias please='sudo $(fc -ln -1)' 
 alias reload="source ~/.zshrc"
-alias air='~/go/bin/air'
 
 alias nrs="sudo nixos-rebuild switch --flake ~/dotfiles/nixos-config#nixxer"
 
@@ -137,16 +136,14 @@ case ":$PATH:" in
 esac
 # pnpm end
 
-# rmpc completions
-# fpath=(~/.zsh/completions $fpath)
-# autoload -Uz compinit && compinit
-
 #nimble
 export PATH=/home/k4rkie/.nimble/bin:$PATH
-
 
 # Added by Antigravity CLI installer
 export PATH="/home/k4rkie/.local/bin:$PATH"
 
 # Fzf bindings
 eval "$(fzf --zsh)"
+
+# direnv
+eval "$(direnv hook zsh)"

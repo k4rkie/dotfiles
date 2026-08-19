@@ -43,6 +43,13 @@ return {
       }
       vim.lsp.enable("clangd")
 
+      -- zig lsp
+      vim.lsp.config.zls = {
+        cmd = { "zls" },
+        filetypes = { "zig" },
+      }
+      vim.lsp.enable("zls")
+
       vim.lsp.config.rust_analyzer = {
         cmd = { "rust-analyzer" },
         filetypes = { "rust" },
@@ -69,7 +76,8 @@ return {
             min_width = 15,
             max_height = 8,
             scrollbar = false,
-            winhighlight = "Normal:BlinkCmpMenu,FloatBorder:BlinkCmpMenuBorder,CursorLine:BlinkCmpMenuSelection,Search:None",
+            winhighlight =
+            "Normal:BlinkCmpMenu,FloatBorder:BlinkCmpMenuBorder,CursorLine:BlinkCmpMenuSelection,Search:None",
           },
         },
       })

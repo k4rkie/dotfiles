@@ -1,6 +1,7 @@
 -- Autostart hook: things to launch once Hyprland is up.
 -- Daemons (waybar, swaync, swayosd, hypridle) and tray applets.
 hl.on("hyprland.start", function()
+
   -- --- tray applets ---
   hl.exec_cmd("nm-applet")
   hl.exec_cmd("blueman-applet")

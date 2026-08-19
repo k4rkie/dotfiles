@@ -99,7 +99,6 @@
     cliphist
     swaynotificationcenter
     swayosd
-    swaybg
     wlsunset
     grim
     slurp

@@ -4,11 +4,10 @@
   "reload_style_on_change": true,
   "height": 18,
   "modules-left": [
-    "custom/tag",
-    "ext/workspaces"
+    "ext/workspaces",
+    "group/media"
   ],
-  "modules-center": [
-    "clock",
+  "modules-center": [ "clock",
   ],
   "modules-right": [
     "memory",
@@ -26,7 +25,6 @@
   },
   "clock": {
     "format": "{:%a %b-%d, %I:%M %p}",
-    // "format": "{:%I:%M %p}",
     "interval": 60,
     "tooltip": true,
     "tooltip-format": "<big>{calendar}</big>",
@@ -61,12 +59,12 @@
   "memory": {
     "format": "mem:{}%",
     "tooltip": "false",
-    "on-click": "foot -a btop btop",
+    "on-click": "footclient -a btop btop",
   },
   "cpu": {
     "format": "cpu:{usage}%",
     "tooltip": "false",
-    "on-click": "foot -a btop btop",
+    "on-click": "footclient -a btop btop",
   },
   "pulseaudio": {
     "format": "vol:{volume}%",
@@ -98,11 +96,6 @@
     "tooltip-format-ethernet": "{ifname}󰈀 ",
     "tooltip-format-disconnected": "Disconnected",
     "on-click": "~/scripts/rofi-wifi-menu.sh"
-  },
-  "custom/tag": {
-    "format": "tag :",
-    "interval": "once",
-    "tooltip": false,
   },
   "custom/notifications": {
     "tooltip": true,
@@ -156,7 +149,7 @@
     "exec": "/home/k4rkie/.config/waybar/custom_modules/media/media-now-playing.sh",
     "escape": true,
     "tooltip": false,
-    "on-click": "kitty -a rmpc rmpc",
+    "on-click": "footclient -a rmpc rmpc",
     "on-click-middle": "mpc prev",
     "on-click-right": "mpc next",
   },
@@ -170,5 +163,14 @@
     "escape": true,
     "interval": 1,
     "tooltip": false,
+  },
+  "mango/window": {
+    "format": "{app_id}",
+    "rewrite": {
+      "zen-beta": "zen browser",
+      "footclient": "foot"
+    },
+    "icon": true,
+    "icon-size": 18
   },
 }

@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  toofan,
   ...
 }:
 let
@@ -19,16 +20,15 @@ in
   xdg.configFile = {
     "fastfetch".source = link "${dotfiles}/fastfetch";
     "foot".source = link "${dotfiles}/foot";
-    "hypr".source = link "${dotfiles}/hypr";
     "kitty".source = link "${dotfiles}/kitty";
     "mango".source = link "${dotfiles}/mango";
+    "hypr".source = link "${dotfiles}/hypr";
     "mpd".source = link "${dotfiles}/mpd";
     "mpv".source = link "${dotfiles}/mpv";
     "nvim".source = link "${dotfiles}/nvim";
     "quickshell".source = link "${dotfiles}/quickshell";
     "rmpc".source = link "${dotfiles}/rmpc";
     "rofi".source = link "${dotfiles}/rofi";
-    "sway".source = link "${dotfiles}/sway";
     "swaync".source = link "${dotfiles}/swaync";
     "swayosd".source = link "${dotfiles}/swayosd";
     "waybar".source = link "${dotfiles}/waybar";
@@ -63,38 +63,39 @@ in
 
   programs.fzf = {
     enable = true;
+    enableZshIntegration = false;
     changeDirWidgetCommand = "fd --type d";
     changeDirWidgetOptions = [ "--preview 'tree -C {} | head -200'" ];
     defaultCommand = "fd --type f";
   };
 
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+    enableZshIntegration = false;
+  };
+
+  # Sway audio idle inhibitor
   systemd.user.services.sway-audio-idle-inhibit = {
     Unit = {
       Description = "Prevent idle/sleep when audio is playing";
-      After = [
-        "pipewire.service"
-        "wireplumber.service"
-        "graphical-session.target"
-      ];
-      PartOf = [ "graphical-session.target" ];
     };
 
     Service = {
       Type = "simple";
+      ExecStartPre = "${pkgs.coreutils}/bin/sleep 3";
       ExecStart = "${pkgs.sway-audio-idle-inhibit}/bin/sway-audio-idle-inhibit";
       Restart = "on-failure";
-      RestartSec = "2s";
+      RestartSec = "5";
     };
 
     Install = {
-      WantedBy = [ "graphical-session.target" ];
+      WantedBy = [ "default.target" ];
     };
   };
 
-  home.packages = with pkgs; [
-    kitty
-    vivaldi
 
+  home.packages = with pkgs; [
     clang
     tree-sitter
     prettier
@@ -143,12 +144,14 @@ in
     awww
     ffmpeg
     yt-dlp
+    toofan.packages.${pkgs.stdenv.hostPlatform.system}.default
 
     # --- Language Runtimes & Compilers ---
     nodejs
     bun
     pnpm
     go
+    zig
     rustup
     python3
 
@@ -160,6 +163,7 @@ in
     clang-tools
     gnumake
     cmake
+    zls
 
     # --- Misc Tools ---
     tesseract

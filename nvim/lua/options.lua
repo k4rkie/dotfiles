@@ -33,34 +33,20 @@ vim.opt.termguicolors = true
 vim.opt.undofile = true
 
 vim.opt.clipboard = "unnamedplus"
-
 vim.opt.cmdheight = 0
-
 vim.opt.winborder = "single"
 
--- vim.opt.scrolloff = 999
-
-vim.o.foldlevel = 99
+vim.opt.foldlevel = 99
+vim.opt.autoread = true
 
 vim.diagnostic.config({
   virtual_text = {
     severity = vim.diagnostic.severity.ERROR,
-    format = function(d)
-      local msg = d.message:gsub("\n", " ")
-      if #msg > 80 then
-        return msg:sub(1, 80) .. "…"
-      end
-      return msg
-    end,
   },
   signs = false,
   underline = { severity = vim.diagnostic.severity.ERROR },
-  float = {
-    border = "single",
-    focusable = false,
-    scope = "cursor",
-  },
 })
+
 -- Define explicit colors for LSP diagnostics
 -- ColorScheme autocmd ensures these survive async colorscheme loads (base16)
 local function set_diagnostic_hl()
@@ -82,7 +68,6 @@ vim.api.nvim_create_autocmd("ColorScheme", {
   pattern = "*",
   callback = set_diagnostic_hl,
 })
-
 vim.schedule(set_diagnostic_hl)
 
 vim.opt.guicursor = {
@@ -91,27 +76,6 @@ vim.opt.guicursor = {
   "r:block",
   "o:block",
 }
-
-vim.api.nvim_set_hl(0, "TelescopeBorder", { link = "FloatBorder" })
-vim.api.nvim_set_hl(0, "TelescopePromptBorder", { link = "FloatBorder" })
-vim.api.nvim_set_hl(0, "TelescopeResultsBorder", { link = "FloatBorder" })
-vim.api.nvim_set_hl(0, "TelescopePreviewBorder", { link = "FloatBorder" })
-
-vim.api.nvim_set_hl(0, "BlinkCmpMenu", { fg = "#c1c1c1", bg = "#030303" })
-vim.api.nvim_set_hl(0, "BlinkCmpMenuBorder", { fg = "#c1c1c1" })
-vim.api.nvim_set_hl(0, "BlinkCmpMenuSelection", { bg = "#2b2b2b", bold = true })
-vim.api.nvim_set_hl(0, "BlinkCmpLabel", { fg = "#c1c1c1" })
-vim.api.nvim_set_hl(0, "BlinkCmpLabelMatch", { fg = "#e3c5a5" })
-vim.api.nvim_set_hl(0, "BlinkCmpLabelDescription", { fg = "#999999" })
-vim.api.nvim_set_hl(0, "BlinkCmpSource", { fg = "#696969" })
-
-local prompt_bg = "#030303"
-
-vim.api.nvim_set_hl(0, "TelescopePromptNormal", { bg = prompt_bg })
-vim.api.nvim_set_hl(0, "TelescopePromptTitle", { bg = prompt_bg })
-vim.api.nvim_set_hl(0, "TelescopePromptPrefix", { bg = prompt_bg })
-vim.api.nvim_set_hl(0, "TelescopePromptCounter", { bg = prompt_bg })
-
 
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "*",
@@ -140,5 +104,36 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   end,
 })
 
+-- highlight yank
+vim.api.nvim_create_autocmd("TextYankPost", {
+  group = vim.api.nvim_create_augroup("highlight_yank", { clear = true }),
+  pattern = "*",
+  desc = "highlight selection on yank",
+  callback = function()
+    vim.highlight.on_yank({ timeout = 200, visual = true })
+  end,
+})
+
+-- restore cursor to file position in previous editing session
+vim.api.nvim_create_autocmd("BufReadPost", {
+  callback = function(args)
+    local mark = vim.api.nvim_buf_get_mark(args.buf, '"')
+    local line_count = vim.api.nvim_buf_line_count(args.buf)
+    if mark[1] > 0 and mark[1] <= line_count then
+      vim.api.nvim_win_set_cursor(0, mark)
+      -- defer centering slightly so it's applied after render
+      vim.schedule(function()
+        vim.cmd("normal! zz")
+      end)
+    end
+  end,
+})
+
+-- open help in vertical split
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "help",
+  command = "wincmd L",
+})
+
 -- Disable logging the diagnostics
--- vim.lsp.log.set_level("OFF")
+vim.lsp.log.set_level("OFF")
