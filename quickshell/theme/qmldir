@@ -1,4 +1,2 @@
-singleton Colors 1.0 Colors.qml
 singleton PanelColors 1.0 PanelColors.qml
-singleton ThemeState 1.0 ThemeState.qml
 singleton LauncherState 1.0 LauncherState.qml

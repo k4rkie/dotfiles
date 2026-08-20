@@ -1,22 +1,9 @@
 pragma Singleton
 import QtQuick
 import Quickshell
-import Quickshell.Services.UPower
-import "."
 
 Singleton {
-    readonly property bool isDark: ThemeState.isDark
     readonly property int transitionDuration: 250
-
-    // Light theme definitions (Clean & Neutral, No Pure White)
-    readonly property color lightBarBackground:    Colors.grey100
-    readonly property color lightPopupBackground:  Colors.grey50
-    readonly property color lightRowBackground:    Colors.grey200
-    readonly property color lightTrackBackground:  Colors.grey300
-    readonly property color lightBorder:           Colors.blueGrey100
-    readonly property color lightTextMain:         Colors.blueGrey900
-    readonly property color lightTextAccent:       Colors.blueGrey800
-    readonly property color lightTextDim:          Colors.blueGrey400
 
     // Base16 Black Metal Bathory Tweaked
     readonly property color base00: "#030303"
@@ -90,17 +77,10 @@ Singleton {
     readonly property color ramRing:           base0D
     readonly property color gpuRing:           base0B
 
-    // Functions
-    function profileColor(profile) {
-        if (profile === PowerProfile.PowerSaver)  return Colors.green200
-        if (profile === PowerProfile.Performance) return Colors.red200
-        return Colors.orange200
-    }
-
     property var _hashCache: ({})
     function hashColor(str) {
-        if (!str || str === "") return isDark ? Colors.blueGrey300 : Colors.blueGrey400
-        if (_hashCache[str + isDark]) return _hashCache[str + isDark]
+        if (!str || str === "") return "#90A4AE"
+        if (_hashCache[str]) return _hashCache[str]
 
         var hash = 0
         for (var i = 0; i < str.length; i++) {
@@ -108,20 +88,15 @@ Singleton {
             hash = hash & hash
         }
 
-        var palette = isDark ? [
-            Colors.teal200, Colors.lightBlue200, Colors.green200,
-            Colors.purple200, Colors.orange200, Colors.pink200,
-            Colors.yellow200, Colors.cyan200, Colors.deepPurple200,
-            Colors.blueGrey300
-        ] : [
-            Colors.teal300, Colors.lightBlue300, Colors.green400,
-            Colors.purple300, Colors.orange300, Colors.pink300,
-            Colors.yellow700, Colors.cyan300, Colors.deepPurple300,
-            Colors.blueGrey400
+        var palette = [
+            "#80cbc4", "#81D4FA", "#a5d6a7",
+            "#CE93D8", "#ffcc80", "#f48fb1",
+            "#fff59d", "#80DEEA", "#B39DDB",
+            "#90A4AE"
         ]
 
         var result = palette[Math.abs(hash) % palette.length]
-        _hashCache[str + isDark] = result
+        _hashCache[str] = result
         return result
     }
 }

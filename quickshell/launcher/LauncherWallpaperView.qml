@@ -357,7 +357,7 @@ Item {
                                 font.family:      "JetBrainsMono Nerd Font"
                                 font.pixelSize:   11
                                 font.bold:        true
-                                color:            modelData.mediaType === "gif" ? Colors.teal200 : Colors.green200
+                                color:            modelData.mediaType === "gif" ? PanelColors.network : PanelColors.scanning
                             }
                         }
                     }

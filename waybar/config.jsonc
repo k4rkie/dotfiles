@@ -4,40 +4,23 @@
   "reload_style_on_change": true,
   "height": 18,
   "modules-left": [
-    "ext/workspaces",
-    "group/media"
+    "ext/workspaces"
   ],
-  "modules-center": [ "clock",
-  ],
+  "modules-center": [ "custom/media-animation", "clock" ],
   "modules-right": [
     "memory",
-    "cpu",
     "pulseaudio",
     "battery",
     "custom/caffeine",
-    "custom/separator",
+    "network",
     "custom/notifications",
     "tray"
   ],
-  "tray": {
-    "icon-size": 14,
-    "spacing": 4
-  },
   "clock": {
     "format": "{:%a %b-%d, %I:%M %p}",
     "interval": 60,
-    "tooltip": true,
-    "tooltip-format": "<big>{calendar}</big>",
-    "on-click": "",
-    "calendar": {
-        "mode": "month",
-        "format": {
-          "months": "<span color='#c1c2c2'><b>{}</b></span>",
-          "days": "<span color='#c1c1c1'><b>{}</b></span>",
-          "weekdays": "<span color='#c1c1c1'><b>{}</b></span>",
-          "today": "<span color='#d9af82'><b><u>{}</u></b></span>"
-      }
-    }
+    "tooltip": false,
+    "on-click": "quickshell ipc call calendar toggle",
   },
   "ext/workspaces": {
     "format": "{icon}",
@@ -82,33 +65,29 @@
     "format-plugged": " bat:{capacity}%",
     "format-full": " bat:{capacity}%",
   },
-  "custom/recording": {
-    "exec": "/home/k4rkie/scripts/wf-status.sh",
-    "interval": 1
-  },
   "network": {
-    "format": "󰖩 ",
-    "format-wifi": "󰖩 ",
-    "format-ethernet": "󰈀 ",
-    "format-disconnected": "󰖪 ",
+    "format": "wifi:󰖩",
+    "format-wifi": "wifi:󰖩",
+    "format-ethernet": "eth:󰈀",
+    "format-disconnected": "wifi:󰖪",
     "tooltip-format": "{ifname}",
     "tooltip-format-wifi": "{essid} ({signalStrength}%) ",
     "tooltip-format-ethernet": "{ifname}󰈀 ",
     "tooltip-format-disconnected": "Disconnected",
-    "on-click": "~/scripts/rofi-wifi-menu.sh"
+    "on-click": "quickshell ipc call wifi toggle"
   },
   "custom/notifications": {
     "tooltip": true,
     "format": "<span size='12pt'>{icon}</span>",
     "format-icons": {
-      "notification": "󱅫",
-      "none": "",
-      "dnd-notification": "󰂠",
-      "dnd-none": "󰪓",
-      "inhibited-notification": "󰂛",
-      "inhibited-none": "󰪑",
-      "dnd-inhibited-notification": "󰂛",
-      "dnd-inhibited-none": "󰪑"
+      "notification": "noti:󱅫",
+      "none": "noti:",
+      "dnd-notification": "noti:󰂠",
+      "dnd-none": "noti:󰪓",
+      "inhibited-notification": "noti:󰂛",
+      "inhibited-none": "noti:󰪑",
+      "dnd-inhibited-notification": "noti:󰂛",
+      "dnd-inhibited-none": "noti:󰪑"
     },
     "return-type": "json",
     "exec-if": "which swaync-client",
@@ -133,44 +112,17 @@
     "signal": 8,
     "tooltip": false
   },
+  "custom/media-animation": {
+    "exec": "~/.config/waybar/custom_modules/media/media-animation.sh",
+    "tooltip": false,
+    "on-click": "quickshell ipc call media toggle",
+  },
   "custom/separator": {
     "format": "|",
     "tooltip": false,
   },
-  "group/media": {
-    "orientation": "horizontal",
-    "modules": [
-      "custom/media-animation",
-      "custom/media-now-playing",
-      "custom/media-time"
-    ]
-  },
-  "custom/media-now-playing": {
-    "exec": "/home/k4rkie/.config/waybar/custom_modules/media/media-now-playing.sh",
-    "escape": true,
-    "tooltip": false,
-    "on-click": "footclient -a rmpc rmpc",
-    "on-click-middle": "mpc prev",
-    "on-click-right": "mpc next",
-  },
-  "custom/media-animation": {
-    "exec": "~/.config/waybar/custom_modules/media/media-animation.sh",
-    "tooltip": false,
-    "on-click": "mpc toggle",
-  },
-  "custom/media-time": {
-    "exec": "~/.config/waybar/custom_modules/media/media-time.sh",
-    "escape": true,
-    "interval": 1,
-    "tooltip": false,
-  },
-  "mango/window": {
-    "format": "{app_id}",
-    "rewrite": {
-      "zen-beta": "zen browser",
-      "footclient": "foot"
-    },
-    "icon": true,
-    "icon-size": 18
-  },
+  "tray": {
+    "icon-size": 14,
+    "spacing": 4
+  }
 }

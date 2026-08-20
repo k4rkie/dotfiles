@@ -38,11 +38,11 @@ tooltip {
 #clock:hover,
 #cpu:hover,
 #memory:hover,
-#battery:hover,
 #pulseaudio:hover,
 #network:hover,
 #custom-notifications:hover,
 #tray:hover,
+#custom-caffeine:hover,
 #mpris:hover {
   opacity: 0.75;
 }
@@ -90,7 +90,7 @@ tooltip {
 
 #custom-media-animation {
   font-size: 12px;
-  margin-right: 10px;
+  margin-right: 4px;
 }
 
 #custom-media-now-playing {
@@ -102,8 +102,7 @@ tooltip {
   font-size: 12px;
 }
 
-#tray,
-#custom-notifications{
+#tray{
   margin: 0px 4px;
 }
 
