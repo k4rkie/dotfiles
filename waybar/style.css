@@ -27,7 +27,6 @@ tooltip {
 #network,
 #pulseaudio,
 #custom-caffeine,
-#media,
 #custom-notifications {
   margin: 0px 4px;
   padding: 0px 4px;
@@ -82,7 +81,6 @@ tooltip {
 #custom-caffeine.inactive, 
 #battery,
 #custom-notifications,
-#media,
 #custom-caffeine,
 #cpu {
   color: #a1a1a1;
@@ -93,17 +91,12 @@ tooltip {
   margin-right: 4px;
 }
 
-#custom-media-now-playing {
-  margin-right: 10px;
-}
-
-#custom-media-time {
-  color: #404040;
-  font-size: 12px;
-}
-
-#tray{
+#tray {
   margin: 0px 4px;
+}
+
+#custom-notifications {
+  margin-right: 8px;
 }
 
 #custom-separator{

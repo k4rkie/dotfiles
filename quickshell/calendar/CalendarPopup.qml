@@ -31,6 +31,8 @@ PanelWindow {
 
     property int contentHeight: contentCol.implicitHeight
 
+    property real slideOffset: 0
+
     function toggle() {
         if (animState === "closed" || animState === "closing") {
             var now = new Date()
@@ -41,9 +43,31 @@ PanelWindow {
             _viewYear = _todayYear
             _viewMonth = _todayMonth
             animState = "open"
+            closeAnim.stop()
+            openAnim.restart()
         } else {
-            animState = "closed"
+            animState = "closing"
+            openAnim.stop()
+            closeAnim.restart()
         }
+    }
+
+    SequentialAnimation {
+        id: openAnim
+        ScriptAction { script: { root.slideOffset = root.height + 8; innerRect.opacity = 0 } }
+        ParallelAnimation {
+            NumberAnimation { target: root; property: "slideOffset"; to: 0; duration: 100; easing.type: Easing.OutCubic }
+            NumberAnimation { target: innerRect; property: "opacity"; to: 1; duration: 100; easing.type: Easing.OutCubic }
+        }
+    }
+
+    SequentialAnimation {
+        id: closeAnim
+        ParallelAnimation {
+            NumberAnimation { target: root; property: "slideOffset"; to: root.height + 8; duration: 100; easing.type: Easing.InCubic }
+            NumberAnimation { target: innerRect; property: "opacity"; to: 0; duration: 100; easing.type: Easing.InCubic }
+        }
+        ScriptAction { script: { root.animState = "closed"; root.slideOffset = 0; innerRect.opacity = 1 } }
     }
 
     IpcHandler {
@@ -70,8 +94,8 @@ PanelWindow {
         id: monthAnim
         property int direction: 0
         ParallelAnimation {
-            NumberAnimation { target: dayGrid; property: "opacity"; to: 0; duration: 80; easing.type: Easing.OutCubic }
-            NumberAnimation { target: gridTrans; property: "x"; to: monthAnim.direction > 0 ? -30 : 30; duration: 80; easing.type: Easing.OutCubic }
+            NumberAnimation { target: dayGrid; property: "opacity"; to: 0; duration: 100; easing.type: Easing.OutCubic }
+            NumberAnimation { target: gridTrans; property: "x"; to: monthAnim.direction > 0 ? -30 : 30; duration: 100; easing.type: Easing.OutCubic }
         }
         ScriptAction {
             script: {
@@ -115,8 +139,7 @@ PanelWindow {
             SmoothedAnimation { velocity: 800; easing.type: Easing.OutExpo }
         }
 
-        y: root.height - height
-        opacity: 1.0
+        y: root.height - height + root.slideOffset
 
 
         HoverHandler { id: hover }

@@ -16,7 +16,7 @@ window {
     location:                    center;
     anchor:                      center;
     fullscreen:                  false;
-    width:                       22%;
+    width:                       25%;
     x-offset:                    0px;
     y-offset:                    0px;
 
@@ -33,7 +33,7 @@ window {
 listview {
     enabled:                     true;
     columns:                     1;
-    lines:                       7;
+    lines:                       6;
     cycle:                       true;
     dynamic:                     true;
     scrollbar:                   false;
@@ -43,7 +43,7 @@ listview {
     fixed-columns:               true;
     spacing:                     0px;
     margin:                      0px;
-    padding:                     2px;
+    padding:                     6px;
     border:                      0px solid;
     border-radius:               0px;
     cursor:                      "default";

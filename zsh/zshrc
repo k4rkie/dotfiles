@@ -4,8 +4,6 @@
 # ~/scripts/pfetch
 # 1. Enable color support for prompt
 autoload -U colors && colors
-
-
 # -------------------------------
 # 2. History Settings (smart and shared)
 # -------------------------------

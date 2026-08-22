@@ -32,9 +32,36 @@ PanelWindow {
 
     implicitWidth: contentCardWidth + arrowOffset * 2
 
+    property real slideOffset: 0
+
     function toggle() {
-        if (animState === "closed" || animState === "closing") animState = "open"
-        else animState = "closed"
+        if (animState === "closed" || animState === "closing") {
+            animState = "open"
+            closeAnim.stop()
+            openAnim.restart()
+        } else {
+            animState = "closing"
+            openAnim.stop()
+            closeAnim.restart()
+        }
+    }
+
+    SequentialAnimation {
+        id: openAnim
+        ScriptAction { script: { root.slideOffset = root.height + 8; contentCard.opacity = 0 } }
+        ParallelAnimation {
+            NumberAnimation { target: root; property: "slideOffset"; to: 0; duration: 100; easing.type: Easing.OutCubic }
+            NumberAnimation { target: contentCard; property: "opacity"; to: 1; duration: 100; easing.type: Easing.OutCubic }
+        }
+    }
+
+    SequentialAnimation {
+        id: closeAnim
+        ParallelAnimation {
+            NumberAnimation { target: root; property: "slideOffset"; to: root.height + 8; duration: 100; easing.type: Easing.InCubic }
+            NumberAnimation { target: contentCard; property: "opacity"; to: 0; duration: 100; easing.type: Easing.InCubic }
+        }
+        ScriptAction { script: { root.animState = "closed"; root.slideOffset = 0; contentCard.opacity = 1 } }
     }
 
     IpcHandler {
@@ -94,12 +121,12 @@ PanelWindow {
 
     function getPlayerIcon(identity) {
         const id = (identity || "").toLowerCase()
-        if (id.includes("spotify")) return "\uf2bc"
-        if (id.includes("firefox")) return "\uf269"
-        if (id.includes("zen")) return "\uf269"
-        if (id.includes("chrome")) return "\uf268"
-        if (id.includes("vlc")) return "\uf1c7"
-        return "\uf1eb"
+        if (id.includes("spotify")) return ""
+        if (id.includes("firefox")) return ""
+        if (id.includes("zen")) return ""
+        if (id.includes("chrome")) return ""
+        if (id.includes("vlc")) return ""
+        return ""
     }
 
     function fmtTime(secs) {
@@ -137,10 +164,22 @@ PanelWindow {
     Connections {
         target: root.activePlayer
         function onTrackChanged() {
-            livePosition = 0
             _stableLength = activePlayer?.length ?? 0
-            _trackChangeCooldown = 3
+            _startResync(activePlayer?.position ?? -1)
             metaSettleTimer.restart()
+        }
+        function onPositionChanged() {
+            if (userSeeking || root._playerSwitching || !activePlayer) return
+            const pos = activePlayer.position
+            if (_resyncing) {
+                _stableLength = activePlayer.length ?? 0
+                if (_posIsSane(pos)) {
+                    _stopResync()
+                    livePosition = pos
+                }
+                return
+            }
+            livePosition = pos
         }
         function onTrackTitleChanged() { metaSettleTimer.restart() }
         function onTrackArtistChanged() { metaSettleTimer.restart() }
@@ -159,35 +198,56 @@ PanelWindow {
             _stableLength = activePlayer?.length ?? 0
             livePosition = activePlayer?.position ?? 0
             _lastTrackTitle = activePlayer?.trackTitle ?? ""
-            _trackChangeCooldown = 0
+            _stopResync()
             playerSwitchSettleTimer.restart()
             _crossfadeText(); metaSettleTimer.restart()
         }
     }
     property string _lastTrackTitle: ""
-    property int _trackChangeCooldown: 0
+    property bool _resyncing: false
+    property real _staleRef: -1
+    property real _estimateOrigin: 0
+
+    function _startResync(stalePos) {
+        _resyncing = true
+        _staleRef = stalePos
+        _estimateOrigin = Date.now()
+        livePosition = 0
+    }
+
+    function _stopResync() {
+        _resyncing = false
+        _staleRef = -1
+    }
+
+    function _posIsSane(pos) {
+        if (_stableLength > 0 && pos >= _stableLength) return false
+        return pos <= 5 || pos < _staleRef - 2
+    }
 
     Timer {
-        interval: 1000; repeat: true; running: isPlaying && !userSeeking
+        interval: 250; repeat: true; running: isPlaying && !userSeeking
         onTriggered: {
-            if (activePlayer) {
-                const pos = activePlayer.position
-                const curTitle = activePlayer.trackTitle ?? ""
-                if (curTitle !== root._lastTrackTitle) {
-                    root._lastTrackTitle = curTitle
-                    root.livePosition = 0
-                    root._stableLength = activePlayer.length ?? 0
-                    root._trackChangeCooldown = 3
-                    return
-                }
-                if (root._trackChangeCooldown > 0) {
-                    root._trackChangeCooldown--
-                    root._stableLength = activePlayer.length ?? 0
-                    if (root._stableLength > 0 && pos > root._stableLength) return
-                    if (pos > 5) return
-                }
-                livePosition = pos
+            if (!activePlayer) return
+            const pos = activePlayer.position
+            const curTitle = activePlayer.trackTitle ?? ""
+            root._stableLength = activePlayer.length ?? 0
+            if (curTitle !== root._lastTrackTitle) {
+                root._lastTrackTitle = curTitle
+                root._startResync(pos)
+                return
             }
+            if (root._resyncing) {
+                if (root._posIsSane(pos)) {
+                    root._stopResync()
+                    livePosition = pos
+                } else {
+                    root._staleRef = Math.max(root._staleRef, pos)
+                    livePosition = (Date.now() - root._estimateOrigin) / 1000
+                }
+                return
+            }
+            livePosition = pos
         }
     }
 
@@ -196,6 +256,7 @@ PanelWindow {
         x: root.arrowOffset
         width: root.contentCardWidth
         anchors.bottom: parent.bottom
+        anchors.bottomMargin: -root.slideOffset
         height: popupColumn.implicitHeight + 24
         color: PanelColors.popupBackground
         border.color: "#090909"
@@ -261,10 +322,10 @@ PanelWindow {
                         anchors.centerIn: parent
                         text: {
                             const id = (activePlayer?.identity ?? "").toLowerCase()
-                            if (id.includes("firefox")) return "\uf269"
-                            if (id.includes("zen")) return "\uf269"
-                            if (id.includes("chrome") || id.includes("chromium")) return "\uf268"
-                            return "\uf001"
+                            if (id.includes("firefox")) return ""
+                            if (id.includes("zen")) return ""
+                            if (id.includes("chrome") || id.includes("chromium")) return ""
+                            return ""
                         }
                         font.pixelSize: 24; font.family: "MapleMono NF"; color: PanelColors.textDim; z: 1
                     }
@@ -345,14 +406,14 @@ PanelWindow {
                     opacity: (activePlayer?.shuffleSupported ?? false) ? 1.0 : 0.0
                     Behavior on opacity { NumberAnimation { duration: 200 } }
                     visible: opacity > 0
-                    icon: "\uf074"; accentColor: PanelColors.clock
+                    icon: ""; accentColor: PanelColors.clock
                     highlighted: activePlayer?.shuffle ?? false
                     onClicked: { if (activePlayer) activePlayer.shuffle = !(activePlayer.shuffle ?? false) }
                 }
 
                 Row { anchors.centerIn: parent; spacing: 4
                     MediaBtn {
-                        icon: "\uf04a"; accentColor: PanelColors.clock
+                        icon: ""; accentColor: PanelColors.clock
                         enabled: activePlayer?.canGoPrevious ?? false
                         opacity: enabled ? 1.0 : 0.45
                         Behavior on opacity { NumberAnimation { duration: 180 } }
@@ -360,12 +421,12 @@ PanelWindow {
                     }
                     MediaBtn {
                         id: playBtn; highlighted: true; accentColor: PanelColors.clock
-                        icon: root.isPlaying ? "\uf04c" : "\uf04b"
+                        icon: root.isPlaying ? "" : ""
                         enabled: root.isPlaying ? (activePlayer?.canPause ?? false) : (activePlayer?.canPlay ?? false)
                         onClicked: root.isPlaying ? activePlayer?.pause() : activePlayer?.play()
                     }
                     MediaBtn {
-                        icon: "\uf04e"; accentColor: PanelColors.clock
+                        icon: ""; accentColor: PanelColors.clock
                         enabled: activePlayer?.canGoNext ?? false
                         opacity: enabled ? 1.0 : 0.45
                         Behavior on opacity { NumberAnimation { duration: 180 } }
@@ -378,7 +439,7 @@ PanelWindow {
                     opacity: (activePlayer?.loopSupported ?? false) ? 1.0 : 0.0
                     Behavior on opacity { NumberAnimation { duration: 200 } }
                     visible: opacity > 0
-                    icon: (activePlayer?.loopState ?? MprisLoopState.None) === MprisLoopState.Track ? "\uf07d" : "\uf07e"
+                    icon: (activePlayer?.loopState ?? MprisLoopState.None) === MprisLoopState.Track ? "󰑘" : "󰑖"
                     accentColor: PanelColors.clock
                     highlighted: (activePlayer?.loopState ?? MprisLoopState.None) !== MprisLoopState.None
                     onClicked: {
@@ -395,7 +456,7 @@ PanelWindow {
 
     PlayerNavBtn {
         visible: root.multiPlayer
-        icon: "\uf053"
+        icon: ""
         x: 0
         anchors.verticalCenter: contentCard.verticalCenter
         accentColor: PanelColors.clock
@@ -404,7 +465,7 @@ PanelWindow {
 
     PlayerNavBtn {
         visible: root.multiPlayer
-        icon: "\uf054"
+        icon: ""
         x: contentCard.x + contentCard.width + root.arrowGap
         anchors.verticalCenter: contentCard.verticalCenter
         accentColor: PanelColors.clock

@@ -44,10 +44,34 @@ PanelWindow {
             connectError = ""
             forgetNetwork = null
             animState = "open"
+            closeAnim.stop()
+            openAnim.restart()
             if (wifiDevice) wifiDevice.scannerEnabled = true
         } else {
-            animState = "closed"
+            animState = "closing"
+            openAnim.stop()
+            closeAnim.restart()
         }
+    }
+
+    property real slideOffset: 0
+
+    SequentialAnimation {
+        id: openAnim
+        ScriptAction { script: { root.slideOffset = root.height + 8; innerRect.opacity = 0 } }
+        ParallelAnimation {
+            NumberAnimation { target: root; property: "slideOffset"; to: 0; duration: 100; easing.type: Easing.OutCubic }
+            NumberAnimation { target: innerRect; property: "opacity"; to: 1; duration: 100; easing.type: Easing.OutCubic }
+        }
+    }
+
+    SequentialAnimation {
+        id: closeAnim
+        ParallelAnimation {
+            NumberAnimation { target: root; property: "slideOffset"; to: root.height + 8; duration: 100; easing.type: Easing.InCubic }
+            NumberAnimation { target: innerRect; property: "opacity"; to: 0; duration: 100; easing.type: Easing.InCubic }
+        }
+        ScriptAction { script: { root.animState = "closed"; root.slideOffset = 0; innerRect.opacity = 1 } }
     }
 
     IpcHandler {
@@ -136,8 +160,7 @@ PanelWindow {
             NumberAnimation { duration: 150; easing.type: Easing.OutCubic }
         }
 
-        y: root.height - height
-        opacity: 1.0
+        y: root.height - height + root.slideOffset
 
 
 

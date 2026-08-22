@@ -6,10 +6,12 @@ import "launcher"
 import "wifi"
 import "calendar"
 import "media"
+import "bar"
 
 ShellRoot {
     AppLauncher {}
     WifiPopup {}
     CalendarPopup {}
     MediaPopup {}
+    StatusBar {}
 }
