@@ -28,6 +28,13 @@ PanelWindow {
     property string animState:     "closed"
     property int    selectedIndex: -1
 
+    // ── Unfold open/close animation ───────────────────────────────────────
+    // 0 = collapsed to just the search bar, 1 = fully expanded.
+    // While animating, the panel height interpolates between the two so the
+    // window "zaps" open: search bar first, then the body unfolds from center.
+    property real unfoldProgress: 1.0
+    readonly property int collapsedHeight: searchBar.height + 26
+
     property bool wallpaperMode: false
     property bool clipboardMode: false
     property bool emojiMode:     false
@@ -60,10 +67,6 @@ PanelWindow {
     property bool animateWidth: false
 
     // ── Mode switching ────────────────────────────────────────────────────
-    // All four flags are set in one JS call so QML batches them into a single
-    // binding evaluation pass. No intermediate all-false frame ever occurs,
-    // which is what caused the dots to flash when opening clipboard/emoji/wallpaper
-    // while in grid mode.
     function _switchMode(wall, clip, emoji, hidden) {
         wallpaperMode = wall
         clipboardMode = clip
@@ -154,17 +157,38 @@ PanelWindow {
     }
 
     // ── Connections ───────────────────────────────────────────────────────
-    Connections {
+        Connections {
         target: LauncherState
         function onVisibleChanged() {
-            root.animState = LauncherState.visible ? "open" : "closed"
+            appView.closeHiddenMenu()
             if (LauncherState.visible) {
-                appView.closeHiddenMenu()
                 if (root.appModeActive) filterTimer.restart()
+                root.animState = "opening"
+                searchBar.forceActiveFocus()
+                unfoldCloseAnim.stop()
+                unfoldOpenAnim.restart()
             } else {
-                appView.closeHiddenMenu()
+                unfoldOpenAnim.stop()
+                if (root.animState !== "closed") {
+                    root.animState = "closing"
+                    unfoldCloseAnim.restart()
+                }
             }
         }
+    }
+
+    // Zap-open: unfold from the collapsed search-bar height to full.
+    SequentialAnimation {
+        id: unfoldOpenAnim
+        ScriptAction { script: root.unfoldProgress = 0 }
+        NumberAnimation { target: root; property: "unfoldProgress"; to: 1; duration: 0; easing.type: Easing.OutExpo }
+        ScriptAction { script: root.animState = "open" }
+    }
+
+    SequentialAnimation {
+        id: unfoldCloseAnim
+        NumberAnimation { target: root; property: "unfoldProgress"; to: 0; duration: 0; easing.type: Easing.InQuad }
+        ScriptAction { script: { root.animState = "closed"; root.unfoldProgress = 1 } }
     }
     Connections {
         target: LauncherHiddenApps
@@ -235,14 +259,21 @@ PanelWindow {
     Rectangle {
         id: panel
 
-        width:  root.panelWidth
-        height: panelColumn.implicitHeight + 28
+        width: root.panelWidth
+
+        // Full height once settled; interpolated between collapsed (search bar
+        // only) and full while the unfold open/close animation runs.
+        height: root.animState === "open"
+            ? panelColumn.implicitHeight + 28
+            : Math.round(root.collapsedHeight + (panelColumn.implicitHeight + 28 - root.collapsedHeight) * root.unfoldProgress)
+
+        clip: root.animState !== "open"
 
         // Width only animates during intentional grid↔list toggles (animateWidth:
         // true). All other mode switches snap instantly.
         Behavior on width {
             enabled: root.animateWidth
-            NumberAnimation { duration: 200; easing.type: Easing.OutCubic }
+            NumberAnimation { duration: 0; easing.type: Easing.OutCubic }
         }
 
         x: Math.round((parent.width  - width)  / 2)
@@ -250,7 +281,7 @@ PanelWindow {
 
         radius: 0
         color:        PanelColors.popupBackground
-        Behavior on color { ColorAnimation { duration: PanelColors.transitionDuration } }
+        Behavior on color { ColorAnimation { duration: 0 } }
         border.color: "#090909"
         border.width: 2
 
@@ -432,7 +463,7 @@ PanelWindow {
                 clip:    true
                 visible: height > 0
                 opacity: root.clipboardMode ? 1.0 : 0.0
-                Behavior on opacity { NumberAnimation { duration: 200; easing.type: Easing.OutCubic } }
+                Behavior on opacity { NumberAnimation { duration: 0; easing.type: Easing.OutCubic } }
 
                 onDismissed: { LauncherState.hide(); searchBar.clear() }
             }
@@ -448,7 +479,7 @@ PanelWindow {
                 clip:    true
                 visible: height > 0
                 opacity: root.wallpaperMode ? 1.0 : 0.0
-                Behavior on opacity { NumberAnimation { duration: 200; easing.type: Easing.OutCubic } }
+                Behavior on opacity { NumberAnimation { duration: 0; easing.type: Easing.OutCubic } }
 
                 onDismissed: { LauncherState.hide(); searchBar.clear(); filterTimer.restart() }
             }
@@ -466,7 +497,7 @@ PanelWindow {
                 clip:    true
                 visible: height > 0
                 opacity: root.emojiMode ? 1.0 : 0.0
-                Behavior on opacity { NumberAnimation { duration: 160; easing.type: Easing.OutCubic } }
+                Behavior on opacity { NumberAnimation { duration: 0; easing.type: Easing.OutCubic } }
 
                 onDismissed: { LauncherState.hide(); searchBar.clear() }
             }
@@ -480,7 +511,7 @@ PanelWindow {
                 clip:    true
                 visible: height > 0
                 opacity: root.hiddenMode ? 1.0 : 0.0
-                Behavior on opacity { NumberAnimation { duration: 200; easing.type: Easing.OutCubic } }
+                Behavior on opacity { NumberAnimation { duration: 0; easing.type: Easing.OutCubic } }
 
                 // ── Keyboard Navigation ───────────────────────────────────
                 property int selectedIndex: 0
@@ -522,6 +553,7 @@ PanelWindow {
                 // ──────────────────────────────────────────────────────────
 
                 Text {
+                renderType: Text.NativeRendering
                     anchors.centerIn: parent
                     text:             "No hidden apps"
                     font.pixelSize:   14
@@ -555,7 +587,7 @@ PanelWindow {
                                 radius: 0
                                 color: gridHiddenHover.containsMouse || hiddenAppsView.selectedIndex === index
                                        ? Qt.rgba(1,1,1,0.08) : "transparent"
-                                Behavior on color { ColorAnimation { duration: 150 } }
+                                Behavior on color { ColorAnimation { duration: 0 } }
                                 Column {
                                     anchors.centerIn: parent
                                     spacing: 6
@@ -567,6 +599,7 @@ PanelWindow {
                                         source: Quickshell.iconPath(modelData.icon)
                                     }
                                     Text {
+                                    renderType: Text.NativeRendering
                                         anchors.horizontalCenter: parent.horizontalCenter
                                         text: modelData.name
                                         font.pixelSize: 14; font.bold: true
@@ -610,7 +643,7 @@ PanelWindow {
                                 radius: 0
                                 color: hiddenRowHover.containsMouse || hiddenAppsView.selectedIndex === index
                                        ? PanelColors.rowBackground : "transparent"
-                                Behavior on color { ColorAnimation { duration: 120 } }
+                                Behavior on color { ColorAnimation { duration: 0 } }
                                 Row {
                                     anchors { fill: parent; leftMargin: 12; rightMargin: 12 }
                                     spacing: 12
@@ -620,6 +653,7 @@ PanelWindow {
                                         source: Quickshell.iconPath(modelData.icon)
                                     }
                                     Text {
+                                    renderType: Text.NativeRendering
                                         anchors.verticalCenter: parent.verticalCenter
                                         text: modelData.name
                                         font.pixelSize: 16; font.bold: true
@@ -664,12 +698,12 @@ PanelWindow {
                 height: root.appModeActive ? activeHeight : 0
                 Behavior on height {
                     enabled: root.appModeActive
-                    NumberAnimation { duration: 200; easing.type: Easing.OutCubic }
+                    NumberAnimation { duration: 0; easing.type: Easing.OutCubic }
                 }
 
                 clip:    true
                 opacity: root.appModeActive ? 1.0 : 0.0
-                Behavior on opacity { NumberAnimation { duration: 160; easing.type: Easing.OutCubic } }
+                Behavior on opacity { NumberAnimation { duration: 0; easing.type: Easing.OutCubic } }
                 visible: opacity > 0
 
                 isGridView:    root.isGridView
@@ -707,14 +741,14 @@ PanelWindow {
                 visible: root.appModeActive ? (opacity > 0) : false
 
                 opacity: shouldShow ? 1.0 : 0.0
-                Behavior on opacity { NumberAnimation { duration: 150; easing.type: Easing.OutCubic } }
+                Behavior on opacity { NumberAnimation { duration: 0; easing.type: Easing.OutCubic } }
 
                 Repeater {
                     model: root.totalPages
                     Rectangle {
                         width: 8; height: 8; radius: 0
                         color: index === root.currentPage ? PanelColors.launcher : PanelColors.border
-                        Behavior on color { ColorAnimation { duration: 150 } }
+                        Behavior on color { ColorAnimation { duration: 0 } }
                         MouseArea {
                             anchors.fill: parent; cursorShape: Qt.PointingHandCursor
                             onClicked: root.currentPage = index

@@ -3,15 +3,13 @@ import Quickshell
 import Quickshell.Io
 import Quickshell.Wayland
 import Quickshell.Services.SystemTray
-import Quickshell.Services.Mpris
-import Quickshell.Networking
 import "../theme"
 
 PanelWindow {
     id: root
 
     color: PanelColors.barBackground
-    implicitHeight: 26
+    implicitHeight: 28
     anchors { left: true; right: true; bottom: true }
 
     WlrLayershell.layer: WlrLayershell.Top
@@ -24,12 +22,14 @@ PanelWindow {
     }
 
     component BarText: Text {
-        font.family: "Maple Mono NF"
-        font.pixelSize: 14
-        color: "#a1a1a1"
+        renderType: Text.NativeRendering
+        font.family: "SevrainsMono Nerd Font"
+        font.pixelSize: 16
+        color: "#aaaaaa"
     }
 
-    // workspaces
+    // ---- workspaces ------------------------------------------------------------------
+
     Row {
         id: wsRow
         anchors { left: parent.left; leftMargin: 2; verticalCenter: parent.verticalCenter }
@@ -44,23 +44,24 @@ PanelWindow {
                 readonly property bool isActive: modelData.is_active
                 readonly property bool isUrgent: modelData.is_urgent
                 readonly property string label:
-                    ["I","II","III","IV","V","VI","VII","VIII","IX"][modelData.index - 1] ?? String(modelData.index)
+                    ["one","two","three","four","five","six","seven","eight","nine"][modelData.index - 1] ?? String(modelData.index)
 
-                width: Math.max(18, wsLabel.implicitWidth + 8)
+                width: Math.max(isActive ? 28 : 18, wsLabel.implicitWidth + 8)
                 height: 18
                 radius: 0
                 color: isUrgent ? "#ad401f" : (isActive ? "#a1a1a1" : "transparent")
                 opacity: wsArea.containsMouse ? 0.75 : 1.0
 
-                Behavior on opacity { NumberAnimation { duration: 100 } }
+                Behavior on opacity { NumberAnimation { duration: 0 } }
 
                 Text {
+                    renderType: Text.NativeRendering
                     id: wsLabel
                     anchors.centerIn: parent
                     text: wsBtn.label
-                    font.family: "Maple Mono NF"
-                    font.pixelSize: 14
-                    color: wsBtn.isActive || wsBtn.isUrgent ? "#030303" : "#444444"
+                    font.family: "SevrainsMono Nerd Font"
+                    font.pixelSize: 16
+                    color: wsBtn.isActive || wsBtn.isUrgent ? "#000000" : "#444444"
                 }
 
                 MouseArea {
@@ -73,34 +74,13 @@ PanelWindow {
         }
     }
 
-    // focused window title
-    Item {
-        anchors { left: wsRow.right; leftMargin: 8; verticalCenter: parent.verticalCenter }
-        visible: root.focusedTitle !== ""
-        width: visible ? Math.min(focusTitleText.implicitWidth, 320) : 0
-        height: root.height
+    // ---- center: media animation + clock ----------------------------------------------
 
-        BarText {
-            id: focusTitleText
-            anchors.centerIn: parent
-            width: parent.width
-            elide: Text.ElideRight
-            text: root.focusedTitle === "" ? "" : "> " + root.focusedTitle
-        }
-
-        MouseArea {
-            anchors.fill: parent
-            hoverEnabled: true
-            onContainsMouseChanged: focusTitleText.opacity = containsMouse ? 0.75 : 1.0
-        }
-    }
-
-    // center: media animation + clock
     Row {
         anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: parent.verticalCenter }
         spacing: 0
 
-        // media playing animation
+        // media playing animation (rainbow bars, mirrors waybar media-animation.sh)
         Item {
             width: mediaAnimText.implicitWidth
             height: root.height
@@ -108,8 +88,8 @@ PanelWindow {
             BarText {
                 id: mediaAnimText
                 font.pixelSize: 12
+                textFormat: Text.StyledText
                 anchors.centerIn: parent
-                text: root.mediaPlaying ? root.mediaFrames[root.mediaFrameIdx] : root.mediaPauseFrame
             }
 
             MouseArea {
@@ -121,19 +101,19 @@ PanelWindow {
         }
 
         Item {
-            width: 8
+            width: 12
             height: parent.height
         }
 
         // clock
         Item {
-            width: clockText.implicitWidth
+            width: clockText.implicitWidth + 12
             height: parent.height
 
             BarText {
                 id: clockText
                 anchors.centerIn: parent
-                text: Qt.formatDateTime(clockTime.date, "ddd MMM-dd, hh:mm AP")
+                text: Qt.formatDateTime(clockTime.date, "ddd, hh:mm AP")
             }
 
             MouseArea {
@@ -145,17 +125,23 @@ PanelWindow {
         }
     }
 
-    // right side
+    // ---- right side -------------------------------------------------------------------
+
     Row {
         anchors { right: parent.right; verticalCenter: parent.verticalCenter }
         spacing: 0
 
         // memory
         Item {
-            width: memText.implicitWidth + 16
+            width: memText.implicitWidth + 12
             height: root.height
 
-            BarText { id: memText; anchors.centerIn: parent; text: "mem:" + root.memPct + "%" }
+            BarText {
+                id: memText
+                anchors.centerIn: parent
+                color: "#a9b665"
+                text: "mem:" + root.memPct + "%"
+            }
 
             MouseArea {
                 anchors.fill: parent
@@ -166,47 +152,21 @@ PanelWindow {
             }
         }
 
-        // volume
-        Item {
-            width: volText.implicitWidth + 16
-            height: root.height
-
-            BarText {
-                id: volText
-                anchors.centerIn: parent
-                text: (root.volMuted ? "volx:" : "vol:") + root.volPct + "%"
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                hoverEnabled: true
-                cursorShape: Qt.PointingHandCursor
-                acceptedButtons: Qt.LeftButton
-                scrollGestureEnabled: true
-                onContainsMouseChanged: volText.opacity = containsMouse ? 0.75 : 1.0
-                onClicked: Quickshell.execDetached(["pavucontrol"])
-                onWheel: (wheel) => {
-                    if (wheel.angleDelta.y > 0)
-                        volSetProc.command = ["wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "1%+"]
-                    else
-                        volSetProc.command = ["wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "1%-"]
-                    volSetProc.running = true
-                }
-            }
-        }
-
         // battery
         Item {
             visible: root.hasBattery
-            width: visible ? batText.implicitWidth + 16 : 0
+            width: visible ? batText.implicitWidth + 12 : 0
             height: root.height
 
             BarText {
                 id: batText
                 anchors.centerIn: parent
                 text: root.batCharging
-                    ? " bat:" + root.batPct + "%"
-                    : "󱊣 bat:" + root.batPct + "%"
+                    ? "pow:" + root.batPct + "%"
+                    : "bat:" + root.batPct + "%"
+                color: !root.batCharging && root.batPct <= 15 ? "#ea6962"
+                    : !root.batCharging && root.batPct <= 30 ? "#e78a4e"
+                    : "#7daea3"
             }
 
             MouseArea {
@@ -216,62 +176,23 @@ PanelWindow {
             }
         }
 
-        // caffeine
+        // control center
         Item {
-            width: cafText.implicitWidth + 16
-            height: root.height
-
-            BarText { id: cafText; anchors.centerIn: parent; text: "caf:" + (root.caffeineOn ? "on" : "off") }
-
-            MouseArea {
-                anchors.fill: parent
-                hoverEnabled: true
-                cursorShape: Qt.PointingHandCursor
-                onContainsMouseChanged: cafText.opacity = containsMouse ? 0.75 : 1.0
-                onClicked: cafToggleProc.running = true
-            }
-        }
-
-        // network
-        Item {
-            width: netText.implicitWidth + 16
+            width: ctrlText.implicitWidth + 12
             height: root.height
 
             BarText {
-                id: netText
+                id: ctrlText
                 anchors.centerIn: parent
-                text: "net:" + (root.ethConnected ? "" : (root.wifiConnected ? "󰖩" : "󰖪"))
+                color: "#e78a4e"
+                text: "ctrl:\uE690"
             }
 
             MouseArea {
                 anchors.fill: parent
-                hoverEnabled: true
                 cursorShape: Qt.PointingHandCursor
-                onContainsMouseChanged: netText.opacity = containsMouse ? 0.75 : 1.0
-                onClicked: Quickshell.execDetached(["quickshell", "ipc", "call", "wifi", "toggle"])
-            }
-        }
-
-        // notifications
-        Item {
-            width: notiText.implicitWidth + 24
-            height: root.height
-
-            BarText { id: notiText; anchors.centerIn: parent; text: "noti:" + root.notiIcon }
-
-            MouseArea {
-                anchors.fill: parent
-                hoverEnabled: true
-                cursorShape: Qt.PointingHandCursor
-                acceptedButtons: Qt.LeftButton | Qt.RightButton
-                onContainsMouseChanged: notiText.opacity = containsMouse ? 0.75 : 1.0
-                onClicked: (mouse) => {
-                    if (mouse.button === Qt.RightButton)
-                        notiProc.command = ["swaync-client", "-d", "-sw"]
-                    else
-                        notiProc.command = ["swaync-client", "-t", "-sw"]
-                    notiProc.running = true
-                }
+                onContainsMouseChanged: ctrlText.opacity = containsMouse ? 0.75 : 1.0
+                onClicked: Quickshell.execDetached(["quickshell", "ipc", "call", "control", "toggle"])
             }
         }
 
@@ -298,12 +219,12 @@ PanelWindow {
                         mipmap: true
                         opacity: trayArea.containsMouse ? 0.75 : 1.0
 
-                        Behavior on opacity { NumberAnimation { duration: 150 } }
+                        Behavior on opacity { NumberAnimation { duration: 0 } }
                     }
 
                     QsMenuAnchor {
                         id: trayMenuAnchor
-                        anchor.window: root.QsWindow.window
+                        anchor.window: root.QsWindow.window ?? null
                         anchor.item: trayItem
                         anchor.edges: Edges.Bottom | Edges.Right
                         anchor.gravity: Edges.Bottom | Edges.Right
@@ -332,62 +253,9 @@ PanelWindow {
         }
     }
 
-    // state
+    // ---- state ------------------------------------------------------------------------
+
     property var mangoTags: []
-    property string focusedTitle: ""
-
-    // mangowc IPC: focused client
-    function _setFocusedTitle(line) {
-        try {
-            const c = JSON.parse(line)
-            root.focusedTitle = c && c.appid ? String(c.appid).trim() : ""
-        } catch (e) { root.focusedTitle = "" }
-    }
-    Process {
-        id: focusWatch
-        command: ["mmsg", "watch", "focusing-client"]
-        running: true
-        stdout: SplitParser { onRead: (line) => root._setFocusedTitle(line) }
-    }
-    Process {
-        id: focusGet
-        command: ["mmsg", "get", "focusing-client"]
-        stdout: StdioCollector { onStreamFinished: root._setFocusedTitle(text.trim()) }
-    }
-    Timer {
-        interval: 2000; running: true; triggeredOnStart: true; repeat: true
-        onTriggered: if (!focusGet.running) focusGet.running = true
-    }
-
-    // media animation
-    readonly property var mediaFrames: ["▂▄▆", "▄▂▆", "▄▆▂", "▆▄▂", "▆▂▄"]
-    property int mediaFrameIdx: 0
-    property string mediaPauseFrame: "▂▄▆"
-    readonly property bool mediaPlaying: {
-        const vals = Mpris.players.values
-        for (let i = 0; i < vals.length; i++)
-            if (vals[i].playbackState === MprisPlaybackState.Playing) return true
-        return false
-    }
-    onMediaPlayingChanged: if (!mediaPlaying) {
-        mediaPauseFrame = mediaFrames[Math.floor(Math.random() * mediaFrames.length)]
-        mediaFrameIdx = 0
-    }
-
-    Timer {
-        interval: 200; running: root.mediaPlaying; repeat: true
-        onTriggered: root.mediaFrameIdx = (root.mediaFrameIdx + 1) % root.mediaFrames.length
-    }
-
-    // clock
-    QtObject {
-        id: clockTime
-        property date date: new Date()
-    }
-    Timer {
-        interval: 30000; running: true; triggeredOnStart: true; repeat: true
-        onTriggered: clockTime.date = new Date()
-    }
 
     // mangowc IPC: live tag state
     Process {
@@ -403,7 +271,9 @@ PanelWindow {
                         for (let j = 0; j < mons[i].tags.length; j++)
                             arr.push(mons[i].tags[j])
                     arr.sort((a, b) => a.index - b.index)
-                    root.mangoTags = arr
+                    const next = JSON.stringify(arr.map(t => [t.index, t.is_active, t.is_urgent, t.client_count]))
+                    const cur = JSON.stringify(root.mangoTags.map(t => [t.index, t.is_active, t.is_urgent, t.client_count]))
+                    if (next !== cur) root.mangoTags = arr
                 } catch (e) {}
             }
         }
@@ -412,138 +282,97 @@ PanelWindow {
         id: wsSwitchProc
         command: ["true"]
     }
-    property int memPct: 0
-    property int volPct: 0
-    property bool volMuted: false
-    property int batPct: 0
-    property bool batCharging: false
-    property bool caffeineOn: false
-    property bool wifiConnected: false
-    property bool ethConnected: false
-    property string notiIcon: ""
 
-    readonly property var wifiDevice: {
-        for (let i = 0; i < Networking.devices.values.length; i++) {
-            const d = Networking.devices.values[i]
-            if (d.type === DeviceType.Wifi) return d
-        }
-        return null
+    readonly property var mediaFrames:
+    [ "▁▃▅▇", "▃▅▇▅", "▅▇▅▃", "▇▅▃▁", "▅▃▁▃", "▃▁▃▅" ]
+    readonly property var mediaColors:
+        ["#ea6962", "#e78a4e", "#d8a657", "#a9b665", "#7daea3", "#d3869b"]
+    property bool audioActive: false
+    property int mediaFrameIdx: 0
+    property string pauseFrame: ""
+    property int pauseOffset: 0
+    property bool wasPlaying: true
+
+    function _renderBars(frame, offset) {
+        let out = ""
+        for (let i = 0; i < frame.length; i++)
+            out += "<font color='" + mediaColors[(i + offset) % mediaColors.length] + "'>" + frame[i] + "</font>"
+        return out
     }
-    readonly property bool wifiActive: {
-        if (!wifiDevice) return false
-        for (let i = 0; i < wifiDevice.networks.values.length; i++)
-            if (wifiDevice.networks.values[i].connected) return true
-        return false
+
+    Process {
+        id: audioWatch
+        running: true
+        command: ["sh", "-c",
+            "while :; do wpctl status 2>/dev/null | grep -q '\\[active\\]' && echo P || echo S; sleep 0.3; done"]
+        stdout: SplitParser { onRead: (line) => root.audioActive = line.trim() === "P" }
     }
-    onWifiActiveChanged: wifiConnected = wifiActive
-    Component.onCompleted: {
-        wifiConnected = wifiActive
-        ethConnected = Qt.binding(function() {
-            for (let i = 0; i < Networking.devices.values.length; i++) {
-                const d = Networking.devices.values[i]
-                if (d.type === DeviceType.Ethernet && d.state === DeviceState.Activated) return true
+
+    onAudioActiveChanged: {
+        if (audioActive) {
+            wasPlaying = true
+            mediaAnimText.text = _renderBars(mediaFrames[mediaFrameIdx], mediaFrameIdx)
+        } else {
+            if (wasPlaying) {
+                pauseFrame = mediaFrames[Math.floor(Math.random() * mediaFrames.length)]
+                pauseOffset = Math.floor(Math.random() * mediaColors.length)
+                wasPlaying = false
             }
-            return false
-        })
+            mediaAnimText.text = _renderBars(pauseFrame, pauseOffset)
+        }
     }
 
-    // memory poll
     Timer {
-        interval: 3000; running: true; triggeredOnStart: true; repeat: true
-        onTriggered: memProc.running = true
+        interval: 150; running: root.audioActive; repeat: true
+        onTriggered: {
+            root.mediaFrameIdx = (root.mediaFrameIdx + 1) % root.mediaFrames.length
+            mediaAnimText.text = root._renderBars(
+                root.mediaFrames[root.mediaFrameIdx], root.mediaFrameIdx)
+        }
     }
+
+    Component.onCompleted: mediaAnimText.text = _renderBars(mediaFrames[0], 0)
+
+    // clock
+    QtObject {
+        id: clockTime
+        property date date: new Date()
+    }
+    Timer {
+        interval: 30000; running: true; triggeredOnStart: true; repeat: true
+        onTriggered: clockTime.date = new Date()
+    }
+
+    // memory: persistent stream, no repeated forks
+    property int memPct: 0
     Process {
         id: memProc
         command: ["sh", "-c",
-            "awk '/MemTotal/{t=$2}/MemAvailable/{a=$2}END{printf \"%d\", (1-a/t)*100}' /proc/meminfo"]
-        stdout: StdioCollector {
-            onStreamFinished: root.memPct = parseInt(text.trim()) || 0
+            "while :; do awk '/MemTotal/{t=$2}/MemAvailable/{a=$2}END{printf \"%d\\n\", (1-a/t)*100}' /proc/meminfo; sleep 5; done"]
+        running: true
+        stdout: SplitParser {
+            onRead: (line) => { root.memPct = parseInt(line.trim()) || 0 }
         }
     }
 
-    // volume poll
-    Timer {
-        interval: 2000; running: true; triggeredOnStart: true; repeat: true
-        onTriggered: volProc.running = true
-    }
-    Process {
-        id: volProc
-        command: ["wpctl", "get-volume", "@DEFAULT_AUDIO_SINK@"]
-        stdout: StdioCollector {
-            onStreamFinished: {
-                const out = text.trim()
-                root.volMuted = out.indexOf("[MUTED]") >= 0
-                const v = parseFloat(out.replace("Volume:", ""))
-                root.volPct = isFinite(v) ? Math.round(v * 100) : 0
-            }
-        }
-    }
-    Process {
-        id: volSetProc
-        onRunningChanged: if (!running) volProc.running = true
-    }
-
-    // battery (sysfs, like waybar)
+    // battery (sysfs): persistent stream
     property bool hasBattery: false
-    Timer {
-        interval: 10000; running: true; triggeredOnStart: true; repeat: true
-        onTriggered: batProc.running = true
-    }
+    property int batPct: 0
+    property bool batCharging: false
     Process {
         id: batProc
         command: ["sh", "-c",
-            "cat /sys/class/power_supply/BAT*/capacity 2>/dev/null; echo ---; cat /sys/class/power_supply/BAT*/status 2>/dev/null"]
-        stdout: StdioCollector {
-            onStreamFinished: {
-                const parts = text.trim().split("---")
-                const cap = parseInt((parts[0] || "").trim())
-                const status = (parts[1] || "").trim()
+            "while :; do c=$(cat /sys/class/power_supply/BAT*/capacity 2>/dev/null); s=$(cat /sys/class/power_supply/BAT*/status 2>/dev/null); echo \"$c $s\"; sleep 10; done"]
+        running: true
+        stdout: SplitParser {
+            onRead: (line) => {
+                const parts = line.trim().split(" ")
+                const cap = parseInt(parts[0])
+                const status = parts.slice(1).join(" ")
                 root.hasBattery = isFinite(cap)
                 if (isFinite(cap)) root.batPct = cap
                 root.batCharging = status.indexOf("Charging") >= 0 || status === "Full"
             }
         }
     }
-
-    // caffeine
-    FileView {
-        path: "/tmp/caffeine"
-        watchChanges: true
-        printErrors: false
-        onLoaded: root.caffeineOn = true
-        onLoadFailed: root.caffeineOn = false
-        onFileChanged: reload()
-    }
-    Process {
-        id: cafToggleProc
-        command: [Quickshell.env("HOME") + "/scripts/caffeine-toggle.sh"]
-    }
-
-    // notifications
-    Timer {
-        interval: 2000; running: true; triggeredOnStart: true; repeat: true
-        onTriggered: {
-            if (notiProc.running) return
-            notiPoll.running = true
-        }
-    }
-    Process {
-        id: notiPoll
-        command: ["sh", "-c", "swaync-client -swb 2>/dev/null"]
-        stdout: StdioCollector {
-            onStreamFinished: {
-                try {
-                    const obj = JSON.parse(text.trim())
-                    const alt = String(obj.alt || "")
-                    const dnd = alt.indexOf("dnd") >= 0
-                    const inhibited = alt.indexOf("inhibited") >= 0
-                    const hasNoti = alt.indexOf("none") < 0
-                    if (inhibited) root.notiIcon = hasNoti ? "󰂛" : "󰪑"
-                    else if (dnd) root.notiIcon = hasNoti ? "󰂠" : "󰪓"
-                    else root.notiIcon = hasNoti ? "󱅫" : ""
-                } catch (e) { root.notiIcon = "" }
-            }
-        }
-    }
-    Process { id: notiProc }
 }

@@ -78,7 +78,7 @@
 
 #element {
     border-radius: 0px;
-    padding: 4px 0px;
+    padding: 4px;
     margin: 2px;
 }
 

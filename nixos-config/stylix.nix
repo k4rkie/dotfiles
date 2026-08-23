@@ -22,13 +22,14 @@
 
     fonts = {
       monospace = {
-        package = pkgs.maple-mono.NF;
-        name = "Maple Mono NF";
+        # package = pkgs.maple-mono.NF;
+        # name = "Maple Mono NF";
 
-        # package = pkgs.runCommand "Monasekva Code Nerd Font" { } ''
-        #   install -Dm644 ${./fonts/MonasevkaCodeNerdFont-Regular.ttf} $out/share/fonts/truetype/MonasevkaCodeNerdFont-Regular.ttf
-        # '';
-        # name = "Monasevka Code Nerd Font";
+        package = pkgs.runCommand "SevrainsMono Nerd Font" { } ''
+          install -Dm644 ${./fonts/SevrainsMonoNerdFont-Regular.ttf} $out/share/fonts/truetype/SevrainsMonoNerdFont-Regular.ttf
+        '';
+        name = "SevrainsMono Nerd Font";
+
       };
       sansSerif = config.stylix.fonts.monospace;
       serif = config.stylix.fonts.monospace;

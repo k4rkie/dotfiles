@@ -7,12 +7,13 @@ import "../theme"
 
 PanelWindow {
     id: root
-    implicitHeight: 400
     color: "transparent"
 
-    anchors.bottom: true
-    margins.bottom: 8
-    exclusiveZone: 0
+    // fullscreen so clicks outside the card can dismiss it
+    exclusionMode: ExclusionMode.Ignore
+    anchors { top: true; left: true; right: true; bottom: true }
+    // card sits 8px above the waybar (18), centered horizontally
+    readonly property int bottomBarGap: 39
 
     WlrLayershell.layer: WlrLayershell.Overlay
     WlrLayershell.keyboardFocus: WlrKeyboardFocus.OnDemand
@@ -29,8 +30,8 @@ PanelWindow {
     readonly property int arrowWidth: 36
     readonly property int arrowGap: 6
     readonly property int arrowOffset: arrowWidth + arrowGap
-
-    implicitWidth: contentCardWidth + arrowOffset * 2
+    // left edge of the whole (card + arrows) layout, centered on screen
+    readonly property int layoutX: (root.width - (contentCardWidth + arrowOffset * 2)) / 2
 
     property real slideOffset: 0
 
@@ -50,16 +51,16 @@ PanelWindow {
         id: openAnim
         ScriptAction { script: { root.slideOffset = root.height + 8; contentCard.opacity = 0 } }
         ParallelAnimation {
-            NumberAnimation { target: root; property: "slideOffset"; to: 0; duration: 100; easing.type: Easing.OutCubic }
-            NumberAnimation { target: contentCard; property: "opacity"; to: 1; duration: 100; easing.type: Easing.OutCubic }
+            NumberAnimation { target: root; property: "slideOffset"; to: 0; duration: 0; easing.type: Easing.OutExpo }
+            NumberAnimation { target: contentCard; property: "opacity"; to: 1; duration: 0; easing.type: Easing.OutQuad }
         }
     }
 
     SequentialAnimation {
         id: closeAnim
         ParallelAnimation {
-            NumberAnimation { target: root; property: "slideOffset"; to: root.height + 8; duration: 100; easing.type: Easing.InCubic }
-            NumberAnimation { target: contentCard; property: "opacity"; to: 0; duration: 100; easing.type: Easing.InCubic }
+            NumberAnimation { target: root; property: "slideOffset"; to: root.height + 8; duration: 0; easing.type: Easing.InQuad }
+            NumberAnimation { target: contentCard; property: "opacity"; to: 0; duration: 0; easing.type: Easing.InQuad }
         }
         ScriptAction { script: { root.animState = "closed"; root.slideOffset = 0; contentCard.opacity = 1 } }
     }
@@ -251,17 +252,26 @@ PanelWindow {
         }
     }
 
+    // click outside the card closes the menu
+    MouseArea {
+        anchors.fill: parent
+        enabled: root.animState === "open"
+        onClicked: root.toggle()
+    }
+
     Rectangle {
         id: contentCard
-        x: root.arrowOffset
+        x: root.layoutX + root.arrowOffset
+        y: parent.height - height - root.bottomBarGap + root.slideOffset
         width: root.contentCardWidth
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: -root.slideOffset
         height: popupColumn.implicitHeight + 24
         color: PanelColors.popupBackground
         border.color: "#090909"
         border.width: 2
         radius: 0
+
+        // swallow clicks so they don't reach the outside catcher
+        MouseArea { anchors.fill: parent; onPressed: (m) => m.accepted = true }
 
         Column {
             id: popupColumn
@@ -269,6 +279,7 @@ PanelWindow {
             spacing: 12
 
             Text {
+            renderType: Text.NativeRendering
                 visible: !root.hasContent
                 width: parent.width
                 text: "No active media session"
@@ -304,7 +315,7 @@ PanelWindow {
                         fillMode: Image.PreserveAspectCrop
                         asynchronous: true; mipmap: true; smooth: true
                         opacity: artContainer._showA ? 0.0 : 1.0
-                        Behavior on opacity { NumberAnimation { duration: 220; easing.type: Easing.InOutSine } }
+                        Behavior on opacity { NumberAnimation { duration: 0; easing.type: Easing.InOutSine } }
                         visible: opacity > 0
                     }
                     Image {
@@ -314,10 +325,11 @@ PanelWindow {
                         fillMode: Image.PreserveAspectCrop
                         asynchronous: true; mipmap: true; smooth: true
                         opacity: artContainer._showA ? 1.0 : 0.0
-                        Behavior on opacity { NumberAnimation { duration: 220; easing.type: Easing.InOutSine } }
+                        Behavior on opacity { NumberAnimation { duration: 0; easing.type: Easing.InOutSine } }
                         visible: opacity > 0
                     }
                     Text {
+                    renderType: Text.NativeRendering
                         visible: artA.status !== Image.Ready && artB.status !== Image.Ready
                         anchors.centerIn: parent
                         text: {
@@ -327,7 +339,7 @@ PanelWindow {
                             if (id.includes("chrome") || id.includes("chromium")) return ""
                             return ""
                         }
-                        font.pixelSize: 24; font.family: "MapleMono NF"; color: PanelColors.textDim; z: 1
+                        font.pixelSize: 16; font.family: "MapleMono NF"; color: PanelColors.textDim; z: 1
                     }
                     Rectangle { anchors.fill: parent; color: "transparent"; border.width: 2; border.color: PanelColors.clock; radius: 0 }
                 }
@@ -337,28 +349,28 @@ PanelWindow {
                     anchors.verticalCenter: parent.verticalCenter
                     height: Math.max(textSlotA.implicitHeight, textSlotB.implicitHeight)
 
-                    Column { id: textSlotA; width: parent.width; spacing: 6; opacity: root._textShowA ? 1.0 : 0.0; Behavior on opacity { NumberAnimation { duration: 120; easing.type: Easing.InOutSine } }
+                    Column { id: textSlotA; width: parent.width; spacing: 6; opacity: root._textShowA ? 1.0 : 0.0; Behavior on opacity { NumberAnimation { duration: 0; easing.type: Easing.InOutSine } }
                         Item { width: parent.width; height: 20; clip: true
-                            Text { text: root._titleA || "Unknown Title"; font.pixelSize: 15; font.bold: true; font.family: "MapleMono NF"; color: PanelColors.textAccent }
+                            Text { text: root._titleA || "Unknown Title"; font.pixelSize: 16; font.bold: true; font.family: "MapleMono NF"; color: PanelColors.textAccent ; renderType: Text.NativeRendering }
                         }
-                        Text { width: parent.width; text: root._artistA || "Unknown Artist"; font.pixelSize: 12; font.family: "MapleMono NF"; color: PanelColors.textDim; elide: Text.ElideRight }
+                        Text { width: parent.width; text: root._artistA || "Unknown Artist"; font.pixelSize: 13; font.family: "MapleMono NF"; color: PanelColors.textDim; elide: Text.ElideRight ; renderType: Text.NativeRendering }
                         Rectangle { visible: root._identityA !== ""; height: 18; width: identRowA.implicitWidth + 12; radius: height / 2; color: Qt.rgba(PanelColors.clock.r, PanelColors.clock.g, PanelColors.clock.b, 0.15)
                             Row { id: identRowA; anchors.centerIn: parent; spacing: 4
-                                Text { text: root.getPlayerIcon(root._identityA); font.pixelSize: 10; font.family: "MapleMono NF"; color: PanelColors.textAccent; anchors.verticalCenter: parent.verticalCenter }
-                                Text { text: root._identityA; font.pixelSize: 9; font.bold: true; font.family: "MapleMono NF"; color: PanelColors.textAccent; anchors.verticalCenter: parent.verticalCenter }
+                                Text { text: root.getPlayerIcon(root._identityA); font.pixelSize: 12; font.family: "MapleMono NF"; color: PanelColors.textAccent; anchors.verticalCenter: parent.verticalCenter ; renderType: Text.NativeRendering }
+                                Text { text: root._identityA; font.pixelSize: 12; font.bold: true; font.family: "MapleMono NF"; color: PanelColors.textAccent; anchors.verticalCenter: parent.verticalCenter ; renderType: Text.NativeRendering }
                             }
                         }
                     }
 
-                    Column { id: textSlotB; width: parent.width; spacing: 6; opacity: root._textShowA ? 0.0 : 1.0; Behavior on opacity { NumberAnimation { duration: 120; easing.type: Easing.InOutSine } }
+                    Column { id: textSlotB; width: parent.width; spacing: 6; opacity: root._textShowA ? 0.0 : 1.0; Behavior on opacity { NumberAnimation { duration: 0; easing.type: Easing.InOutSine } }
                         Item { width: parent.width; height: 20; clip: true
-                            Text { text: root._titleB || "Unknown Title"; font.pixelSize: 15; font.bold: true; font.family: "MapleMono NF"; color: PanelColors.textAccent }
+                            Text { text: root._titleB || "Unknown Title"; font.pixelSize: 16; font.bold: true; font.family: "MapleMono NF"; color: PanelColors.textAccent ; renderType: Text.NativeRendering }
                         }
-                        Text { width: parent.width; text: root._artistB || "Unknown Artist"; font.pixelSize: 12; font.family: "MapleMono NF"; color: PanelColors.textDim; elide: Text.ElideRight }
+                        Text { width: parent.width; text: root._artistB || "Unknown Artist"; font.pixelSize: 13; font.family: "MapleMono NF"; color: PanelColors.textDim; elide: Text.ElideRight ; renderType: Text.NativeRendering }
                         Rectangle { visible: root._identityB !== ""; height: 18; width: identRowB.implicitWidth + 12; radius: height / 2; color: Qt.rgba(PanelColors.clock.r, PanelColors.clock.g, PanelColors.clock.b, 0.15)
                             Row { id: identRowB; anchors.centerIn: parent; spacing: 4
-                                Text { text: root.getPlayerIcon(root._identityB); font.pixelSize: 10; font.family: "MapleMono NF"; color: PanelColors.textAccent; anchors.verticalCenter: parent.verticalCenter }
-                                Text { text: root._identityB; font.pixelSize: 9; font.bold: true; font.family: "MapleMono NF"; color: PanelColors.textAccent; anchors.verticalCenter: parent.verticalCenter }
+                                Text { text: root.getPlayerIcon(root._identityB); font.pixelSize: 12; font.family: "MapleMono NF"; color: PanelColors.textAccent; anchors.verticalCenter: parent.verticalCenter ; renderType: Text.NativeRendering }
+                                Text { text: root._identityB; font.pixelSize: 12; font.bold: true; font.family: "MapleMono NF"; color: PanelColors.textAccent; anchors.verticalCenter: parent.verticalCenter ; renderType: Text.NativeRendering }
                             }
                         }
                     }
@@ -390,9 +402,9 @@ PanelWindow {
                 Timer { id: seekReleaseTimer; interval: 1200; onTriggered: root.userSeeking = false }
 
                 Row { width: parent.width
-                    Text { id: posL; text: root.isLiveStream ? "Live" : root.fmtTime(root.livePosition); font.pixelSize: 11; font.family: "MapleMono NF"; color: PanelColors.textDim }
+                    Text { id: posL; text: root.isLiveStream ? "Live" : root.fmtTime(root.livePosition); font.pixelSize: 12; font.family: "MapleMono NF"; color: PanelColors.textDim ; renderType: Text.NativeRendering }
                     Item { width: parent.width - posL.implicitWidth - posR.implicitWidth; height: 1 }
-                    Text { id: posR; text: root.isLiveStream ? "\u221e" : root.fmtTime(root._stableLength); font.pixelSize: 11; font.family: "MapleMono NF"; color: PanelColors.textDim }
+                    Text { id: posR; text: root.isLiveStream ? "\u221e" : root.fmtTime(root._stableLength); font.pixelSize: 12; font.family: "MapleMono NF"; color: PanelColors.textDim ; renderType: Text.NativeRendering }
                 }
             }
 
@@ -404,7 +416,7 @@ PanelWindow {
                 MediaBtn {
                     anchors.left: parent.left; anchors.verticalCenter: parent.verticalCenter
                     opacity: (activePlayer?.shuffleSupported ?? false) ? 1.0 : 0.0
-                    Behavior on opacity { NumberAnimation { duration: 200 } }
+                    Behavior on opacity { NumberAnimation { duration: 0 } }
                     visible: opacity > 0
                     icon: ""; accentColor: PanelColors.clock
                     highlighted: activePlayer?.shuffle ?? false
@@ -416,7 +428,7 @@ PanelWindow {
                         icon: ""; accentColor: PanelColors.clock
                         enabled: activePlayer?.canGoPrevious ?? false
                         opacity: enabled ? 1.0 : 0.45
-                        Behavior on opacity { NumberAnimation { duration: 180 } }
+                        Behavior on opacity { NumberAnimation { duration: 0 } }
                         onClicked: activePlayer?.previous()
                     }
                     MediaBtn {
@@ -429,7 +441,7 @@ PanelWindow {
                         icon: ""; accentColor: PanelColors.clock
                         enabled: activePlayer?.canGoNext ?? false
                         opacity: enabled ? 1.0 : 0.45
-                        Behavior on opacity { NumberAnimation { duration: 180 } }
+                        Behavior on opacity { NumberAnimation { duration: 0 } }
                         onClicked: activePlayer?.next()
                     }
                 }
@@ -437,7 +449,7 @@ PanelWindow {
                 MediaBtn {
                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
                     opacity: (activePlayer?.loopSupported ?? false) ? 1.0 : 0.0
-                    Behavior on opacity { NumberAnimation { duration: 200 } }
+                    Behavior on opacity { NumberAnimation { duration: 0 } }
                     visible: opacity > 0
                     icon: (activePlayer?.loopState ?? MprisLoopState.None) === MprisLoopState.Track ? "󰑘" : "󰑖"
                     accentColor: PanelColors.clock
@@ -457,7 +469,7 @@ PanelWindow {
     PlayerNavBtn {
         visible: root.multiPlayer
         icon: ""
-        x: 0
+        x: root.layoutX
         anchors.verticalCenter: contentCard.verticalCenter
         accentColor: PanelColors.clock
         onClicked: root.selectedIndex = (root.selectedIndex - 1 + root.playerList.length) % root.playerList.length
@@ -466,7 +478,7 @@ PanelWindow {
     PlayerNavBtn {
         visible: root.multiPlayer
         icon: ""
-        x: contentCard.x + contentCard.width + root.arrowGap
+        x: root.layoutX + root.arrowOffset + contentCard.width + root.arrowGap
         anchors.verticalCenter: contentCard.verticalCenter
         accentColor: PanelColors.clock
         onClicked: root.selectedIndex = (root.selectedIndex + 1) % root.playerList.length
@@ -482,15 +494,16 @@ PanelWindow {
         border.color: PanelColors.border
         border.width: 2
         scale: navMouse.pressed ? 0.88 : 1.0
-        Behavior on color { ColorAnimation { duration: 120 } }
-        Behavior on scale { NumberAnimation { duration: 100; easing.type: Easing.OutCubic } }
+        Behavior on color { ColorAnimation { duration: 0 } }
+        Behavior on scale { NumberAnimation { duration: 0; easing.type: Easing.OutCubic } }
         Text {
+        renderType: Text.NativeRendering
             anchors.centerIn: parent
             text: navBtn.icon
             font.pixelSize: 16
             font.family: "MapleMono NF"
             color: navMouse.containsMouse ? navBtn.accentColor : PanelColors.textMain
-            Behavior on color { ColorAnimation { duration: 120 } }
+            Behavior on color { ColorAnimation { duration: 0 } }
         }
         MouseArea {
             id: navMouse
@@ -516,17 +529,18 @@ PanelWindow {
         border.color: highlighted ? "transparent" : Qt.rgba(1, 1, 1, btnMouse.containsMouse ? 0.10 : 0.04)
         border.width: 1
         scale: btnMouse.pressed ? 0.91 : 1.0
-        Behavior on color { ColorAnimation { duration: 120 } }
-        Behavior on scale { NumberAnimation { duration: 100; easing.type: Easing.OutCubic } }
+        Behavior on color { ColorAnimation { duration: 0 } }
+        Behavior on scale { NumberAnimation { duration: 0; easing.type: Easing.OutCubic } }
         Text {
+        renderType: Text.NativeRendering
             anchors.centerIn: parent; text: btn.icon
-            font.pixelSize: 18; font.family: "MapleMono NF"
+            font.pixelSize: 16; font.family: "MapleMono NF"
             color: {
                 if (!btn.enabled) return PanelColors.textDim
                 if (btn.highlighted) return PanelColors.pillForeground
                 return btnMouse.containsMouse ? PanelColors.textAccent : PanelColors.textMain
             }
-            Behavior on color { ColorAnimation { duration: 120 } }
+            Behavior on color { ColorAnimation { duration: 0 } }
         }
         MouseArea {
             id: btnMouse; anchors.fill: parent; hoverEnabled: true; enabled: btn.enabled
@@ -553,7 +567,7 @@ PanelWindow {
         readonly property bool hovered: barMouse.containsMouse || barMouse.pressed
         readonly property real targetValue: activeInteraction ? internalValue : value
         property real animValue: targetValue
-        Behavior on animValue { enabled: !bar.dragging; NumberAnimation { duration: 80; easing.type: Easing.OutCubic } }
+        Behavior on animValue { enabled: !bar.dragging; NumberAnimation { duration: 0; easing.type: Easing.OutCubic } }
         readonly property real _fillWidth: ((bar.animValue - bar.from) / (bar.to - bar.from)) * bar.width
         function _updateFromMouse(mouseX) {
             var newVal = Math.max(bar.from, Math.min(bar.to, bar.from + (mouseX / bar.width) * (bar.to - bar.from)))
@@ -563,19 +577,19 @@ PanelWindow {
         property real _phase: 0
         NumberAnimation on _phase { from: 0; to: Math.PI * 2; duration: 1200; loops: Animation.Infinite; running: bar.playing && !bar.activeInteraction }
         property real _waveAmount: 0.0
-        Behavior on _waveAmount { NumberAnimation { duration: 400; easing.type: Easing.InOutSine } }
+        Behavior on _waveAmount { NumberAnimation { duration: 0; easing.type: Easing.InOutSine } }
         onPlayingChanged: _waveAmount = (playing && !activeInteraction) ? 1.0 : 0.0
         onActiveInteractionChanged: _waveAmount = (playing && !activeInteraction) ? 1.0 : 0.0
 
         property color _strokeColor: hovered ? Qt.lighter(bar.accentColor, 1.15) : bar.accentColor
-        Behavior on _strokeColor { ColorAnimation { duration: 150 } }
+        Behavior on _strokeColor { ColorAnimation { duration: 0 } }
 
         Rectangle {
             x: Math.max(0, bar._fillWidth - 3)
             width: Math.max(0, parent.width - x - 3); height: 6; radius: 3
             anchors.verticalCenter: parent.verticalCenter
             color: bar.hovered ? Qt.rgba(PanelColors.trackBackground.r, PanelColors.trackBackground.g, PanelColors.trackBackground.b, 0.4) : Qt.lighter(PanelColors.trackBackground, 1.1)
-            Behavior on color { ColorAnimation { duration: 150 } }
+            Behavior on color { ColorAnimation { duration: 0 } }
         }
         Canvas {
             id: waveCanvas
@@ -609,16 +623,16 @@ PanelWindow {
         Item {
             width: 0; height: 0; anchors.verticalCenter: parent.verticalCenter; x: bar._fillWidth
             opacity: bar.forceNoNeedle ? 0.0 : 1.0
-            Behavior on opacity { NumberAnimation { duration: 250; easing.type: Easing.InOutSine } }
+            Behavior on opacity { NumberAnimation { duration: 0; easing.type: Easing.InOutSine } }
             Rectangle {
                 anchors.centerIn: parent
                 width: bar.isNeedle ? 6 : (bar.hovered ? 18 : 14)
                 height: bar.isNeedle ? 24 : (bar.hovered ? 18 : 14)
                 radius: width / 2
                 color: bar.hovered ? Qt.lighter(bar.accentColor, 1.15) : bar.accentColor
-                Behavior on width { NumberAnimation { duration: 300; easing.type: Easing.OutBack } }
-                Behavior on height { NumberAnimation { duration: 300; easing.type: Easing.OutBack } }
-                Behavior on color { ColorAnimation { duration: 150 } }
+                Behavior on width { NumberAnimation { duration: 0; easing.type: Easing.OutBack } }
+                Behavior on height { NumberAnimation { duration: 0; easing.type: Easing.OutBack } }
+                Behavior on color { ColorAnimation { duration: 0 } }
             }
         }
         MouseArea {

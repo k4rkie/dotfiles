@@ -78,6 +78,7 @@
     playerctl
     networkmanagerapplet
     blueman
+    bluez
 
     # --- Containers/Virtualization ---
     docker-compose
@@ -144,11 +145,6 @@
 
   programs.nix-ld.enable = true;
 
-  programs.nh = {
-    enable = true;
-    flake = "/home/k4rkie/dotfiles/nixos-config";
-  };
-
   programs.xfconf.enable = true;
 
   programs.appimage = {
@@ -188,6 +184,11 @@
   security.sudo.extraConfig = ''
     Defaults pwfeedback
   '';
+
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = false;
+  };
 
   # Keep boot menu clean but still allow rollbacks
   boot.loader.systemd-boot.configurationLimit = 10;

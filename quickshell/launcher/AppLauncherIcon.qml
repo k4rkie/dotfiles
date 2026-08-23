@@ -64,7 +64,7 @@ Item {
 
     Behavior on opacity {
         SequentialAnimation {
-            NumberAnimation { duration: 150; easing.type: Easing.InOutSine }
+            NumberAnimation { duration: 0; easing.type: Easing.InOutSine }
             ScriptAction {
                 script: { if (!root.onCurrentPage) root._fullyHidden = true }
             }
@@ -76,8 +76,8 @@ Item {
     width:  launcherIsGridView ? 136 : parent.width - 8
     height: launcherIsGridView ? 132 : 44
 
-    Behavior on x { NumberAnimation { duration: 150; easing.type: Easing.OutCubic } }
-    Behavior on y { NumberAnimation { duration: 150; easing.type: Easing.OutCubic } }
+    Behavior on x { NumberAnimation { duration: 0; easing.type: Easing.OutCubic } }
+    Behavior on y { NumberAnimation { duration: 0; easing.type: Easing.OutCubic } }
 
     property bool   appPrefersNonDefault: false
     property bool   isTerminal:           false
@@ -230,7 +230,7 @@ Item {
         color: (root.launcherSelectedIdx === root.delegateIndex || root._isHovered || ctxMenu.isOpen)
                    ? Qt.rgba(1, 1, 1, 0.08)
                    : "transparent"
-        Behavior on color { ColorAnimation { duration: 150 } }
+        Behavior on color { ColorAnimation { duration: 0 } }
     }
 
     // ── Visuals: Grid View ────────────────────────────────────────────────
@@ -247,10 +247,11 @@ Item {
             source: Quickshell.iconPath(root.appIcon)
 
             scale: (root.launcherSelectedIdx === root.delegateIndex || root._isHovered || ctxMenu.isOpen) ? 1.1 : 1.0
-            Behavior on scale { NumberAnimation { duration: 120; easing.type: Easing.OutCubic } }
+            Behavior on scale { NumberAnimation { duration: 0; easing.type: Easing.OutCubic } }
         }
 
         Text {
+        renderType: Text.NativeRendering
             anchors.horizontalCenter: parent.horizontalCenter
             text:                root.appName
             font.pixelSize:      14
@@ -281,6 +282,7 @@ Item {
         }
 
         Text {
+        renderType: Text.NativeRendering
             anchors.verticalCenter: parent.verticalCenter
             text:                root.appName
             font.pixelSize:      16
@@ -351,16 +353,16 @@ Item {
         SequentialAnimation {
             id: openAnim
             ParallelAnimation {
-                NumberAnimation { target: innerRect; property: "y";       to: 0;   duration: 220; easing.type: Easing.OutExpo  }
-                NumberAnimation { target: innerRect; property: "opacity"; to: 1.0; duration: 170; easing.type: Easing.OutCubic }
+                NumberAnimation { target: innerRect; property: "y";       to: 0;   duration: 0; easing.type: Easing.OutExpo  }
+                NumberAnimation { target: innerRect; property: "opacity"; to: 1.0; duration: 0; easing.type: Easing.OutCubic }
             }
         }
 
         SequentialAnimation {
             id: closeAnim
             ParallelAnimation {
-                NumberAnimation { target: innerRect; property: "y";       to: 14;  duration: 160; easing.type: Easing.InCubic }
-                NumberAnimation { target: innerRect; property: "opacity"; to: 0.0; duration: 130; easing.type: Easing.InCubic }
+                NumberAnimation { target: innerRect; property: "y";       to: 14;  duration: 0; easing.type: Easing.InCubic }
+                NumberAnimation { target: innerRect; property: "opacity"; to: 0.0; duration: 0; easing.type: Easing.InCubic }
             }
             ScriptAction { script: ctxMenu.visible = false }
         }
@@ -381,8 +383,8 @@ Item {
 
             readonly property int padding: 12
 
-            Behavior on color        { ColorAnimation { duration: PanelColors.transitionDuration } }
-            Behavior on border.color { ColorAnimation { duration: PanelColors.transitionDuration } }
+            Behavior on color        { ColorAnimation { duration: 0 } }
+            Behavior on border.color { ColorAnimation { duration: 0 } }
 
             HoverHandler {
                 onHoveredChanged: { if (hovered) dismissTimer.restart() }
@@ -399,6 +401,7 @@ Item {
                 spacing: 4
 
                 Text {
+                renderType: Text.NativeRendering
                     width:          parent.width
                     text:           root.appName
                     font.pixelSize: 12
@@ -430,7 +433,7 @@ Item {
                             color: rowMouse.containsMouse
                                 ? Qt.lighter(PanelColors.rowBackground, 1.15)
                                 : PanelColors.rowBackground
-                            Behavior on color { ColorAnimation { duration: 100 } }
+                            Behavior on color { ColorAnimation { duration: 0 } }
 
                             Rectangle {
                                 width: 3; height: parent.height - 10; radius: 0
@@ -443,6 +446,7 @@ Item {
                             }
 
                             Text {
+                            renderType: Text.NativeRendering
                                 anchors {
                                     left:           parent.left
                                     leftMargin:     14

@@ -143,6 +143,7 @@ Item {
                 border.width: 2
 
                 Text {
+                renderType: Text.NativeRendering
                     anchors.centerIn: parent
                     text:             modelData.char
                     font:             grid.emojiFont
@@ -179,6 +180,7 @@ Item {
 
     // Empty state
     Text {
+    renderType: Text.NativeRendering
         anchors.centerIn: parent
         text:             "No emoji found"
         font.pixelSize:   14; font.bold: true

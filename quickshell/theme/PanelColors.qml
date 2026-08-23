@@ -30,6 +30,7 @@ Singleton {
 
     // Accents
     readonly property color launcher:          base08
+    readonly property color pillActive:        base0B
     readonly property color battery:           base0A
     readonly property color network:           base0B
     readonly property color audio:             base08

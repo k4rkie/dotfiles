@@ -292,7 +292,7 @@ Item {
                 anchors { fill: parent; margins: 4 }
                 radius: 0
                 color:  isHovered || isSelected ? Qt.rgba(1, 1, 1, 0.10) : "transparent"
-                Behavior on color { ColorAnimation { duration: 120 } }
+                Behavior on color { ColorAnimation { duration: 0 } }
 
                 Column {
                     anchors { fill: parent; margins: 4 }
@@ -334,7 +334,7 @@ Item {
                             radius: 0
                             border.color: isHovered || isSelected ? PanelColors.launcher : PanelColors.border
                             border.width: 2
-                            Behavior on border.color { ColorAnimation { duration: 120 } }
+                            Behavior on border.color { ColorAnimation { duration: 0 } }
                         }
 
                         // ── Media badge (gif / video only) ────────────────
@@ -351,6 +351,7 @@ Item {
                             color:  PanelColors.rowBackground
 
                             Text {
+                            renderType: Text.NativeRendering
                                 id:               badgeLabel
                                 anchors.centerIn: parent
                                 text:             modelData.mediaType === "gif" ? "󰵸 GIF" : " VID"
@@ -364,6 +365,7 @@ Item {
 
                     // ── Label ─────────────────────────────────────────────
                     Text {
+                    renderType: Text.NativeRendering
                         width:               parent.width
                         height:              wallpaperGrid.labelH
                         text:                modelData.wallName
@@ -371,7 +373,7 @@ Item {
                         font.bold:           true
                         font.family:         "JetBrainsMono Nerd Font"
                         color:               isSelected ? PanelColors.launcher : PanelColors.textMain
-                        Behavior on color    { ColorAnimation { duration: 120 } }
+                        Behavior on color    { ColorAnimation { duration: 0 } }
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment:   Text.AlignVCenter
                         elide:               Text.ElideRight

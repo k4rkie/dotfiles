@@ -117,15 +117,15 @@ Item {
         SequentialAnimation {
             id: hiddenOpenAnim
             ParallelAnimation {
-                NumberAnimation { target: hiddenMenuInner; property: "y";       to: 0;   duration: 220; easing.type: Easing.OutExpo  }
-                NumberAnimation { target: hiddenMenuInner; property: "opacity"; to: 1.0; duration: 170; easing.type: Easing.OutCubic }
+                NumberAnimation { target: hiddenMenuInner; property: "y";       to: 0;   duration: 0; easing.type: Easing.OutExpo  }
+                NumberAnimation { target: hiddenMenuInner; property: "opacity"; to: 1.0; duration: 0; easing.type: Easing.OutCubic }
             }
         }
         SequentialAnimation {
             id: hiddenCloseAnim
             ParallelAnimation {
-                NumberAnimation { target: hiddenMenuInner; property: "y";       to: 14;  duration: 160; easing.type: Easing.InCubic }
-                NumberAnimation { target: hiddenMenuInner; property: "opacity"; to: 0.0; duration: 130; easing.type: Easing.InCubic }
+                NumberAnimation { target: hiddenMenuInner; property: "y";       to: 14;  duration: 0; easing.type: Easing.InCubic }
+                NumberAnimation { target: hiddenMenuInner; property: "opacity"; to: 0.0; duration: 0; easing.type: Easing.InCubic }
             }
             ScriptAction { script: hiddenMenuPopup.visible = false }
         }
@@ -142,8 +142,8 @@ Item {
             border.color:   PanelColors.border
             border.width:   2
             clip:           true
-            Behavior on color        { ColorAnimation { duration: PanelColors.transitionDuration } }
-            Behavior on border.color { ColorAnimation { duration: PanelColors.transitionDuration } }
+            Behavior on color        { ColorAnimation { duration: 0 } }
+            Behavior on border.color { ColorAnimation { duration: 0 } }
 
             HoverHandler { onHoveredChanged: { if (hovered) hiddenDismissTimer.restart() } }
 
@@ -153,6 +153,7 @@ Item {
                 spacing: 4
 
                 Text {
+                renderType: Text.NativeRendering
                     width: parent.width; text: "Hidden Apps"
                     font.pixelSize: 13; font.bold: true
                     font.family: "JetBrainsMono Nerd Font"
@@ -160,6 +161,7 @@ Item {
                 }
                 Rectangle { width: parent.width; height: 2; color: PanelColors.border }
                 Text {
+                renderType: Text.NativeRendering
                     width: parent.width; text: "No hidden apps"
                     font.pixelSize: 13; font.family: "JetBrainsMono Nerd Font"
                     color: PanelColors.textDim
@@ -175,13 +177,14 @@ Item {
                         Rectangle {
                             anchors.fill: parent; radius: 0
                             color: hRow.containsMouse ? Qt.lighter(PanelColors.rowBackground, 1.15) : PanelColors.rowBackground
-                            Behavior on color { ColorAnimation { duration: 100 } }
+                            Behavior on color { ColorAnimation { duration: 0 } }
                             Rectangle {
                                 width: 3; height: parent.height - 10; radius: 0
                                 anchors { left: parent.left; leftMargin: 4; verticalCenter: parent.verticalCenter }
                                 color: PanelColors.textDim
                             }
                             Text {
+                            renderType: Text.NativeRendering
                                 anchors { left: parent.left; leftMargin: 14; right: parent.right; rightMargin: 10; verticalCenter: parent.verticalCenter }
                                 text: modelData.name; font.pixelSize: 13; font.bold: true
                                 font.family: "JetBrainsMono Nerd Font"
@@ -247,6 +250,7 @@ Item {
                 anchors.centerIn: parent; spacing: 8
                 IconImage { anchors.horizontalCenter: parent.horizontalCenter; implicitSize: 64; source: "utilities-terminal" }
                 Text {
+                renderType: Text.NativeRendering
                     anchors.horizontalCenter: parent.horizontalCenter
                     text: "Run: " + root.searchText
                     font.pixelSize: 14; font.bold: true
@@ -308,7 +312,7 @@ Item {
                            : listRowHover.containsMouse
                                ? PanelColors.rowBackground
                                : "transparent"
-                Behavior on color { ColorAnimation { duration: 120 } }
+                Behavior on color { ColorAnimation { duration: 0 } }
 
                 Row {
                     anchors { fill: parent; leftMargin: 12; rightMargin: 12 }
@@ -322,12 +326,13 @@ Item {
                     }
 
                     Text {
+                    renderType: Text.NativeRendering
                         anchors.verticalCenter: parent.verticalCenter
                         text:  listDelegate.entry ? listDelegate.entry.name : ""
                         font.pixelSize: 17
                         font.family:    "JetBrainsMono Nerd Font"
                         color: listDelegate.isSelected ? PanelColors.pillForeground : PanelColors.textMain
-                        Behavior on color { ColorAnimation { duration: 120 } }
+                        Behavior on color { ColorAnimation { duration: 0 } }
                         width: appListView.width - 14 - 22 - 12 - 12 - 8
                         elide: Text.ElideRight
                     }
@@ -408,15 +413,15 @@ Item {
                 SequentialAnimation {
                     id: listCtxOpenAnim
                     ParallelAnimation {
-                        NumberAnimation { target: listCtxInner; property: "y";       to: 0;   duration: 220; easing.type: Easing.OutExpo  }
-                        NumberAnimation { target: listCtxInner; property: "opacity"; to: 1.0; duration: 170; easing.type: Easing.OutCubic }
+                        NumberAnimation { target: listCtxInner; property: "y";       to: 0;   duration: 0; easing.type: Easing.OutExpo  }
+                        NumberAnimation { target: listCtxInner; property: "opacity"; to: 1.0; duration: 0; easing.type: Easing.OutCubic }
                     }
                 }
                 SequentialAnimation {
                     id: listCtxCloseAnim
                     ParallelAnimation {
-                        NumberAnimation { target: listCtxInner; property: "y";       to: 14;  duration: 160; easing.type: Easing.InCubic }
-                        NumberAnimation { target: listCtxInner; property: "opacity"; to: 0.0; duration: 130; easing.type: Easing.InCubic }
+                        NumberAnimation { target: listCtxInner; property: "y";       to: 14;  duration: 0; easing.type: Easing.InCubic }
+                        NumberAnimation { target: listCtxInner; property: "opacity"; to: 0.0; duration: 0; easing.type: Easing.InCubic }
                     }
                     ScriptAction { script: listCtxMenu.visible = false }
                 }
@@ -436,8 +441,8 @@ Item {
 
                     readonly property int padding: 12
 
-                    Behavior on color        { ColorAnimation { duration: PanelColors.transitionDuration } }
-                    Behavior on border.color { ColorAnimation { duration: PanelColors.transitionDuration } }
+                    Behavior on color        { ColorAnimation { duration: 0 } }
+                    Behavior on border.color { ColorAnimation { duration: 0 } }
 
                     HoverHandler {
                         onHoveredChanged: { if (hovered) listCtxDismiss.restart() }
@@ -454,6 +459,7 @@ Item {
                         spacing: 4
 
                         Text {
+                        renderType: Text.NativeRendering
                             width:          parent.width
                             text:           listDelegate.entry ? listDelegate.entry.name : ""
                             font.pixelSize: 12
@@ -481,7 +487,7 @@ Item {
                                     color: listCtxRowMouse.containsMouse
                                         ? Qt.lighter(PanelColors.rowBackground, 1.15)
                                         : PanelColors.rowBackground
-                                    Behavior on color { ColorAnimation { duration: 100 } }
+                                    Behavior on color { ColorAnimation { duration: 0 } }
 
                                     Rectangle {
                                         width: 3; height: parent.height - 10; radius: 0
@@ -490,6 +496,7 @@ Item {
                                     }
 
                                     Text {
+                                    renderType: Text.NativeRendering
                                         anchors {
                                             left: parent.left; leftMargin: 14
                                             right: parent.right; rightMargin: 10
@@ -546,13 +553,14 @@ Item {
                 anchors { fill: parent; leftMargin: 4; rightMargin: 4 }
                 radius: 0
                 color: fallbackHover.containsMouse ? PanelColors.rowBackground : Qt.rgba(1, 1, 1, 0.08)
-                Behavior on color { ColorAnimation { duration: 120 } }
+                Behavior on color { ColorAnimation { duration: 0 } }
 
                 Row {
                     anchors { fill: parent; leftMargin: 12; rightMargin: 12 }
                     spacing: 12
                     IconImage { anchors.verticalCenter: parent.verticalCenter; implicitSize: 22; source: "utilities-terminal" }
                     Text {
+                    renderType: Text.NativeRendering
                         anchors.verticalCenter: parent.verticalCenter
                         text: "Run: " + root.searchText
                         font.pixelSize: 16; font.bold: true

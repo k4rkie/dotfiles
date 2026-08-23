@@ -6,13 +6,17 @@ import "../theme"
 
 PanelWindow {
     id: root
-    implicitWidth: 240
-    implicitHeight: 400
     color: "transparent"
 
-    anchors.bottom: true
-    margins.bottom: 8
-    exclusiveZone: 0
+    property color borderColor: PanelColors.date
+    property int padding: 12
+    property bool clipContent: false
+
+    // fullscreen so clicks outside the card can dismiss it
+    exclusionMode: ExclusionMode.Ignore
+    anchors { top: true; left: true; right: true; bottom: true }
+    // card sits 8px above the waybar (18), centered horizontally
+    readonly property int bottomBarGap: 39
 
     WlrLayershell.layer: WlrLayershell.Overlay
     WlrLayershell.keyboardFocus: WlrKeyboardFocus.OnDemand
@@ -25,9 +29,6 @@ PanelWindow {
     visible: animState !== "closed"
 
     property string animState: "closed"
-    property color borderColor: PanelColors.date
-    property int padding: 12
-    property bool clipContent: false
 
     property int contentHeight: contentCol.implicitHeight
 
@@ -56,16 +57,16 @@ PanelWindow {
         id: openAnim
         ScriptAction { script: { root.slideOffset = root.height + 8; innerRect.opacity = 0 } }
         ParallelAnimation {
-            NumberAnimation { target: root; property: "slideOffset"; to: 0; duration: 100; easing.type: Easing.OutCubic }
-            NumberAnimation { target: innerRect; property: "opacity"; to: 1; duration: 100; easing.type: Easing.OutCubic }
+            NumberAnimation { target: root; property: "slideOffset"; to: 0; duration: 0; easing.type: Easing.OutExpo }
+            NumberAnimation { target: innerRect; property: "opacity"; to: 1; duration: 0; easing.type: Easing.OutQuad }
         }
     }
 
     SequentialAnimation {
         id: closeAnim
         ParallelAnimation {
-            NumberAnimation { target: root; property: "slideOffset"; to: root.height + 8; duration: 100; easing.type: Easing.InCubic }
-            NumberAnimation { target: innerRect; property: "opacity"; to: 0; duration: 100; easing.type: Easing.InCubic }
+            NumberAnimation { target: root; property: "slideOffset"; to: root.height + 8; duration: 0; easing.type: Easing.InQuad }
+            NumberAnimation { target: innerRect; property: "opacity"; to: 0; duration: 0; easing.type: Easing.InQuad }
         }
         ScriptAction { script: { root.animState = "closed"; root.slideOffset = 0; innerRect.opacity = 1 } }
     }
@@ -94,8 +95,8 @@ PanelWindow {
         id: monthAnim
         property int direction: 0
         ParallelAnimation {
-            NumberAnimation { target: dayGrid; property: "opacity"; to: 0; duration: 100; easing.type: Easing.OutCubic }
-            NumberAnimation { target: gridTrans; property: "x"; to: monthAnim.direction > 0 ? -30 : 30; duration: 100; easing.type: Easing.OutCubic }
+            NumberAnimation { target: dayGrid; property: "opacity"; to: 0; duration: 0; easing.type: Easing.OutCubic }
+            NumberAnimation { target: gridTrans; property: "x"; to: monthAnim.direction > 0 ? -30 : 30; duration: 0; easing.type: Easing.OutCubic }
         }
         ScriptAction {
             script: {
@@ -111,8 +112,8 @@ PanelWindow {
         }
         PropertyAction { target: gridTrans; property: "x"; value: monthAnim.direction > 0 ? 30 : -30 }
         ParallelAnimation {
-            NumberAnimation { target: dayGrid; property: "opacity"; to: 1; duration: 200; easing.type: Easing.OutExpo }
-            NumberAnimation { target: gridTrans; property: "x"; to: 0; duration: 200; easing.type: Easing.OutExpo }
+            NumberAnimation { target: dayGrid; property: "opacity"; to: 1; duration: 0; easing.type: Easing.OutExpo }
+            NumberAnimation { target: gridTrans; property: "x"; to: 0; duration: 0; easing.type: Easing.OutExpo }
         }
     }
 
@@ -123,24 +124,29 @@ PanelWindow {
     function _daysInMonth(y, m) { return new Date(y, m + 1, 0).getDate() }
     function _firstWeekday(y, m) { return (new Date(y, m, 1).getDay() + 6) % 7 }
 
+    // click outside the card closes the menu
+    MouseArea {
+        anchors.fill: parent
+        enabled: root.animState === "open"
+        onClicked: root.toggle()
+    }
+
     Rectangle {
         id: innerRect
-        width: parent.width
+        width: 240
         height: root.contentHeight + (root.padding * 2)
+        x: (parent.width - width) / 2
+        y: root.height - height - root.bottomBarGap + root.slideOffset
         radius: 0
         color: PanelColors.popupBackground
-        Behavior on color { ColorAnimation { duration: PanelColors.transitionDuration } }
+        Behavior on color { ColorAnimation { duration: 0 } }
         border.color: "#090909"
-        Behavior on border.color { ColorAnimation { duration: PanelColors.transitionDuration } }
+        Behavior on border.color { ColorAnimation { duration: 0 } }
         border.width: 2
         clip: root.clipContent
 
-        Behavior on height {
-            SmoothedAnimation { velocity: 800; easing.type: Easing.OutExpo }
-        }
-
-        y: root.height - height + root.slideOffset
-
+        // swallow clicks so they don't reach the outside catcher
+        MouseArea { anchors.fill: parent; onPressed: (m) => m.accepted = true }
 
         HoverHandler { id: hover }
 
@@ -158,13 +164,14 @@ PanelWindow {
                     width: 24; height: 24; radius: 0
                     anchors { left: parent.left; verticalCenter: parent.verticalCenter }
                     color: prevArea.containsMouse ? Qt.lighter(PanelColors.rowBackground, 1.15) : PanelColors.rowBackground
-                    Behavior on color { ColorAnimation { duration: 150 } }
+                    Behavior on color { ColorAnimation { duration: 0 } }
                     Text {
+                    renderType: Text.NativeRendering
                         anchors.centerIn: parent
                         text: ""
                         font.pixelSize: 16; font.family: "MapleMono NF"
                         color: prevArea.containsMouse ? PanelColors.textAccent : PanelColors.textDim
-                        Behavior on color { ColorAnimation { duration: 150 } }
+                        Behavior on color { ColorAnimation { duration: 0 } }
                     }
                     MouseArea {
                         id: prevArea; anchors.fill: parent; hoverEnabled: true
@@ -173,6 +180,7 @@ PanelWindow {
                 }
 
                 Text {
+                renderType: Text.NativeRendering
                     anchors.centerIn: parent
                     text: root._monthName(root._viewMonth) + " " + root._viewYear
                     font.pixelSize: 16; font.bold: true; font.family: "MapleMono NF"
@@ -184,13 +192,14 @@ PanelWindow {
                     width: 24; height: 24; radius: 0
                     anchors { right: parent.right; verticalCenter: parent.verticalCenter }
                     color: nextArea.containsMouse ? Qt.lighter(PanelColors.rowBackground, 1.15) : PanelColors.rowBackground
-                    Behavior on color { ColorAnimation { duration: 150 } }
+                    Behavior on color { ColorAnimation { duration: 0 } }
                     Text {
+                    renderType: Text.NativeRendering
                         anchors.centerIn: parent
                         text: ""
                         font.pixelSize: 16; font.family: "MapleMono NF"
                         color: nextArea.containsMouse ? PanelColors.textAccent : PanelColors.textDim
-                        Behavior on color { ColorAnimation { duration: 150 } }
+                        Behavior on color { ColorAnimation { duration: 0 } }
                     }
                     MouseArea {
                         id: nextArea; anchors.fill: parent; hoverEnabled: true
@@ -207,7 +216,7 @@ PanelWindow {
                         width: contentCol.width / 7
                         horizontalAlignment: Text.AlignHCenter
                         text: modelData
-                        font.pixelSize: 14; font.bold: true; font.family: "MapleMono NF"
+                        font.pixelSize: 16; font.bold: true; font.family: "MapleMono NF"
                         color: index >= 5 ? PanelColors.date : PanelColors.textDim
                     }
                 }
@@ -283,14 +292,15 @@ PanelWindow {
                                             return base
                                         }
 
-                                        Behavior on color { ColorAnimation { duration: 150 } }
+                                        Behavior on color { ColorAnimation { duration: 0 } }
 
                                         Text {
+                                        renderType: Text.NativeRendering
                                             anchors.centerIn: parent
                                             text: isEmpty ? "" : dayNum
-                                            font.pixelSize: 14; font.bold: isToday || isSelected; font.family: "MapleMono NF"
+                                            font.pixelSize: 16; font.bold: isToday || isSelected; font.family: "MapleMono NF"
                                             color: isToday ? PanelColors.pillForeground : (isSelected ? PanelColors.textAccent : PanelColors.textMain)
-                                            Behavior on color { ColorAnimation { duration: 150 } }
+                                            Behavior on color { ColorAnimation { duration: 0 } }
                                         }
                                     }
 

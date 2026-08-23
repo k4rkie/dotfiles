@@ -206,7 +206,7 @@ Item {
         visible: opacity > 0
         opacity: 0
         z: 10
-        Behavior on opacity { NumberAnimation { duration: 200; easing.type: Easing.OutCubic } }
+        Behavior on opacity { NumberAnimation { duration: 0; easing.type: Easing.OutCubic } }
 
         anchors.centerIn: parent
         width:  320
@@ -229,6 +229,7 @@ Item {
             spacing: 12
 
             Text {
+            renderType: Text.NativeRendering
                 width:               parent.width
                 text:                "Clear clipboard history?"
                 font.pixelSize:      16
@@ -240,6 +241,7 @@ Item {
             }
 
             Text {
+            renderType: Text.NativeRendering
                 width:               parent.width
                 text:                "This will permanently delete all clipboard entries."
                 font.pixelSize:      16
@@ -261,9 +263,10 @@ Item {
                     color:  cancelMouse.containsMouse
                                 ? Qt.lighter(PanelColors.rowBackground, 1.15)
                                 : PanelColors.rowBackground
-                    Behavior on color { ColorAnimation { duration: 100 } }
+                    Behavior on color { ColorAnimation { duration: 0 } }
 
                     Text {
+                    renderType: Text.NativeRendering
                         anchors.centerIn: parent
                         text:             "Cancel"
                         font.pixelSize:   13
@@ -289,9 +292,10 @@ Item {
                     color:  deleteAllMouse.containsMouse
                                 ? PanelColors.error
                                 : PanelColors.rowBackground
-                    Behavior on color { ColorAnimation { duration: 100 } }
+                    Behavior on color { ColorAnimation { duration: 0 } }
 
                     Text {
+                    renderType: Text.NativeRendering
                         anchors.centerIn: parent
                         text:             "Delete All"
                         font.pixelSize:   13
@@ -300,7 +304,7 @@ Item {
                         color:            deleteAllMouse.containsMouse
                                               ? PanelColors.pillForeground
                                               : PanelColors.error
-                        Behavior on color { ColorAnimation { duration: 100 } }
+                        Behavior on color { ColorAnimation { duration: 0 } }
                     }
 
                     MouseArea {
@@ -328,7 +332,7 @@ Item {
         spacing:      2
 
         opacity: 1
-        Behavior on opacity { NumberAnimation { duration: 250; easing.type: Easing.OutCubic } }
+        Behavior on opacity { NumberAnimation { duration: 0; easing.type: Easing.OutCubic } }
 
         ScrollBar.vertical: ScrollBar { policy: ScrollBar.AsNeeded }
         model: root.filteredClipboard
@@ -352,7 +356,7 @@ Item {
             height: isDeletingItem ? 0 : (isImg ? list.imageRowH : rowText.implicitHeight + 14)
             clip:   true
 
-            Behavior on height { NumberAnimation { duration: 250; easing.type: Easing.InOutQuad } }
+            Behavior on height { NumberAnimation { duration: 0; easing.type: Easing.InOutQuad } }
 
             Timer {
                 id: deleteTimer
@@ -379,8 +383,8 @@ Item {
                 x: delegateItem.isDeletingItem ? -width : 0
                 opacity: delegateItem.isDeletingItem ? 0 : 1
 
-                Behavior on x { NumberAnimation { duration: 250; easing.type: Easing.OutQuart } }
-                Behavior on opacity { NumberAnimation { duration: 200; easing.type: Easing.OutQuart } }
+                Behavior on x { NumberAnimation { duration: 0; easing.type: Easing.OutQuart } }
+                Behavior on opacity { NumberAnimation { duration: 0; easing.type: Easing.OutQuart } }
 
                 Rectangle {
                     id: rowRect
@@ -391,7 +395,7 @@ Item {
                                : rowHover.containsMouse
                                    ? Qt.rgba(1, 1, 1, 0.06)
                                    : "transparent"
-                    Behavior on color { ColorAnimation { duration: 120 } }
+                    Behavior on color { ColorAnimation { duration: 0 } }
 
                     // Left accent bar
                     Rectangle {
@@ -451,12 +455,13 @@ Item {
                             height: clipImg.paintedHeight + (border.width * 2)
                             radius:       0
                             visible:      clipImg.status === Image.Ready
-                            Behavior on border.color { ColorAnimation { duration: 120 } }
+                            Behavior on border.color { ColorAnimation { duration: 0 } }
                         }
                     }
 
                     // ── Text row ──────────────────────────────────────────────
                     Text {
+                    renderType: Text.NativeRendering
                         id:      rowText
                         visible: !isImg
                         width:   parent.width - 14 - 8 - deleteBtn.width - 12
@@ -489,16 +494,17 @@ Item {
                         color: deleteBtnMouse.containsMouse
                             ? PanelColors.error
                             : PanelColors.rowBackground
-                        Behavior on color { ColorAnimation { duration: 100 } }
+                        Behavior on color { ColorAnimation { duration: 0 } }
 
                         Text {
+                        renderType: Text.NativeRendering
                             anchors.centerIn: parent
                             text:             ""
                             font.pixelSize:   12
                             font.bold:        true
                             font.family:      "Monasevka Code Nerd Font"
                             color:            deleteBtnMouse.containsMouse ? PanelColors.pillForeground : PanelColors.textDim
-                            Behavior on color { ColorAnimation { duration: 100 } }
+                            Behavior on color { ColorAnimation { duration: 0 } }
                         }
 
                         MouseArea {
@@ -542,6 +548,7 @@ Item {
 
     // Empty state
     Text {
+    renderType: Text.NativeRendering
         anchors.centerIn: parent
         text:             "󰺝 clipboard is empty.."
         font.pixelSize:   14; font.bold: true

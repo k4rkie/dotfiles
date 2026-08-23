@@ -155,6 +155,7 @@ in
     zig
     rustup
     python3
+    jdk
 
     # --- Language Servers (LSPs) & Build Tools ---
     nil

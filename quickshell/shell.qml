@@ -3,15 +3,16 @@
 import QtQuick
 import Quickshell
 import "launcher"
-import "wifi"
 import "calendar"
 import "media"
 import "bar"
+import "controlcenter"
 
 ShellRoot {
     AppLauncher {}
-    WifiPopup {}
     CalendarPopup {}
     MediaPopup {}
+    ControlCenter {}
+    NotifPopup {}
     StatusBar {}
 }

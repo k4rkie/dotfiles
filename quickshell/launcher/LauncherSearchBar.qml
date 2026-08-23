@@ -33,7 +33,7 @@ Rectangle {
     height: 36
     radius: 0
     color:  PanelColors.textBox
-    Behavior on color { ColorAnimation { duration: PanelColors.transitionDuration } }
+    Behavior on color { ColorAnimation { duration: 0 } }
 
     border.color: "transparent"
     border.width: 0
@@ -48,23 +48,23 @@ Rectangle {
             bottomMargin: 8
         }
 
-        // Left mode pill
+        // Left mode label
         Rectangle {
             id: pill
             visible:                root.pillText !== ""
             anchors.left:           parent.left
             anchors.verticalCenter: parent.verticalCenter
             height: 26
-            width:  pillLabel.implicitWidth + 16
+            width:  pillLabel.implicitWidth
             radius: 0
-            color:  PanelColors.rowBackground
-            Behavior on color { ColorAnimation { duration: PanelColors.transitionDuration } }
+            color:  "transparent"
 
             Text {
+            renderType: Text.NativeRendering
                 id: pillLabel
                 anchors.centerIn: parent
                 text:             root.pillText
-                font.pixelSize:   13
+                font.pixelSize:   16
                 font.bold:        true
                 font.family:      "JetBrainsMono Nerd Font"
                 color:            PanelColors.launcher
@@ -84,9 +84,10 @@ Rectangle {
                         ? (root.rightPillDestructive ? PanelColors.error
                                                      : Qt.lighter(PanelColors.rowBackground, 1.15))
                         : PanelColors.rowBackground
-            Behavior on color { ColorAnimation { duration: 100 } }
+            Behavior on color { ColorAnimation { duration: 0 } }
 
             Text {
+            renderType: Text.NativeRendering
                 id: rightPillLabel
                 anchors.centerIn: parent
                 text:             root.rightPillText
@@ -99,7 +100,7 @@ Rectangle {
                                ? (rightPillMouse.containsMouse ? PanelColors.pillForeground
                                                                : PanelColors.error)
                                : PanelColors.textMain
-                Behavior on color { ColorAnimation { duration: 100 } }
+                Behavior on color { ColorAnimation { duration: 0 } }
             }
 
             MouseArea {
@@ -117,6 +118,7 @@ Rectangle {
 
         // Placeholder
         Text {
+        renderType: Text.NativeRendering
             anchors {
                 left:        pill.visible ? pill.right : parent.left
                 leftMargin:  pill.visible ? 8 : 0
@@ -136,6 +138,7 @@ Rectangle {
 
         // Input
         TextInput {
+        renderType: TextInput.NativeRendering
             id: input
             anchors {
                 left:        pill.visible ? pill.right : parent.left

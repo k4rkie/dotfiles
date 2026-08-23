@@ -9,15 +9,13 @@
   "modules-center": [ "custom/media-animation", "clock" ],
   "modules-right": [
     "memory",
-    "pulseaudio",
     "battery",
-    "custom/caffeine",
-    "network",
-    "custom/notifications",
+    "custom/control-center",
+    // "network",
     "tray"
   ],
   "clock": {
-    "format": "{:%a %b-%d, %I:%M %p}",
+    "format": "{:%a, %I:%M %p}",
     "interval": 60,
     "tooltip": false,
     "on-click": "quickshell ipc call calendar toggle",
@@ -28,19 +26,19 @@
     "on-click": "activate",
     "sort-by-id": true,
     "format-icons": {
-      "1": "I",
-      "2": "II",
-      "3": "III",
-      "4": "IV",
-      "5": "V",
-      "6": "VI",
-      "7": "VII",
-      "8": "VIII",
-      "9": "IX",
+      "1": "one",
+      "2": "two",
+      "3": "three",
+      "4": "four",
+      "5": "five",
+      "6": "six",
+      "7": "seven",
+      "8": "eight",
+      "9": "nine",
     }
   },
   "memory": {
-    "format": "mem:{}%",
+    "format": "[mem:{}%]",
     "tooltip": "false",
     "on-click": "footclient -a btop btop",
   },
@@ -60,10 +58,9 @@
       "warning": 30,
       "critical": 15
     },
-    "format": "󱊣 bat:{capacity}%",
-    "format-charging": " bat:{capacity}%",
-    "format-plugged": " bat:{capacity}%",
-    "format-full": " bat:{capacity}%",
+    "format": "[bat:{capacity}%]",
+    "format-charging": "[pow:{capacity}%]",
+    "format-plugged": "[pow:{capacity}%]",
   },
   "network": {
     "format": "net:󰖪",
@@ -115,6 +112,7 @@
   "custom/media-animation": {
     "exec": "~/.config/waybar/custom_modules/media/media-animation.sh",
     "tooltip": false,
+    "escape": false,
     "on-click": "quickshell ipc call media toggle",
   },
   "custom/separator": {
@@ -124,5 +122,10 @@
   "tray": {
     "icon-size": 14,
     "spacing": 4
+  },
+  "custom/control-center": {
+    "format": "[ctrl: ]",
+    "on-click": "quickshell ipc call control toggle",
+    "tooltip": false
   }
 }
