@@ -146,6 +146,7 @@ in
     ffmpeg
     yt-dlp
     toofan.packages.${pkgs.stdenv.hostPlatform.system}.default
+    libreoffice
 
     # --- Language Runtimes & Compilers ---
     nodejs

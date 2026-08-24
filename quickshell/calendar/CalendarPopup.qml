@@ -168,7 +168,7 @@ PanelWindow {
                     Text {
                     renderType: Text.NativeRendering
                         anchors.centerIn: parent
-                        text: ""
+                        text: "󰁍"
                         font.pixelSize: 16; font.family: "MapleMono NF"
                         color: prevArea.containsMouse ? PanelColors.textAccent : PanelColors.textDim
                         Behavior on color { ColorAnimation { duration: 0 } }
@@ -196,7 +196,7 @@ PanelWindow {
                     Text {
                     renderType: Text.NativeRendering
                         anchors.centerIn: parent
-                        text: ""
+                        text: "󰁔"
                         font.pixelSize: 16; font.family: "MapleMono NF"
                         color: nextArea.containsMouse ? PanelColors.textAccent : PanelColors.textDim
                         Behavior on color { ColorAnimation { duration: 0 } }

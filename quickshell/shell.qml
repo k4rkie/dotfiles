@@ -14,5 +14,4 @@ ShellRoot {
     MediaPopup {}
     ControlCenter {}
     NotifPopup {}
-    StatusBar {}
 }

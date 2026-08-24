@@ -56,7 +56,7 @@ Singleton {
                 timestamp: Date.now()
             }
             historyModel.insert(0, entry)
-            if (root.ready) toastModel.append(entry)
+            if (root.ready) toastModel.insert(0, entry)
         }
     }
 

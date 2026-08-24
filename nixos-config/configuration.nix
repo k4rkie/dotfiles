@@ -143,7 +143,26 @@
 
   programs.mango.enable = true;
 
-  programs.nix-ld.enable = true;
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [
+      # X11 dependencies required by LWJGL / GLFW
+      xorg.libX11
+      xorg.libXext
+      xorg.libXcursor
+      xorg.libXrandr
+      xorg.libXi
+      xorg.libXinerama
+      xorg.libXxf86vm
+      xorg.libXrender
+
+      # Graphics and Wayland fallbacks
+      libGL
+      libxkbcommon
+      wayland
+      alsa-lib
+    ];
+  };
 
   programs.xfconf.enable = true;
 
