@@ -25,11 +25,13 @@
         # package = pkgs.maple-mono.NF;
         # name = "Maple Mono NF";
 
-        package = pkgs.runCommand "SevrainsMono Nerd Font" { } ''
-          install -Dm644 ${./fonts/SevrainsMonoNerdFont-Regular.ttf} $out/share/fonts/truetype/SevrainsMonoNerdFont-Regular.ttf
-        '';
-        name = "SevrainsMono Nerd Font";
+        # package = pkgs.runCommand "SevrainsMono Nerd Font" { } ''
+        #   install -Dm644 ${./fonts/SevrainsMonoNerdFont-Regular.ttf} $out/share/fonts/truetype/SevrainsMonoNerdFont-Regular.ttf
+        # '';
+        # name = "SevrainsMono Nerd Font";
 
+        package = pkgs.nerd-fonts.departure-mono;
+        name = "DepartureMono Nerd Font";
       };
       sansSerif = config.stylix.fonts.monospace;
       serif = config.stylix.fonts.monospace;

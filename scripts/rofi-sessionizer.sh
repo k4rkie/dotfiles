@@ -70,4 +70,4 @@ fi
 # kitty --detach tmux attach-session -t "$selected_name" 
 
 # foot
-footclient tmux attach-session -t "$selected_name" &
+foot tmux attach-session -t "$selected_name" &

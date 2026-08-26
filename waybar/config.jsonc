@@ -2,20 +2,32 @@
   "layer": "top",
   "position": "bottom",
   "reload_style_on_change": true,
+  "margin-right": 200,
+  "margin-left": 200,
   "height": 18,
   "modules-left": [
+    "images#pc",
+    "custom/media-animation",
     "ext/workspaces"
   ],
-  "modules-center": [ "custom/media-animation", "clock" ],
+  "modules-center": [],
   "modules-right": [
     "memory",
     "battery",
+    "group/time",
     "custom/control-center",
-    // "network",
     "tray"
   ],
+  "group/time": {
+    "orientation": "horizontal",
+    "spacing": 0,
+    "modules": [
+      "image#globe",
+      "clock"
+    ]
+  },
   "clock": {
-    "format": "{:%a, %I:%M %p}",
+    "format": "{:%I:%M %p}",
     "interval": 60,
     "tooltip": false,
     "on-click": "quickshell ipc call calendar toggle",
@@ -38,94 +50,53 @@
     }
   },
   "memory": {
-    "format": "[mem:{}%]",
+    "format": " {}%",
     "tooltip": "false",
-    "on-click": "footclient -a btop btop",
+    "on-click": "foot -a btop btop",
   },
   "cpu": {
     "format": "cpu:{usage}%",
     "tooltip": "false",
-    "on-click": "footclient -a btop btop",
-  },
-  "pulseaudio": {
-    "format": "vol:{volume}%",
-    "format-muted": "volx:{volume}%",
-    "scroll-step": 1,
-    "on-click": "pavucontrol"
+    "on-click": "foot -a btop btop",
   },
   "battery": {
+    "interval": 60,
     "states": {
       "warning": 30,
       "critical": 15
     },
-    "format": "[bat:{capacity}%]",
-    "format-charging": "[pow:{capacity}%]",
-    "format-plugged": "[pow:{capacity}%]",
-  },
-  "network": {
-    "format": "net:󰖪",
-    "format-disconnected": "net:󰖪",
-    "format-wifi": "net:󰖩",
-    "format-ethernet": "net:",
-    "tooltip-format-wifi": "{essid} ({signalStrength}%)",
-    "tooltip-format-ethernet": "{ifname}",
-    "tooltip-format-disconnected": "Disconnected",
-    "max-length": 50,
-    "on-click": "quickshell ipc call wifi toggle"
-  },
-  "custom/notifications": {
-    "tooltip": true,
-    "format": "<span size='12pt'>{icon}</span>",
-    "format-icons": {
-      "notification": "noti:󱅫",
-      "none": "noti:",
-      "dnd-notification": "noti:󰂠",
-      "dnd-none": "noti:󰪓",
-      "inhibited-notification": "noti:󰂛",
-      "inhibited-none": "noti:󰪑",
-      "dnd-inhibited-notification": "noti:󰂛",
-      "dnd-inhibited-none": "noti:󰪑"
+    "events": {
+      "on-discharging-warning": "notify-send -u normal 'Low Battery'",
+      "on-discharging-critical": "notify-send -u critical 'Very Low Battery'",
+      "on-charging-100": "notify-send -u normal 'Battery Full!'"
     },
-    "return-type": "json",
-    "exec-if": "which swaync-client",
-    "exec": "swaync-client -swb",
-    "on-click": "swaync-client -t -sw",
-    "on-click-right": "swaync-client -d -sw",
-    "escape": true
-  },
-  "custom/caffeine": {
-    "exec": "~/scripts/caffeine-status.sh",
-    "on-click": "~/scripts/caffeine-toggle.sh",
-    "return-type": "json",
-    "interval": 10,
-    "signal": 8,
-    "tooltip": true
-  },
-  "custom/keyboard": {
-    "exec": "~/scripts/kbtoggle.sh",
-    "on-click": "~/scripts/kbtoggle.sh --toggle && pkill -RTMIN+8 waybar",
-    "return-type": "json",
-    "interval": 5,
-    "signal": 8,
-    "tooltip": false
+    "format": "{icon} {capacity}%",
+    "format-icons": ["", "", "", "", ""],
+    "tooltip": true,
+    "max-length": 25
   },
   "custom/media-animation": {
     "exec": "~/.config/waybar/custom_modules/media/media-animation.sh",
     "tooltip": false,
     "escape": false,
-    "on-click": "quickshell ipc call media toggle",
-  },
-  "custom/separator": {
-    "format": "|",
-    "tooltip": false,
   },
   "tray": {
     "icon-size": 14,
     "spacing": 4
   },
   "custom/control-center": {
-    "format": "[ctrl: ]",
+    "format": " ",
     "on-click": "quickshell ipc call control toggle",
     "tooltip": false
+  },
+  "image#globe": {
+    "path": "/home/k4rkie/.config/waybar/assets/images/globe.png",
+    "size": 30,
+    "interval": 5,
+  },
+  "image#pc": {
+    "path": "/home/k4rkie/.config/waybar/assets/images/pc_icon.png",
+    "size": 30,
+    "interval": 5,
   }
 }

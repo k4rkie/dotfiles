@@ -67,8 +67,7 @@ PanelWindow {
 
     property real slideOffset: 0
 
-    readonly property int bottomBarHeight: 26
-
+    readonly property int bottomBarHeight: 38
     IpcHandler {
         target: "control"
         function toggle(): void { root.toggle() }
@@ -80,6 +79,13 @@ PanelWindow {
         function openWallpaper(): void { root.openPage("wallpaper") }
         function openWifi(): void { root.openPage("wifi") }
         function openBluetooth(): void { root.openPage("bluetooth") }
+        function openNotifications(): void { root.openPage("notifications") }
+    }
+
+    // kept for the waybar media button; opens the control center
+    IpcHandler {
+        target: "media"
+        function toggle(): void { root.toggle() }
     }
 
     // Open (or refocus) the menu directly on a given page.
@@ -115,6 +121,7 @@ PanelWindow {
         return null
     }
     readonly property string wifiSsid: {
+        if (wifiCliSsid !== "") return wifiCliSsid
         if (!wifiDevice || !Networking.wifiEnabled) return ""
         for (let i = 0; i < wifiDevice.networks.values.length; i++) {
             const n = wifiDevice.networks.values[i]
@@ -123,8 +130,18 @@ PanelWindow {
         return ""
     }
 
+    property string wifiCliSsid: ""
+    property var wifiCliNetworks: []
+    property bool wifiCliReady: false
+    property bool wifiScanning: false
+    property var wifiKnownNames: []
+    property var wifiProfiles: ({})
+    property var wifiForgetQueue: []
+    property string wifiListOutput: ""
+
     readonly property var wifiSortedNetworks: {
-        const nets = wifiDevice?.networks.values ?? []
+        const nets = wifiCliReady
+            ? wifiCliNetworks : (wifiDevice?.networks.values ?? [])
         return nets.slice().sort((a, b) => b.signalStrength - a.signalStrength)
     }
 
@@ -137,7 +154,21 @@ PanelWindow {
     }
 
     function wifiConnect(net) {
-        if (!net || net.connected || net.stateChanging) return
+        if (!net || net.stateChanging) return
+        if (net.connected) {
+            wifiReconnect(net)
+            return
+        }
+        if (typeof net.connect !== "function") {
+            if (wifiActionProc.running) return
+            if (net.security !== "--" && !net.known) {
+                root.pendingWifiNet = net
+                return
+            }
+            wifiActionProc.command = root.wifiConnectCommand(net.name)
+            wifiActionProc.running = true
+            return
+        }
         const secured = net.security !== WifiSecurityType.Open
             && net.security !== WifiSecurityType.Unknown && net.security !== WifiSecurityType.Owe
         if (secured && !net.known) {
@@ -147,9 +178,28 @@ PanelWindow {
         net.connect()
     }
 
+    function wifiReconnect(net) {
+        if (!net || wifiActionProc.running) return
+        wifiActionProc.command = root.wifiConnectCommand(net.name)
+        wifiActionProc.running = true
+    }
+
+    function wifiConnectCommand(ssid, password) {
+        const command = ["nmcli", "device", "wifi", "connect", ssid]
+        if (root.wifiDevice && root.wifiDevice.name)
+            command.push("ifname", root.wifiDevice.name)
+        if (password !== undefined) command.push("password", password)
+        return command
+    }
+
     function submitWifiPassword() {
-        if (!pendingWifiNet || wifiPskInput.text === "") return
-        pendingWifiNet.connectWithPsk(wifiPskInput.text)
+        if (!pendingWifiNet || wifiPskInput.text === "" || wifiActionProc.running) return
+        if (typeof pendingWifiNet.connectWithPsk === "function") {
+            pendingWifiNet.connectWithPsk(wifiPskInput.text)
+        } else {
+            wifiActionProc.command = root.wifiConnectCommand(pendingWifiNet.name, wifiPskInput.text)
+            wifiActionProc.running = true
+        }
         pendingWifiNet = null
     }
 
@@ -158,19 +208,141 @@ PanelWindow {
     }
 
     function wifiForget(net) {
-        if (net) net.forget()
+        if (!net || wifiActionProc.running) return
+        if (typeof net.forget === "function") net.forget()
+        else {
+            const profiles = []
+            const profileNames = Object.keys(root.wifiProfiles)
+            for (let i = 0; i < profileNames.length; i++) {
+                const profileName = profileNames[i]
+                if (profileName === net.name || profileName.indexOf(net.name + " ") === 0)
+                    profiles.push(...root.wifiProfiles[profileName])
+            }
+            root.wifiForgetQueue = profiles.map(profile => profile.uuid)
+            root.deleteNextWifiProfile()
+        }
     }
 
-    Process { id: wifiRescanProc; command: ["true"] }
+    function deleteNextWifiProfile() {
+        if (wifiActionProc.running || wifiForgetQueue.length === 0) return
+        const queue = wifiForgetQueue.slice()
+        const uuid = queue.shift()
+        root.wifiForgetQueue = queue
+        wifiActionProc.command = ["nmcli", "connection", "delete", "uuid", uuid]
+        wifiActionProc.running = true
+    }
+
+    Process { id: wifiToggleProc; command: ["true"] }
+    Process {
+        id: wifiActionProc
+        command: ["true"]
+        onExited: {
+            if (root.wifiForgetQueue.length > 0) {
+                root.deleteNextWifiProfile()
+                return
+            }
+            if (root.page === "wifi" && Networking.wifiEnabled) {
+                wifiKnownProc.exec(wifiKnownProc.command)
+                wifiListProc.exec(wifiListProc.command)
+            }
+        }
+    }
+    Process {
+        id: wifiListProc
+        command: ["nmcli", "-t", "-e", "yes", "-f", "IN-USE,SSID,SIGNAL,SECURITY", "device", "wifi", "list"]
+        stdout: StdioCollector {
+            waitForEnd: true
+            onStreamFinished: {
+                root.wifiListOutput = text
+                root.parseWifiList(text)
+            }
+        }
+    }
+    Process {
+        id: wifiKnownProc
+        command: ["nmcli", "-t", "-e", "yes", "-f", "NAME,TYPE,UUID", "connection", "show"]
+        stdout: StdioCollector {
+            waitForEnd: true
+            onStreamFinished: {
+                const names = []
+                const profiles = {}
+                const lines = text.trim().split("\n")
+                for (let i = 0; i < lines.length; i++) {
+                    const f = root.splitNmcliLine(lines[i])
+                    if (f.length >= 3 && f[1] === "802-11-wireless") {
+                        names.push(f[0])
+                        if (!profiles[f[0]]) profiles[f[0]] = []
+                        profiles[f[0]].push({ name: f[0], uuid: f[2] })
+                    }
+                }
+                root.wifiKnownNames = names
+                root.wifiProfiles = profiles
+                if (root.wifiListOutput !== "") root.parseWifiList(root.wifiListOutput)
+            }
+        }
+    }
+    Process {
+        id: wifiRescanProc
+        command: ["nmcli", "device", "wifi", "rescan"]
+        onStarted: root.wifiScanning = true
+        onExited: {
+            root.wifiScanning = false
+            if (root.page === "wifi" && Networking.wifiEnabled)
+                wifiListProc.exec(wifiListProc.command)
+        }
+    }
+
+    function splitNmcliLine(line) {
+        const fields = []
+        let field = ""
+        let escaped = false
+        for (let i = 0; i < line.length; i++) {
+            const c = line[i]
+            if (escaped) { field += c; escaped = false }
+            else if (c === "\\") escaped = true
+            else if (c === ":") { fields.push(field); field = "" }
+            else field += c
+        }
+        if (escaped) field += "\\"
+        fields.push(field)
+        return fields
+    }
+
+    function parseWifiList(output) {
+        const result = []
+        const lines = output.trim().split("\n")
+        for (let i = 0; i < lines.length; i++) {
+            if (!lines[i]) continue
+            const f = root.splitNmcliLine(lines[i])
+            if (f.length < 4 || f[1] === "") continue
+            result.push({
+                name: f[1], signalStrength: Number(f[2]) || 0,
+                security: f[3] || "--", connected: f[0] === "*",
+                stateChanging: false,
+                known: root.wifiProfiles[f[1]] !== undefined
+            })
+            if (f[0] === "*") root.wifiCliSsid = f[1]
+        }
+        root.wifiCliNetworks = result
+        root.wifiCliReady = true
+        if (result.every(n => !n.connected)) root.wifiCliSsid = ""
+    }
+
+    function toggleWifi() {
+        if (wifiToggleProc.running) return
+        wifiToggleProc.command = ["nmcli", "radio", "wifi",
+            Networking.wifiEnabled ? "off" : "on"]
+        wifiToggleProc.running = true
+    }
 
     function kickWifiScan() {
-        const d = root.wifiDevice
-        if (!d || !Networking.wifiEnabled) return
-        wifiRescanProc.command = ["bash", "-c",
-            "sleep 0.2; nmcli device wifi rescan ifname \"" + d.name + "\" 2>/dev/null; true"]
-        wifiRescanProc.running = true
-        d.scannerEnabled = false
-        d.scannerEnabled = true
+        if (!Networking.wifiEnabled) return
+        if (!wifiKnownProc.running) wifiKnownProc.running = true
+        if (!wifiListProc.running) wifiListProc.running = true
+        if (!wifiRescanProc.running) {
+            root.wifiScanning = true
+            wifiRescanProc.running = true
+        }
     }
 
     Timer {
@@ -190,6 +362,10 @@ PanelWindow {
     Connections {
         target: Networking
         function onWifiEnabledChanged() {
+            if (!Networking.wifiEnabled) {
+                root.wifiCliReady = false
+                root.wifiCliSsid = ""
+            }
             if (root.page === "wifi") wifiRecoverTimer.restart()
         }
     }
@@ -404,7 +580,7 @@ PanelWindow {
     property var clipEntries: []
     function loadClipboard() {
         clipListProc.running = false
-        clipListProc.command = ["bash", "-c", "cliphist list | head -n 25"]
+        clipListProc.command = ["bash", "-c", "cliphist list | head -n 50"]
         clipListProc.running = true
     }
     Process {
@@ -591,7 +767,7 @@ PanelWindow {
 
     Rectangle {
         id: menuCard
-        x: parent.width - width - 8
+        x: parent.width - width - 8 - 30
         y: parent.height - height - 8 - root.bottomBarHeight - root.slideOffset
         width: 400
         height: contentCol.implicitHeight + 24
@@ -602,9 +778,34 @@ PanelWindow {
 
         Behavior on height { NumberAnimation { duration: 0; easing.type: Easing.OutCubic } }
 
-        MouseArea { anchors.fill: parent; onPressed: (m) => m.accepted = true }
+         MouseArea { anchors.fill: parent; onPressed: (m) => m.accepted = true }
 
-        Column {
+         Rectangle {
+             z: 2
+             anchors { top: parent.top; left: parent.left; right: parent.right; topMargin: 2 }
+             height: 2
+             color: "#303030"
+         }
+         Rectangle {
+             z: 2
+             anchors { top: parent.top; left: parent.left; bottom: parent.bottom; topMargin: 2; bottomMargin: 2 }
+             width: 2
+             color: "#242424"
+         }
+         Rectangle {
+             z: 2
+             anchors { left: parent.left; right: parent.right; bottom: parent.bottom; bottomMargin: 2 }
+             height: 2
+             color: "#000000"
+         }
+         Rectangle {
+             z: 2
+             anchors { top: parent.top; right: parent.right; bottom: parent.bottom; topMargin: 2; bottomMargin: 2 }
+             width: 2
+             color: "#000000"
+         }
+
+         Column {
             id: contentCol
             anchors { top: parent.top; left: parent.left; right: parent.right; margins: 12 }
             spacing: 14
@@ -677,6 +878,11 @@ PanelWindow {
                     spacing: 6
 
                     HeaderIconButton {
+                        iconText: root.dndOn ? "󰂛" : (notificationHistory.count > 0 ? "󱅫" : "󰂚")
+                        isActive: root.page === "notifications"
+                        onClicked: root.page = root.page === "notifications" ? "main" : "notifications"
+                    }
+                    HeaderIconButton {
                         iconText: "󰸉"
                         isActive: root.page === "wallpaper"
                         onClicked: {
@@ -718,7 +924,7 @@ PanelWindow {
                         iconText: Networking.wifiEnabled ? "󰤨" : "󰤭"
                         labelText: root.wifiSsid !== "" ? root.wifiSsid : "Disconnected"
                         checked: Networking.wifiEnabled
-                        onClicked: Networking.wifiEnabled = !Networking.wifiEnabled
+                        onClicked: root.toggleWifi()
                         onRightClicked: root.openPage("wifi")
                     }
 
@@ -749,7 +955,7 @@ PanelWindow {
 
                     Pill {
                         width: (parent.width - parent.spacing) / 2
-                        iconText: root.dndOn ? "󰂛" : "󰂝"
+                        iconText: "󰂛"
                         labelText: root.dndOn ? "DND On" : "DND Off"
                         checked: root.dndOn
                         onClicked: NotifState.dndOn = !NotifState.dndOn
@@ -758,136 +964,176 @@ PanelWindow {
 
                 Divider {}
 
-                // ---- notifications ----
+                // ---- media ----
                 Column {
                     width: parent.width
                     spacing: 6
 
                     Item {
                         width: parent.width
-                        height: 26
+                        height: 36
 
                         Text {
                             renderType: Text.NativeRendering
                             anchors.left: parent.left
                             anchors.verticalCenter: parent.verticalCenter
-                            text: "Notifications"
+                            text: "Media"
                             font.pixelSize: 16; font.bold: true; font.family: "MapleMono NF"
                             color: PanelColors.textAccent
                         }
-                    Text {
-                        id: clearNotiText
-                            renderType: Text.NativeRendering
+
+                        Row {
                             anchors { right: parent.right; verticalCenter: parent.verticalCenter }
-                            visible: notificationHistory.count > 0
-                            text: "clear all"
-                            font.pixelSize: 13; font.bold: true; font.family: "MapleMono NF"
-                            color: clearNotiMouse.containsMouse ? PanelColors.error : PanelColors.textDim
-                            MouseArea {
-                                id: clearNotiMouse
-                                anchors.fill: parent; hoverEnabled: true
-                                cursorShape: Qt.PointingHandCursor
-                                onClicked: root.clearNotifications()
+                            spacing: 4
+                            visible: mediaSection.multiPlayer
+
+                            HeaderIconButton {
+                                iconText: "\uF053"
+                                onClicked: mediaSection.prevPlayer()
+                            }
+                            HeaderIconButton {
+                                iconText: "\uF054"
+                                onClicked: mediaSection.nextPlayer()
                             }
                         }
                     }
 
+                    MediaSection { id: mediaSection; width: parent.width }
+                }
+
+            }
+
+            // ---- notifications page ----
+
+            Column {
+                width: parent.width
+                spacing: 6
+                visible: root.page === "notifications"
+
+                Item {
+                    width: parent.width
+                    height: 26
+
                     Text {
                         renderType: Text.NativeRendering
-                        width: parent.width
-                        visible: notificationHistory.count === 0
-                        text: "No notifications"
-                        font.pixelSize: 16; font.family: "MapleMono NF"
-                        color: PanelColors.textDim
-                        horizontalAlignment: Text.AlignHCenter
-                        topPadding: 12
+                        anchors.left: parent.left
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: "Notifications"
+                        font.pixelSize: 16; font.bold: true; font.family: "MapleMono NF"
+                        color: PanelColors.textAccent
                     }
+                Text {
+                    id: clearNotiText
+                        renderType: Text.NativeRendering
+                        anchors { right: parent.right; verticalCenter: parent.verticalCenter }
+                        visible: notificationHistory.count > 0
+                        text: "clear all"
+                        font.pixelSize: 13; font.bold: true; font.family: "MapleMono NF"
+                        color: clearNotiMouse.containsMouse ? PanelColors.error : PanelColors.textDim
+                        MouseArea {
+                            id: clearNotiMouse
+                            anchors.fill: parent; hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: root.clearNotifications()
+                        }
+                    }
+                }
 
-                    ListView {
-                        id: notiList
-                        width: parent.width
-                        height: Math.min(contentHeight, 300)
-                        spacing: 4
-                        clip: true
-                        interactive: contentHeight > height
-                        model: notificationHistory
+                Text {
+                    renderType: Text.NativeRendering
+                    width: parent.width
+                    visible: notificationHistory.count === 0
+                    text: "No notifications"
+                    font.pixelSize: 16; font.family: "MapleMono NF"
+                    color: PanelColors.textDim
+                    horizontalAlignment: Text.AlignHCenter
+                    topPadding: 12
+                }
 
-                        delegate: Rectangle {
-                            required property var modelData
-                            required property int index
-                            width: notiList.width
-                            height: 44; radius: 0
-                            color: notiMouse.containsMouse ? Qt.lighter(PanelColors.rowBackground, 1.25) : PanelColors.rowBackground
-                            Behavior on color { ColorAnimation { duration: 0 } }
+                ListView {
+                    id: notiList
+                    width: parent.width
+                    height: Math.min(contentHeight, 300)
+                    spacing: 4
+                    clip: true
+                    interactive: contentHeight > height
+                    model: notificationHistory
 
-                            Row {
-                                anchors { left: parent.left; leftMargin: 10; right: parent.right; rightMargin: 10; verticalCenter: parent.verticalCenter }
-                                spacing: 8
+                    delegate: Rectangle {
+                        required property var modelData
+                        required property int index
+                        width: notiList.width
+                        height: 44; radius: 0
+                        color: notiMouse.containsMouse ? Qt.lighter(PanelColors.rowBackground, 1.25) : PanelColors.rowBackground
+                        Behavior on color { ColorAnimation { duration: 0 } }
 
-                                Rectangle {
-                                    width: 30; height: 30; radius: 0
-                                    anchors.verticalCenter: parent.verticalCenter
-                                    color: PanelColors.rowBackground
-                                    border.width: 1
-                                    border.color: PanelColors.border
-                                    clip: true
+                        Row {
+                            anchors { left: parent.left; leftMargin: 10; right: parent.right; rightMargin: 10; verticalCenter: parent.verticalCenter }
+                            spacing: 8
 
-                                    Image {
-                                        anchors.fill: parent; anchors.margins: 2
-                                        source: modelData.image !== "" ? modelData.image : ""
-                                        fillMode: Image.PreserveAspectCrop
-                                        asynchronous: true
-                                        visible: modelData.image !== ""
-                                    }
-                                    Text {
-                                        renderType: Text.NativeRendering
-                                        anchors.centerIn: parent
-                                        visible: modelData.image === ""
-                                        text: modelData.appName !== "" ? modelData.appName.charAt(0).toUpperCase() : "?"
-                                        font.pixelSize: 16; font.bold: true; font.family: "MapleMono NF"
-                                        color: PanelColors.textAccent
-                                    }
+                            Rectangle {
+                                width: 30; height: 30; radius: 0
+                                anchors.verticalCenter: parent.verticalCenter
+                                color: PanelColors.rowBackground
+                                border.width: 1
+                                border.color: PanelColors.border
+                                clip: true
+
+                                Image {
+                                    anchors.fill: parent; anchors.margins: 2
+                                    source: modelData.image !== "" ? modelData.image : ""
+                                    fillMode: Image.PreserveAspectCrop
+                                    asynchronous: true
+                                    visible: modelData.image !== ""
                                 }
-
-                                Column {
-                                    anchors.verticalCenter: parent.verticalCenter
-                                    spacing: 2
-                                    width: parent.width - 30 - notiTimeText.width - parent.spacing * 2
-
-                                    Text {
-                                        renderType: Text.NativeRendering
-                                        width: parent.width
-                                        text: modelData.appName !== "" ? modelData.appName : "notification"
-                                        font.pixelSize: 12; font.bold: true; font.family: "MapleMono NF"
-                                        color: PanelColors.textDim
-                                        elide: Text.ElideRight
-                                    }
-                                    Text {
-                                        renderType: Text.NativeRendering
-                                        width: parent.width
-                                        text: modelData.summary + (modelData.body !== "" ? " — " + modelData.body : "")
-                                        font.pixelSize: 13; font.family: "MapleMono NF"
-                                        color: PanelColors.textMain
-                                        elide: Text.ElideRight
-                                    }
+                                Text {
+                                    renderType: Text.NativeRendering
+                                    anchors.centerIn: parent
+                                    visible: modelData.image === ""
+                                    text: modelData.appName !== "" ? modelData.appName.charAt(0).toUpperCase() : "?"
+                                    font.pixelSize: 16; font.bold: true; font.family: "MapleMono NF"
+                                    color: PanelColors.textAccent
                                 }
+                            }
+
+                            Column {
+                                anchors.verticalCenter: parent.verticalCenter
+                                spacing: 2
+                                width: parent.width - 30 - notiTimeText.width - parent.spacing * 2
 
                                 Text {
-                                    id: notiTimeText
                                     renderType: Text.NativeRendering
-                                    anchors.verticalCenter: parent.verticalCenter
-                                    text: root.fmtNotiTime(modelData.timestamp)
-                                    font.pixelSize: 12; font.family: "MapleMono NF"
+                                    width: parent.width
+                                    text: modelData.appName !== "" ? modelData.appName : "notification"
+                                    font.pixelSize: 12; font.bold: true; font.family: "MapleMono NF"
                                     color: PanelColors.textDim
+                                    elide: Text.ElideRight
+                                }
+                                Text {
+                                    renderType: Text.NativeRendering
+                                    width: parent.width
+                                    text: modelData.summary + (modelData.body !== "" ? " — " + modelData.body : "")
+                                    font.pixelSize: 13; font.family: "MapleMono NF"
+                                    color: PanelColors.textMain
+                                    elide: Text.ElideRight
                                 }
                             }
 
-                            MouseArea {
-                                id: notiMouse
-                                anchors.fill: parent; hoverEnabled: true
-                                cursorShape: Qt.PointingHandCursor
-                                onClicked: root.removeNotification(index)
+                            Text {
+                                id: notiTimeText
+                                renderType: Text.NativeRendering
+                                anchors.verticalCenter: parent.verticalCenter
+                                text: root.fmtNotiTime(modelData.timestamp)
+                                font.pixelSize: 12; font.family: "MapleMono NF"
+                                color: PanelColors.textDim
                             }
+                        }
+
+                        MouseArea {
+                            id: notiMouse
+                            anchors.fill: parent; hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: root.removeNotification(index)
                         }
                     }
                 }
@@ -901,8 +1147,6 @@ PanelWindow {
                 visible: root.page === "wifi"
 
                 onVisibleChanged: {
-                    if (root.wifiDevice)
-                        root.wifiDevice.scannerEnabled = visible
                     if (visible) {
                         root.kickWifiScan()
                         wifiRecoverTimer.restart()
@@ -925,7 +1169,7 @@ PanelWindow {
                     ToggleSwitch {
                         anchors { right: parent.right; verticalCenter: parent.verticalCenter }
                         checked: Networking.wifiEnabled
-                        onToggled: Networking.wifiEnabled = !Networking.wifiEnabled
+                        onToggled: root.toggleWifi()
                     }
                 }
 
@@ -954,7 +1198,9 @@ PanelWindow {
                                     required property var modelData
 
                                     readonly property bool secured:
-                                        modelData.security !== WifiSecurityType.Open
+                                        typeof modelData.security === "string"
+                                        ? modelData.security !== "--"
+                                        : modelData.security !== WifiSecurityType.Open
                                         && modelData.security !== WifiSecurityType.Unknown
                                         && modelData.security !== WifiSecurityType.Owe
 
@@ -994,6 +1240,7 @@ PanelWindow {
                                     }
 
                                     Row {
+                                        z: 2
                                         anchors { right: parent.right; rightMargin: 10; verticalCenter: parent.verticalCenter }
                                         spacing: 12
 
@@ -1014,17 +1261,21 @@ PanelWindow {
                                             color: PanelColors.pillActive
                                             anchors.verticalCenter: parent.verticalCenter
                                         }
-                                        Text {
-                                            renderType: Text.NativeRendering
-                                            visible: netRow.modelData.known && netMouse.containsMouse
+                                Text {
+                                    renderType: Text.NativeRendering
+                                    visible: netRow.modelData.known && netMouse.containsMouse
                                             text: "forget"
                                             font.pixelSize: 12; font.bold: true; font.family: "MapleMono NF"
                                             color: forgetMouse.containsMouse ? PanelColors.error : PanelColors.textDim
                                             MouseArea {
                                                 id: forgetMouse
                                                 anchors.fill: parent; hoverEnabled: true
+                                                z: 2
                                                 cursorShape: Qt.PointingHandCursor
-                                                onClicked: root.wifiForget(netRow.modelData)
+                                                onClicked: {
+                                                    mouse.accepted = true
+                                                    root.wifiForget(netRow.modelData)
+                                                }
                                             }
                                         }
                                     }
@@ -1032,6 +1283,7 @@ PanelWindow {
                                     MouseArea {
                                         id: netMouse
                                         anchors.fill: parent; hoverEnabled: true
+                                        z: 1
                                         cursorShape: Qt.PointingHandCursor
                                         onClicked: root.wifiConnect(netRow.modelData)
                                     }
@@ -1042,7 +1294,7 @@ PanelWindow {
                                 renderType: Text.NativeRendering
                                 width: netCol.width
                                 visible: root.wifiSortedNetworks.length === 0
-                                text: root.wifiDevice?.scannerEnabled ? "scanning for networks…" : "no networks found"
+                                text: root.wifiScanning ? "scanning for networks…" : "no networks found"
                                 font.pixelSize: 13; font.family: "MapleMono NF"
                                 color: PanelColors.textDim
                                 horizontalAlignment: Text.AlignHCenter
@@ -1805,6 +2057,33 @@ PanelWindow {
 
     // ---- components ---------------------------------------------------------------------
 
+    component BevelOverlay: Item {
+        property bool pressed: false
+        anchors.fill: parent
+        z: 1
+
+        Rectangle {
+            anchors { top: parent.top; left: parent.left; right: parent.right; topMargin: 2 }
+            height: 1
+            color: parent.pressed ? "#090909" : "#303030"
+        }
+        Rectangle {
+            anchors { top: parent.top; left: parent.left; bottom: parent.bottom; topMargin: 2; bottomMargin: 2 }
+            width: 1
+            color: parent.pressed ? "#090909" : "#242424"
+        }
+        Rectangle {
+            anchors { left: parent.left; right: parent.right; bottom: parent.bottom; bottomMargin: 2 }
+            height: 1
+            color: parent.pressed ? "#686868" : "#000000"
+        }
+        Rectangle {
+            anchors { top: parent.top; right: parent.right; bottom: parent.bottom; topMargin: 2; bottomMargin: 2 }
+            width: 1
+            color: parent.pressed ? "#686868" : "#000000"
+        }
+    }
+
     component HeaderIconButton: Rectangle {
         id: hbtn
         property string iconText: ""
@@ -1813,10 +2092,9 @@ PanelWindow {
         width: 36; height: 36; radius: 0
         color: hmouse.containsMouse || isActive ? Qt.lighter(PanelColors.rowBackground, 1.35) : PanelColors.rowBackground
         border.width: 1
-        border.color: hmouse.containsMouse || isActive ? Qt.rgba(1, 1, 1, 0.12) : Qt.rgba(1, 1, 1, 0.04)
-        scale: hmouse.pressed ? 0.91 : 1.0
+        border.color: "#090909"
         Behavior on color { ColorAnimation { duration: 0 } }
-        Behavior on scale { NumberAnimation { duration: 0; easing.type: Easing.OutCubic } }
+        BevelOverlay { pressed: hmouse.pressed }
         Text {
             renderType: Text.NativeRendering
             anchors.centerIn: parent
@@ -1826,7 +2104,7 @@ PanelWindow {
             Behavior on color { ColorAnimation { duration: 0 } }
         }
         MouseArea {
-            id: hmouse; anchors.fill: parent; hoverEnabled: true
+            id: hmouse; z: 2; anchors.fill: parent; hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
             onClicked: hbtn.clicked()
         }
@@ -1850,6 +2128,7 @@ PanelWindow {
         border.width: 2
         border.color: "#090909"
         Behavior on color { ColorAnimation { duration: 0 } }
+        BevelOverlay { pressed: pillMouse.pressed }
 
         Row {
             anchors.centerIn: parent
@@ -1878,7 +2157,7 @@ PanelWindow {
         }
 
         MouseArea {
-            id: pillMouse; anchors.fill: parent; hoverEnabled: true
+            id: pillMouse; z: 2; anchors.fill: parent; hoverEnabled: true
             acceptedButtons: Qt.LeftButton | Qt.RightButton
             cursorShape: Qt.PointingHandCursor
             onClicked: (mouse) => {
@@ -1896,9 +2175,10 @@ PanelWindow {
         signal clicked()
         width: parent.width; height: 46; radius: 0
         color: actMouse.containsMouse ? Qt.lighter(PanelColors.rowBackground, 1.25) : PanelColors.rowBackground
-        border.width: 1
-        border.color: Qt.rgba(1, 1, 1, 0.04)
+        border.width: 2
+        border.color: "#090909"
         Behavior on color { ColorAnimation { duration: 0 } }
+        BevelOverlay { pressed: actMouse.pressed }
 
         Row {
             anchors.centerIn: parent
@@ -1921,7 +2201,7 @@ PanelWindow {
         }
 
         MouseArea {
-            id: actMouse; anchors.fill: parent; hoverEnabled: true
+            id: actMouse; z: 2; anchors.fill: parent; hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
             onClicked: actRow.clicked()
         }
@@ -1936,6 +2216,8 @@ PanelWindow {
         border.width: 1
         border.color: "#090909"
 
+        BevelOverlay { pressed: tswitchMouse.pressed }
+
         Rectangle {
             x: tswitch.checked ? parent.width - width - 2 : 2
             anchors.verticalCenter: parent.verticalCenter
@@ -1944,6 +2226,8 @@ PanelWindow {
             Behavior on x { NumberAnimation { duration: 0 } }
         }
         MouseArea {
+            id: tswitchMouse
+            z: 2
             anchors.fill: parent
             cursorShape: Qt.PointingHandCursor
             onClicked: tswitch.toggled()

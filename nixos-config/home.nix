@@ -20,16 +20,14 @@ in
   xdg.configFile = {
     "fastfetch".source = link "${dotfiles}/fastfetch";
     "foot".source = link "${dotfiles}/foot";
-    "kitty".source = link "${dotfiles}/kitty";
-    "mango".source = link "${dotfiles}/mango";
     "hypr".source = link "${dotfiles}/hypr";
+    "mango".source = link "${dotfiles}/mango";
     "mpd".source = link "${dotfiles}/mpd";
     "mpv".source = link "${dotfiles}/mpv";
     "nvim".source = link "${dotfiles}/nvim";
     "quickshell".source = link "${dotfiles}/quickshell";
     "rmpc".source = link "${dotfiles}/rmpc";
     "rofi".source = link "${dotfiles}/rofi";
-    "swaync".source = link "${dotfiles}/swaync";
     "swayosd".source = link "${dotfiles}/swayosd";
     "waybar".source = link "${dotfiles}/waybar";
     "yazi".source = link "${dotfiles}/yazi";
@@ -141,7 +139,7 @@ in
     tree
     delta
     jq
-    wallust
+    hellwal
     awww
     ffmpeg
     yt-dlp

@@ -12,7 +12,7 @@ pause_frames=(
   "▃▁▃▅"
 )
 
-colors=("#ea6962" "#e78a4e" "#d8a657" "#a9b665" "#7daea3" "#d3869b")
+colors=("#B8B8B8" "#AAA" "#9C9C9C" "#8E8E8E" "#808080" "#727272")
 
 is_audio_playing() {
   wpctl status 2>/dev/null | grep -q '\[active\]'

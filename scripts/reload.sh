@@ -7,11 +7,14 @@ if pgrep -x Hyprland >/dev/null; then
   pkill -USR1 hyprlock 2>/dev/null
 elif pgrep -x mango >/dev/null; then
   mmsg dispatch reload_config
-  # swayidle is exec-once, handled by mango on reload
   pkill hyprlock 2>/dev/null
 fi
 
-pkill -SIGUSR2 waybar
+pkill waybar
+pkill quickshell
+waybar &
+quickshell
+
 pkill swaync && swaync &
 
 pkill -f mpd-notify.sh
@@ -19,4 +22,4 @@ pkill -f mpd-notify.sh
 
 pkill swayosd-server && swayosd-server &
 
-notify-send "Config" "Config reloaded" -i "$HOME/.local/share/noti-icons/hyprland.png"
+notify-send "Config" "Config reloaded" 

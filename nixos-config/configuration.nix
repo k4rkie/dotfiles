@@ -142,6 +142,7 @@
   programs.dconf.enable = true;
 
   programs.mango.enable = true;
+  programs.sway.enable = true;
 
   programs.nix-ld = {
     enable = true;

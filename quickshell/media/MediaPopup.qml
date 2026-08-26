@@ -13,7 +13,7 @@ PanelWindow {
     exclusionMode: ExclusionMode.Ignore
     anchors { top: true; left: true; right: true; bottom: true }
     // card sits 8px above the waybar (18), centered horizontally
-    readonly property int bottomBarGap: 39
+    readonly property int bottomBarGap: 46
 
     WlrLayershell.layer: WlrLayershell.Overlay
     WlrLayershell.keyboardFocus: WlrKeyboardFocus.OnDemand
@@ -261,7 +261,7 @@ PanelWindow {
 
     Rectangle {
         id: contentCard
-        x: root.layoutX + root.arrowOffset
+        x: root.layoutX + root.arrowOffset - 730
         y: parent.height - height - root.bottomBarGap + root.slideOffset
         width: root.contentCardWidth
         height: popupColumn.implicitHeight + 24
@@ -270,10 +270,35 @@ PanelWindow {
         border.width: 2
         radius: 0
 
-        // swallow clicks so they don't reach the outside catcher
-        MouseArea { anchors.fill: parent; onPressed: (m) => m.accepted = true }
+         // swallow clicks so they don't reach the outside catcher
+         MouseArea { anchors.fill: parent; onPressed: (m) => m.accepted = true }
 
-        Column {
+         Rectangle {
+             z: 2
+             anchors { top: parent.top; left: parent.left; right: parent.right; topMargin: 2 }
+             height: 2
+             color: "#303030"
+         }
+         Rectangle {
+             z: 2
+             anchors { top: parent.top; left: parent.left; bottom: parent.bottom; topMargin: 2; bottomMargin: 2 }
+             width: 2
+             color: "#242424"
+         }
+         Rectangle {
+             z: 2
+             anchors { left: parent.left; right: parent.right; bottom: parent.bottom; bottomMargin: 2 }
+             height: 2
+             color: "#000000"
+         }
+         Rectangle {
+             z: 2
+             anchors { top: parent.top; right: parent.right; bottom: parent.bottom; topMargin: 2; bottomMargin: 2 }
+             width: 2
+             color: "#000000"
+         }
+
+         Column {
             id: popupColumn
             anchors { top: parent.top; left: parent.left; right: parent.right; margins: 12 }
             spacing: 12
@@ -484,19 +509,45 @@ PanelWindow {
         onClicked: root.selectedIndex = (root.selectedIndex + 1) % root.playerList.length
     }
 
-    component PlayerNavBtn: Rectangle {
+     component BevelOverlay: Item {
+         property bool pressed: false
+         anchors.fill: parent
+         z: 1
+
+         Rectangle {
+             anchors { top: parent.top; left: parent.left; right: parent.right; topMargin: 2 }
+             height: 1
+             color: parent.pressed ? "#090909" : "#303030"
+         }
+         Rectangle {
+             anchors { top: parent.top; left: parent.left; bottom: parent.bottom; topMargin: 2; bottomMargin: 2 }
+             width: 1
+             color: parent.pressed ? "#090909" : "#242424"
+         }
+         Rectangle {
+             anchors { left: parent.left; right: parent.right; bottom: parent.bottom; bottomMargin: 2 }
+             height: 1
+             color: parent.pressed ? "#686868" : "#000000"
+         }
+         Rectangle {
+             anchors { top: parent.top; right: parent.right; bottom: parent.bottom; topMargin: 2; bottomMargin: 2 }
+             width: 1
+             color: parent.pressed ? "#686868" : "#000000"
+         }
+     }
+
+     component PlayerNavBtn: Rectangle {
         id: navBtn
         property string icon: ""
         property color accentColor: PanelColors.clock
         signal clicked()
         width: 36; height: 36; radius: 0
         color: navMouse.containsMouse ? Qt.lighter(PanelColors.rowBackground, 1.3) : PanelColors.rowBackground
-        border.color: PanelColors.border
-        border.width: 2
-        scale: navMouse.pressed ? 0.88 : 1.0
-        Behavior on color { ColorAnimation { duration: 0 } }
-        Behavior on scale { NumberAnimation { duration: 0; easing.type: Easing.OutCubic } }
-        Text {
+         border.color: "#090909"
+         border.width: 2
+          Behavior on color { ColorAnimation { duration: 0 } }
+         BevelOverlay { pressed: navMouse.pressed }
+         Text {
         renderType: Text.NativeRendering
             anchors.centerIn: parent
             text: navBtn.icon
@@ -505,12 +556,13 @@ PanelWindow {
             color: navMouse.containsMouse ? navBtn.accentColor : PanelColors.textMain
             Behavior on color { ColorAnimation { duration: 0 } }
         }
-        MouseArea {
-            id: navMouse
-            anchors.fill: parent; hoverEnabled: true
+         MouseArea {
+             id: navMouse
+             z: 2
+             anchors.fill: parent; hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
             onClicked: navBtn.clicked()
-        }
+         }
     }
 
     component MediaBtn: Rectangle {
@@ -526,11 +578,10 @@ PanelWindow {
             if (highlighted) return btnMouse.containsMouse ? Qt.lighter(accentColor, 1.1) : accentColor
             return btnMouse.containsMouse ? Qt.lighter(PanelColors.rowBackground, 1.25) : PanelColors.rowBackground
         }
-        border.color: highlighted ? "transparent" : Qt.rgba(1, 1, 1, btnMouse.containsMouse ? 0.10 : 0.04)
-        border.width: 1
-        scale: btnMouse.pressed ? 0.91 : 1.0
-        Behavior on color { ColorAnimation { duration: 0 } }
-        Behavior on scale { NumberAnimation { duration: 0; easing.type: Easing.OutCubic } }
+          border.color: "#090909"
+          border.width: 2
+          Behavior on color { ColorAnimation { duration: 0 } }
+         BevelOverlay { pressed: btnMouse.pressed }
         Text {
         renderType: Text.NativeRendering
             anchors.centerIn: parent; text: btn.icon
@@ -542,8 +593,8 @@ PanelWindow {
             }
             Behavior on color { ColorAnimation { duration: 0 } }
         }
-        MouseArea {
-            id: btnMouse; anchors.fill: parent; hoverEnabled: true; enabled: btn.enabled
+         MouseArea {
+             id: btnMouse; z: 2; anchors.fill: parent; hoverEnabled: true; enabled: btn.enabled
             cursorShape: Qt.PointingHandCursor; onClicked: btn.clicked()
         }
     }

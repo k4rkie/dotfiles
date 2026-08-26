@@ -1,8 +1,10 @@
 pragma Singleton
 import QtQuick
 import Quickshell
+import Quickshell.Io
 
 Singleton {
+    id: root
     readonly property int transitionDuration: 250
 
     // Base16 Black Metal Bathory Tweaked
@@ -26,7 +28,7 @@ Singleton {
     // Surfaces
     readonly property color barBackground:     base00
     readonly property color pillForeground:    base01
-    readonly property color overlayBackground: "#aa030303"
+    readonly property color overlayBackground: Qt.rgba(base00.r, base00.g, base00.b, 0.667)
 
     // Accents
     readonly property color launcher:          base08
@@ -77,6 +79,14 @@ Singleton {
     readonly property color cpuRing:           base08
     readonly property color ramRing:           base0D
     readonly property color gpuRing:           base0B
+
+    FileView {
+        path: Quickshell.env("HOME") + "/.cache/dynamic-theme/base00"
+        watchChanges: true
+        printErrors: false
+        onLoaded: root.wallpaperBase00 = text().trim()
+        onFileChanged: reload()
+    }
 
     property var _hashCache: ({})
     function hashColor(str) {
