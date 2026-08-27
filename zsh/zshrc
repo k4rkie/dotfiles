@@ -59,7 +59,7 @@ precmd() { vcs_info }
 zstyle ':vcs_info:git:*' formats '(󰘬 %b) '
 
 # 4. Set the prompt (ensure you use single quotes here)
-PROMPT='%F{#7D718F}%~%f ${vcs_info_msg_0_}%k-> '
+PROMPT='[%F{#7D718F}%~%f] ${vcs_info_msg_0_}%k-> '
 # -------------------------------
 # 6. Aliases
 # -------------------------------
@@ -68,7 +68,7 @@ alias la="eza -lha --icons=always --git --hyperlink"
 
 alias vi="nvim"
 alias cl="clear"
-alias ff="fastfetch"
+alias nf="nerdfetch"
 
 alias ..="cd .."
 alias mv="mv -i"

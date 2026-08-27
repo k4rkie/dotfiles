@@ -46,7 +46,6 @@ tooltip {
 #custom-media-animation,
 #custom-control-center,
 #custom-notifications {
-  margin: 0px 2px;
   padding: 0px 6px;
   border-radius: 4px;
   background-color: #070707;
@@ -165,16 +164,6 @@ tooltip {
 #custom-control-center {
   margin-right: 0px;
   padding-right: 0px;
-}
-
-#image.pc,
-#image.globe {
-  margin: 0px;
-  padding: 0px;
-}
-
-#time #clock {
-  margin: 0px;
 }
 
 #time {

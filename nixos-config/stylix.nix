@@ -15,15 +15,13 @@
 
     icons = {
       enable = true;
-      package = pkgs.papirus-icon-theme.override { color = "nordic"; };
+      package = pkgs.papirus-icon-theme.override { color = "white"; };
       dark = "Papirus-Dark";
       light = "Papirus";
     };
 
     fonts = {
       monospace = {
-        # package = pkgs.maple-mono.NF;
-        # name = "Maple Mono NF";
 
         # package = pkgs.runCommand "SevrainsMono Nerd Font" { } ''
         #   install -Dm644 ${./fonts/SevrainsMonoNerdFont-Regular.ttf} $out/share/fonts/truetype/SevrainsMonoNerdFont-Regular.ttf

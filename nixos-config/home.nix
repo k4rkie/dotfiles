@@ -18,7 +18,6 @@ in
 
   # ~/.config symlinks
   xdg.configFile = {
-    "fastfetch".source = link "${dotfiles}/fastfetch";
     "foot".source = link "${dotfiles}/foot";
     "hypr".source = link "${dotfiles}/hypr";
     "mango".source = link "${dotfiles}/mango";
@@ -130,7 +129,6 @@ in
     fd
     ripgrep
     zoxide
-    fastfetch
     bat
     eza
     btop

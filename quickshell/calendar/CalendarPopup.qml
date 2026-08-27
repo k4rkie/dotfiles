@@ -162,7 +162,7 @@ PanelWindow {
         id: innerRect
         width: 240
         height: root.contentHeight + (root.padding * 2)
-        x: (parent.width - width) / 2 + 640
+        x: (parent.width - width) / 2 + 680
         y: root.height - height - root.bottomBarGap + root.slideOffset
         radius: 0
         color: PanelColors.popupBackground
