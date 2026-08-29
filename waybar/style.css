@@ -2,7 +2,7 @@
   border: none;
   border-radius: 0;
   min-height: 0;
-  font-family: "SevrainsMono Nerd Font";
+  font-family: "DepartureMono Nerd Font";
   font-size: 16px;
 }
 
@@ -45,6 +45,7 @@ tooltip {
 #custom-caffeine,
 #custom-media-animation,
 #custom-control-center,
+#tray,
 #custom-notifications {
   padding: 0px 6px;
   border-radius: 4px;
@@ -150,10 +151,6 @@ tooltip {
 #custom-media-animation {
   background-color: transparent;
   padding: 6px;
-}
-
-#tray {
-  margin: 0px 4px;
 }
 
 #custom-separator{

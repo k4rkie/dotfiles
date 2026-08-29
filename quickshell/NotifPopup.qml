@@ -76,7 +76,7 @@ PanelWindow {
                         anchors.centerIn: parent
                         visible: toastCard.iconSource === ""
                         text: toastCard.modelData.appName !== "" ? toastCard.modelData.appName.charAt(0).toUpperCase() : "?"
-                        font.pixelSize: 16; font.bold: true; font.family: "MapleMono NF"
+                        font.pixelSize: 16; font.bold: true; font.family: "DepartureMono Nerd Font"
                         color: PanelColors.textAccent
                     }
                 }
@@ -90,7 +90,7 @@ PanelWindow {
                         renderType: Text.NativeRendering
                         width: parent.width
                         text: toastCard.modelData.appName !== "" ? toastCard.modelData.appName : "notification"
-                        font.pixelSize: 12; font.bold: true; font.family: "MapleMono NF"
+                        font.pixelSize: 12; font.bold: true; font.family: "DepartureMono Nerd Font"
                         color: PanelColors.textDim
                         elide: Text.ElideRight
                     }
@@ -98,7 +98,7 @@ PanelWindow {
                         renderType: Text.NativeRendering
                         width: parent.width
                         text: toastCard.modelData.summary + (toastCard.modelData.body !== "" ? " — " + toastCard.modelData.body : "")
-                        font.pixelSize: 13; font.family: "MapleMono NF"
+                        font.pixelSize: 13; font.family: "DepartureMono Nerd Font"
                         color: PanelColors.textMain
                         elide: Text.ElideRight
                     }

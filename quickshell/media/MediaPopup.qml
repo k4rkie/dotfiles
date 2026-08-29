@@ -309,7 +309,7 @@ PanelWindow {
                 width: parent.width
                 text: "No active media session"
                 font.pixelSize: 13
-                font.family: "MapleMono NF"
+                font.family: "DepartureMono Nerd Font"
                 color: PanelColors.textDim
                 horizontalAlignment: Text.AlignHCenter
                 topPadding: 8; bottomPadding: 8
@@ -364,7 +364,7 @@ PanelWindow {
                             if (id.includes("chrome") || id.includes("chromium")) return ""
                             return ""
                         }
-                        font.pixelSize: 16; font.family: "MapleMono NF"; color: PanelColors.textDim; z: 1
+                        font.pixelSize: 16; font.family: "DepartureMono Nerd Font"; color: PanelColors.textDim; z: 1
                     }
                     Rectangle { anchors.fill: parent; color: "transparent"; border.width: 2; border.color: PanelColors.clock; radius: 0 }
                 }
@@ -376,26 +376,26 @@ PanelWindow {
 
                     Column { id: textSlotA; width: parent.width; spacing: 6; opacity: root._textShowA ? 1.0 : 0.0; Behavior on opacity { NumberAnimation { duration: 0; easing.type: Easing.InOutSine } }
                         Item { width: parent.width; height: 20; clip: true
-                            Text { text: root._titleA || "Unknown Title"; font.pixelSize: 16; font.bold: true; font.family: "MapleMono NF"; color: PanelColors.textAccent ; renderType: Text.NativeRendering }
+                            Text { text: root._titleA || "Unknown Title"; font.pixelSize: 16; font.bold: true; font.family: "DepartureMono Nerd Font"; color: PanelColors.textAccent ; renderType: Text.NativeRendering }
                         }
-                        Text { width: parent.width; text: root._artistA || "Unknown Artist"; font.pixelSize: 13; font.family: "MapleMono NF"; color: PanelColors.textDim; elide: Text.ElideRight ; renderType: Text.NativeRendering }
+                        Text { width: parent.width; text: root._artistA || "Unknown Artist"; font.pixelSize: 13; font.family: "DepartureMono Nerd Font"; color: PanelColors.textDim; elide: Text.ElideRight ; renderType: Text.NativeRendering }
                         Rectangle { visible: root._identityA !== ""; height: 18; width: identRowA.implicitWidth + 12; radius: height / 2; color: Qt.rgba(PanelColors.clock.r, PanelColors.clock.g, PanelColors.clock.b, 0.15)
                             Row { id: identRowA; anchors.centerIn: parent; spacing: 4
-                                Text { text: root.getPlayerIcon(root._identityA); font.pixelSize: 12; font.family: "MapleMono NF"; color: PanelColors.textAccent; anchors.verticalCenter: parent.verticalCenter ; renderType: Text.NativeRendering }
-                                Text { text: root._identityA; font.pixelSize: 12; font.bold: true; font.family: "MapleMono NF"; color: PanelColors.textAccent; anchors.verticalCenter: parent.verticalCenter ; renderType: Text.NativeRendering }
+                                Text { text: root.getPlayerIcon(root._identityA); font.pixelSize: 12; font.family: "DepartureMono Nerd Font"; color: PanelColors.textAccent; anchors.verticalCenter: parent.verticalCenter ; renderType: Text.NativeRendering }
+                                Text { text: root._identityA; font.pixelSize: 12; font.bold: true; font.family: "DepartureMono Nerd Font"; color: PanelColors.textAccent; anchors.verticalCenter: parent.verticalCenter ; renderType: Text.NativeRendering }
                             }
                         }
                     }
 
                     Column { id: textSlotB; width: parent.width; spacing: 6; opacity: root._textShowA ? 0.0 : 1.0; Behavior on opacity { NumberAnimation { duration: 0; easing.type: Easing.InOutSine } }
                         Item { width: parent.width; height: 20; clip: true
-                            Text { text: root._titleB || "Unknown Title"; font.pixelSize: 16; font.bold: true; font.family: "MapleMono NF"; color: PanelColors.textAccent ; renderType: Text.NativeRendering }
+                            Text { text: root._titleB || "Unknown Title"; font.pixelSize: 16; font.bold: true; font.family: "DepartureMono Nerd Font"; color: PanelColors.textAccent ; renderType: Text.NativeRendering }
                         }
-                        Text { width: parent.width; text: root._artistB || "Unknown Artist"; font.pixelSize: 13; font.family: "MapleMono NF"; color: PanelColors.textDim; elide: Text.ElideRight ; renderType: Text.NativeRendering }
+                        Text { width: parent.width; text: root._artistB || "Unknown Artist"; font.pixelSize: 13; font.family: "DepartureMono Nerd Font"; color: PanelColors.textDim; elide: Text.ElideRight ; renderType: Text.NativeRendering }
                         Rectangle { visible: root._identityB !== ""; height: 18; width: identRowB.implicitWidth + 12; radius: height / 2; color: Qt.rgba(PanelColors.clock.r, PanelColors.clock.g, PanelColors.clock.b, 0.15)
                             Row { id: identRowB; anchors.centerIn: parent; spacing: 4
-                                Text { text: root.getPlayerIcon(root._identityB); font.pixelSize: 12; font.family: "MapleMono NF"; color: PanelColors.textAccent; anchors.verticalCenter: parent.verticalCenter ; renderType: Text.NativeRendering }
-                                Text { text: root._identityB; font.pixelSize: 12; font.bold: true; font.family: "MapleMono NF"; color: PanelColors.textAccent; anchors.verticalCenter: parent.verticalCenter ; renderType: Text.NativeRendering }
+                                Text { text: root.getPlayerIcon(root._identityB); font.pixelSize: 12; font.family: "DepartureMono Nerd Font"; color: PanelColors.textAccent; anchors.verticalCenter: parent.verticalCenter ; renderType: Text.NativeRendering }
+                                Text { text: root._identityB; font.pixelSize: 12; font.bold: true; font.family: "DepartureMono Nerd Font"; color: PanelColors.textAccent; anchors.verticalCenter: parent.verticalCenter ; renderType: Text.NativeRendering }
                             }
                         }
                     }
@@ -427,9 +427,9 @@ PanelWindow {
                 Timer { id: seekReleaseTimer; interval: 1200; onTriggered: root.userSeeking = false }
 
                 Row { width: parent.width
-                    Text { id: posL; text: root.isLiveStream ? "Live" : root.fmtTime(root.livePosition); font.pixelSize: 12; font.family: "MapleMono NF"; color: PanelColors.textDim ; renderType: Text.NativeRendering }
+                    Text { id: posL; text: root.isLiveStream ? "Live" : root.fmtTime(root.livePosition); font.pixelSize: 12; font.family: "DepartureMono Nerd Font"; color: PanelColors.textDim ; renderType: Text.NativeRendering }
                     Item { width: parent.width - posL.implicitWidth - posR.implicitWidth; height: 1 }
-                    Text { id: posR; text: root.isLiveStream ? "\u221e" : root.fmtTime(root._stableLength); font.pixelSize: 12; font.family: "MapleMono NF"; color: PanelColors.textDim ; renderType: Text.NativeRendering }
+                    Text { id: posR; text: root.isLiveStream ? "\u221e" : root.fmtTime(root._stableLength); font.pixelSize: 12; font.family: "DepartureMono Nerd Font"; color: PanelColors.textDim ; renderType: Text.NativeRendering }
                 }
             }
 
@@ -552,7 +552,7 @@ PanelWindow {
             anchors.centerIn: parent
             text: navBtn.icon
             font.pixelSize: 16
-            font.family: "MapleMono NF"
+            font.family: "DepartureMono Nerd Font"
             color: navMouse.containsMouse ? navBtn.accentColor : PanelColors.textMain
             Behavior on color { ColorAnimation { duration: 0 } }
         }
@@ -585,7 +585,7 @@ PanelWindow {
         Text {
         renderType: Text.NativeRendering
             anchors.centerIn: parent; text: btn.icon
-            font.pixelSize: 16; font.family: "MapleMono NF"
+            font.pixelSize: 16; font.family: "DepartureMono Nerd Font"
             color: {
                 if (!btn.enabled) return PanelColors.textDim
                 if (btn.highlighted) return PanelColors.pillForeground

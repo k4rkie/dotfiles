@@ -15,5 +15,5 @@ Item {
     readonly property int  fontSizeRow:  16
     readonly property int  fontSizeSmall: 13
     readonly property int  iconSize:     24
-    readonly property string monoFont:  "JetBrainsMono Nerd Font"
+    readonly property string monoFont:  "DepartureMono Nerd Font"
 }

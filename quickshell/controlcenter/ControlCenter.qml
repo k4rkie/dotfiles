@@ -847,7 +847,7 @@ PanelWindow {
                                 anchors.centerIn: parent
                                 visible: !avatarImg.visible
                                 text: root.userName !== "" ? root.userName.charAt(0).toUpperCase() : "?"
-                                font.pixelSize: 16; font.bold: true; font.family: "MapleMono NF"
+                                font.pixelSize: 16; font.bold: true; font.family: "DepartureMono Nerd Font"
                                 color: PanelColors.textAccent
                             }
                         }
@@ -860,13 +860,13 @@ PanelWindow {
                         Text {
                             renderType: Text.NativeRendering
                             text: root.userName
-                            font.pixelSize: 16; font.bold: true; font.family: "MapleMono NF"
+                            font.pixelSize: 16; font.bold: true; font.family: "DepartureMono Nerd Font"
                             color: PanelColors.textAccent
                         }
                         Text {
                             renderType: Text.NativeRendering
                             text: "@" + (root.hostName !== "" ? root.hostName : "nixos")
-                            font.pixelSize: 16; font.family: "MapleMono NF"
+                            font.pixelSize: 16; font.family: "DepartureMono Nerd Font"
                             color: PanelColors.textDim
                         }
                     }
@@ -978,7 +978,7 @@ PanelWindow {
                             anchors.left: parent.left
                             anchors.verticalCenter: parent.verticalCenter
                             text: "Media"
-                            font.pixelSize: 16; font.bold: true; font.family: "MapleMono NF"
+                            font.pixelSize: 16; font.bold: true; font.family: "DepartureMono Nerd Font"
                             color: PanelColors.textAccent
                         }
 
@@ -1019,7 +1019,7 @@ PanelWindow {
                         anchors.left: parent.left
                         anchors.verticalCenter: parent.verticalCenter
                         text: "Notifications"
-                        font.pixelSize: 16; font.bold: true; font.family: "MapleMono NF"
+                        font.pixelSize: 16; font.bold: true; font.family: "DepartureMono Nerd Font"
                         color: PanelColors.textAccent
                     }
                 Text {
@@ -1028,7 +1028,7 @@ PanelWindow {
                         anchors { right: parent.right; verticalCenter: parent.verticalCenter }
                         visible: notificationHistory.count > 0
                         text: "clear all"
-                        font.pixelSize: 13; font.bold: true; font.family: "MapleMono NF"
+                        font.pixelSize: 13; font.bold: true; font.family: "DepartureMono Nerd Font"
                         color: clearNotiMouse.containsMouse ? PanelColors.error : PanelColors.textDim
                         MouseArea {
                             id: clearNotiMouse
@@ -1044,7 +1044,7 @@ PanelWindow {
                     width: parent.width
                     visible: notificationHistory.count === 0
                     text: "No notifications"
-                    font.pixelSize: 16; font.family: "MapleMono NF"
+                    font.pixelSize: 16; font.family: "DepartureMono Nerd Font"
                     color: PanelColors.textDim
                     horizontalAlignment: Text.AlignHCenter
                     topPadding: 12
@@ -1091,7 +1091,7 @@ PanelWindow {
                                     anchors.centerIn: parent
                                     visible: modelData.image === ""
                                     text: modelData.appName !== "" ? modelData.appName.charAt(0).toUpperCase() : "?"
-                                    font.pixelSize: 16; font.bold: true; font.family: "MapleMono NF"
+                                    font.pixelSize: 16; font.bold: true; font.family: "DepartureMono Nerd Font"
                                     color: PanelColors.textAccent
                                 }
                             }
@@ -1105,7 +1105,7 @@ PanelWindow {
                                     renderType: Text.NativeRendering
                                     width: parent.width
                                     text: modelData.appName !== "" ? modelData.appName : "notification"
-                                    font.pixelSize: 12; font.bold: true; font.family: "MapleMono NF"
+                                    font.pixelSize: 12; font.bold: true; font.family: "DepartureMono Nerd Font"
                                     color: PanelColors.textDim
                                     elide: Text.ElideRight
                                 }
@@ -1113,7 +1113,7 @@ PanelWindow {
                                     renderType: Text.NativeRendering
                                     width: parent.width
                                     text: modelData.summary + (modelData.body !== "" ? " — " + modelData.body : "")
-                                    font.pixelSize: 13; font.family: "MapleMono NF"
+                                    font.pixelSize: 13; font.family: "DepartureMono Nerd Font"
                                     color: PanelColors.textMain
                                     elide: Text.ElideRight
                                 }
@@ -1124,7 +1124,7 @@ PanelWindow {
                                 renderType: Text.NativeRendering
                                 anchors.verticalCenter: parent.verticalCenter
                                 text: root.fmtNotiTime(modelData.timestamp)
-                                font.pixelSize: 12; font.family: "MapleMono NF"
+                                font.pixelSize: 12; font.family: "DepartureMono Nerd Font"
                                 color: PanelColors.textDim
                             }
                         }
@@ -1163,7 +1163,7 @@ PanelWindow {
                         anchors.left: parent.left
                         anchors.verticalCenter: parent.verticalCenter
                         text: "Wi-Fi"
-                        font.pixelSize: 16; font.bold: true; font.family: "MapleMono NF"
+                        font.pixelSize: 16; font.bold: true; font.family: "DepartureMono Nerd Font"
                         color: PanelColors.textAccent
                     }
                     ToggleSwitch {
@@ -1216,7 +1216,7 @@ PanelWindow {
                                         Text {
                                             renderType: Text.NativeRendering
                                             text: root.wifiSignalGlyph(netRow.modelData.signalStrength)
-                                            font.pixelSize: 15; font.family: "MapleMono NF"
+                                            font.pixelSize: 15; font.family: "DepartureMono Nerd Font"
                                             color: netRow.modelData.connected ? PanelColors.pillActive : PanelColors.textDim
                                             anchors.verticalCenter: parent.verticalCenter
                                         }
@@ -1224,7 +1224,7 @@ PanelWindow {
                                             renderType: Text.NativeRendering
                                             text: "󰌾"
                                             visible: netRow.secured
-                                            font.pixelSize: 11; font.family: "MapleMono NF"
+                                            font.pixelSize: 11; font.family: "DepartureMono Nerd Font"
                                             color: PanelColors.textDim
                                             anchors.verticalCenter: parent.verticalCenter
                                         }
@@ -1232,7 +1232,7 @@ PanelWindow {
                                             renderType: Text.NativeRendering
                                             width: netRow.width - 130
                                             text: netRow.modelData.name !== "" ? netRow.modelData.name : "(hidden network)"
-                                            font.pixelSize: 14; font.family: "MapleMono NF"
+                                            font.pixelSize: 14; font.family: "DepartureMono Nerd Font"
                                             color: netRow.modelData.connected ? PanelColors.textAccent : PanelColors.textMain
                                             elide: Text.ElideRight
                                             anchors.verticalCenter: parent.verticalCenter
@@ -1249,7 +1249,7 @@ PanelWindow {
                                             visible: netRow.modelData.stateChanging
                                                 || netRow.modelData.state === ConnectionState.Connecting
                                             text: "connecting…"
-                                            font.pixelSize: 12; font.family: "MapleMono NF"
+                                            font.pixelSize: 12; font.family: "DepartureMono Nerd Font"
                                             color: PanelColors.textDim
                                             anchors.verticalCenter: parent.verticalCenter
                                         }
@@ -1257,7 +1257,7 @@ PanelWindow {
                                             renderType: Text.NativeRendering
                                             visible: netRow.modelData.connected && !netRow.modelData.stateChanging
                                             text: "connected"
-                                            font.pixelSize: 12; font.bold: true; font.family: "MapleMono NF"
+                                            font.pixelSize: 12; font.bold: true; font.family: "DepartureMono Nerd Font"
                                             color: PanelColors.pillActive
                                             anchors.verticalCenter: parent.verticalCenter
                                         }
@@ -1265,7 +1265,7 @@ PanelWindow {
                                     renderType: Text.NativeRendering
                                     visible: netRow.modelData.known && netMouse.containsMouse
                                             text: "forget"
-                                            font.pixelSize: 12; font.bold: true; font.family: "MapleMono NF"
+                                            font.pixelSize: 12; font.bold: true; font.family: "DepartureMono Nerd Font"
                                             color: forgetMouse.containsMouse ? PanelColors.error : PanelColors.textDim
                                             MouseArea {
                                                 id: forgetMouse
@@ -1295,7 +1295,7 @@ PanelWindow {
                                 width: netCol.width
                                 visible: root.wifiSortedNetworks.length === 0
                                 text: root.wifiScanning ? "scanning for networks…" : "no networks found"
-                                font.pixelSize: 13; font.family: "MapleMono NF"
+                                font.pixelSize: 13; font.family: "DepartureMono Nerd Font"
                                 color: PanelColors.textDim
                                 horizontalAlignment: Text.AlignHCenter
                                 topPadding: 8
@@ -1309,7 +1309,7 @@ PanelWindow {
                         anchors.centerIn: parent
                         visible: !Networking.wifiEnabled
                         text: "wi-fi is turned off"
-                        font.pixelSize: 13; font.family: "MapleMono NF"
+                        font.pixelSize: 13; font.family: "DepartureMono Nerd Font"
                         color: PanelColors.textDim
                     }
                 }
@@ -1334,7 +1334,7 @@ PanelWindow {
                                 || root.pendingWifiNet.security === WifiSecurityType.Wpa2Eap)
                             text: "password for \"" + (root.pendingWifiNet?.name ?? "") + "\""
                                 + (enterprise ? " (enterprise network)" : "")
-                            font.pixelSize: 13; font.bold: true; font.family: "MapleMono NF"
+                            font.pixelSize: 13; font.bold: true; font.family: "DepartureMono Nerd Font"
                             color: PanelColors.textAccent
                         }
 
@@ -1350,7 +1350,7 @@ PanelWindow {
                                     id: wifiPskInput
                                     anchors { fill: parent; leftMargin: 8; rightMargin: 8 }
                                     verticalAlignment: TextInput.AlignVCenter
-                                    font.pixelSize: 13; font.family: "MapleMono NF"
+                                    font.pixelSize: 13; font.family: "DepartureMono Nerd Font"
                                     color: PanelColors.textMain
                                     echoMode: TextInput.Password
                                     clip: true
@@ -1376,7 +1376,7 @@ PanelWindow {
                             Text {
                                 renderType: Text.NativeRendering
                                 text: "connect"
-                                font.pixelSize: 13; font.bold: true; font.family: "MapleMono NF"
+                                font.pixelSize: 13; font.bold: true; font.family: "DepartureMono Nerd Font"
                                 color: pskOk.containsMouse ? PanelColors.pillActive : PanelColors.textDim
                                 MouseArea {
                                     id: pskOk
@@ -1388,7 +1388,7 @@ PanelWindow {
                             Text {
                                 renderType: Text.NativeRendering
                                 text: "cancel"
-                                font.pixelSize: 13; font.bold: true; font.family: "MapleMono NF"
+                                font.pixelSize: 13; font.bold: true; font.family: "DepartureMono Nerd Font"
                                 color: pskCancel.containsMouse ? PanelColors.error : PanelColors.textDim
                                 MouseArea {
                                     id: pskCancel
@@ -1427,7 +1427,7 @@ PanelWindow {
                         anchors.left: parent.left
                         anchors.verticalCenter: parent.verticalCenter
                         text: "Bluetooth"
-                        font.pixelSize: 16; font.bold: true; font.family: "MapleMono NF"
+                        font.pixelSize: 16; font.bold: true; font.family: "DepartureMono Nerd Font"
                         color: PanelColors.textAccent
                     }
                     ToggleSwitch {
@@ -1452,7 +1452,7 @@ PanelWindow {
                             renderType: Text.NativeRendering
                             anchors { left: parent.left; leftMargin: 10; verticalCenter: parent.verticalCenter }
                             text: "Discoverable"
-                            font.pixelSize: 13; font.bold: true; font.family: "MapleMono NF"
+                            font.pixelSize: 13; font.bold: true; font.family: "DepartureMono Nerd Font"
                             color: PanelColors.textMain
                         }
                         ToggleSwitch {
@@ -1472,7 +1472,7 @@ PanelWindow {
                             renderType: Text.NativeRendering
                             anchors { left: parent.left; leftMargin: 10; verticalCenter: parent.verticalCenter }
                             text: "Scanning"
-                            font.pixelSize: 13; font.bold: true; font.family: "MapleMono NF"
+                            font.pixelSize: 13; font.bold: true; font.family: "DepartureMono Nerd Font"
                             color: PanelColors.textMain
                         }
                         ToggleSwitch {
@@ -1488,7 +1488,7 @@ PanelWindow {
                     width: parent.width
                     visible: !root.btPowered
                     text: "bluetooth is turned off"
-                    font.pixelSize: 13; font.family: "MapleMono NF"
+                    font.pixelSize: 13; font.family: "DepartureMono Nerd Font"
                     color: PanelColors.textDim
                     horizontalAlignment: Text.AlignHCenter
                     topPadding: 6
@@ -1499,7 +1499,7 @@ PanelWindow {
                     width: parent.width
                     visible: root.btPowered && root.btPairedList.length > 0
                     text: "paired devices"
-                    font.pixelSize: 12; font.bold: true; font.family: "MapleMono NF"
+                    font.pixelSize: 12; font.bold: true; font.family: "DepartureMono Nerd Font"
                     color: PanelColors.textDim
                     topPadding: 4
                 }
@@ -1537,7 +1537,7 @@ PanelWindow {
                                     Text {
                                         renderType: Text.NativeRendering
                                         text: root.btDeviceGlyph(pairedRow.modelData.icon)
-                                        font.pixelSize: 15; font.family: "MapleMono NF"
+                                        font.pixelSize: 15; font.family: "DepartureMono Nerd Font"
                                         color: pairedRow.modelData.connected ? PanelColors.pillActive : PanelColors.textDim
                                         anchors.verticalCenter: parent.verticalCenter
                                     }
@@ -1545,7 +1545,7 @@ PanelWindow {
                                         renderType: Text.NativeRendering
                                         width: pairedRow.width - 170
                                         text: pairedRow.modelData.name !== "" ? pairedRow.modelData.name : pairedRow.modelData.address
-                                        font.pixelSize: 14; font.family: "MapleMono NF"
+                                        font.pixelSize: 14; font.family: "DepartureMono Nerd Font"
                                         color: pairedRow.modelData.connected ? PanelColors.textAccent : PanelColors.textMain
                                         elide: Text.ElideRight
                                         anchors.verticalCenter: parent.verticalCenter
@@ -1561,7 +1561,7 @@ PanelWindow {
                                         visible: pairedRow.modelData.state === BluetoothDeviceState.Connecting
                                             || pairedRow.modelData.state === BluetoothDeviceState.Disconnecting
                                         text: "…"
-                                        font.pixelSize: 12; font.family: "MapleMono NF"
+                                        font.pixelSize: 12; font.family: "DepartureMono Nerd Font"
                                         color: PanelColors.textDim
                                         anchors.verticalCenter: parent.verticalCenter
                                     }
@@ -1570,7 +1570,7 @@ PanelWindow {
                                         visible: pairedRow.modelData.batteryAvailable
                                         property int battPct: root.btBatteryPct(pairedRow.modelData)
                                         text: battPct + "%"
-                                        font.pixelSize: 12; font.family: "MapleMono NF"
+                                        font.pixelSize: 12; font.family: "DepartureMono Nerd Font"
                                         color: battPct < 20 ? PanelColors.error : PanelColors.textDim
                                         anchors.verticalCenter: parent.verticalCenter
                                     }
@@ -1578,7 +1578,7 @@ PanelWindow {
                                         renderType: Text.NativeRendering
                                         visible: pairedRow.modelData.connected
                                         text: "connected"
-                                        font.pixelSize: 12; font.bold: true; font.family: "MapleMono NF"
+                                        font.pixelSize: 12; font.bold: true; font.family: "DepartureMono Nerd Font"
                                         color: PanelColors.pillActive
                                         anchors.verticalCenter: parent.verticalCenter
                                     }
@@ -1586,7 +1586,7 @@ PanelWindow {
                                         renderType: Text.NativeRendering
                                         visible: devMouse.containsMouse
                                         text: pairedRow.modelData.connected ? "disconnect" : "connect"
-                                        font.pixelSize: 12; font.bold: true; font.family: "MapleMono NF"
+                                        font.pixelSize: 12; font.bold: true; font.family: "DepartureMono Nerd Font"
                                         color: PanelColors.textAccent
                                         anchors.verticalCenter: parent.verticalCenter
                                     }
@@ -1594,7 +1594,7 @@ PanelWindow {
                                         renderType: Text.NativeRendering
                                         visible: devMouse.containsMouse
                                         text: "remove"
-                                        font.pixelSize: 12; font.bold: true; font.family: "MapleMono NF"
+                                        font.pixelSize: 12; font.bold: true; font.family: "DepartureMono Nerd Font"
                                         color: removeMouse.containsMouse ? PanelColors.error : PanelColors.textDim
                                         MouseArea {
                                             id: removeMouse
@@ -1622,7 +1622,7 @@ PanelWindow {
                     width: parent.width
                     visible: root.btPowered && root.btNearbyList.length > 0
                     text: "nearby devices"
-                    font.pixelSize: 12; font.bold: true; font.family: "MapleMono NF"
+                    font.pixelSize: 12; font.bold: true; font.family: "DepartureMono Nerd Font"
                     color: PanelColors.textDim
                     topPadding: 4
                 }
@@ -1660,7 +1660,7 @@ PanelWindow {
                                     Text {
                                         renderType: Text.NativeRendering
                                         text: root.btDeviceGlyph(nearbyRow.modelData.icon)
-                                        font.pixelSize: 15; font.family: "MapleMono NF"
+                                        font.pixelSize: 15; font.family: "DepartureMono Nerd Font"
                                         color: PanelColors.textDim
                                         anchors.verticalCenter: parent.verticalCenter
                                     }
@@ -1668,7 +1668,7 @@ PanelWindow {
                                         renderType: Text.NativeRendering
                                         width: nearbyRow.width - 140
                                         text: nearbyRow.modelData.name !== "" ? nearbyRow.modelData.name : nearbyRow.modelData.address
-                                        font.pixelSize: 14; font.family: "MapleMono NF"
+                                        font.pixelSize: 14; font.family: "DepartureMono Nerd Font"
                                         color: PanelColors.textMain
                                         elide: Text.ElideRight
                                         anchors.verticalCenter: parent.verticalCenter
@@ -1680,7 +1680,7 @@ PanelWindow {
                                     anchors { right: parent.right; rightMargin: 10; verticalCenter: parent.verticalCenter }
                                     visible: nearbyRow.modelData.pairing
                                     text: "pairing…"
-                                    font.pixelSize: 12; font.family: "MapleMono NF"
+                                    font.pixelSize: 12; font.family: "DepartureMono Nerd Font"
                                     color: PanelColors.textDim
                                 }
                                 Text {
@@ -1688,7 +1688,7 @@ PanelWindow {
                                     anchors { right: parent.right; rightMargin: 10; verticalCenter: parent.verticalCenter }
                                     visible: !nearbyRow.modelData.pairing && nearMouse.containsMouse
                                     text: "pair & connect"
-                                    font.pixelSize: 12; font.bold: true; font.family: "MapleMono NF"
+                                    font.pixelSize: 12; font.bold: true; font.family: "DepartureMono Nerd Font"
                                     color: PanelColors.textAccent
                                 }
 
@@ -1720,7 +1720,7 @@ PanelWindow {
                     width: parent.width
                     visible: root.btPowered && root.btNearbyList.length === 0
                     text: "searching for devices…"
-                    font.pixelSize: 13; font.family: "MapleMono NF"
+                    font.pixelSize: 13; font.family: "DepartureMono Nerd Font"
                     color: PanelColors.textDim
                     horizontalAlignment: Text.AlignHCenter
                 }
@@ -1772,14 +1772,14 @@ PanelWindow {
                         anchors.left: parent.left
                         anchors.verticalCenter: parent.verticalCenter
                         text: "Clipboard"
-                        font.pixelSize: 16; font.bold: true; font.family: "MapleMono NF"
+                        font.pixelSize: 16; font.bold: true; font.family: "DepartureMono Nerd Font"
                         color: PanelColors.textAccent
                     }
                     Text {
                         renderType: Text.NativeRendering
                         anchors { right: parent.right; verticalCenter: parent.verticalCenter }
                         text: "left: copy   right: delete"
-                        font.pixelSize: 13; font.family: "MapleMono NF"
+                        font.pixelSize: 13; font.family: "DepartureMono Nerd Font"
                         color: PanelColors.textDim
                     }
                 }
@@ -1873,7 +1873,7 @@ PanelWindow {
                                         visible: !clipRow.modelData.isImage
                                         anchors { left: parent.left; leftMargin: 10; right: parent.right; rightMargin: 10; verticalCenter: parent.verticalCenter }
                                         text: clipRow.modelData.preview.replace(/\n/g, " ")
-                                        font.pixelSize: 16; font.family: "MapleMono NF"
+                                        font.pixelSize: 16; font.family: "DepartureMono Nerd Font"
                                         color: PanelColors.textMain
                                         elide: Text.ElideRight
                                     }
@@ -1895,7 +1895,7 @@ PanelWindow {
                                 width: clipCol.width
                                 visible: root.clipEntries.length === 0
                                 text: "clipboard history is empty"
-                                font.pixelSize: 16; font.family: "MapleMono NF"
+                                font.pixelSize: 16; font.family: "DepartureMono Nerd Font"
                                 color: PanelColors.textDim
                                 horizontalAlignment: Text.AlignHCenter
                                 topPadding: 12
@@ -1939,13 +1939,13 @@ PanelWindow {
                         Text {
                             renderType: Text.NativeRendering
                             text: "󰍉"
-                            font.pixelSize: 13; font.family: "MapleMono NF"
+                            font.pixelSize: 13; font.family: "DepartureMono Nerd Font"
                             color: PanelColors.textDim
                         }
                         TextInput {
                             id: wallSearch
                             width: parent.width - 23 - 8
-                            font.pixelSize: 13; font.family: "MapleMono NF"
+                            font.pixelSize: 13; font.family: "DepartureMono Nerd Font"
                             color: PanelColors.textMain
                             renderType: TextInput.NativeRendering
                             clip: true
@@ -1967,7 +1967,7 @@ PanelWindow {
                         visible: wallSearch.text === ""
                         anchors { left: parent.left; leftMargin: 37; verticalCenter: parent.verticalCenter }
                         text: "search..."
-                        font.pixelSize: 13; font.family: "MapleMono NF"
+                        font.pixelSize: 13; font.family: "DepartureMono Nerd Font"
                         color: PanelColors.textDim
                     }
                 }
@@ -2022,7 +2022,7 @@ PanelWindow {
                                         visible: modelData.isVideo
                                         anchors { right: parent.right; bottom: parent.bottom; margins: 4 }
                                         text: "VID"
-                                        font.pixelSize: 13; font.bold: true; font.family: "MapleMono NF"
+                                        font.pixelSize: 13; font.bold: true; font.family: "DepartureMono Nerd Font"
                                         color: PanelColors.scanning
                                     }
                                 }
@@ -2032,7 +2032,7 @@ PanelWindow {
                                     width: parent.width
                                     height: 18
                                     text: modelData.wallName
-                                    font.pixelSize: 12; font.bold: true; font.family: "MapleMono NF"
+                                    font.pixelSize: 12; font.bold: true; font.family: "DepartureMono Nerd Font"
                                     color: wallHover.containsMouse ? PanelColors.launcher : PanelColors.textMain
                                     Behavior on color { ColorAnimation { duration: 0 } }
                                     horizontalAlignment: Text.AlignHCenter
@@ -2099,7 +2099,7 @@ PanelWindow {
             renderType: Text.NativeRendering
             anchors.centerIn: parent
             text: hbtn.iconText
-            font.pixelSize: 16; font.family: "MapleMono NF"
+            font.pixelSize: 16; font.family: "DepartureMono Nerd Font"
             color: hmouse.containsMouse || hbtn.isActive ? PanelColors.textAccent : PanelColors.textMain
             Behavior on color { ColorAnimation { duration: 0 } }
         }
@@ -2137,7 +2137,7 @@ PanelWindow {
             Text {
                 renderType: Text.NativeRendering
                 text: pill.iconText
-                font.pixelSize: 16; font.family: "MapleMono NF"
+                font.pixelSize: 16; font.family: "DepartureMono Nerd Font"
                 color: pill.checked || pill.isActive ? PanelColors.pillForeground
                     : pillMouse.containsMouse ? PanelColors.textAccent : PanelColors.textMain
                 anchors.verticalCenter: parent.verticalCenter
@@ -2146,7 +2146,7 @@ PanelWindow {
             Text {
                 renderType: Text.NativeRendering
                 text: pill.labelText
-                font.pixelSize: 16; font.bold: true; font.family: "MapleMono NF"
+                font.pixelSize: 16; font.bold: true; font.family: "DepartureMono Nerd Font"
                 width: Math.max(0, pill.width - 38)
                 elide: Text.ElideRight
                 color: pill.checked || pill.isActive ? PanelColors.pillForeground
@@ -2187,14 +2187,14 @@ PanelWindow {
             Text {
                 renderType: Text.NativeRendering
                 text: actRow.iconText
-                font.pixelSize: 16; font.family: "MapleMono NF"
+                font.pixelSize: 16; font.family: "DepartureMono Nerd Font"
                 color: actRow.danger ? PanelColors.error : PanelColors.textMain
                 anchors.verticalCenter: parent.verticalCenter
             }
             Text {
                 renderType: Text.NativeRendering
                 text: actRow.labelText
-                font.pixelSize: 16; font.bold: true; font.family: "MapleMono NF"
+                font.pixelSize: 16; font.bold: true; font.family: "DepartureMono Nerd Font"
                 color: actRow.danger ? PanelColors.error : PanelColors.textMain
                 anchors.verticalCenter: parent.verticalCenter
             }

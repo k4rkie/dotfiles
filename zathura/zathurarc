@@ -10,4 +10,4 @@ set selection-clipboard clipboard
 set default-bg "#030303"
 set default-fg "#aaaaaa"
 
-set font "Maple Mono NF 12"
+set font "DepartureMono Nerd Font 12"

@@ -2,13 +2,12 @@
 configuration {
 	  modi:                       "drun,filebrowser";
     show-icons:                 true;
-    icon-theme:                 "matefaenzadark";
     display-drun:               "  Apps";
     display-filebrowser:        "  Files";
     drun-display-format:        "{name}";
 }
 *{
-    font : "MonasevkaCode Nerd Font 14";
+    font : "DepartureMono Nerd Font 14";
 }
 window {
     /* properties for window widget */

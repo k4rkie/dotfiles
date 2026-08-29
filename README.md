@@ -39,7 +39,7 @@
 | **gamma** | Wlsunset |
 | **browser** | Zen |
 | **gtk** | Base16 Bark theme, Papirus-Dark icons |
-| **font** | Monasevka Code|
+| **font** | DepartureMono Nerd Font|
 
 ## scripts
 

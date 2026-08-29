@@ -18,7 +18,7 @@ NAME="$2"
 COLOR="${3:-#ffffff}"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 ICONS_DIR="$HOME/.local/share/noti-icons"
-FONT_FILE="$(fc-match "JetBrainsMono Nerd Font:style=Regular" --format="%{file}")"
+FONT_FILE="$(fc-match "DepartureMono Nerd Font:style=Regular" --format="%{file}")"
 
 mkdir -p "$ICONS_DIR"
 

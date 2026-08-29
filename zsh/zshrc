@@ -47,8 +47,6 @@ source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # -------------------------------
 # 5. Prompt Configuration 
 # -------------------------------
-# PROMPT=" %~ %k❯ "
-# 1. Enable parameter expansion in the prompt
 setopt PROMPT_SUBST
 
 # 2. Load vcs_info
@@ -63,34 +61,20 @@ PROMPT='[%F{#7D718F}%~%f] ${vcs_info_msg_0_}%k-> '
 # -------------------------------
 # 6. Aliases
 # -------------------------------
-alias ls="eza -lh  --icons=always --git --hyperlink"
-alias la="eza -lha --icons=always --git --hyperlink"
+alias ls="eza -lha  --icons=always --git --hyperlink"
 
 alias vi="nvim"
-alias cl="clear"
 alias nf="nerdfetch"
-
-alias ..="cd .."
-alias mv="mv -i"
-
-alias please='sudo $(fc -ln -1)' 
 alias reload="source ~/.zshrc"
-
-alias nrs="sudo nixos-rebuild switch --flake ~/dotfiles/nixos-config#nixxer"
-
-alias ytd='yt-dlp --cookies-from-browser firefox --extractor-args "youtube:player_client=web_safari" -f "bestvideo[height<=1080]+bestaudio/best" --remux-video mp4 --embed-metadata -o "%(uploader)s - %(title)s.%(ext)s"'
 
 # -------------------------------
 #  PATH variables
 # -------------------------------
-export PATH="$HOME/.local/bin/scripts:$PATH"
-export PATH="$HOME/scripts:$PATH"
 export PATH="$HOME/.local/bin/:$PATH"
 export PATH="/usr/local/go/bin/:$PATH"
 
-export TERMINAL=kitty
+export TERMINAL=foot
 export EDITOR=nvim
-export VISUAL=nvim
 
 export PATH="$HOME/.cargo/bin:$PATH"
 
@@ -104,44 +88,38 @@ function y() {
 	rm -f -- "$tmp"
 }
 
-# Vi mode
-bindkey -v
-
+# lazy load nvm so terminal opens instantly
 export NVM_DIR="$HOME/.config/nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-
-# bun completions
-[ -s "/home/k4rkie/.bun/_bun" ] && source "/home/k4rkie/.bun/_bun"
+nvm() {
+  unset -f nvm node npm npx
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+  nvm "$@"
+}
+node() {
+  unset -f nvm node npm npx
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+  node "$@"
+}
+npm() {
+  unset -f nvm node npm npx
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+  npm "$@"
+}
+npx() {
+  unset -f nvm node npm npx
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+  npx "$@"
+}
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 export PATH=$PATH:$HOME/go/bin
 
-# Generated for envman. Do not edit.
-[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
-
 # opencode
 export PATH=/home/k4rkie/.opencode/bin:$PATH
 
-# pnpm
-export PNPM_HOME="/home/k4rkie/.local/share/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME/bin:"*) ;;
-  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
-esac
-# pnpm end
+# fzf bindings (fast load)
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-#nimble
-export PATH=/home/k4rkie/.nimble/bin:$PATH
-
-# Added by Antigravity CLI installer
-export PATH="/home/k4rkie/.local/bin:$PATH"
-
-# Fzf bindings
-eval "$(fzf --zsh)"
-
-# direnv
-eval "$(direnv hook zsh)"
+. "$HOME/.local/bin/env"
