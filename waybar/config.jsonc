@@ -65,7 +65,6 @@
     },
     "format": "{icon} {capacity}%",
     "format-icons": ["", "", "", "", ""],
-    "format-charging": "",
     "tooltip": true,
     "max-length": 25
   },

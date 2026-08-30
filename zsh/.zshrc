@@ -122,4 +122,8 @@ export PATH=/home/k4rkie/.opencode/bin:$PATH
 # fzf bindings (fast load)
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-. "$HOME/.local/bin/env"
+
+
+# Added by Antigravity CLI installer
+export PATH="/home/k4rkie/.local/bin:$PATH"
+\n# npm global prefix\nexport PATH="$HOME/.npm-global/bin:$PATH"

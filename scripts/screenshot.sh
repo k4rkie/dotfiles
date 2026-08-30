@@ -1,26 +1,36 @@
 #!/usr/bin/env bash
 
-# Background the actual capture so rofi (utils-menu) can close immediately.
-# The delay inside the function lets rofi's fade-out animation finish
-# before grim grabs the screen. Increase this if you still see a ghost.
-capture_screenshot() {
-    local tmp="/tmp/qs-screenshot.ppm"
+SCREENSHOTS_DIR="$HOME/Pictures/Screenshots"
+mkdir -p "$SCREENSHOTS_DIR"
 
-    if [[ "$1" == "region" ]]; then
-        # Capture the region first, then sleep slightly so slurp's selection UI
-        # completely clears from the screen before grim captures it.
-        region=$(slurp)
-        if [[ -n "$region" ]]; then
-            sleep 0.2
-            grim -t ppm -g "$region" "$tmp" && satty --filename "$tmp" &
-        fi
-    elif [[ "$1" == "window" ]]; then
-        sleep 0.3 # Small delay to let rofi close and focus return to underlying window
-        grim -t ppm -g "$(swaymsg -t get_tree | jq -r '.. | select(.focused? == true) | .rect | "\(.x),\(.y) \(.width)x\(.height)"')" "$tmp" && satty --filename "$tmp" &
-    else
-        sleep 0.3 # Small delay to let rofi fade out completely
-        grim -t ppm "$tmp" && satty --filename "$tmp" &
-    fi
-}
+timestamp="$(date +%Y%m%d_%H%M%S)"
+output="$SCREENSHOTS_DIR/screenshot_${timestamp}.png"
+tmp="/tmp/qs-screenshot.png"
 
-capture_screenshot "$1" >/dev/null 2>&1 &
+if [[ "$1" == "region" ]]; then
+    region="$(slurp)"
+
+    [[ -z "$region" ]] && exit 0
+
+    sleep 0.2
+    grim -g "$region" "$tmp"
+
+elif [[ "$1" == "window" ]]; then
+    sleep 0.3
+
+    geometry="$(swaymsg -t get_tree | jq -r \
+        '.. | select(.focused? == true) | .rect |
+        "\(.x),\(.y) \(.width)x\(.height)"')"
+
+    grim -g "$geometry" "$tmp"
+
+else
+    sleep 0.3
+    grim "$tmp"
+fi
+
+satty \
+    --filename "$tmp" \
+    --actions-on-enter "save-to-file" \
+    --early-exit "save" \
+    --output-filename "$output"
