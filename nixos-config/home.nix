@@ -99,7 +99,6 @@ in
     neovim
     zed-editor
     obsidian
-    vscode
     foot
 
     # --- Web & Communications ---
@@ -107,21 +106,16 @@ in
 
     # --- Media, Graphics & Audio ---
     gimp
-    blender
-    kdePackages.kdenlive
     audacity
     mpv
     imv
     zathura
     zathuraPkgs.zathura_pdf_poppler
     rmpc
-    zscroll
 
     # --- Terminal Utilities & Navigation ---
     tmux
     yazi
-    lazygit
-    lazydocker
     fd
     ripgrep
     zoxide
@@ -133,7 +127,6 @@ in
     tree
     delta
     jq
-    hellwal
     awww
     ffmpeg
     yt-dlp
@@ -163,8 +156,6 @@ in
     # --- Misc Tools ---
     tesseract
     satty
-    cava
-    impala
     cmatrix
     cbonsai
     quickshell

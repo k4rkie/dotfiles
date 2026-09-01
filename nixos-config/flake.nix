@@ -9,11 +9,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    zen-browser = {
-      url = "github:0xc000022070/zen-browser-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     mangowm = {
       url = "github:mangowm/mango";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -30,7 +25,6 @@
       self,
       nixpkgs,
       home-manager,
-      zen-browser,
       mangowm,
       toofan,
       ...
@@ -39,7 +33,7 @@
       nixosConfigurations.nixxer = nixpkgs.lib.nixosSystem {
 
         system = "x86_64-linux";
-        specialArgs = { inherit zen-browser; };
+        specialArgs = { };
 
         modules = [
           home-manager.nixosModules.home-manager

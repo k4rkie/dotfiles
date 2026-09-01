@@ -5,7 +5,6 @@
 {
   config,
   pkgs,
-  zen-browser,
   ...
 }:
 
@@ -67,8 +66,6 @@
     vim
     wget
     curl
-
-    zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.beta
 
     # --- Hardware & Core Integration ---
     brightnessctl
