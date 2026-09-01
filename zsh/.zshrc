@@ -57,21 +57,23 @@ precmd() { vcs_info }
 zstyle ':vcs_info:git:*' formats '(󰘬 %b) '
 
 # 4. Set the prompt (ensure you use single quotes here)
-PROMPT='[%F{#7D718F}%~%f] ${vcs_info_msg_0_}%k-> '
+PROMPT='[%F{#7D718F}%~%f] ${vcs_info_msg_0_}%k$ '
+
 # -------------------------------
 # 6. Aliases
 # -------------------------------
-alias ls="eza -lha  --icons=always --git --hyperlink"
+alias ls="eza -lha  --icons=always --git"
 
 alias vi="nvim"
-alias nf="nerdfetch"
 alias reload="source ~/.zshrc"
 
 # -------------------------------
 #  PATH variables
 # -------------------------------
 export PATH="$HOME/.local/bin/:$PATH"
+
 export PATH="/usr/local/go/bin/:$PATH"
+export PATH=$PATH:$HOME/go/bin
 
 export TERMINAL=foot
 export EDITOR=nvim
@@ -114,7 +116,7 @@ npx() {
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
-export PATH=$PATH:$HOME/go/bin
+
 
 # opencode
 export PATH=/home/k4rkie/.opencode/bin:$PATH
@@ -122,8 +124,8 @@ export PATH=/home/k4rkie/.opencode/bin:$PATH
 # fzf bindings (fast load)
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-
-
 # Added by Antigravity CLI installer
 export PATH="/home/k4rkie/.local/bin:$PATH"
-\n# npm global prefix\nexport PATH="$HOME/.npm-global/bin:$PATH"
+
+# npm global prefix
+export PATH="$HOME/.npm-global/bin:$PATH"

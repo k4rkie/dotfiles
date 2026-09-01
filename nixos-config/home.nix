@@ -43,10 +43,6 @@ in
 
   programs.home-manager.enable = true;
 
-  # Disable Stylix targets that you manage manually stylix.targets.hyprland.enable = false;
-  stylix.targets.waybar.enable = false;
-  stylix.targets.neovim.enable = false;
-
   programs.git = {
     enable = true;
     settings = {

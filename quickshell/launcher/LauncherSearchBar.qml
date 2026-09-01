@@ -66,7 +66,7 @@ Rectangle {
                 text:             root.pillText
                 font.pixelSize:   16
                 font.bold:        true
-font.family: "DepartureMono Nerd Font"
+font.family: FontConfig.fontFamily
                 color:            PanelColors.launcher
             }
         }
@@ -93,7 +93,7 @@ font.family: "DepartureMono Nerd Font"
                 text:             root.rightPillText
                 font.pixelSize:   13
                 font.bold:        true
-font.family: "DepartureMono Nerd Font"
+font.family: FontConfig.fontFamily
                 color: root.rightPillDisabled
                            ? PanelColors.textDim
                            : root.rightPillDestructive
@@ -130,7 +130,7 @@ font.family: "DepartureMono Nerd Font"
             text:              root.placeholder
             font.pixelSize:    16
             font.bold:         true
-font.family: "DepartureMono Nerd Font"
+font.family: FontConfig.fontFamily
             color:             PanelColors.textBoxDim
             verticalAlignment: Text.AlignVCenter
             visible:           input.text === ""
@@ -151,7 +151,7 @@ font.family: "DepartureMono Nerd Font"
             color:             PanelColors.textMain
             font.pixelSize:    16
             font.bold:         true
-font.family: "DepartureMono Nerd Font"
+font.family: FontConfig.fontFamily
             selectByMouse:     true
             clip:              true
             verticalAlignment: TextInput.AlignVCenter

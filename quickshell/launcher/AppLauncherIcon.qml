@@ -256,7 +256,7 @@ Item {
             text:                root.appName
             font.pixelSize:      14
             font.bold:           true
-font.family: "DepartureMono Nerd Font"
+font.family: FontConfig.fontFamily
             color:               PanelColors.textMain
             width:               parent.width
             horizontalAlignment: Text.AlignHCenter
@@ -287,7 +287,7 @@ font.family: "DepartureMono Nerd Font"
             text:                root.appName
             font.pixelSize:      16
             font.bold:           true
-font.family: "DepartureMono Nerd Font"
+font.family: FontConfig.fontFamily
             color:               PanelColors.textMain
             width:               parent.width - iconImgList.width - 12
             horizontalAlignment: Text.AlignLeft
@@ -406,7 +406,7 @@ font.family: "DepartureMono Nerd Font"
                     text:           root.appName
                     font.pixelSize: 12
                     font.bold:      true
-font.family: "DepartureMono Nerd Font"
+font.family: FontConfig.fontFamily
                     color:          PanelColors.textDim
                     bottomPadding:  4
                     elide:          Text.ElideRight
@@ -457,7 +457,7 @@ font.family: "DepartureMono Nerd Font"
                                 text:           modelData.label
                                 font.pixelSize: 13
                                 font.bold:      true
-            font.family: "DepartureMono Nerd Font"
+            font.family: FontConfig.fontFamily
                                 color:          PanelColors.textMain
                                 elide:          Text.ElideRight
                             }

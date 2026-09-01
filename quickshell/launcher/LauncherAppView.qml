@@ -156,14 +156,14 @@ Item {
                 renderType: Text.NativeRendering
                     width: parent.width; text: "Hidden Apps"
                     font.pixelSize: 13; font.bold: true
-                    font.family: "DepartureMono Nerd Font"
+                    font.family: FontConfig.fontFamily
                     color: PanelColors.textDim; bottomPadding: 4
                 }
                 Rectangle { width: parent.width; height: 2; color: PanelColors.border }
                 Text {
                 renderType: Text.NativeRendering
                     width: parent.width; text: "No hidden apps"
-                    font.pixelSize: 13; font.family: "DepartureMono Nerd Font"
+                    font.pixelSize: 13; font.family: FontConfig.fontFamily
                     color: PanelColors.textDim
                     visible: LauncherHiddenApps.hiddenApps.length === 0
                     topPadding: 4; bottomPadding: 4
@@ -187,7 +187,7 @@ Item {
                             renderType: Text.NativeRendering
                                 anchors { left: parent.left; leftMargin: 14; right: parent.right; rightMargin: 10; verticalCenter: parent.verticalCenter }
                                 text: modelData.name; font.pixelSize: 13; font.bold: true
-                                font.family: "DepartureMono Nerd Font"
+                                font.family: FontConfig.fontFamily
                                 color: PanelColors.textMain; elide: Text.ElideRight
                             }
                             MouseArea {
@@ -254,7 +254,7 @@ Item {
                     anchors.horizontalCenter: parent.horizontalCenter
                     text: "Run: " + root.searchText
                     font.pixelSize: 14; font.bold: true
-                    font.family: "DepartureMono Nerd Font"
+                    font.family: FontConfig.fontFamily
                     color: PanelColors.textMain; width: 120
                     horizontalAlignment: Text.AlignHCenter; elide: Text.ElideRight
                 }
@@ -330,7 +330,7 @@ Item {
                         anchors.verticalCenter: parent.verticalCenter
                         text:  listDelegate.entry ? listDelegate.entry.name : ""
                         font.pixelSize: 17
-font.family: "DepartureMono Nerd Font"
+font.family: FontConfig.fontFamily
                         color: listDelegate.isSelected ? PanelColors.pillForeground : PanelColors.textMain
                         Behavior on color { ColorAnimation { duration: 0 } }
                         width: appListView.width - 14 - 22 - 12 - 12 - 8
@@ -464,7 +464,7 @@ font.family: "DepartureMono Nerd Font"
                             text:           listDelegate.entry ? listDelegate.entry.name : ""
                             font.pixelSize: 12
                             font.bold: true
-    font.family: "DepartureMono Nerd Font"
+    font.family: FontConfig.fontFamily
                             color:          PanelColors.textDim
                             bottomPadding:  4
                             elide:          Text.ElideRight
@@ -504,7 +504,7 @@ font.family: "DepartureMono Nerd Font"
                                         }
                                         text:           modelData.label
                                         font.pixelSize: 13; font.bold: true
-                font.family: "DepartureMono Nerd Font"
+                font.family: FontConfig.fontFamily
                                         color:          PanelColors.textMain
                                         elide:          Text.ElideRight
                                     }
@@ -564,7 +564,7 @@ font.family: "DepartureMono Nerd Font"
                         anchors.verticalCenter: parent.verticalCenter
                         text: "Run: " + root.searchText
                         font.pixelSize: 16; font.bold: true
-                        font.family: "DepartureMono Nerd Font"
+                        font.family: FontConfig.fontFamily
                         color: PanelColors.textMain
                         width: appListView.width - 14 - 22 - 12 - 12 - 8
                         elide: Text.ElideRight

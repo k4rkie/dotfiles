@@ -6,8 +6,8 @@
   "margin-left": 200,
   "height": 18,
   "modules-left": [
-    "custom/media-animation",
-    "ext/workspaces"
+    "ext/workspaces",
+    "mango/window"
   ],
   "modules-center": [],
   "modules-right": [
@@ -72,6 +72,7 @@
     "exec": "~/.config/waybar/custom_modules/media/media-animation.sh",
     "tooltip": false,
     "escape": false,
+    "size": 8
   },
   "tray": {
     "icon-size": 14,
@@ -86,5 +87,13 @@
     "path": "/home/k4rkie/.config/waybar/assets/images/globe.png",
     "size": 30,
     "interval": 5,
+  },
+  "mango/window": {
+    "format": "{app_id}",
+    "icon": true,
+    "icon-size": 18,
+    "rewrite": {
+      ".*firefox*": "firefox"
+    }
   }
 }

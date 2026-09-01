@@ -184,7 +184,7 @@ Item {
         anchors.centerIn: parent
         text:             "No emoji found"
         font.pixelSize:   14; font.bold: true
-font.family: "DepartureMono Nerd Font"
+font.family: FontConfig.fontFamily
         color:            PanelColors.textDim
         visible:          root.filteredEmoji.length === 0 && root._query !== ""
     }

@@ -8,6 +8,7 @@ waybar &
 pkill -f mpd-notify.sh
 ~/scripts/mpd-notify.sh &
 
-pkill swayosd-server && swayosd-server &
+pkill swayosd-server 
+swayosd-server &
 
 notify-send "Config" "Config reloaded" 

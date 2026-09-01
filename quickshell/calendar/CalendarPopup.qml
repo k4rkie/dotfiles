@@ -224,7 +224,7 @@ PanelWindow {
                     renderType: Text.NativeRendering
                         anchors.centerIn: parent
                         text: "󰁍"
-                        font.pixelSize: 16; font.family: "DepartureMono Nerd Font"
+                        font.pixelSize: 16; font.family: FontConfig.fontFamily
                         color: prevArea.containsMouse ? PanelColors.textAccent : PanelColors.textDim
                         Behavior on color { ColorAnimation { duration: 0 } }
                     }
@@ -238,7 +238,7 @@ PanelWindow {
                 renderType: Text.NativeRendering
                     anchors.centerIn: parent
                     text: root._monthName(root._viewMonth) + " " + root._viewYear
-                    font.pixelSize: 16; font.bold: true; font.family: "DepartureMono Nerd Font"
+                    font.pixelSize: 16; font.bold: true; font.family: FontConfig.fontFamily
                     color: PanelColors.textAccent
                 }
 
@@ -255,7 +255,7 @@ PanelWindow {
                     renderType: Text.NativeRendering
                         anchors.centerIn: parent
                         text: "󰁔"
-                        font.pixelSize: 16; font.family: "DepartureMono Nerd Font"
+                        font.pixelSize: 16; font.family: FontConfig.fontFamily
                         color: nextArea.containsMouse ? PanelColors.textAccent : PanelColors.textDim
                         Behavior on color { ColorAnimation { duration: 0 } }
                     }
@@ -274,7 +274,7 @@ PanelWindow {
                         width: contentCol.width / 7
                         horizontalAlignment: Text.AlignHCenter
                         text: modelData
-                        font.pixelSize: 16; font.bold: true; font.family: "DepartureMono Nerd Font"
+                        font.pixelSize: 16; font.bold: true; font.family: FontConfig.fontFamily
                         color: index >= 5 ? PanelColors.date : PanelColors.textDim
                     }
                 }
@@ -360,7 +360,7 @@ PanelWindow {
                                         renderType: Text.NativeRendering
                                             anchors.centerIn: parent
                                             text: isEmpty ? "" : dayNum
-                                            font.pixelSize: 16; font.bold: isToday || isSelected; font.family: "DepartureMono Nerd Font"
+                                            font.pixelSize: 16; font.bold: isToday || isSelected; font.family: FontConfig.fontFamily
                                             color: isToday ? PanelColors.pillForeground : (isSelected ? PanelColors.textAccent : PanelColors.textMain)
                                             Behavior on color { ColorAnimation { duration: 0 } }
                                         }

@@ -234,7 +234,7 @@ Item {
                 text:                "Clear clipboard history?"
                 font.pixelSize:      16
                 font.bold:           true
-font.family: "DepartureMono Nerd Font"
+font.family: FontConfig.fontFamily
                 color:               PanelColors.textMain
                 horizontalAlignment: Text.AlignHCenter
                 wrapMode:            Text.WordWrap
@@ -245,7 +245,7 @@ font.family: "DepartureMono Nerd Font"
                 width:               parent.width
                 text:                "This will permanently delete all clipboard entries."
                 font.pixelSize:      16
-font.family: "DepartureMono Nerd Font"
+font.family: FontConfig.fontFamily
                 color:               PanelColors.textDim
                 horizontalAlignment: Text.AlignHCenter
                 wrapMode:            Text.WordWrap
@@ -271,7 +271,7 @@ font.family: "DepartureMono Nerd Font"
                         text:             "Cancel"
                         font.pixelSize:   13
                         font.bold:        true
-                        font.family:      "DepartureMono Nerd Font"
+                        font.family: FontConfig.fontFamily
                         color:            PanelColors.textMain
                     }
 
@@ -300,7 +300,7 @@ font.family: "DepartureMono Nerd Font"
                         text:             "Delete All"
                         font.pixelSize:   13
                         font.bold:        true
-                        font.family:      "DepartureMono Nerd Font"
+                        font.family: FontConfig.fontFamily
                         color:            deleteAllMouse.containsMouse
                                               ? PanelColors.pillForeground
                                               : PanelColors.error
@@ -470,7 +470,7 @@ font.family: "DepartureMono Nerd Font"
                             verticalCenter: parent.verticalCenter
                         }
                         text:           modelData.content
-                        font.pixelSize: 16; font.family: "DepartureMono Nerd Font"
+                        font.pixelSize: 16; font.family: FontConfig.fontFamily
                         color:          PanelColors.textMain
                         maximumLineCount: 2
                         wrapMode:         Text.WordWrap
@@ -502,7 +502,7 @@ font.family: "DepartureMono Nerd Font"
                             text:             ""
                             font.pixelSize:   12
                             font.bold:        true
-                            font.family:      "DepartureMono Nerd Font"
+                            font.family: FontConfig.fontFamily
                             color:            deleteBtnMouse.containsMouse ? PanelColors.pillForeground : PanelColors.textDim
                             Behavior on color { ColorAnimation { duration: 0 } }
                         }
@@ -552,7 +552,7 @@ font.family: "DepartureMono Nerd Font"
         anchors.centerIn: parent
         text:             "󰺝 clipboard is empty.."
         font.pixelSize:   14; font.bold: true
-font.family: "DepartureMono Nerd Font"
+font.family: FontConfig.fontFamily
         color:            PanelColors.textDim
         visible:          root.filteredClipboard.length === 0 && !clipboardProc.running
     }

@@ -355,7 +355,7 @@ Item {
                                 id:               badgeLabel
                                 anchors.centerIn: parent
                                 text:             modelData.mediaType === "gif" ? "󰵸 GIF" : " VID"
-font.family: "DepartureMono Nerd Font"
+font.family: FontConfig.fontFamily
                                 font.pixelSize:   11
                                 font.bold:        true
                                 color:            modelData.mediaType === "gif" ? PanelColors.network : PanelColors.scanning
@@ -371,7 +371,7 @@ font.family: "DepartureMono Nerd Font"
                         text:                modelData.wallName
                         font.pixelSize:      13
                         font.bold:           true
-font.family: "DepartureMono Nerd Font"
+font.family: FontConfig.fontFamily
                         color:               isSelected ? PanelColors.launcher : PanelColors.textMain
                         Behavior on color    { ColorAnimation { duration: 0 } }
                         horizontalAlignment: Text.AlignHCenter

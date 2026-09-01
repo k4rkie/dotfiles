@@ -9,11 +9,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    stylix = {
-      url = "github:nix-community/stylix/release-26.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -35,7 +30,6 @@
       self,
       nixpkgs,
       home-manager,
-      stylix,
       zen-browser,
       mangowm,
       toofan,
@@ -48,7 +42,6 @@
         specialArgs = { inherit zen-browser; };
 
         modules = [
-          stylix.nixosModules.stylix
           home-manager.nixosModules.home-manager
           mangowm.nixosModules.mango
           ./hardware-configuration.nix

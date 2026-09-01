@@ -3,6 +3,7 @@
 // Each view imports this as a namespace via an instance, or reads
 // the readonly properties directly since they are literal constants.
 import QtQuick
+import "../theme"
 
 Item {
     // ── Signals every view exposes upward ────────────────────────────────
@@ -15,5 +16,5 @@ Item {
     readonly property int  fontSizeRow:  16
     readonly property int  fontSizeSmall: 13
     readonly property int  iconSize:     24
-    readonly property string monoFont:  "DepartureMono Nerd Font"
+    readonly property string monoFont:  FontConfig.fontFamily
 }

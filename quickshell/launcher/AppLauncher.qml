@@ -558,7 +558,7 @@ PanelWindow {
                     text:             "No hidden apps"
                     font.pixelSize:   14
                     font.bold:        true
-font.family: "DepartureMono Nerd Font"
+font.family: FontConfig.fontFamily
                     color:            PanelColors.textDim
                     visible:          LauncherHiddenApps.hiddenApps.length === 0
                 }
@@ -603,7 +603,7 @@ font.family: "DepartureMono Nerd Font"
                                         anchors.horizontalCenter: parent.horizontalCenter
                                         text: modelData.name
                                         font.pixelSize: 14; font.bold: true
-                                        font.family: "DepartureMono Nerd Font"
+                                        font.family: FontConfig.fontFamily
                                         color: PanelColors.textMain
                                         width: parent.width
                                         horizontalAlignment: Text.AlignHCenter
@@ -657,7 +657,7 @@ font.family: "DepartureMono Nerd Font"
                                         anchors.verticalCenter: parent.verticalCenter
                                         text: modelData.name
                                         font.pixelSize: 16; font.bold: true
-                                        font.family: "DepartureMono Nerd Font"
+                                        font.family: FontConfig.fontFamily
                                         color: PanelColors.textMain
                                         width: hiddenAppsView.width - 14 - 22 - 12 - 12 - 8
                                         elide: Text.ElideRight

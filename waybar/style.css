@@ -46,14 +46,16 @@ tooltip {
 #custom-media-animation,
 #custom-control-center,
 #tray,
+#window,
 #custom-notifications {
-  padding: 0px 6px;
+  padding: 0px 8px;
   border-radius: 4px;
   background-color: #070707;
 }
 
 #memory,
 #battery,
+#window,
 #custom-control-center,
 #tray {
   background: linear-gradient(to bottom, #121212 0%, #070707 100%);
@@ -123,7 +125,7 @@ tooltip {
 }
 
 #memory {
-  color: #a9b665; 
+  color: #a9b665;
 }
 
 #battery,
@@ -136,7 +138,7 @@ tooltip {
 }
 
 #battery.critical:not(.charging) {
-  color: #ea6962; 
+  color: #ea6962;
 }
 
 #custom-control-center {
@@ -153,8 +155,8 @@ tooltip {
   padding: 6px;
 }
 
-#custom-separator{
-  opacity:0.4;
+#custom-separator {
+  opacity: 0.4;
   margin: 0px 2px;
 }
 
@@ -230,4 +232,3 @@ window#waybar,
     inset 2px 2px 0 rgba(0, 0, 0, 0.85),
     inset -1px -1px 0 rgba(255, 255, 255, 0.2);
 }
-
