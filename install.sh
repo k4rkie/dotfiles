@@ -73,6 +73,7 @@ declare -A CONFIG_SYMLINKS=(
     [swaync]=swaync
     [swayosd]=swayosd
     [tmux]=tmux
+    [wallust]=wallust
     [waybar]=waybar
     [yazi]=yazi
     [zathura]=zathura

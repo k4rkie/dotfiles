@@ -32,5 +32,5 @@ fi
 satty \
     --filename "$tmp" \
     --actions-on-enter "save-to-file" \
-    --early-exit "save" \
+    --early-exit \
     --output-filename "$output"

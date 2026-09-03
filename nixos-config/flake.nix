@@ -18,6 +18,11 @@
       url = "github:vyrx-dev/toofan";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    waybar = {
+      url = "github:Alexays/Waybar/6d60c8e02be67bb85bb9b1ea803f2fbcf0722002";
+      flake = false;
+    };
   };
 
   outputs =
@@ -28,12 +33,12 @@
       mangowm,
       toofan,
       ...
-    }:
+    }@inputs:
     {
-      nixosConfigurations.nixxer = nixpkgs.lib.nixosSystem {
+      nixosConfigurations.mentat = nixpkgs.lib.nixosSystem {
 
         system = "x86_64-linux";
-        specialArgs = { };
+        specialArgs = { inherit inputs; };
 
         modules = [
           home-manager.nixosModules.home-manager

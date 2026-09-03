@@ -1,0 +1,5 @@
+backend = "wal"
+
+[templates]
+gtk3 = { src = "gtk.css", dst = "~/.config/gtk-3.0/gtk.css" }
+gtk4 = { src = "gtk.css", dst = "~/.config/gtk-4.0/gtk.css" }

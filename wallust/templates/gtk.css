@@ -1,0 +1,114 @@
+/* Colors */
+@define-color window_bg_color {{background}};
+@define-color window_fg_color {{foreground}};
+@define-color view_bg_color {{color0}};
+@define-color view_fg_color {{foreground}};
+@define-color headerbar_bg_color {{background}};
+@define-color headerbar_fg_color {{foreground}};
+@define-color card_bg_color {{color0}};
+@define-color card_fg_color {{foreground}};
+@define-color popover_bg_color {{color0}};
+@define-color popover_fg_color {{foreground}};
+@define-color dialog_bg_color {{background}};
+@define-color dialog_fg_color {{foreground}};
+@define-color sidebar_bg_color {{color0}};
+@define-color sidebar_fg_color {{foreground}};
+@define-color sidebar_shade_color alpha({{color8}}, 0.2);
+@define-color shade_color alpha({{color8}}, 0.2);
+
+/* Accent & Status */
+@define-color accent_color {{color4}};
+@define-color accent_bg_color {{color4}};
+@define-color accent_fg_color {{background}};
+@define-color destructive_bg_color {{color1}};
+@define-color destructive_fg_color {{foreground}};
+
+/* Borders */
+@define-color borders {{color8}};
+@define-color border_color {{color8}};
+@define-color headerbar_border_color @borders;
+@define-color card_border_color @borders;
+@define-color popover_border_color @borders;
+@define-color sidebar_border_color @borders;
+
+/* Enforce dark mode for portals via Adwaita overrides */
+@define-color theme_bg_color {{background}};
+@define-color theme_fg_color {{foreground}};
+@define-color theme_base_bg_color {{color0}};
+@define-color theme_base_fg_color {{foreground}};
+
+/* GTK 3 Native Surfaces */
+window, .background {
+    background-color: @window_bg_color;
+    color: @window_fg_color;
+}
+
+headerbar, .titlebar {
+    background-color: @headerbar_bg_color;
+    color: @headerbar_fg_color;
+    border-color: @borders;
+}
+
+view, textview text, treeview {
+    background-color: @view_bg_color;
+    color: @view_fg_color;
+}
+
+entry {
+    background-color: @view_bg_color;
+    color: @view_fg_color;
+    border-color: @borders;
+}
+
+button {
+    background-color: @card_bg_color;
+    color: @window_fg_color;
+    border-color: @borders;
+}
+
+button:checked, button:active {
+    background-color: @accent_bg_color;
+    color: @accent_fg_color;
+}
+
+/* Sidebar styling */
+.sidebar, .sidebar .view, .sidebar treeview, sidebar, sidebar view, sidebar treeview {
+    background-color: @sidebar_bg_color;
+    color: @sidebar_fg_color;
+}
+
+.sidebar headerbar, .sidebar .titlebar, sidebar headerbar, sidebar .titlebar {
+    background-color: @sidebar_bg_color;
+    color: @sidebar_fg_color;
+}
+
+.sidebar separator, sidebar separator {
+    background-color: @sidebar_border_color;
+    color: @sidebar_fg_color;
+}
+
+.sidebar row:selected, sidebar row:selected {
+    background-color: @accent_bg_color;
+    color: @accent_fg_color;
+}
+
+.sidebar row:hover, sidebar row:hover {
+    background-color: alpha(@accent_bg_color, 0.3);
+}
+
+/* Desktop portal / xdg-desktop-portal-gtk */
+.portal-widget, .xdg-desktop-portal-gtk, .gtk-password-dialog, .gtk-file-chooser, .gtk-app-chooser {
+    background-color: @window_bg_color;
+    color: @window_fg_color;
+}
+
+/* Sidebar in portals */
+.portal-widget .sidebar, .xdg-desktop-portal-gtk .sidebar {
+    background-color: @sidebar_bg_color;
+    color: @sidebar_fg_color;
+}
+
+/* Square theme */
+* {
+    border-radius: 0px;
+}

@@ -1,7 +1,6 @@
 # -------------------------------
 # 🔧 Zsh Configuration -k4rkie
 # -------------------------------
-# ~/scripts/pfetch
 # 1. Enable color support for prompt
 autoload -U colors && colors
 # -------------------------------
@@ -9,11 +8,9 @@ autoload -U colors && colors
 # -------------------------------
 # File to store command history
 HISTFILE=$HOME/.zsh/history/.zsh_history
-
 # Number of commands to save in memory and to file
 HISTSIZE=100000
 SAVEHIST=100000
-
 # History options for smart saving and sharing across terminals
 setopt APPEND_HISTORY             # Append new commands to the history file
 setopt SHARE_HISTORY              # Share history across all open shells
@@ -22,14 +19,12 @@ setopt HIST_IGNORE_DUPS           # Ignore duplicate entries
 setopt HIST_IGNORE_ALL_DUPS       # Remove older duplicates as well
 setopt HIST_REDUCE_BLANKS         # Remove extra blanks from history
 setopt HIST_VERIFY                # Allow editing of history lines before execution
-
 # -------------------------------
 # 3. Auto-Correction (typo fixes)
 # -------------------------------
 # Enables correction for minor command typos
 ENABLE_CORRECTION="true"
 setopt CORRECT
-
 # -------------------------------
 # 4. Plugin Setup (manual)
 # -------------------------------
@@ -57,12 +52,13 @@ precmd() { vcs_info }
 zstyle ':vcs_info:git:*' formats '(󰘬 %b) '
 
 # 4. Set the prompt (ensure you use single quotes here)
-PROMPT='[%F{#7D718F}%~%f] ${vcs_info_msg_0_}%k$ '
+PROMPT='[%F{#a1955f}%~%f] ${vcs_info_msg_0_}%k$ '
 
 # -------------------------------
 # 6. Aliases
 # -------------------------------
-alias ls="eza -lha  --icons=always --git"
+alias ls="eza -lh  --icons=always --git"
+alias la="eza -lha  --icons=always --git"
 
 alias vi="nvim"
 alias reload="source ~/.zshrc"
@@ -71,6 +67,7 @@ alias reload="source ~/.zshrc"
 #  PATH variables
 # -------------------------------
 export PATH="$HOME/.local/bin/:$PATH"
+export PATH="$HOME/scripts/:$PATH"
 
 export PATH="/usr/local/go/bin/:$PATH"
 export PATH=$PATH:$HOME/go/bin
@@ -117,15 +114,11 @@ npx() {
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-
 # opencode
 export PATH=/home/k4rkie/.opencode/bin:$PATH
-
-# fzf bindings (fast load)
+#fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 # Added by Antigravity CLI installer
 export PATH="/home/k4rkie/.local/bin:$PATH"
-
 # npm global prefix
 export PATH="$HOME/.npm-global/bin:$PATH"

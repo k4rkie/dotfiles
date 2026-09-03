@@ -140,7 +140,8 @@
         "home-manager": "home-manager",
         "mangowm": "mangowm",
         "nixpkgs": "nixpkgs",
-        "toofan": "toofan"
+        "toofan": "toofan",
+        "waybar": "waybar"
       }
     },
     "scenefx": {
@@ -199,6 +200,23 @@
       "original": {
         "owner": "vyrx-dev",
         "repo": "toofan",
+        "type": "github"
+      }
+    },
+    "waybar": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1787863049,
+        "narHash": "sha256-G6AcGuevhkYflQHhJq9GnLhEMgcI51Y6MYKBQvdRPDc=",
+        "owner": "Alexays",
+        "repo": "Waybar",
+        "rev": "6d60c8e02be67bb85bb9b1ea803f2fbcf0722002",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Alexays",
+        "repo": "Waybar",
+        "rev": "6d60c8e02be67bb85bb9b1ea803f2fbcf0722002",
         "type": "github"
       }
     }

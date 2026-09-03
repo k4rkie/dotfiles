@@ -4,5 +4,5 @@ import Quickshell
 
 Singleton {
     id: root
-    readonly property string fontFamily: "DepartureMono Nerd Font"
+    readonly property string fontFamily: "Mononoki Nerd Font"
 }

@@ -16,7 +16,7 @@ PanelWindow {
     anchors { top: true; right: true }
     margins { top: 8; right: 8 }
 
-    implicitWidth: 340
+    implicitWidth: 360
     implicitHeight: toastList.contentHeight
     visible: NotifState.toasts.count > 0
 
@@ -47,18 +47,18 @@ PanelWindow {
             }
 
             width: toastList.width
-            height: 52; radius: 0
+            height: contentRow.implicitHeight + 24; radius: 0
             color: PanelColors.popupBackground
             border.color: "#090909"
             border.width: 2
 
             Row {
-                anchors { left: parent.left; leftMargin: 10; right: parent.right; rightMargin: 10; verticalCenter: parent.verticalCenter }
-                spacing: 8
+                id: contentRow
+                anchors { left: parent.left; leftMargin: 12; right: parent.right; rightMargin: 12; top: parent.top; topMargin: 12 }
+                spacing: 12
 
                 Rectangle {
-                    width: 30; height: 30; radius: 0
-                    anchors.verticalCenter: parent.verticalCenter
+                    width: 42; height: 42; radius: 0
                     color: PanelColors.rowBackground
                     border.width: 1
                     border.color: PanelColors.border
@@ -76,31 +76,37 @@ PanelWindow {
                         anchors.centerIn: parent
                         visible: toastCard.iconSource === ""
                         text: toastCard.modelData.appName !== "" ? toastCard.modelData.appName.charAt(0).toUpperCase() : "?"
-                        font.pixelSize: 16; font.bold: true; font.family: FontConfig.fontFamily
+                        font.pixelSize: 18; font.bold: true; font.family: FontConfig.fontFamily
                         color: PanelColors.textAccent
                     }
                 }
 
                 Column {
-                    anchors.verticalCenter: parent.verticalCenter
-                    spacing: 2
-                    width: parent.width - 30 - parent.spacing
+                    spacing: 6
+                    width: parent.width - 42 - parent.spacing
 
                     Text {
                         renderType: Text.NativeRendering
                         width: parent.width
-                        text: toastCard.modelData.appName !== "" ? toastCard.modelData.appName : "notification"
-                        font.pixelSize: 12; font.bold: true; font.family: FontConfig.fontFamily
-                        color: PanelColors.textDim
+                        topPadding: 2
+                        text: toastCard.modelData.summary !== "" ? toastCard.modelData.summary : toastCard.modelData.appName
+                        font.pixelSize: 16; font.bold: true; font.family: FontConfig.fontFamily
+                        color: PanelColors.textMain
                         elide: Text.ElideRight
+                        wrapMode: Text.Wrap
+                        maximumLineCount: 2
                     }
                     Text {
                         renderType: Text.NativeRendering
                         width: parent.width
-                        text: toastCard.modelData.summary + (toastCard.modelData.body !== "" ? " — " + toastCard.modelData.body : "")
-                        font.pixelSize: 13; font.family: FontConfig.fontFamily
-                        color: PanelColors.textMain
+                        topPadding: 0
+                        visible: toastCard.modelData.body !== ""
+                        text: toastCard.modelData.body
+                        font.pixelSize: 12; font.family: FontConfig.fontFamily
+                        color: PanelColors.textDim
                         elide: Text.ElideRight
+                        wrapMode: Text.Wrap
+                        maximumLineCount: 3
                     }
                 }
             }

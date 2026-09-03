@@ -29,6 +29,7 @@ in
     "rofi".source = link "${dotfiles}/rofi";
     "swayosd".source = link "${dotfiles}/swayosd";
     "waybar".source = link "${dotfiles}/waybar";
+    "wallust".source = link "${dotfiles}/wallust";
     "yazi".source = link "${dotfiles}/yazi";
     "zathura".source = link "${dotfiles}/zathura";
     "zed".source = link "${dotfiles}/zed";
@@ -37,11 +38,13 @@ in
   # home directory symlinks
   home.file = {
     ".tmux.conf".source = link "${dotfiles}/tmux/tmux.conf";
-    ".zshrc".source = link "${dotfiles}/zsh/zshrc";
+    ".zshrc".source = link "${dotfiles}/zsh/.zshrc";
     "scripts".source = link "${dotfiles}/scripts";
   };
 
   programs.home-manager.enable = true;
+
+  xdg.userDirs.enable = true;
 
   programs.git = {
     enable = true;
@@ -94,6 +97,7 @@ in
     tree-sitter
     prettier
     uv
+    wallust
 
     # --- Editors & Notes ---
     neovim
@@ -162,5 +166,6 @@ in
     qalculate-gtk
     iwd
     sway-audio-idle-inhibit
+    (papirus-icon-theme.override { color = "white"; })
   ];
 }

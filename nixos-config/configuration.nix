@@ -5,6 +5,7 @@
 {
   config,
   pkgs,
+  inputs,
   ...
 }:
 
@@ -18,7 +19,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "nixxer"; # Define your hostname.
+  networking.hostName = "mentat"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -27,9 +28,6 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
-
-  networking.wireless.iwd.enable = true;
-  networking.networkmanager.wifi.backend = "iwd";
 
   # Set your time zone.
   time.timeZone = "Asia/Kathmandu";
@@ -87,14 +85,24 @@
     xdg-user-dirs
     xdg-utils
 
-    # --- Hyprland / Wayland Session Essentials ---
-    waybar
+    # --- Wayland Session Essentials ---
+    (pkgs.waybar.overrideAttrs (oldAttrs: {
+      src = inputs.waybar;
+      # Disable Cava via Meson build flag
+      mesonFlags = (oldAttrs.mesonFlags or [ ]) ++ [
+        "-Dcava=disabled"
+      ];
+      # Include ModemManager dependency added in newer master commits
+      buildInputs = (oldAttrs.buildInputs or [ ]) ++ [
+        pkgs.modemmanager
+      ];
+    }))
+
     rofi
     hyprlock
     hyprpicker
     wl-clipboard
     cliphist
-    swaynotificationcenter
     swayosd
     wlsunset
     grim
@@ -108,7 +116,6 @@
 
     # --- Audio Daemons Helpers ---
     mpd
-    mpc
   ];
 
   services.gvfs.enable = true;
@@ -160,6 +167,15 @@
       alsa-lib
     ];
   };
+
+  fonts.packages = with pkgs; [
+    nerd-fonts.mononoki
+    nerd-fonts.departure-mono
+    maple-mono.NF
+    dejavu_fonts
+    noto-fonts-color-emoji
+  ];
+  fonts.fontconfig.enable = true;
 
   programs.xfconf.enable = true;
 

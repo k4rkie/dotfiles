@@ -25,7 +25,7 @@
     ]
   },
   "clock": {
-    "format": "󱦟 {:%I:%M %p}",
+    "format": "󱦟:{:%I:%M %p}",
     "interval": 60,
     "tooltip": false,
     "on-click": "quickshell ipc call calendar toggle",
@@ -48,7 +48,7 @@
     }
   },
   "memory": {
-    "format": " {}%",
+    "format": " :{}%",
     "tooltip": "false",
     "on-click": "foot -a btop btop",
   },
@@ -63,8 +63,9 @@
       "warning": 30,
       "critical": 15
     },
-    "format": "{icon} {capacity}%",
-    "format-icons": ["", "", "", "", ""],
+    "format": "{icon}:{capacity}%",
+    "format-charging": "{icon}󱐋:{capacity}%",
+    "format-icons": ["󰂎", "󱊡", "󱊢", "󱊣"],
     "tooltip": true,
     "max-length": 25
   },

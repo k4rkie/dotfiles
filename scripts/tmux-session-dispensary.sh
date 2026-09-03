@@ -3,13 +3,12 @@
 DIRS=(
     "$HOME"
     "$HOME/learn"
-    "$HOME/dev"
-    "$HOME/dev/go"
-    "$HOME/dev/Feriyo"
-    "$HOME/dev/C"
-    "$HOME/dev/C/graphics"
-    "$HOME/dev/JS"
-    "$HOME/dev/Rust"
+    "$HOME/Projects"
+    "$HOME/Projects/go"
+    "$HOME/Projects/C"
+    "$HOME/Projects/C"
+    "$HOME/Projects/JS"
+    "$HOME/Projects/Rust"
     "$HOME/dotfiles"
 )
 

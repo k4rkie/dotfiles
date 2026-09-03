@@ -1063,17 +1063,17 @@ PanelWindow {
                         required property var modelData
                         required property int index
                         width: notiList.width
-                        height: 44; radius: 0
+                        height: notiRow.implicitHeight + 20; radius: 0
                         color: notiMouse.containsMouse ? Qt.lighter(PanelColors.rowBackground, 1.25) : PanelColors.rowBackground
                         Behavior on color { ColorAnimation { duration: 0 } }
 
                         Row {
-                            anchors { left: parent.left; leftMargin: 10; right: parent.right; rightMargin: 10; verticalCenter: parent.verticalCenter }
-                            spacing: 8
+                            id: notiRow
+                            anchors { left: parent.left; leftMargin: 10; right: parent.right; rightMargin: 10; top: parent.top; topMargin: 10 }
+                            spacing: 10
 
                             Rectangle {
-                                width: 30; height: 30; radius: 0
-                                anchors.verticalCenter: parent.verticalCenter
+                                width: 42; height: 42; radius: 0
                                 color: PanelColors.rowBackground
                                 border.width: 1
                                 border.color: PanelColors.border
@@ -1091,31 +1091,37 @@ PanelWindow {
                                     anchors.centerIn: parent
                                     visible: modelData.image === ""
                                     text: modelData.appName !== "" ? modelData.appName.charAt(0).toUpperCase() : "?"
-                                    font.pixelSize: 16; font.bold: true; font.family: FontConfig.fontFamily
+                                    font.pixelSize: 18; font.bold: true; font.family: FontConfig.fontFamily
                                     color: PanelColors.textAccent
                                 }
                             }
 
                             Column {
-                                anchors.verticalCenter: parent.verticalCenter
-                                spacing: 2
-                                width: parent.width - 30 - notiTimeText.width - parent.spacing * 2
+                                spacing: 5
+                                width: parent.width - 42 - notiTimeText.width - parent.spacing * 2
 
                                 Text {
                                     renderType: Text.NativeRendering
                                     width: parent.width
-                                    text: modelData.appName !== "" ? modelData.appName : "notification"
-                                    font.pixelSize: 12; font.bold: true; font.family: FontConfig.fontFamily
-                                    color: PanelColors.textDim
+                                    topPadding: 2
+                                    text: modelData.summary !== "" ? modelData.summary : modelData.appName
+                                    font.pixelSize: 15; font.bold: true; font.family: FontConfig.fontFamily
+                                    color: PanelColors.textMain
                                     elide: Text.ElideRight
+                                    wrapMode: Text.Wrap
+                                    maximumLineCount: 2
                                 }
                                 Text {
                                     renderType: Text.NativeRendering
                                     width: parent.width
-                                    text: modelData.summary + (modelData.body !== "" ? " — " + modelData.body : "")
-                                    font.pixelSize: 13; font.family: FontConfig.fontFamily
-                                    color: PanelColors.textMain
+                                    topPadding: 0
+                                    visible: modelData.body !== ""
+                                    text: modelData.body
+                                    font.pixelSize: 12; font.family: FontConfig.fontFamily
+                                    color: PanelColors.textDim
                                     elide: Text.ElideRight
+                                    wrapMode: Text.Wrap
+                                    maximumLineCount: 3
                                 }
                             }
 

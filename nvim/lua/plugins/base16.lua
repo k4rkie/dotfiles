@@ -38,11 +38,12 @@ return {
       base08 = "#82709c",
       base09 = "#aaaaaa",
       base0A = "#d1a76b",
-      base0B = "#e3c5a5",
+      base0B = "#a1955f",
       base0C = "#aaaaaa",
       base0D = "#696969",
       base0E = "#999999",
       base0F = "#444444",
+
     })
   end,
 }
