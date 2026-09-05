@@ -2,39 +2,21 @@
   "layer": "top",
   "position": "bottom",
   "reload_style_on_change": true,
-  "margin-right": 200,
-  "margin-left": 200,
   "height": 18,
   "modules-left": [
-    "ext/workspaces",
+    "mango/workspaces",
     "mango/window"
   ],
   "modules-center": [],
   "modules-right": [
     "memory",
+    "clock",
     "battery",
-    "group/time",
     "custom/control-center",
     "tray"
   ],
-  "group/time": {
-    "orientation": "horizontal",
-    "spacing": 0,
-    "modules": [
-      "clock"
-    ]
-  },
-  "clock": {
-    "format": "󱦟:{:%I:%M %p}",
-    "interval": 60,
-    "tooltip": false,
-    "on-click": "quickshell ipc call calendar toggle",
-  },
-  "ext/workspaces": {
+  "mango/workspaces": {
     "format": "{icon}",
-    "ignore-hidden": true,
-    "on-click": "activate",
-    "sort-by-id": true,
     "format-icons": {
       "1": "one",
       "2": "two",
@@ -45,10 +27,31 @@
       "7": "seven",
       "8": "eight",
       "9": "nine",
+    },
+    "on-click": "activate",
+    "hide-empty": true
+  },
+  "mango/window": {
+    "format": "{app_id}",
+    "icon": true,
+    "icon-size": 18,
+    "rewrite": {
+      ".*firefox*": "firefox"
     }
   },
+  "mango/layout": {
+      "format": "[] {symbol}",
+      "format-S": "󰌌 {symbol}",
+      "format-M": "󰕰 {symbol}"
+  },
+  "clock": {
+    "format": "{:%I:%M %p}",
+    "interval": 60,
+    "tooltip": false,
+    "on-click": "quickshell ipc call calendar toggle",
+  },
   "memory": {
-    "format": " :{}%",
+    "format": "mem:{}%",
     "tooltip": "false",
     "on-click": "foot -a btop btop",
   },
@@ -63,38 +66,22 @@
       "warning": 30,
       "critical": 15
     },
-    "format": "{icon}:{capacity}%",
-    "format-charging": "{icon}󱐋:{capacity}%",
+    "format": "bat:{capacity}%",
+    "format-charging": "bat:󱐋{capacity}%",
     "format-icons": ["󰂎", "󱊡", "󱊢", "󱊣"],
     "tooltip": true,
     "max-length": 25
-  },
-  "custom/media-animation": {
-    "exec": "~/.config/waybar/custom_modules/media/media-animation.sh",
-    "tooltip": false,
-    "escape": false,
-    "size": 8
   },
   "tray": {
     "icon-size": 14,
     "spacing": 4
   },
   "custom/control-center": {
-    "format": " ",
+    "format": "ctrl:󰢻",
     "on-click": "quickshell ipc call control toggle",
     "tooltip": false
   },
-  "image#globe": {
-    "path": "/home/k4rkie/.config/waybar/assets/images/globe.png",
-    "size": 30,
-    "interval": 5,
-  },
-  "mango/window": {
-    "format": "{app_id}",
-    "icon": true,
-    "icon-size": 18,
-    "rewrite": {
-      ".*firefox*": "firefox"
-    }
+  "custom/separator": {
+    "format": "|"
   }
 }

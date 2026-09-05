@@ -49,8 +49,8 @@ PanelWindow {
             width: toastList.width
             height: contentRow.implicitHeight + 24; radius: 0
             color: PanelColors.popupBackground
-            border.color: "#090909"
-            border.width: 2
+            border.color: PanelColors.border
+            border.width: 1
 
             Row {
                 id: contentRow

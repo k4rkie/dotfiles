@@ -282,8 +282,8 @@ PanelWindow {
         radius: 0
         color:        PanelColors.popupBackground
         Behavior on color { ColorAnimation { duration: 0 } }
-        border.color: "#090909"
-        border.width: 2
+        border.color: PanelColors.border
+        border.width: 1
 
         HoverHandler {
             onHoveredChanged: {

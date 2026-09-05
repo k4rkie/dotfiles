@@ -267,7 +267,7 @@ Item {
                     }
                     font.pixelSize: 16; font.family: FontConfig.fontFamily; color: PanelColors.textDim; z: 1
                 }
-                Rectangle { anchors.fill: parent; color: "transparent"; border.width: 2; border.color: PanelColors.clock; radius: 0 }
+                Rectangle { anchors.fill: parent; color: "transparent"; border.width: 1; border.color: PanelColors.border; radius: 0 }
             }
 
             Item {
@@ -391,31 +391,11 @@ Item {
         }
     }
 
+    // flat: no bevel
     component BevelOverlay: Item {
         property bool pressed: false
         anchors.fill: parent
         z: 1
-
-        Rectangle {
-            anchors { top: parent.top; left: parent.left; right: parent.right; topMargin: 2 }
-            height: 1
-            color: parent.pressed ? "#090909" : "#303030"
-        }
-        Rectangle {
-            anchors { top: parent.top; left: parent.left; bottom: parent.bottom; topMargin: 2; bottomMargin: 2 }
-            width: 1
-            color: parent.pressed ? "#090909" : "#242424"
-        }
-        Rectangle {
-            anchors { left: parent.left; right: parent.right; bottom: parent.bottom; bottomMargin: 2 }
-            height: 1
-            color: parent.pressed ? "#686868" : "#000000"
-        }
-        Rectangle {
-            anchors { top: parent.top; right: parent.right; bottom: parent.bottom; topMargin: 2; bottomMargin: 2 }
-            width: 1
-            color: parent.pressed ? "#686868" : "#000000"
-        }
     }
 
     component MediaBtn: Rectangle {
@@ -431,10 +411,9 @@ Item {
             if (highlighted) return btnMouse.containsMouse ? Qt.lighter(accentColor, 1.1) : accentColor
             return btnMouse.containsMouse ? Qt.lighter(PanelColors.rowBackground, 1.25) : PanelColors.rowBackground
         }
-          border.color: "#090909"
-          border.width: 2
+          border.color: highlighted ? Qt.darker(accentColor, 1.2) : PanelColors.border
+          border.width: 1
           Behavior on color { ColorAnimation { duration: 0 } }
-         BevelOverlay { pressed: btnMouse.pressed }
         Text {
             renderType: Text.NativeRendering
             anchors.centerIn: parent; text: btn.icon

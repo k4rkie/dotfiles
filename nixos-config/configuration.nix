@@ -76,6 +76,8 @@
 
     # --- Containers/Virtualization ---
     docker-compose
+    podman
+    distrobox
 
     # --- File System & Storage Mechanics ---
     thunar
@@ -140,6 +142,11 @@
   };
 
   virtualisation.docker.enable = true;
+  virtualisation.podman = {
+    enable = true;
+    defaultNetwork.settings.dns_enabled = true;
+  };
+
   programs.zsh.enable = true;
 
   programs.dconf.enable = true;
@@ -151,22 +158,38 @@
     enable = true;
     libraries = with pkgs; [
       # X11 dependencies required by LWJGL / GLFW
-      xorg.libX11
-      xorg.libXext
-      xorg.libXcursor
-      xorg.libXrandr
-      xorg.libXi
-      xorg.libXinerama
-      xorg.libXxf86vm
-      xorg.libXrender
+      libX11
+      libXext
+      libXcursor
+      libXrandr
+      libXi
+      libXinerama
+      libXxf86vm
+      libXrender
 
       # Graphics and Wayland fallbacks
       libGL
       libxkbcommon
       wayland
       alsa-lib
+
+      stdenv.cc.cc.lib # libstdc++.so.6, libgcc_s.so.1 (C++ stdlib)
+      stdenv.cc.libc # Standard C library primitives
+      glibc # Core glibc dynamic links
+      util-linux # System utilities & libuuid
+      libffi # Foreign Function Interface (used by ctypes/cffi)
+
+      openssl # libssl, libcrypto (psycopg2, cryptography, requests)
+      curl # libcurl
+      libsodium # Modern cryptography primitives
+      libxml2 # XML parsing native bindings
+
+      postgresql.lib # libpq (psycopg2, asyncpg, node-postgres)
+      sqlite # Embedded database C bindings
     ];
   };
+
+  services.envfs.enable = true;
 
   fonts.packages = with pkgs; [
     nerd-fonts.mononoki

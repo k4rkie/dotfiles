@@ -32,7 +32,7 @@ Singleton {
 
     // Accents
     readonly property color launcher:          base08
-    readonly property color pillActive:        base0B
+    readonly property color pillActive:        base08
     readonly property color battery:           base0A
     readonly property color network:           base0B
     readonly property color audio:             base08
@@ -52,7 +52,7 @@ Singleton {
     readonly property color popupBackground:   base00
     readonly property color rowBackground:     base01
     readonly property color trackBackground:   base02
-    readonly property color border:            base03
+    readonly property color border:            base02
 
     // Text
     readonly property color textMain:          base05
@@ -73,7 +73,7 @@ Singleton {
     readonly property color dashboardAccent:     base08
     readonly property color dashboardStripe:     base02
 
-    readonly property color profile:           base0B
+    readonly property color profile:           base08
     readonly property color system:            base0D
 
     readonly property color cpuRing:           base08

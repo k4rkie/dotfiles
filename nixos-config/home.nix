@@ -95,7 +95,6 @@ in
   home.packages = with pkgs; [
     clang
     tree-sitter
-    prettier
     uv
     wallust
 
@@ -148,24 +147,16 @@ in
     jdk
 
     # --- Language Servers (LSPs) & Build Tools ---
-    nil
-    lua-language-server
-    gopls
-    typescript-language-server
     clang-tools
     gnumake
     cmake
-    zls
 
     # --- Misc Tools ---
     tesseract
     satty
-    cmatrix
-    cbonsai
     quickshell
     qalculate-gtk
-    iwd
     sway-audio-idle-inhibit
-    (papirus-icon-theme.override { color = "white"; })
+    (papirus-icon-theme.override { color = "indigo"; })
   ];
 }

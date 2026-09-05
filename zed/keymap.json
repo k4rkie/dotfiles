@@ -32,13 +32,13 @@
   },
 
   // ── Editor — Normal Mode ──
-  {
-    "context": "Editor && vim_mode == normal && !VimWaiting && !VimObject",
-    "bindings": {
-      "space w": "workspace::Save",
-      "space f f": "file_finder::Toggle",
-    },
-  },
+  // {
+  //   "context": "Editor && vim_mode == normal && !VimWaiting && !VimObject",
+  //   "bindings": {
+  //     "space w": "workspace::Save",
+  //     "space f f": "file_finder::Toggle",
+  //   },
+  // },
 
   // ── Editor — Visual Mode ──
   {

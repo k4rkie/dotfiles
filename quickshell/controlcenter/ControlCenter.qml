@@ -67,7 +67,7 @@ PanelWindow {
 
     property real slideOffset: 0
 
-    readonly property int bottomBarHeight: 38
+    readonly property int bottomBarHeight: 34
     IpcHandler {
         target: "control"
         function toggle(): void { root.toggle() }
@@ -767,43 +767,18 @@ PanelWindow {
 
     Rectangle {
         id: menuCard
-        x: parent.width - width - 8 - 30
+        x: parent.width - width - 8 - 6
         y: parent.height - height - 8 - root.bottomBarHeight - root.slideOffset
         width: 400
         height: contentCol.implicitHeight + 24
         radius: 0
         color: PanelColors.popupBackground
-        border.color: "#090909"
-        border.width: 2
+        border.color: PanelColors.border
+        border.width: 1
 
         Behavior on height { NumberAnimation { duration: 0; easing.type: Easing.OutCubic } }
 
          MouseArea { anchors.fill: parent; onPressed: (m) => m.accepted = true }
-
-         Rectangle {
-             z: 2
-             anchors { top: parent.top; left: parent.left; right: parent.right; topMargin: 2 }
-             height: 2
-             color: "#303030"
-         }
-         Rectangle {
-             z: 2
-             anchors { top: parent.top; left: parent.left; bottom: parent.bottom; topMargin: 2; bottomMargin: 2 }
-             width: 2
-             color: "#242424"
-         }
-         Rectangle {
-             z: 2
-             anchors { left: parent.left; right: parent.right; bottom: parent.bottom; bottomMargin: 2 }
-             height: 2
-             color: "#000000"
-         }
-         Rectangle {
-             z: 2
-             anchors { top: parent.top; right: parent.right; bottom: parent.bottom; topMargin: 2; bottomMargin: 2 }
-             width: 2
-             color: "#000000"
-         }
 
          Column {
             id: contentCol
@@ -2063,31 +2038,11 @@ PanelWindow {
 
     // ---- components ---------------------------------------------------------------------
 
+    // flat: no bevel — keep as no-op for compatibility
     component BevelOverlay: Item {
         property bool pressed: false
         anchors.fill: parent
         z: 1
-
-        Rectangle {
-            anchors { top: parent.top; left: parent.left; right: parent.right; topMargin: 2 }
-            height: 1
-            color: parent.pressed ? "#090909" : "#303030"
-        }
-        Rectangle {
-            anchors { top: parent.top; left: parent.left; bottom: parent.bottom; topMargin: 2; bottomMargin: 2 }
-            width: 1
-            color: parent.pressed ? "#090909" : "#242424"
-        }
-        Rectangle {
-            anchors { left: parent.left; right: parent.right; bottom: parent.bottom; bottomMargin: 2 }
-            height: 1
-            color: parent.pressed ? "#686868" : "#000000"
-        }
-        Rectangle {
-            anchors { top: parent.top; right: parent.right; bottom: parent.bottom; topMargin: 2; bottomMargin: 2 }
-            width: 1
-            color: parent.pressed ? "#686868" : "#000000"
-        }
     }
 
     component HeaderIconButton: Rectangle {
@@ -2098,9 +2053,8 @@ PanelWindow {
         width: 36; height: 36; radius: 0
         color: hmouse.containsMouse || isActive ? Qt.lighter(PanelColors.rowBackground, 1.35) : PanelColors.rowBackground
         border.width: 1
-        border.color: "#090909"
+        border.color: PanelColors.border
         Behavior on color { ColorAnimation { duration: 0 } }
-        BevelOverlay { pressed: hmouse.pressed }
         Text {
             renderType: Text.NativeRendering
             anchors.centerIn: parent
@@ -2131,10 +2085,9 @@ PanelWindow {
                 return pillMouse.containsMouse ? Qt.lighter(accentColor, 1.15) : accentColor
             return pillMouse.containsMouse ? Qt.lighter(PanelColors.rowBackground, 1.25) : PanelColors.rowBackground
         }
-        border.width: 2
-        border.color: "#090909"
+        border.width: 1
+        border.color: checked || isActive ? Qt.darker(accentColor, 1.2) : PanelColors.border
         Behavior on color { ColorAnimation { duration: 0 } }
-        BevelOverlay { pressed: pillMouse.pressed }
 
         Row {
             anchors.centerIn: parent
@@ -2181,10 +2134,9 @@ PanelWindow {
         signal clicked()
         width: parent.width; height: 46; radius: 0
         color: actMouse.containsMouse ? Qt.lighter(PanelColors.rowBackground, 1.25) : PanelColors.rowBackground
-        border.width: 2
-        border.color: "#090909"
+        border.width: 1
+        border.color: PanelColors.border
         Behavior on color { ColorAnimation { duration: 0 } }
-        BevelOverlay { pressed: actMouse.pressed }
 
         Row {
             anchors.centerIn: parent
@@ -2220,9 +2172,7 @@ PanelWindow {
         width: 34; height: 18; radius: 0
         color: tswitch.checked ? PanelColors.pillActive : PanelColors.rowBackground
         border.width: 1
-        border.color: "#090909"
-
-        BevelOverlay { pressed: tswitchMouse.pressed }
+        border.color: PanelColors.border
 
         Rectangle {
             x: tswitch.checked ? parent.width - width - 2 : 2

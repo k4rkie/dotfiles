@@ -44,15 +44,22 @@ source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # -------------------------------
 setopt PROMPT_SUBST
 
-# 2. Load vcs_info
+# Load vcs_info
 autoload -Uz vcs_info
 precmd() { vcs_info }
 
-# 3. Format the git output
+# Format the git output
 zstyle ':vcs_info:git:*' formats '(󰘬 %b) '
 
-# 4. Set the prompt (ensure you use single quotes here)
-PROMPT='[%F{#a1955f}%~%f] ${vcs_info_msg_0_}%k$ '
+# Get container name
+if [[ -n $CONTAINER_ID ]]; then
+  container_name_prompt="{󰏗 $CONTAINER_ID} "
+else
+  container_name_prompt=""
+fi
+
+# Set the prompt (ensure you use single quotes here)
+PROMPT='${container_name_prompt}[%F{#a1955f}%~%f] ${vcs_info_msg_0_}%k󰘧 '
 
 # -------------------------------
 # 6. Aliases
@@ -61,6 +68,7 @@ alias ls="eza -lh  --icons=always --git"
 alias la="eza -lha  --icons=always --git"
 
 alias vi="nvim"
+alias fastfetch="fastfetch -c examples/27"
 alias reload="source ~/.zshrc"
 
 # -------------------------------
@@ -122,3 +130,5 @@ export PATH=/home/k4rkie/.opencode/bin:$PATH
 export PATH="/home/k4rkie/.local/bin:$PATH"
 # npm global prefix
 export PATH="$HOME/.npm-global/bin:$PATH"
+
+# export LD_LIBRARY_PATH=$NIX_LD_LIBRARY_PATH:$LD_LIBRARY_PATH

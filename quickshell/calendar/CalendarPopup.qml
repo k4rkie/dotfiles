@@ -16,7 +16,7 @@ PanelWindow {
     exclusionMode: ExclusionMode.Ignore
     anchors { top: true; left: true; right: true; bottom: true }
     // card sits 8px above the waybar (18), centered horizontally
-    readonly property int bottomBarGap: 46
+    readonly property int bottomBarGap: 40
 
     WlrLayershell.layer: WlrLayershell.Overlay
     WlrLayershell.keyboardFocus: WlrKeyboardFocus.OnDemand
@@ -131,74 +131,29 @@ PanelWindow {
         onClicked: root.toggle()
     }
 
+     // flat: no bevel — kept as no-op for compatibility
      component BevelOverlay: Item {
          property bool pressed: false
          anchors.fill: parent
          z: 1
-
-         Rectangle {
-             anchors { top: parent.top; left: parent.left; right: parent.right; topMargin: 2 }
-             height: 1
-             color: parent.pressed ? "#090909" : "#303030"
-         }
-         Rectangle {
-             anchors { top: parent.top; left: parent.left; bottom: parent.bottom; topMargin: 2; bottomMargin: 2 }
-             width: 1
-             color: parent.pressed ? "#090909" : "#242424"
-         }
-         Rectangle {
-             anchors { left: parent.left; right: parent.right; bottom: parent.bottom; bottomMargin: 2 }
-             height: 1
-             color: parent.pressed ? "#686868" : "#000000"
-         }
-         Rectangle {
-             anchors { top: parent.top; right: parent.right; bottom: parent.bottom; topMargin: 2; bottomMargin: 2 }
-             width: 1
-             color: parent.pressed ? "#686868" : "#000000"
-         }
      }
 
      Rectangle {
         id: innerRect
         width: 240
         height: root.contentHeight + (root.padding * 2)
-        x: (parent.width - width) / 2 + 680
+        x: (parent.width - width) / 2 + 750
         y: root.height - height - root.bottomBarGap + root.slideOffset
         radius: 0
         color: PanelColors.popupBackground
         Behavior on color { ColorAnimation { duration: 0 } }
-        border.color: "#090909"
+        border.color: PanelColors.border
         Behavior on border.color { ColorAnimation { duration: 0 } }
-        border.width: 2
+        border.width: 1
         clip: root.clipContent
 
          // swallow clicks so they don't reach the outside catcher
          MouseArea { anchors.fill: parent; onPressed: (m) => m.accepted = true }
-
-         Rectangle {
-             z: 2
-             anchors { top: parent.top; left: parent.left; right: parent.right; topMargin: 2 }
-             height: 2
-             color: "#303030"
-         }
-         Rectangle {
-             z: 2
-             anchors { top: parent.top; left: parent.left; bottom: parent.bottom; topMargin: 2; bottomMargin: 2 }
-             width: 2
-             color: "#242424"
-         }
-         Rectangle {
-             z: 2
-             anchors { left: parent.left; right: parent.right; bottom: parent.bottom; bottomMargin: 2 }
-             height: 2
-             color: "#000000"
-         }
-         Rectangle {
-             z: 2
-             anchors { top: parent.top; right: parent.right; bottom: parent.bottom; topMargin: 2; bottomMargin: 2 }
-             width: 2
-             color: "#000000"
-         }
 
          HoverHandler { id: hover }
 
@@ -216,10 +171,9 @@ PanelWindow {
                     width: 24; height: 24; radius: 0
                      anchors { left: parent.left; verticalCenter: parent.verticalCenter }
                      color: prevArea.containsMouse ? Qt.lighter(PanelColors.rowBackground, 1.15) : PanelColors.rowBackground
-                     border.width: 2
-                     border.color: "#090909"
+                     border.width: 1
+                     border.color: PanelColors.border
                       Behavior on color { ColorAnimation { duration: 0 } }
-                     BevelOverlay { pressed: prevArea.pressed }
                     Text {
                     renderType: Text.NativeRendering
                         anchors.centerIn: parent
@@ -247,10 +201,9 @@ PanelWindow {
                     width: 24; height: 24; radius: 0
                      anchors { right: parent.right; verticalCenter: parent.verticalCenter }
                      color: nextArea.containsMouse ? Qt.lighter(PanelColors.rowBackground, 1.15) : PanelColors.rowBackground
-                     border.width: 2
-                     border.color: "#090909"
+                     border.width: 1
+                     border.color: PanelColors.border
                       Behavior on color { ColorAnimation { duration: 0 } }
-                     BevelOverlay { pressed: nextArea.pressed }
                     Text {
                     renderType: Text.NativeRendering
                         anchors.centerIn: parent
@@ -337,24 +290,22 @@ PanelWindow {
                                     width: contentCol.width / 7
                                     height: parent.height
 
-                                    Rectangle {
+                                     Rectangle {
                                         anchors.centerIn: parent
                                         width: 24; height: 24; radius: 0
+                                        border.width: isToday || isSelected ? 1 : 0
+                                        border.color: isToday ? PanelColors.date : PanelColors.border
                                         color: {
                                             if (isEmpty) return "transparent"
-                                            let base = isToday ? PanelColors.date : (isSelected ? PanelColors.border : "transparent")
+                                            let base = isToday ? PanelColors.date : (isSelected ? PanelColors.rowBackground : "transparent")
                                             if (dayArea.containsMouse) {
-                                                let hoverRef = isToday ? PanelColors.date : (isSelected ? PanelColors.border : PanelColors.rowBackground)
+                                                let hoverRef = isToday ? PanelColors.date : (isSelected ? PanelColors.rowBackground : PanelColors.rowBackground)
                                                 return Qt.lighter(hoverRef, 1.15)
                                             }
                                             return base
                                          }
 
                                           Behavior on color { ColorAnimation { duration: 0 } }
-                                         BevelOverlay {
-                                             visible: !isEmpty && (dayArea.containsMouse || dayArea.pressed)
-                                             pressed: dayArea.pressed
-                                         }
 
                                         Text {
                                         renderType: Text.NativeRendering
