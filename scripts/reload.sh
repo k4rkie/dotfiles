@@ -2,9 +2,6 @@
 
 mmsg dispatch reload_config
 
-pkill waybar
-waybar &
-
 pkill -f mpd-notify.sh
 ~/scripts/mpd-notify.sh &
 

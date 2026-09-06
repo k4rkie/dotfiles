@@ -16,7 +16,7 @@ PanelWindow {
     exclusionMode: ExclusionMode.Ignore
     anchors { top: true; left: true; right: true; bottom: true }
     // card sits 8px above the waybar (18), centered horizontally
-    readonly property int bottomBarGap: 40
+    readonly property int bottomBarGap: 44
 
     WlrLayershell.layer: WlrLayershell.Overlay
     WlrLayershell.keyboardFocus: WlrKeyboardFocus.OnDemand
@@ -142,7 +142,7 @@ PanelWindow {
         id: innerRect
         width: 240
         height: root.contentHeight + (root.padding * 2)
-        x: (parent.width - width) / 2 + 750
+        x: (parent.width - width) / 2 + 700
         y: root.height - height - root.bottomBarGap + root.slideOffset
         radius: 0
         color: PanelColors.popupBackground

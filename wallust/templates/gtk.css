@@ -1,114 +1,141 @@
-/* Colors */
+@define-color accent_color {{color1 | lighten(0.15)}};
+@define-color accent_bg_color {{color1 | lighten(0.15)}};
+@define-color accent_fg_color {{background}};
+
+@define-color destructive_bg_color {{color1 | lighten(0.20)}};
+@define-color destructive_fg_color {{background}};
+
+@define-color error_bg_color {{color1 | lighten(0.20)}};
+@define-color error_fg_color {{background}};
+
 @define-color window_bg_color {{background}};
 @define-color window_fg_color {{foreground}};
-@define-color view_bg_color {{color0}};
+
+@define-color view_bg_color {{background}};
 @define-color view_fg_color {{foreground}};
+
 @define-color headerbar_bg_color {{background}};
 @define-color headerbar_fg_color {{foreground}};
-@define-color card_bg_color {{color0}};
+@define-color headerbar_backdrop_color @window_bg_color;
+
+@define-color card_bg_color {{background}};
 @define-color card_fg_color {{foreground}};
-@define-color popover_bg_color {{color0}};
+
+@define-color popover_bg_color {{background}};
 @define-color popover_fg_color {{foreground}};
+
 @define-color dialog_bg_color {{background}};
 @define-color dialog_fg_color {{foreground}};
-@define-color sidebar_bg_color {{color0}};
+
+@define-color overview_bg_color {{background}};
+@define-color overview_fg_color {{foreground}};
+
+@define-color sidebar_bg_color {{background}};
 @define-color sidebar_fg_color {{foreground}};
-@define-color sidebar_shade_color alpha({{color8}}, 0.2);
-@define-color shade_color alpha({{color8}}, 0.2);
+@define-color sidebar_backdrop_color @window_bg_color;
+@define-color sidebar_border_color @borders;
 
-/* Accent & Status */
-@define-color accent_color {{color4}};
-@define-color accent_bg_color {{color4}};
-@define-color accent_fg_color {{background}};
-@define-color destructive_bg_color {{color1}};
-@define-color destructive_fg_color {{foreground}};
+@define-color secondary_sidebar_bg_color {{background}};
+@define-color secondary_sidebar_fg_color {{foreground}};
 
-/* Borders */
 @define-color borders {{color8}};
-@define-color border_color {{color8}};
+@define-color border_color @borders;
 @define-color headerbar_border_color @borders;
 @define-color card_border_color @borders;
 @define-color popover_border_color @borders;
-@define-color sidebar_border_color @borders;
 
-/* Enforce dark mode for portals via Adwaita overrides */
+@define-color sidebar_shade_color alpha(@borders, 0.2);
+@define-color shade_color alpha(@borders, 0.2);
+
 @define-color theme_bg_color {{background}};
 @define-color theme_fg_color {{foreground}};
-@define-color theme_base_bg_color {{color0}};
+@define-color theme_base_color {{background}};
+@define-color theme_text_color {{foreground}};
+@define-color theme_base_bg_color {{background}};
 @define-color theme_base_fg_color {{foreground}};
 
-/* GTK 3 Native Surfaces */
-window, .background {
-    background-color: @window_bg_color;
-    color: @window_fg_color;
+@define-color theme_selected_bg_color @accent_bg_color;
+@define-color theme_selected_fg_color @accent_fg_color;
+
+@define-color theme_unfocused_fg_color @window_fg_color;
+@define-color theme_unfocused_text_color @view_fg_color;
+@define-color theme_unfocused_bg_color @window_bg_color;
+@define-color theme_unfocused_base_color @window_bg_color;
+@define-color theme_unfocused_selected_bg_color @accent_bg_color;
+@define-color theme_unfocused_selected_fg_color @accent_fg_color;
+
+:root {
+  --accent-color: {{color1 | lighten(0.15)}};
+  --accent-bg-color: {{color1 | lighten(0.15)}};
+  --accent-fg-color: {{background}};
+
+  --destructive-bg-color: {{color1 | lighten(0.20)}};
+  --destructive-fg-color: {{background}};
+
+  --error-bg-color: {{color1 | lighten(0.20)}};
+  --error-fg-color: {{background}};
+  --error-color: {{color1 | lighten(0.20)}};
+
+  --window-bg-color: {{background}};
+  --window-fg-color: {{foreground}};
+
+  --view-bg-color: {{background}};
+  --view-fg-color: {{foreground}};
+
+  --headerbar-bg-color: {{background}};
+  --headerbar-fg-color: {{foreground}};
+  --headerbar-backdrop-color: @window_bg_color;
+
+  --popover-bg-color: {{background}};
+  --popover-fg-color: {{foreground}};
+
+  --card-bg-color: {{background}};
+  --card-fg-color: {{foreground}};
+
+  --dialog-bg-color: {{background}};
+  --dialog-fg-color: {{foreground}};
+
+  --overview-bg-color: {{background}};
+  --overview-fg-color: {{foreground}};
+
+  --sidebar-bg-color: {{background}};
+  --sidebar-fg-color: {{foreground}};
+  --sidebar-backdrop-color: @window_bg_color;
+  --sidebar-border-color: @borders;
+
+  --secondary-sidebar-bg-color: {{background}};
+  --secondary-sidebar-fg-color: {{foreground}};
+
+  --warning-bg-color: {{color3 | lighten(0.15)}};
+  --warning-fg-color: {{background}};
+  --warning-color: {{color3 | lighten(0.15)}};
+
+  --success-color: {{color2 | lighten(0.15)}};
+  --success-bg-color: {{background}};
+  --success-fg-color: {{color2 | lighten(0.20)}};
+
+  --shade-color: alpha({{color8}}, 0.2);
 }
 
-headerbar, .titlebar {
-    background-color: @headerbar_bg_color;
-    color: @headerbar_fg_color;
-    border-color: @borders;
-}
-
-view, textview text, treeview {
-    background-color: @view_bg_color;
-    color: @view_fg_color;
-}
-
-entry {
-    background-color: @view_bg_color;
-    color: @view_fg_color;
-    border-color: @borders;
-}
-
-button {
-    background-color: @card_bg_color;
-    color: @window_fg_color;
-    border-color: @borders;
-}
-
-button:checked, button:active {
-    background-color: @accent_bg_color;
-    color: @accent_fg_color;
-}
-
-/* Sidebar styling */
-.sidebar, .sidebar .view, .sidebar treeview, sidebar, sidebar view, sidebar treeview {
-    background-color: @sidebar_bg_color;
-    color: @sidebar_fg_color;
-}
-
-.sidebar headerbar, .sidebar .titlebar, sidebar headerbar, sidebar .titlebar {
-    background-color: @sidebar_bg_color;
-    color: @sidebar_fg_color;
-}
-
-.sidebar separator, sidebar separator {
-    background-color: @sidebar_border_color;
-    color: @sidebar_fg_color;
-}
-
-.sidebar row:selected, sidebar row:selected {
-    background-color: @accent_bg_color;
-    color: @accent_fg_color;
-}
-
-.sidebar row:hover, sidebar row:hover {
-    background-color: alpha(@accent_bg_color, 0.3);
-}
-
-/* Desktop portal / xdg-desktop-portal-gtk */
-.portal-widget, .xdg-desktop-portal-gtk, .gtk-password-dialog, .gtk-file-chooser, .gtk-app-chooser {
-    background-color: @window_bg_color;
-    color: @window_fg_color;
-}
-
-/* Sidebar in portals */
-.portal-widget .sidebar, .xdg-desktop-portal-gtk .sidebar {
-    background-color: @sidebar_bg_color;
-    color: @sidebar_fg_color;
-}
-
-/* Square theme */
 * {
-    border-radius: 0px;
+  border-radius: 0px;
+}
+
+.portal-widget,
+.xdg-desktop-portal-gtk,
+.gtk-password-dialog,
+.gtk-file-chooser,
+.gtk-app-chooser,
+filechooser {
+  background-color: @window_bg_color;
+  color: @window_fg_color;
+}
+
+.portal-widget .sidebar,
+.xdg-desktop-portal-gtk .sidebar,
+placessidebar,
+placessidebar list,
+placesview {
+  background-color: @sidebar_bg_color;
+  color: @sidebar_fg_color;
 }

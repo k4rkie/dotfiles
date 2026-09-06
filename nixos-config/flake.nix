@@ -18,11 +18,6 @@
       url = "github:vyrx-dev/toofan";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    waybar = {
-      url = "github:Alexays/Waybar/6d60c8e02be67bb85bb9b1ea803f2fbcf0722002";
-      flake = false;
-    };
   };
 
   outputs =

@@ -61,6 +61,7 @@
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
+    firefox
     vim
     wget
     curl
@@ -86,20 +87,7 @@
     udisks2
     xdg-user-dirs
     xdg-utils
-
-    # --- Wayland Session Essentials ---
-    (pkgs.waybar.overrideAttrs (oldAttrs: {
-      src = inputs.waybar;
-      # Disable Cava via Meson build flag
-      mesonFlags = (oldAttrs.mesonFlags or [ ]) ++ [
-        "-Dcava=disabled"
-      ];
-      # Include ModemManager dependency added in newer master commits
-      buildInputs = (oldAttrs.buildInputs or [ ]) ++ [
-        pkgs.modemmanager
-      ];
-    }))
-
+    waybar
     rofi
     hyprlock
     hyprpicker
@@ -140,6 +128,9 @@
   systemd.services.mpd.environment = {
     PIPEWIRE_RUNTIME_DIR = "/run/user/1000";
   };
+
+  services.power-profiles-daemon.enable = true;
+  services.upower.enable = true;
 
   virtualisation.docker.enable = true;
   virtualisation.podman = {
@@ -195,7 +186,7 @@
     nerd-fonts.mononoki
     nerd-fonts.departure-mono
     maple-mono.NF
-    dejavu_fonts
+    nerd-fonts.ubuntu-mono
     noto-fonts-color-emoji
   ];
   fonts.fontconfig.enable = true;

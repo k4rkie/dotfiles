@@ -67,7 +67,7 @@ PanelWindow {
 
     property real slideOffset: 0
 
-    readonly property int bottomBarHeight: 34
+    readonly property int bottomBarHeight: 36
     IpcHandler {
         target: "control"
         function toggle(): void { root.toggle() }
@@ -767,7 +767,7 @@ PanelWindow {
 
     Rectangle {
         id: menuCard
-        x: parent.width - width - 8 - 6
+        x: parent.width - width - 10
         y: parent.height - height - 8 - root.bottomBarHeight - root.slideOffset
         width: 400
         height: contentCol.implicitHeight + 24
