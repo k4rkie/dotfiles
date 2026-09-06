@@ -1,0 +1,2 @@
+singleton AppUsageTracker 1.0 AppUsageTracker.qml
+singleton LauncherHiddenApps 1.0 LauncherHiddenApps.qml

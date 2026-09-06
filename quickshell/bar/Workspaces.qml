@@ -5,7 +5,7 @@ import "../theme"
 
 Rectangle {
     id: root
-    height: 26
+    height: 30
     width: row.implicitWidth + 4
     visible: visibleTags.length > 0
     color: PanelColors.barBackground
@@ -73,7 +73,7 @@ Rectangle {
                     anchors.centerIn: parent
                     text: root.labels[tagIndex]
                     font.family: FontConfig.fontFamily
-                    font.pixelSize: 18
+                    font.pixelSize: FontConfig.size
                     color: isActive ? PanelColors.barBackground : (area.containsMouse ? PanelColors.textAccent : PanelColors.workspaceInactive)
                 }
 

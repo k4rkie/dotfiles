@@ -28,14 +28,14 @@ window#osd progressbar {
 
 window#osd trough {
   min-height: inherit;
-  border-radius: inherit;
+  border-radius: 0px;
   border: none;
   background: alpha(#888888, 0.3);
 }
 
 window#osd progress {
   min-height: inherit;
-  border-radius: inherit;
+  border-radius: 0px;
   border: none;
   background: #82709c;
 }

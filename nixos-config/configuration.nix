@@ -87,7 +87,6 @@
     udisks2
     xdg-user-dirs
     xdg-utils
-    waybar
     rofi
     hyprlock
     hyprpicker
@@ -143,7 +142,6 @@
   programs.dconf.enable = true;
 
   programs.mango.enable = true;
-  programs.sway.enable = true;
 
   programs.nix-ld = {
     enable = true;

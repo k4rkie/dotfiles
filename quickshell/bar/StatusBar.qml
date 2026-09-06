@@ -16,7 +16,7 @@ PanelWindow {
     exclusionMode: ExclusionMode.Auto
     exclusiveZone: 30
 
-    implicitHeight: 32
+    implicitHeight: 34
     WlrLayershell.layer: WlrLayer.Bottom
     WlrLayershell.namespace: "quickshell:bar"
 
@@ -35,15 +35,22 @@ PanelWindow {
         }
 
         Row {
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.leftMargin: 4
+            spacing: 0
+
+            Clock {}
+        } 
+
+        Row {
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
             anchors.rightMargin: 4
             spacing: 8
 
             Memory {}
-            Clock {}
             Battery {}
-            ControlCenterButton {}
             Tray {}
         }
     }

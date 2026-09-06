@@ -5,7 +5,7 @@ import "../theme"
 
 Rectangle {
     id: root
-    height: 26
+    height: 30
     width: label.implicitWidth + 16
     color: "#02040a"
     border.color: PanelColors.border
@@ -15,7 +15,7 @@ Rectangle {
     property string timeText: ""
 
     function updateTime() {
-        timeText = Qt.formatDateTime(new Date(), "hh:mm AP")
+        timeText = Qt.formatDateTime(new Date(), " hh:mm AP")
     }
 
     Timer {
@@ -31,7 +31,7 @@ Rectangle {
         anchors.centerIn: parent
         text: root.timeText
         font.family: FontConfig.fontFamily
-        font.pixelSize: 18
+        font.pixelSize: FontConfig.size
         color: "#5c6bc0"
     }
 
@@ -41,6 +41,9 @@ Rectangle {
         hoverEnabled: true
         onEntered: parent.opacity = 0.7
         onExited: parent.opacity = 1.0
-        onClicked: Quickshell.execDetached(["sh", "-c", "quickshell ipc call calendar toggle"])
+        onClicked: {
+            try { BarAnchor.setAnchor(root, "control") } catch(e) { console.log("anchor fail", e) }
+            BarAnchor.toggleControl()
+        }
     }
 }

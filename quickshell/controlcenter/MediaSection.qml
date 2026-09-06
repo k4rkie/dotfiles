@@ -209,7 +209,7 @@ Item {
             visible: !root.hasContent
             width: parent.width
             text: "No active media session"
-            font.pixelSize: 13
+            font.pixelSize: FontConfig.sizeSmall
             font.family: FontConfig.fontFamily
             color: PanelColors.textDim
             horizontalAlignment: Text.AlignHCenter
@@ -265,7 +265,7 @@ Item {
                         if (id.includes("chrome") || id.includes("chromium")) return ""
                         return ""
                     }
-                    font.pixelSize: 16; font.family: FontConfig.fontFamily; color: PanelColors.textDim; z: 1
+                    font.pixelSize: FontConfig.sizeSmall; font.family: FontConfig.fontFamily; color: PanelColors.textDim; z: 1
                 }
                 Rectangle { anchors.fill: parent; color: "transparent"; border.width: 1; border.color: PanelColors.border; radius: 0 }
             }
@@ -277,26 +277,26 @@ Item {
 
                 Column { id: textSlotA; width: parent.width; spacing: 6; opacity: root._textShowA ? 1.0 : 0.0; Behavior on opacity { NumberAnimation { duration: 0; easing.type: Easing.InOutSine } }
                     Item { width: parent.width; height: 20; clip: true
-                        Text { text: root._titleA || "Unknown Title"; font.pixelSize: 16; font.bold: true; font.family: FontConfig.fontFamily; color: PanelColors.textAccent ; renderType: Text.NativeRendering }
+                        Text { text: root._titleA || "Unknown Title"; font.pixelSize: FontConfig.sizeSmall; font.bold: true; font.family: FontConfig.fontFamily; color: PanelColors.textAccent ; renderType: Text.NativeRendering }
                     }
-                    Text { width: parent.width; text: root._artistA || "Unknown Artist"; font.pixelSize: 13; font.family: FontConfig.fontFamily; color: PanelColors.textDim; elide: Text.ElideRight ; renderType: Text.NativeRendering }
+                    Text { width: parent.width; text: root._artistA || "Unknown Artist"; font.pixelSize: FontConfig.sizeSmall; font.family: FontConfig.fontFamily; color: PanelColors.textDim; elide: Text.ElideRight ; renderType: Text.NativeRendering }
                     Rectangle { visible: root._identityA !== ""; height: 18; width: identRowA.implicitWidth + 12; radius: height / 2; color: Qt.rgba(PanelColors.clock.r, PanelColors.clock.g, PanelColors.clock.b, 0.15)
                         Row { id: identRowA; anchors.centerIn: parent; spacing: 4
-                            Text { text: root.getPlayerIcon(root._identityA); font.pixelSize: 12; font.family: FontConfig.fontFamily; color: PanelColors.textAccent; anchors.verticalCenter: parent.verticalCenter ; renderType: Text.NativeRendering }
-                            Text { text: root._identityA; font.pixelSize: 12; font.bold: true; font.family: FontConfig.fontFamily; color: PanelColors.textAccent; anchors.verticalCenter: parent.verticalCenter ; renderType: Text.NativeRendering }
+                            Text { text: root.getPlayerIcon(root._identityA); font.pixelSize: FontConfig.sizeTiny; font.family: FontConfig.fontFamily; color: PanelColors.textAccent; anchors.verticalCenter: parent.verticalCenter ; renderType: Text.NativeRendering }
+                            Text { text: root._identityA; font.pixelSize: FontConfig.sizeTiny; font.bold: true; font.family: FontConfig.fontFamily; color: PanelColors.textAccent; anchors.verticalCenter: parent.verticalCenter ; renderType: Text.NativeRendering }
                         }
                     }
                 }
 
                 Column { id: textSlotB; width: parent.width; spacing: 6; opacity: root._textShowA ? 0.0 : 1.0; Behavior on opacity { NumberAnimation { duration: 0; easing.type: Easing.InOutSine } }
                     Item { width: parent.width; height: 20; clip: true
-                        Text { text: root._titleB || "Unknown Title"; font.pixelSize: 16; font.bold: true; font.family: FontConfig.fontFamily; color: PanelColors.textAccent ; renderType: Text.NativeRendering }
+                        Text { text: root._titleB || "Unknown Title"; font.pixelSize: FontConfig.sizeSmall; font.bold: true; font.family: FontConfig.fontFamily; color: PanelColors.textAccent ; renderType: Text.NativeRendering }
                     }
-                    Text { width: parent.width; text: root._artistB || "Unknown Artist"; font.pixelSize: 13; font.family: FontConfig.fontFamily; color: PanelColors.textDim; elide: Text.ElideRight ; renderType: Text.NativeRendering }
+                    Text { width: parent.width; text: root._artistB || "Unknown Artist"; font.pixelSize: FontConfig.sizeSmall; font.family: FontConfig.fontFamily; color: PanelColors.textDim; elide: Text.ElideRight ; renderType: Text.NativeRendering }
                     Rectangle { visible: root._identityB !== ""; height: 18; width: identRowB.implicitWidth + 12; radius: height / 2; color: Qt.rgba(PanelColors.clock.r, PanelColors.clock.g, PanelColors.clock.b, 0.15)
                         Row { id: identRowB; anchors.centerIn: parent; spacing: 4
-                            Text { text: root.getPlayerIcon(root._identityB); font.pixelSize: 12; font.family: FontConfig.fontFamily; color: PanelColors.textAccent; anchors.verticalCenter: parent.verticalCenter ; renderType: Text.NativeRendering }
-                            Text { text: root._identityB; font.pixelSize: 12; font.bold: true; font.family: FontConfig.fontFamily; color: PanelColors.textAccent; anchors.verticalCenter: parent.verticalCenter ; renderType: Text.NativeRendering }
+                            Text { text: root.getPlayerIcon(root._identityB); font.pixelSize: FontConfig.sizeTiny; font.family: FontConfig.fontFamily; color: PanelColors.textAccent; anchors.verticalCenter: parent.verticalCenter ; renderType: Text.NativeRendering }
+                            Text { text: root._identityB; font.pixelSize: FontConfig.sizeTiny; font.bold: true; font.family: FontConfig.fontFamily; color: PanelColors.textAccent; anchors.verticalCenter: parent.verticalCenter ; renderType: Text.NativeRendering }
                         }
                     }
                 }
@@ -328,9 +328,9 @@ Item {
             Timer { id: seekReleaseTimer; interval: 1200; onTriggered: root.userSeeking = false }
 
             Row { width: parent.width
-                Text { id: posL; text: root.isLiveStream ? "Live" : root.fmtTime(root.livePosition); font.pixelSize: 12; font.family: FontConfig.fontFamily; color: PanelColors.textDim ; renderType: Text.NativeRendering }
+                Text { id: posL; text: root.isLiveStream ? "Live" : root.fmtTime(root.livePosition); font.pixelSize: FontConfig.sizeTiny; font.family: FontConfig.fontFamily; color: PanelColors.textDim ; renderType: Text.NativeRendering }
                 Item { width: parent.width - posL.implicitWidth - posR.implicitWidth; height: 1 }
-                Text { id: posR; text: root.isLiveStream ? "\u221e" : root.fmtTime(root._stableLength); font.pixelSize: 12; font.family: FontConfig.fontFamily; color: PanelColors.textDim ; renderType: Text.NativeRendering }
+                Text { id: posR; text: root.isLiveStream ? "\u221e" : root.fmtTime(root._stableLength); font.pixelSize: FontConfig.sizeTiny; font.family: FontConfig.fontFamily; color: PanelColors.textDim ; renderType: Text.NativeRendering }
             }
         }
 
@@ -417,7 +417,7 @@ Item {
         Text {
             renderType: Text.NativeRendering
             anchors.centerIn: parent; text: btn.icon
-            font.pixelSize: 16; font.family: FontConfig.fontFamily
+            font.pixelSize: FontConfig.sizeSmall; font.family: FontConfig.fontFamily
             color: {
                 if (!btn.enabled) return PanelColors.textDim
                 if (btn.highlighted) return PanelColors.pillForeground

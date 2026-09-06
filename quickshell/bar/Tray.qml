@@ -5,7 +5,7 @@ import "../theme"
 
 Rectangle {
     id: root
-    height: 26
+    height: 30
     width: trayRow.implicitWidth + 12
     visible: SystemTray.items.values.length > 0
     color: PanelColors.barBackground

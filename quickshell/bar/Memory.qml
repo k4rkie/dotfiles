@@ -5,7 +5,7 @@ import "../theme"
 
 Rectangle {
     id: root
-    height: 26
+    height: 30
     width: label.implicitWidth + 16
     color: "#080a03"
     border.color: PanelColors.border
@@ -36,9 +36,9 @@ Rectangle {
     Text {
         id: label
         anchors.centerIn: parent
-        text: "mem:" + root.percent + "%"
+        text: " :" + root.percent + "%"
         font.family: FontConfig.fontFamily
-        font.pixelSize: 18
+        font.pixelSize: FontConfig.size
         color: "#a9b665"
     }
 

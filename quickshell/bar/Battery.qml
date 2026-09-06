@@ -5,7 +5,7 @@ import "../theme"
 
 Rectangle {
     id: root
-    height: 26
+    height: 30
     width: label.implicitWidth + 16
     radius: 0
     border.width: 2
@@ -37,20 +37,33 @@ Rectangle {
         return "#040806"
     }
 
+    readonly property var icons: ["", "", "", "", ""]
+    readonly property string batIcon: {
+        if (!isReady) return ""
+        var idx = Math.floor(percent / 20)
+        if (percent >= 100) idx = 4
+        else if (percent >= 80) idx = 4
+        else if (percent >= 60) idx = 3
+        else if (percent >= 40) idx = 2
+        else if (percent >= 20) idx = 1
+        else idx = 0
+        return icons[idx]
+    }
+
     Text {
         id: label
         anchors.centerIn: parent
         font.family: FontConfig.fontFamily
-        font.pixelSize: 18
+        font.pixelSize: FontConfig.size
         color: {
             if (root.isCritical) return "#ea6962"
             if (root.isWarning) return "#e78a4e"
             return "#7daea3"
         }
         text: {
-            if (!root.isReady) return "bat:--%"
-            if (root.isCharging) return "bat:󱐋" + root.percent + "%"
-            return "bat:" + root.percent + "%"
+            if (!root.isReady) return " :--%"
+            if (root.isPlugged) return batIcon + " 󱐋:" + root.percent + "%"
+            return batIcon + " :" + root.percent + "%"
         }
     }
 

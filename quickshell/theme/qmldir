@@ -1,4 +1,4 @@
 singleton FontConfig 1.0 FontConfig.qml
 singleton PanelColors 1.0 PanelColors.qml
-singleton LauncherState 1.0 LauncherState.qml
 singleton NotifState 1.0 NotifState.qml
+singleton BarAnchor 1.0 BarAnchor.qml

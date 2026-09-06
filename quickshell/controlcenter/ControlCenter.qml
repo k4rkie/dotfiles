@@ -4,7 +4,9 @@ import Quickshell.Io
 import Quickshell.Wayland
 import Quickshell.Networking
 import Quickshell.Bluetooth
+import Quickshell.Widgets
 import "../theme"
+import "apps"
 
 PanelWindow {
     id: root
@@ -23,6 +25,7 @@ PanelWindow {
 
     property string animState: "closed"
     visible: animState !== "closed"
+    onAnimStateChanged: if (animState === "closed") { ccAppsSearch = ""; ccAppsFiltered = []; ccAppsSelected = -1; if (ccAppsSearchInput) ccAppsSearchInput.text = ""; _emojiQuery = ""; emojiFiltered = []; if (emojiSearchInput) emojiSearchInput.text = "" }
 
     property string page: "main"
 
@@ -67,7 +70,7 @@ PanelWindow {
 
     property real slideOffset: 0
 
-    readonly property int bottomBarHeight: 36
+    readonly property int bottomBarHeight: 24
     IpcHandler {
         target: "control"
         function toggle(): void { root.toggle() }
@@ -80,6 +83,26 @@ PanelWindow {
         function openWifi(): void { root.openPage("wifi") }
         function openBluetooth(): void { root.openPage("bluetooth") }
         function openNotifications(): void { root.openPage("notifications") }
+        function openCalendar(): void { root.openCalendarPage() }
+        function openApps(): void {
+            if (root.page === "apps" && root.animState === "open") { root.close(); return }
+            root.ccAppsSearch = ""; root._updateCcAppsFilter(); root.open(); root.page = "apps"
+        }
+        function openEmoji(): void {
+            if (root.page === "emoji" && root.animState === "open") { root.close(); return }
+            root._emojiQuery = ""; root.emojiLoad(); root.open(); root.page = "emoji"
+        }
+    }
+    IpcHandler {
+        target: "calendar"
+        function toggle(): void { root.openCalendarPage() }
+        function open(): void { root.openCalendarPage() }
+        function close(): void { if (root.page === "calendar") root.close() }
+    }
+    Connections {
+        target: BarAnchor
+        function onToggleControl() { root.toggle() }
+        function onToggleCalendar() { root.openCalendarPage() }
     }
 
     // kept for the waybar media button; opens the control center
@@ -96,8 +119,15 @@ PanelWindow {
         }
         open()
         page = p
-        if (p === "clipboard") loadClipboard()
+        if (p === "calendar") calResetToday()
+        else if (p === "clipboard") loadClipboard()
         else if (p === "wallpaper") loadWallpapers()
+    }
+    function openCalendarPage() {
+        if (animState === "open" && page === "calendar") { close(); return }
+        calResetToday()
+        open()
+        page = "calendar"
     }
 
     // ---- identity --------------------------------------------------------
@@ -545,6 +575,117 @@ PanelWindow {
         btCliRefreshTimer.restart()
     }
 
+    // ---- calendar (moved from standalone CalendarPopup) ----------------------
+    property int _calViewYear: new Date().getFullYear()
+    property int _calViewMonth: new Date().getMonth()
+    property int _calSelectedDay: -1
+    property int _calTodayDay: new Date().getDate()
+    property int _calTodayMonth: new Date().getMonth()
+    property int _calTodayYear: new Date().getFullYear()
+    function _calMonthName(m) { return ["January","February","March","April","May","June","July","August","September","October","November","December"][m] }
+    function _calDaysInMonth(y,m) { return new Date(y, m+1, 0).getDate() }
+    function _calFirstWeekday(y,m) { return (new Date(y, m, 1).getDay() + 6) % 7 }
+    function calUpdateMonth(delta) { calMonthAnim.direction = delta; calMonthAnim.restart() }
+    function calResetToday() {
+        var now = new Date()
+        _calTodayDay = now.getDate(); _calTodayMonth = now.getMonth(); _calTodayYear = now.getFullYear()
+        _calSelectedDay = -1; _calViewYear = _calTodayYear; _calViewMonth = _calTodayMonth
+    }
+    SequentialAnimation {
+        id: calMonthAnim
+        property int direction: 0
+        ParallelAnimation {
+            NumberAnimation { target: calDayGrid; property: "opacity"; to: 0; duration: 0; easing.type: Easing.OutCubic }
+            NumberAnimation { target: calGridTrans; property: "x"; to: calMonthAnim.direction > 0 ? -30 : 30; duration: 0; easing.type: Easing.OutCubic }
+        }
+        ScriptAction { script: {
+                root._calSelectedDay = -1
+                if (calMonthAnim.direction > 0) { if (root._calViewMonth === 11) { root._calViewMonth = 0; root._calViewYear++ } else root._calViewMonth++ }
+                else { if (root._calViewMonth === 0) { root._calViewMonth = 11; root._calViewYear-- } else root._calViewMonth-- }
+            } }
+        PropertyAction { target: calGridTrans; property: "x"; value: calMonthAnim.direction > 0 ? 30 : -30 }
+        ParallelAnimation {
+            NumberAnimation { target: calDayGrid; property: "opacity"; to: 1; duration: 0; easing.type: Easing.OutExpo }
+            NumberAnimation { target: calGridTrans; property: "x"; to: 0; duration: 0; easing.type: Easing.OutExpo }
+        }
+    }
+
+    // ---- apps page (launcher embedded, 400px list) -----------------------
+    property string ccAppsSearch: ""
+    property var ccAppsFiltered: []
+    property int ccAppsSelected: -1
+    property int ccAppsPage: 0
+    readonly property int ccAppsTotalPages: 1
+    Timer { id: ccAppsFilterTimer; interval: 10; onTriggered: root._updateCcAppsFilter() }
+    function _updateCcAppsFilter() {
+        var q = root.ccAppsSearch.toLowerCase()
+        var items = []
+        var apps = DesktopEntries.applications.values
+        for (var i = 0; i < apps.length; i++) {
+            var a = apps[i]
+            if (!a) continue
+            var hidden = LauncherHiddenApps.isHidden(a.id)
+            var nameMatch = q === "" || a.name.toLowerCase().includes(q) || (a.genericName && String(a.genericName).toLowerCase().includes(q)) || (a.comment && String(a.comment).toLowerCase().includes(q)) || (a.keywords && String(a.keywords).toLowerCase().includes(q))
+            var isMatch = !hidden && nameMatch
+            if (isMatch) items.push({ idx: i, usage: AppUsageTracker.getUsage(a.id), name: a.name.toLowerCase() })
+        }
+        items.sort(function(a,b){ if (b.usage !== a.usage) return b.usage - a.usage; return a.name.localeCompare(b.name) })
+        var mapped = []
+        for (var j=0;j<items.length;j++) mapped.push(items[j].idx)
+        root.ccAppsFiltered = mapped
+        if (mapped.length > 0) root.ccAppsSelected = mapped[0]
+        else root.ccAppsSelected = -1
+        root.ccAppsPage = 0
+    }
+    function ccAppsLaunch(idx) {
+        if (idx < 0) return
+        var a = DesktopEntries.applications.values[idx]
+        if (!a) return
+        AppUsageTracker.recordLaunch(a.id)
+        try { a.execute() } catch(e) { Quickshell.execDetached(["gtk-launch", a.id]) }
+        root.close()
+    }
+    Connections { target: LauncherHiddenApps; function onHiddenAppsChanged() { if (root.page === "apps") ccAppsFilterTimer.restart() } }
+    Connections { target: AppUsageTracker; function onUsageMapChanged() { if (root.page === "apps") ccAppsFilterTimer.restart() } }
+
+    // ---- emoji (from LauncherEmojiView, scaled to 460) ---------------------
+    property var _emojiAll: []
+    property var emojiFiltered: []
+    property string _emojiQuery: ""
+    property int emojiSelected: 0
+    Timer { id: emojiFilterDebounce; interval: 40; onTriggered: root._doEmojiFilter() }
+    function _applyEmojiFilter() { emojiFilterDebounce.restart() }
+    function _doEmojiFilter() {
+        var q = _emojiQuery.toLowerCase()
+        emojiFiltered = q === "" ? _emojiAll : _emojiAll.filter(function(e){ return e.name.includes(q) })
+        emojiSelected = 0
+        if (emojiGrid) emojiGrid.currentIndex = 0
+    }
+    function emojiLoad() {
+        if (_emojiAll.length > 0) { _doEmojiFilter(); return }
+        emojiLoaderProc.running = true
+    }
+    Process {
+        id: emojiLoaderProc
+        command: ["cat", Quickshell.shellDir + "/assets/emoji.json"]
+        running: false
+        stdout: StdioCollector {
+            onStreamFinished: {
+                try { root._emojiAll = JSON.parse(text); root._doEmojiFilter() } catch(e) { console.warn("emoji load failed", e) }
+            }
+        }
+    }
+    Process { id: emojiCopyProc; command: ["true"]; function copyEmoji(ch) { command = ["bash","-c","printf '%s' '" + ch + "' | wl-copy"]; running = true } }
+    function _emojiMove(colDelta, rowDelta) {
+        if (emojiFiltered.length === 0) return
+        var cols = 8
+        var maxIdx = emojiFiltered.length - 1
+        var cur = emojiGrid.currentIndex < 0 ? 0 : emojiGrid.currentIndex
+        var next = Math.max(0, Math.min(cur + colDelta + rowDelta * cols, maxIdx))
+        emojiGrid.currentIndex = next
+        emojiGrid.positionViewAtIndex(next, GridView.Contain)
+    }
+
     // ---- caffeine ----------------------------------------------------------
 
     property bool cafOn: false
@@ -767,13 +908,13 @@ PanelWindow {
 
     Rectangle {
         id: menuCard
-        x: parent.width - width - 10
+        x: (parent.width - width) / 2
         y: parent.height - height - 8 - root.bottomBarHeight - root.slideOffset
-        width: 400
+        width: 460
         height: contentCol.implicitHeight + 24
         radius: 0
         color: PanelColors.popupBackground
-        border.color: PanelColors.border
+        border.color: PanelColors.popupBackground
         border.width: 1
 
         Behavior on height { NumberAnimation { duration: 0; easing.type: Easing.OutCubic } }
@@ -856,6 +997,30 @@ PanelWindow {
                         iconText: root.dndOn ? "󰂛" : (notificationHistory.count > 0 ? "󱅫" : "󰂚")
                         isActive: root.page === "notifications"
                         onClicked: root.page = root.page === "notifications" ? "main" : "notifications"
+                    }
+                    HeaderIconButton {
+                        iconText: "󰃭"
+                        isActive: root.page === "calendar"
+                        onClicked: {
+                            if (root.page === "calendar") root.page = "main"
+                            else { root.calResetToday(); root.page = "calendar" }
+                        }
+                    }
+                    HeaderIconButton {
+                        iconText: ""
+                        isActive: root.page === "apps"
+                        onClicked: {
+                            if (root.page === "apps") root.page = "main"
+                            else { root.ccAppsSearch = ""; root._updateCcAppsFilter(); root.page = "apps" }
+                        }
+                    }
+                    HeaderIconButton {
+                        iconText: "󰞅"
+                        isActive: root.page === "emoji"
+                        onClicked: {
+                            if (root.page === "emoji") root.page = "main"
+                            else { root._emojiQuery = ""; root.emojiLoad(); root.page = "emoji" }
+                        }
                     }
                     HeaderIconButton {
                         iconText: "󰸉"
@@ -976,6 +1141,280 @@ PanelWindow {
                     MediaSection { id: mediaSection; width: parent.width }
                 }
 
+            }
+
+            // ---- calendar page (scaled from CalendarPopup, full width) ----
+            Column {
+                width: parent.width
+                spacing: 8
+                visible: root.page === "calendar"
+
+                Item {
+                    width: parent.width
+                    height: 28
+                    Rectangle {
+                        width: 28; height: 28; radius: 0
+                        anchors { left: parent.left; verticalCenter: parent.verticalCenter }
+                        color: calPrevArea.containsMouse ? Qt.lighter(PanelColors.rowBackground, 1.15) : PanelColors.rowBackground
+                        border.width: 1; border.color: PanelColors.border
+                        Text { anchors.centerIn: parent; text: "󰁍"; font.pixelSize: FontConfig.sizeSmall; font.family: FontConfig.fontFamily; color: calPrevArea.containsMouse ? PanelColors.textAccent : PanelColors.textDim }
+                        MouseArea { id: calPrevArea; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor; onClicked: root.calUpdateMonth(-1) }
+                    }
+                    Text {
+                        anchors.centerIn: parent
+                        text: root._calMonthName(root._calViewMonth) + " " + root._calViewYear
+                        font.pixelSize: FontConfig.size; font.bold: true; font.family: FontConfig.fontFamily; color: PanelColors.textAccent
+                        renderType: Text.NativeRendering
+                    }
+                    Rectangle {
+                        width: 28; height: 28; radius: 0
+                        anchors { right: parent.right; verticalCenter: parent.verticalCenter }
+                        color: calNextArea.containsMouse ? Qt.lighter(PanelColors.rowBackground, 1.15) : PanelColors.rowBackground
+                        border.width: 1; border.color: PanelColors.border
+                        Text { anchors.centerIn: parent; text: "󰁔"; font.pixelSize: FontConfig.sizeSmall; font.family: FontConfig.fontFamily; color: calNextArea.containsMouse ? PanelColors.textAccent : PanelColors.textDim }
+                        MouseArea { id: calNextArea; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor; onClicked: root.calUpdateMonth(1) }
+                    }
+                }
+
+                Row {
+                    width: parent.width
+                    Repeater {
+                        model: ["Mo","Tu","We","Th","Fr","Sa","Su"]
+                        delegate: Text {
+                            width: parent.width / 7
+                            horizontalAlignment: Text.AlignHCenter
+                            text: modelData
+                            font.pixelSize: FontConfig.sizeSmall; font.bold: true; font.family: FontConfig.fontFamily
+                            color: index >= 5 ? PanelColors.date : PanelColors.textDim
+                            renderType: Text.NativeRendering
+                        }
+                    }
+                }
+                Rectangle { width: parent.width; height: 2; color: PanelColors.border }
+
+                Column {
+                    id: calDayGrid
+                    width: parent.width
+                    spacing: 2
+                    transform: Translate { id: calGridTrans; x: 0 }
+                    Repeater {
+                        model: Math.ceil((root._calFirstWeekday(root._calViewYear, root._calViewMonth) + root._calDaysInMonth(root._calViewYear, root._calViewMonth)) / 7)
+                        delegate: Rectangle {
+                            required property int index
+                            readonly property int weekIndex: index
+                            readonly property bool isCurrentWeek: {
+                                var t = root._calTodayDay + root._calFirstWeekday(root._calTodayYear, root._calTodayMonth) - 1
+                                return root._calViewMonth === root._calTodayMonth && root._calViewYear === root._calTodayYear && Math.floor(t/7) === weekIndex
+                            }
+                            width: parent.width; height: 32; radius: 0
+                            color: isCurrentWeek ? PanelColors.rowBackground : "transparent"
+                            Rectangle { visible: isCurrentWeek; width: 3; height: parent.height - 8; radius: 0; anchors { left: parent.left; verticalCenter: parent.verticalCenter } color: PanelColors.date }
+                            Row {
+                                anchors.fill: parent
+                                Repeater {
+                                    model: 7
+                                    delegate: Item {
+                                        required property int index
+                                        readonly property int cellIndex: weekIndex * 7 + index
+                                        readonly property int dayNum: cellIndex - root._calFirstWeekday(root._calViewYear, root._calViewMonth) + 1
+                                        readonly property bool isEmpty: dayNum < 1 || dayNum > root._calDaysInMonth(root._calViewYear, root._calViewMonth)
+                                        readonly property bool isToday: !isEmpty && dayNum === root._calTodayDay && root._calViewMonth === root._calTodayMonth && root._calViewYear === root._calTodayYear
+                                        readonly property bool isSelected: !isEmpty && dayNum === root._calSelectedDay
+                                        width: calDayGrid.width / 7; height: parent.height
+                                        Rectangle {
+                                            anchors.centerIn: parent; width: 30; height: 30; radius: 0
+                                            border.width: isToday || isSelected ? 1 : 0
+                                            border.color: isToday ? PanelColors.date : PanelColors.border
+                                            color: {
+                                                if (isEmpty) return "transparent"
+                                                let base = isToday ? PanelColors.date : (isSelected ? PanelColors.rowBackground : "transparent")
+                                                if (calDayArea.containsMouse) { let h = isToday ? PanelColors.date : (isSelected ? PanelColors.rowBackground : PanelColors.rowBackground); return Qt.lighter(h, 1.15) }
+                                                return base
+                                            }
+                                            Text { anchors.centerIn: parent; text: isEmpty ? "" : dayNum; font.pixelSize: FontConfig.sizeSmall; font.bold: isToday || isSelected; font.family: FontConfig.fontFamily; color: isToday ? PanelColors.pillForeground : (isSelected ? PanelColors.textAccent : PanelColors.textMain); renderType: Text.NativeRendering }
+                                        }
+                                        MouseArea { id: calDayArea; anchors.fill: parent; hoverEnabled: !isEmpty; cursorShape: !isEmpty ? Qt.PointingHandCursor : Qt.ArrowCursor; onClicked: if (!isEmpty) root._calSelectedDay = dayNum }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // ---- apps page (launcher embedded) ----
+            Column {
+                width: parent.width
+                spacing: 8
+                visible: root.page === "apps"
+                onVisibleChanged: {
+                    if (visible) { root.ccAppsSearch = ""; ccAppsSearchInput.text = ""; ccAppsFilterTimer.restart(); Qt.callLater(function(){ ccAppsSearchInput.forceActiveFocus() }) }
+                    else { root.ccAppsSearch = ""; if (ccAppsSearchInput) ccAppsSearchInput.text = ""; root.ccAppsSelected = -1; root.ccAppsFiltered = []; }
+                }
+
+                Rectangle {
+                    width: parent.width; height: 36; radius: 0
+                    color: PanelColors.rowBackground; border.width: 1; border.color: PanelColors.border
+                    Row {
+                        anchors { left: parent.left; leftMargin: 10; right: parent.right; rightMargin: 10; verticalCenter: parent.verticalCenter }
+                        spacing: 8
+                        Text { text: ""; font.pixelSize: FontConfig.size - 2; font.family: FontConfig.fontFamily; color: PanelColors.textDim; anchors.verticalCenter: parent.verticalCenter; renderType: Text.NativeRendering }
+                        TextInput {
+                            id: ccAppsSearchInput
+                            width: parent.width - 20
+                            verticalAlignment: Text.AlignVCenter
+                            font.pixelSize: FontConfig.size - 2; font.family: FontConfig.fontFamily; color: PanelColors.textMain
+                            focus: root.page === "apps"
+                            property string placeholderText: "Search apps..."
+                            onTextChanged: { root.ccAppsSearch = text; ccAppsFilterTimer.restart() }
+                            onAccepted: {
+                                var idx = root.ccAppsSelected >= 0 ? root.ccAppsSelected : (root.ccAppsFiltered.length > 0 ? root.ccAppsFiltered[0] : -1)
+                                if (idx >= 0) root.ccAppsLaunch(idx)
+                                else if (text.trim() !== "") { Quickshell.execDetached(["bash","-c", text]); root.close() }
+                            }
+                            Text {
+                                anchors.fill: parent; verticalAlignment: Text.AlignVCenter
+                                text: ccAppsSearchInput.placeholderText; font.pixelSize: FontConfig.size - 2; font.family: FontConfig.fontFamily; color: PanelColors.textDim
+                                visible: ccAppsSearchInput.text === ""
+                            }
+                            Keys.onEscapePressed: root.page = "main"
+                            Keys.onUpPressed: {
+                                var i = root.ccAppsFiltered.indexOf(root.ccAppsSelected)
+                                if (i > 0) { root.ccAppsSelected = root.ccAppsFiltered[i-1]; ccAppsList.positionViewAtIndex(i-1, ListView.Contain) }
+                            }
+                            Keys.onDownPressed: {
+                                var i = root.ccAppsFiltered.indexOf(root.ccAppsSelected)
+                                if (i >= 0 && i < root.ccAppsFiltered.length - 1) { root.ccAppsSelected = root.ccAppsFiltered[i+1]; ccAppsList.positionViewAtIndex(i+1, ListView.Contain) }
+                                else if (root.ccAppsFiltered.length > 0 && i === -1) { root.ccAppsSelected = root.ccAppsFiltered[0] }
+                            }
+                        }
+                    }
+                }
+
+                Item {
+                    width: parent.width
+                    height: root.ccAppsFiltered.length === 0 ? 70 : Math.min(ccAppsList.contentHeight, 260)
+                    clip: true
+                    ListView {
+                        id: ccAppsList
+                        anchors.fill: parent
+                        spacing: 2
+                        clip: true
+                        model: root.ccAppsFiltered
+                        delegate: Item {
+                            required property var modelData
+                            required property int index
+                            readonly property int origIdx: modelData
+                            readonly property var entry: DesktopEntries.applications.values[origIdx]
+                            readonly property bool isSelected: root.ccAppsSelected === origIdx
+                            width: ccAppsList.width; height: 36
+                            Rectangle {
+                                anchors { fill: parent; leftMargin: 2; rightMargin: 2 }
+                                radius: 0
+                                color: isSelected ? PanelColors.launcher : ccAppHover.containsMouse ? PanelColors.rowBackground : "transparent"
+                                Row {
+                                    anchors { fill: parent; leftMargin: 10; rightMargin: 10; verticalCenter: parent.verticalCenter }
+                                    spacing: 10
+                                    IconImage { anchors.verticalCenter: parent.verticalCenter; implicitSize: 22; source: entry ? Quickshell.iconPath(entry.icon) : "" }
+                                    Text {
+                                        anchors.verticalCenter: parent.verticalCenter
+                                        text: entry ? entry.name : ""; font.pixelSize: FontConfig.size - 2; font.family: FontConfig.fontFamily
+                                        color: isSelected ? PanelColors.pillForeground : PanelColors.textMain; elide: Text.ElideRight
+                                        width: parent.width - 22 - 10 - 8; renderType: Text.NativeRendering
+                                    }
+                                }
+                                MouseArea {
+                                    id: ccAppHover; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
+                                    onEntered: root.ccAppsSelected = origIdx
+                                    onClicked: root.ccAppsLaunch(origIdx)
+                                }
+                            }
+                        }
+                    }
+                    Text {
+                        anchors.centerIn: parent
+                        visible: root.ccAppsFiltered.length === 0
+                        text: root.ccAppsSearch === "" ? "No apps" : "No match"
+                        font.pixelSize: FontConfig.size - 2; font.family: FontConfig.fontFamily; color: PanelColors.textDim
+                        renderType: Text.NativeRendering
+                    }
+                }
+            }
+
+            // ---- emoji page (from LauncherEmojiView) ----
+            Column {
+                width: parent.width
+                spacing: 8
+                visible: root.page === "emoji"
+                onVisibleChanged: if (visible) { root._emojiQuery = ""; root.emojiLoad(); Qt.callLater(function(){ emojiSearchInput.forceActiveFocus() }) }
+
+                Rectangle {
+                    width: parent.width; height: 36; radius: 0
+                    color: PanelColors.rowBackground; border.width: 1; border.color: PanelColors.border
+                    Row {
+                        anchors { left: parent.left; leftMargin: 10; right: parent.right; rightMargin: 10; verticalCenter: parent.verticalCenter }
+                        spacing: 8
+                        Text { text: "󰞅"; font.pixelSize: FontConfig.size - 2; font.family: FontConfig.fontFamily; color: PanelColors.textDim; anchors.verticalCenter: parent.verticalCenter; renderType: Text.NativeRendering }
+                        TextInput {
+                            id: emojiSearchInput
+                            width: parent.width - 20
+                            verticalAlignment: Text.AlignVCenter
+                            font.pixelSize: FontConfig.size - 2; font.family: FontConfig.fontFamily; color: PanelColors.textMain
+                            focus: root.page === "emoji"
+                            property string placeholderText: "Search emoji..."
+                            onTextChanged: { root._emojiQuery = text; root._applyEmojiFilter() }
+                            onAccepted: {
+                                if (root.emojiFiltered.length > 0) { emojiCopyProc.copyEmoji(root.emojiFiltered[emojiGrid.currentIndex].char); root.close() }
+                            }
+                            Text {
+                                anchors.fill: parent; verticalAlignment: Text.AlignVCenter
+                                text: emojiSearchInput.placeholderText; font.pixelSize: FontConfig.size - 2; font.family: FontConfig.fontFamily; color: PanelColors.textDim
+                                visible: emojiSearchInput.text === ""
+                            }
+                            Keys.onEscapePressed: root.page = "main"
+                            Keys.onUpPressed: root._emojiMove(0, -1)
+                            Keys.onDownPressed: root._emojiMove(0, 1)
+                            Keys.onLeftPressed: root._emojiMove(-1, 0)
+                            Keys.onRightPressed: root._emojiMove(1, 0)
+                        }
+                    }
+                }
+
+                GridView {
+                    id: emojiGrid
+                    width: parent.width; height: 280
+                    clip: true
+                    cellWidth: Math.floor(width / 8)
+                    cellHeight: Math.floor(width / 8)
+                    model: root.emojiFiltered
+                    currentIndex: root.emojiSelected
+                    onCurrentIndexChanged: root.emojiSelected = currentIndex
+                    delegate: Item {
+                        required property var modelData
+                        required property int index
+                        width: emojiGrid.cellWidth; height: emojiGrid.cellHeight
+                        Rectangle {
+                            anchors { fill: parent; margins: 2 }
+                            radius: 0
+                            color: emojiMouse.containsMouse || index === emojiGrid.currentIndex ? Qt.rgba(1,1,1,0.10) : "transparent"
+                            border.color: index === emojiGrid.currentIndex ? PanelColors.launcher : "transparent"
+                            border.width: 2
+                            Text { anchors.centerIn: parent; text: modelData.char; font.family: "Noto Color Emoji"; font.pixelSize: 26; renderType: Text.NativeRendering }
+                        }
+                        MouseArea {
+                            id: emojiMouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
+                            onClicked: { emojiCopyProc.copyEmoji(modelData.char); root.close() }
+                            onEntered: emojiGrid.currentIndex = index
+                        }
+                    }
+                }
+                Text {
+                    width: parent.width
+                    visible: root.emojiFiltered.length === 0 && root._emojiQuery !== ""
+                    text: "No emoji found"
+                    font.pixelSize: FontConfig.sizeSmall; font.bold: true; font.family: FontConfig.fontFamily; color: PanelColors.textDim
+                    horizontalAlignment: Text.AlignHCenter; renderType: Text.NativeRendering
+                }
             }
 
             // ---- notifications page ----
