@@ -1,0 +1,11 @@
+module controlcenter.pages
+MainPage 1.0 MainPage.qml
+CalendarPage 1.0 CalendarPage.qml
+AppsPage 1.0 AppsPage.qml
+EmojiPage 1.0 EmojiPage.qml
+NotificationsPage 1.0 NotificationsPage.qml
+WifiPage 1.0 WifiPage.qml
+BluetoothPage 1.0 BluetoothPage.qml
+PowerPage 1.0 PowerPage.qml
+ClipboardPage 1.0 ClipboardPage.qml
+WallpaperPage 1.0 WallpaperPage.qml

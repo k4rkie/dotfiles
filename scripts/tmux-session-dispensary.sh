@@ -8,7 +8,6 @@ DIRS=(
     "$HOME/Projects/C"
     "$HOME/Projects/C"
     "$HOME/Projects/JS"
-    "$HOME/Projects/Rust"
     "$HOME/dotfiles"
 )
 

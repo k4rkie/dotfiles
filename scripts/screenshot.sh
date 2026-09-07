@@ -31,6 +31,6 @@ fi
 
 satty \
     --filename "$tmp" \
-    --actions-on-enter "save-to-file" \
+    --copy-command "wl-copy" --actions-on-enter "save-to-clipboard,save-to-file" \
     --early-exit \
     --output-filename "$output"

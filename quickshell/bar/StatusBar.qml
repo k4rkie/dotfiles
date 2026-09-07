@@ -17,7 +17,7 @@ PanelWindow {
     exclusiveZone: 30
 
     implicitHeight: 34
-    WlrLayershell.layer: WlrLayer.Bottom
+    WlrLayershell.layer: WlrLayer.Overlay
     WlrLayershell.namespace: "quickshell:bar"
 
     Rectangle {
@@ -52,6 +52,7 @@ PanelWindow {
             Memory {}
             Battery {}
             Tray {}
+            Wifi {}
         }
     }
 }
