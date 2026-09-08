@@ -135,7 +135,6 @@ import "../apps"
 
                                 width: btPairedCol.width; height: 36; radius: 0
                                 color: devMouse.containsMouse ? Qt.lighter(PanelColors.rowBackground, 1.25) : PanelColors.rowBackground
-                                Behavior on color { ColorAnimation { duration: 0 } }
 
                                 Row {
                                     anchors { left: parent.left; leftMargin: 10; verticalCenter: parent.verticalCenter }
@@ -258,7 +257,6 @@ import "../apps"
 
                                 width: btNearbyCol.width; height: 34; radius: 0
                                 color: nearMouse.containsMouse ? Qt.lighter(PanelColors.rowBackground, 1.25) : PanelColors.rowBackground
-                                Behavior on color { ColorAnimation { duration: 0 } }
 
                                 Row {
                                     anchors { left: parent.left; leftMargin: 10; verticalCenter: parent.verticalCenter }

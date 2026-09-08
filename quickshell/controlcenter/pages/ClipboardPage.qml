@@ -62,7 +62,6 @@ import "../apps"
 
                                     width: clipCol.width; height: modelData.isImage ? 160 : 32; radius: 0
                                     color: clipMouse.containsMouse ? Qt.lighter(PanelColors.rowBackground, 1.25) : PanelColors.rowBackground
-                                    Behavior on color { ColorAnimation { duration: 0 } }
 
                                     Component.onCompleted: {
                                         if (modelData.isImage)

@@ -94,7 +94,6 @@ import "../apps"
                                     color: PanelColors.rowBackground
                                     border.width: wallHover.containsMouse ? 2 : 1
                                     border.color: wallHover.containsMouse ? PanelColors.launcher : PanelColors.border
-                                    Behavior on border.color { ColorAnimation { duration: 0 } }
 
                                     Image {
                                         anchors.fill: parent; anchors.margins: 2
@@ -123,7 +122,6 @@ import "../apps"
                                     text: modelData.wallName
                                     font.pixelSize: 12; font.bold: true; font.family: FontConfig.fontFamily
                                     color: wallHover.containsMouse ? PanelColors.launcher : PanelColors.textMain
-                                    Behavior on color { ColorAnimation { duration: 0 } }
                                     horizontalAlignment: Text.AlignHCenter
                                     verticalAlignment: Text.AlignVCenter
                                     elide: Text.ElideRight

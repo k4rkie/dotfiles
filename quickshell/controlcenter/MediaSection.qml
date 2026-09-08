@@ -241,7 +241,6 @@ Item {
                     fillMode: Image.PreserveAspectCrop
                     asynchronous: true; mipmap: true; smooth: true
                     opacity: artContainer._showA ? 0.0 : 1.0
-                    Behavior on opacity { NumberAnimation { duration: 0; easing.type: Easing.InOutSine } }
                     visible: opacity > 0
                 }
                 Image {
@@ -251,7 +250,6 @@ Item {
                     fillMode: Image.PreserveAspectCrop
                     asynchronous: true; mipmap: true; smooth: true
                     opacity: artContainer._showA ? 1.0 : 0.0
-                    Behavior on opacity { NumberAnimation { duration: 0; easing.type: Easing.InOutSine } }
                     visible: opacity > 0
                 }
                 Text {
@@ -275,7 +273,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 height: Math.max(textSlotA.implicitHeight, textSlotB.implicitHeight)
 
-                Column { id: textSlotA; width: parent.width; spacing: 6; opacity: root._textShowA ? 1.0 : 0.0; Behavior on opacity { NumberAnimation { duration: 0; easing.type: Easing.InOutSine } }
+                    Column { id: textSlotA; width: parent.width; spacing: 6; opacity: root._textShowA ? 1.0 : 0.0
                     Item { width: parent.width; height: 20; clip: true
                         Text { text: root._titleA || "Unknown Title"; font.pixelSize: FontConfig.sizeSmall; font.bold: true; font.family: FontConfig.fontFamily; color: PanelColors.textAccent ; renderType: Text.NativeRendering }
                     }
@@ -286,9 +284,8 @@ Item {
                             Text { text: root._identityA; font.pixelSize: FontConfig.sizeTiny; font.bold: true; font.family: FontConfig.fontFamily; color: PanelColors.textAccent; anchors.verticalCenter: parent.verticalCenter ; renderType: Text.NativeRendering }
                         }
                     }
-                }
-
-                Column { id: textSlotB; width: parent.width; spacing: 6; opacity: root._textShowA ? 0.0 : 1.0; Behavior on opacity { NumberAnimation { duration: 0; easing.type: Easing.InOutSine } }
+                    }
+                    Column { id: textSlotB; width: parent.width; spacing: 6; opacity: root._textShowA ? 0.0 : 1.0
                     Item { width: parent.width; height: 20; clip: true
                         Text { text: root._titleB || "Unknown Title"; font.pixelSize: FontConfig.sizeSmall; font.bold: true; font.family: FontConfig.fontFamily; color: PanelColors.textAccent ; renderType: Text.NativeRendering }
                     }
@@ -342,7 +339,6 @@ Item {
             MediaBtn {
                 anchors.left: parent.left; anchors.verticalCenter: parent.verticalCenter
                 opacity: (activePlayer?.shuffleSupported ?? false) ? 1.0 : 0.0
-                Behavior on opacity { NumberAnimation { duration: 0 } }
                 visible: opacity > 0
                 icon: ""; accentColor: PanelColors.clock
                 highlighted: activePlayer?.shuffle ?? false
@@ -354,7 +350,6 @@ Item {
                     icon: ""; accentColor: PanelColors.clock
                     enabled: activePlayer?.canGoPrevious ?? false
                     opacity: enabled ? 1.0 : 0.45
-                    Behavior on opacity { NumberAnimation { duration: 0 } }
                     onClicked: activePlayer?.previous()
                 }
                 MediaBtn {
@@ -367,7 +362,6 @@ Item {
                     icon: ""; accentColor: PanelColors.clock
                     enabled: activePlayer?.canGoNext ?? false
                     opacity: enabled ? 1.0 : 0.45
-                    Behavior on opacity { NumberAnimation { duration: 0 } }
                     onClicked: activePlayer?.next()
                 }
             }
@@ -375,7 +369,6 @@ Item {
             MediaBtn {
                 anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
                 opacity: (activePlayer?.loopSupported ?? false) ? 1.0 : 0.0
-                Behavior on opacity { NumberAnimation { duration: 0 } }
                 visible: opacity > 0
                 icon: (activePlayer?.loopState ?? MprisLoopState.None) === MprisLoopState.Track ? "󰑘" : "󰑖"
                 accentColor: PanelColors.clock
@@ -413,7 +406,6 @@ Item {
         }
           border.color: highlighted ? Qt.darker(accentColor, 1.2) : PanelColors.border
           border.width: 1
-          Behavior on color { ColorAnimation { duration: 0 } }
         Text {
             renderType: Text.NativeRendering
             anchors.centerIn: parent; text: btn.icon
@@ -423,7 +415,6 @@ Item {
                 if (btn.highlighted) return PanelColors.pillForeground
                 return btnMouse.containsMouse ? PanelColors.textAccent : PanelColors.textMain
             }
-            Behavior on color { ColorAnimation { duration: 0 } }
         }
           MouseArea {
               id: btnMouse; z: 2; anchors.fill: parent; hoverEnabled: true; enabled: btn.enabled
@@ -450,7 +441,6 @@ Item {
         readonly property bool hovered: barMouse.containsMouse || barMouse.pressed
         readonly property real targetValue: activeInteraction ? internalValue : value
         property real animValue: targetValue
-        Behavior on animValue { enabled: !bar.dragging; NumberAnimation { duration: 0; easing.type: Easing.OutCubic } }
         readonly property real _fillWidth: ((bar.animValue - bar.from) / (bar.to - bar.from)) * bar.width
         function _updateFromMouse(mouseX) {
             var newVal = Math.max(bar.from, Math.min(bar.to, bar.from + (mouseX / bar.width) * (bar.to - bar.from)))
@@ -460,19 +450,16 @@ Item {
         property real _phase: 0
         NumberAnimation on _phase { from: 0; to: Math.PI * 2; duration: 1200; loops: Animation.Infinite; running: bar.playing && !bar.activeInteraction }
         property real _waveAmount: 0.0
-        Behavior on _waveAmount { NumberAnimation { duration: 0; easing.type: Easing.InOutSine } }
         onPlayingChanged: _waveAmount = (playing && !activeInteraction) ? 1.0 : 0.0
         onActiveInteractionChanged: _waveAmount = (playing && !activeInteraction) ? 1.0 : 0.0
 
         property color _strokeColor: hovered ? Qt.lighter(bar.accentColor, 1.15) : bar.accentColor
-        Behavior on _strokeColor { ColorAnimation { duration: 0 } }
 
         Rectangle {
             x: Math.max(0, bar._fillWidth - 3)
             width: Math.max(0, parent.width - x - 3); height: 6; radius: 3
             anchors.verticalCenter: parent.verticalCenter
             color: bar.hovered ? Qt.rgba(PanelColors.trackBackground.r, PanelColors.trackBackground.g, PanelColors.trackBackground.b, 0.4) : Qt.lighter(PanelColors.trackBackground, 1.1)
-            Behavior on color { ColorAnimation { duration: 0 } }
         }
         Canvas {
             id: waveCanvas
@@ -506,16 +493,12 @@ Item {
         Item {
             width: 0; height: 0; anchors.verticalCenter: parent.verticalCenter; x: bar._fillWidth
             opacity: bar.forceNoNeedle ? 0.0 : 1.0
-            Behavior on opacity { NumberAnimation { duration: 0; easing.type: Easing.InOutSine } }
             Rectangle {
                 anchors.centerIn: parent
                 width: bar.isNeedle ? 6 : (bar.hovered ? 18 : 14)
                 height: bar.isNeedle ? 24 : (bar.hovered ? 18 : 14)
                 radius: width / 2
                 color: bar.hovered ? Qt.lighter(bar.accentColor, 1.15) : bar.accentColor
-                Behavior on width { NumberAnimation { duration: 0; easing.type: Easing.OutBack } }
-                Behavior on height { NumberAnimation { duration: 0; easing.type: Easing.OutBack } }
-                Behavior on color { ColorAnimation { duration: 0 } }
             }
         }
         MouseArea {

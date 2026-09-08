@@ -50,6 +50,7 @@ PanelWindow {
             spacing: 8
 
             Memory {}
+            Storage {}
             Battery {}
             Tray {}
             Wifi {}

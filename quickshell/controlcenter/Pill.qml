@@ -17,7 +17,6 @@ Rectangle {
         }
         border.width: 1
         border.color: checked || isActive ? Qt.darker(accentColor, 1.2) : PanelColors.border
-        Behavior on color { ColorAnimation { duration: 0 } }
 
         Row {
             anchors.centerIn: parent
@@ -30,7 +29,6 @@ Rectangle {
                 color: pill.checked || pill.isActive ? PanelColors.pillForeground
                     : pillMouse.containsMouse ? PanelColors.textAccent : PanelColors.textMain
                 anchors.verticalCenter: parent.verticalCenter
-                Behavior on color { ColorAnimation { duration: 0 } }
             }
             Text {
                 renderType: Text.NativeRendering
@@ -41,7 +39,6 @@ Rectangle {
                 color: pill.checked || pill.isActive ? PanelColors.pillForeground
                     : pillMouse.containsMouse ? PanelColors.textAccent : PanelColors.textDim
                 anchors.verticalCenter: parent.verticalCenter
-                Behavior on color { ColorAnimation { duration: 0 } }
             }
         }
 

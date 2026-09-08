@@ -10,7 +10,6 @@ Rectangle {
         color: actMouse.containsMouse ? Qt.lighter(PanelColors.rowBackground, 1.25) : PanelColors.rowBackground
         border.width: 1
         border.color: PanelColors.border
-        Behavior on color { ColorAnimation { duration: 0 } }
 
         Row {
             anchors.centerIn: parent

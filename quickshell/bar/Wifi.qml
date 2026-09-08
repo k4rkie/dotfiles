@@ -12,6 +12,10 @@ Rectangle {
     border.color: PanelColors.border
     color: "#060400"
 
+    readonly property var isWifiConnected: Networking.devices.values[0].connected
+    readonly property var wifiName: Networking.devices.values[0].networks.values.find(n => n.connected).name 
+    readonly property var wifiStrength: Math.round(Networking.devices.values[0].networks.values.find(n => n.connected).signalStrength * 100)
+
     Text {
         id: label
         anchors.centerIn: parent
@@ -19,7 +23,8 @@ Rectangle {
         font.pixelSize: FontConfig.size
         color: "#e78a4e"
         text: {
-            return "󱚻" + " :" +"ON"
+            if(isWifiConnected) return "󱚻 :" + root.wifiStrength + "%"
+            return "󰖪 :OFF"
         }
     }
 

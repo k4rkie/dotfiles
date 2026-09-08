@@ -11,11 +11,22 @@ import "../apps"
 
 
             Column {
+                id: emojiPage
     required property var controlRoot
                 width: parent.width
                 spacing: 8
                 visible: controlRoot.page === "emoji"
                 onVisibleChanged: if (visible) { controlRoot._emojiQuery = ""; controlRoot.emojiLoad(); Qt.callLater(function(){ emojiSearchInput.forceActiveFocus() }) }
+
+                function _emojiMoveLocal(colDelta, rowDelta) {
+                    if (controlRoot.emojiFiltered.length === 0) return
+                    var cols = 8
+                    var maxIdx = controlRoot.emojiFiltered.length - 1
+                    var cur = emojiGrid.currentIndex < 0 ? 0 : emojiGrid.currentIndex
+                    var next = Math.max(0, Math.min(cur + colDelta + rowDelta * cols, maxIdx))
+                    emojiGrid.currentIndex = next
+                    emojiGrid.positionViewAtIndex(next, GridView.Contain)
+                }
 
                 Rectangle {
                     width: parent.width; height: 36; radius: 0
@@ -42,10 +53,10 @@ import "../apps"
                                 visible: emojiSearchInput.text === ""
                             }
                             Keys.onEscapePressed: controlRoot.page = "main"
-                            Keys.onUpPressed: controlRoot._emojiMove(0, -1)
-                            Keys.onDownPressed: controlRoot._emojiMove(0, 1)
-                            Keys.onLeftPressed: controlRoot._emojiMove(-1, 0)
-                            Keys.onRightPressed: controlRoot._emojiMove(1, 0)
+                            Keys.onUpPressed: emojiPage._emojiMoveLocal(0, -1)
+                            Keys.onDownPressed: emojiPage._emojiMoveLocal(0, 1)
+                            Keys.onLeftPressed: emojiPage._emojiMoveLocal(-1, 0)
+                            Keys.onRightPressed: emojiPage._emojiMoveLocal(1, 0)
                         }
                     }
                 }

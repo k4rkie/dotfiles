@@ -13,27 +13,11 @@ Column {
     property alias dayGrid: calDayGrid
     property alias gridTrans: calGridTrans
 
-    // keep animation inside page to avoid cross-scope id issues
-    SequentialAnimation {
-        id: calMonthAnim
-        property int direction: 0
-        ParallelAnimation {
-            NumberAnimation { target: calDayGrid; property: "opacity"; to: 0; duration: 0; easing.type: Easing.OutCubic }
-            NumberAnimation { target: calGridTrans; property: "x"; to: calMonthAnim.direction > 0 ? -30 : 30; duration: 0; easing.type: Easing.OutCubic }
-        }
-        ScriptAction { script: {
-                controlRoot._calSelectedDay = -1
-                if (calMonthAnim.direction > 0) { if (controlRoot._calViewMonth === 11) { controlRoot._calViewMonth = 0; controlRoot._calViewYear++ } else controlRoot._calViewMonth++ }
-                else { if (controlRoot._calViewMonth === 0) { controlRoot._calViewMonth = 11; controlRoot._calViewYear-- } else controlRoot._calViewMonth-- }
-            } }
-        PropertyAction { target: calGridTrans; property: "x"; value: calMonthAnim.direction > 0 ? 30 : -30 }
-        ParallelAnimation {
-            NumberAnimation { target: calDayGrid; property: "opacity"; to: 1; duration: 0; easing.type: Easing.OutExpo }
-            NumberAnimation { target: calGridTrans; property: "x"; to: 0; duration: 0; easing.type: Easing.OutExpo }
-        }
+    function updateMonth(delta) {
+        controlRoot._calSelectedDay = -1
+        if (delta > 0) { if (controlRoot._calViewMonth === 11) { controlRoot._calViewMonth = 0; controlRoot._calViewYear++ } else controlRoot._calViewMonth++ }
+        else { if (controlRoot._calViewMonth === 0) { controlRoot._calViewMonth = 11; controlRoot._calViewYear-- } else controlRoot._calViewMonth-- }
     }
-
-    function updateMonth(delta) { calMonthAnim.direction = delta; calMonthAnim.restart() }
 
     // expose to controlRoot via Connections
     Connections {

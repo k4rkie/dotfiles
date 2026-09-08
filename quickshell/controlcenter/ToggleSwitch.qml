@@ -14,7 +14,6 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
             width: 14; height: 14; radius: 0
             color: tswitch.checked ? PanelColors.pillForeground : PanelColors.textDim
-            Behavior on x { NumberAnimation { duration: 0 } }
         }
         MouseArea {
             id: tswitchMouse

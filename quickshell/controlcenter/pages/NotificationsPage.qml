@@ -71,7 +71,6 @@ import "../apps"
                         width: notiList.width
                         height: notiRow.implicitHeight + 20; radius: 0
                         color: notiMouse.containsMouse ? Qt.lighter(PanelColors.rowBackground, 1.25) : PanelColors.rowBackground
-                        Behavior on color { ColorAnimation { duration: 0 } }
 
                         Row {
                             id: notiRow

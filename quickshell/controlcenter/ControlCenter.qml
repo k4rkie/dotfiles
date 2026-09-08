@@ -36,38 +36,18 @@ PanelWindow {
         animState = "open"
         page = "main"
         queryBtState()
-        closeAnim.stop()
-        openAnim.restart()
     }
 
     function close() {
         if (animState !== "open") return
         animState = "closing"
-        openAnim.stop()
-        closeAnim.restart()
+        closeDelay.restart()
     }
+    Timer { id: closeDelay; interval: 200; onTriggered: root.animState = "closed" }
 
     function toggle() {
         if (animState === "open") close()
         else open()
-    }
-
-    SequentialAnimation {
-        id: openAnim
-        ScriptAction { script: { root.slideOffset = 60; menuCard.opacity = 0 } }
-        ParallelAnimation {
-            NumberAnimation { target: root; property: "slideOffset"; to: 0; duration: 0; easing.type: Easing.OutExpo }
-            NumberAnimation { target: menuCard; property: "opacity"; to: 1; duration: 0; easing.type: Easing.OutQuad }
-        }
-    }
-
-    SequentialAnimation {
-        id: closeAnim
-        ParallelAnimation {
-            NumberAnimation { target: root; property: "slideOffset"; to: 60; duration: 0; easing.type: Easing.InQuad }
-            NumberAnimation { target: menuCard; property: "opacity"; to: 0; duration: 0; easing.type: Easing.InQuad }
-        }
-        ScriptAction { script: { root.animState = "closed"; root.slideOffset = 0; menuCard.opacity = 1 } }
     }
 
     property real slideOffset: 0
@@ -641,7 +621,6 @@ PanelWindow {
         var q = _emojiQuery.toLowerCase()
         emojiFiltered = q === "" ? _emojiAll : _emojiAll.filter(function(e){ return e.name.includes(q) })
         emojiSelected = 0
-        if (emojiGrid) emojiGrid.currentIndex = 0
     }
     function emojiLoad() {
         if (_emojiAll.length > 0) { _doEmojiFilter(); return }
@@ -658,15 +637,6 @@ PanelWindow {
         }
     }
     Process { id: emojiCopyProc; command: ["true"]; function copyEmoji(ch) { command = ["bash","-c","printf '%s' '" + ch + "' | wl-copy"]; running = true } }
-    function _emojiMove(colDelta, rowDelta) {
-        if (emojiFiltered.length === 0) return
-        var cols = 8
-        var maxIdx = emojiFiltered.length - 1
-        var cur = emojiGrid.currentIndex < 0 ? 0 : emojiGrid.currentIndex
-        var next = Math.max(0, Math.min(cur + colDelta + rowDelta * cols, maxIdx))
-        emojiGrid.currentIndex = next
-        emojiGrid.positionViewAtIndex(next, GridView.Contain)
-    }
 
     // ---- caffeine ----------------------------------------------------------
 
@@ -942,8 +912,6 @@ PanelWindow {
         border.color: PanelColors.popupBackground
         border.width: 1
 
-        Behavior on height { NumberAnimation { duration: 0; easing.type: Easing.OutCubic } }
-
          MouseArea { anchors.fill: parent; onPressed: (m) => m.accepted = true }
 
          Column {
@@ -1109,14 +1077,12 @@ PanelWindow {
         color: hmouse.containsMouse || isActive ? Qt.lighter(PanelColors.rowBackground, 1.35) : PanelColors.rowBackground
         border.width: 1
         border.color: PanelColors.border
-        Behavior on color { ColorAnimation { duration: 0 } }
         Text {
             renderType: Text.NativeRendering
             anchors.centerIn: parent
             text: hbtn.iconText
             font.pixelSize: 16; font.family: FontConfig.fontFamily
             color: hmouse.containsMouse || hbtn.isActive ? PanelColors.textAccent : PanelColors.textMain
-            Behavior on color { ColorAnimation { duration: 0 } }
         }
         MouseArea {
             id: hmouse; z: 2; anchors.fill: parent; hoverEnabled: true
@@ -1142,7 +1108,7 @@ PanelWindow {
         }
         border.width: 1
         border.color: checked || isActive ? Qt.darker(accentColor, 1.2) : PanelColors.border
-        Behavior on color { ColorAnimation { duration: 0 } }
+
 
         Row {
             anchors.centerIn: parent
@@ -1155,7 +1121,7 @@ PanelWindow {
                 color: pill.checked || pill.isActive ? PanelColors.pillForeground
                     : pillMouse.containsMouse ? PanelColors.textAccent : PanelColors.textMain
                 anchors.verticalCenter: parent.verticalCenter
-                Behavior on color { ColorAnimation { duration: 0 } }
+        
             }
             Text {
                 renderType: Text.NativeRendering
@@ -1166,7 +1132,7 @@ PanelWindow {
                 color: pill.checked || pill.isActive ? PanelColors.pillForeground
                     : pillMouse.containsMouse ? PanelColors.textAccent : PanelColors.textDim
                 anchors.verticalCenter: parent.verticalCenter
-                Behavior on color { ColorAnimation { duration: 0 } }
+        
             }
         }
 
@@ -1191,7 +1157,7 @@ PanelWindow {
         color: actMouse.containsMouse ? Qt.lighter(PanelColors.rowBackground, 1.25) : PanelColors.rowBackground
         border.width: 1
         border.color: PanelColors.border
-        Behavior on color { ColorAnimation { duration: 0 } }
+
 
         Row {
             anchors.centerIn: parent
@@ -1234,7 +1200,7 @@ PanelWindow {
             anchors.verticalCenter: parent.verticalCenter
             width: 14; height: 14; radius: 0
             color: tswitch.checked ? PanelColors.pillForeground : PanelColors.textDim
-            Behavior on x { NumberAnimation { duration: 0 } }
+
         }
         MouseArea {
             id: tswitchMouse
