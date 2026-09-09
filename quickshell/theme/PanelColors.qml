@@ -8,27 +8,38 @@ Singleton {
     readonly property int transitionDuration: 250
 
     // Base16 Black Metal Bathory Tweaked
-    readonly property color base00: "#030303"
-    readonly property color base01: "#080808"
-    readonly property color base02: "#121212"
-    readonly property color base03: "#333333"
-    readonly property color base04: "#999999"
-    readonly property color base05: "#c1c1c1"
-    readonly property color base06: "#999999"
-    readonly property color base07: "#c1c1c1"
-    readonly property color base08: "#a1a1a1"
-    readonly property color base09: "#aaaaaa"
-    readonly property color base0A: "#e78a53"
-    readonly property color base0B: "#d9af82"
-    readonly property color base0C: "#aaaaaa"
-    readonly property color base0D: "#696969"
-    readonly property color base0E: "#999999"
-    readonly property color base0F: "#444444"
+    readonly property color base00: "#080610"
+    readonly property color base01: "#0c0a16"
+    readonly property color base02: "#110e1c"
+    readonly property color base03: "#5e5a74"
+    readonly property color base04: "#807a94"
+    readonly property color base05: "#d0cce4"
+    readonly property color base06: "#d0cce4"
+    readonly property color base07: "#424057"
+    readonly property color base08: "#c27282"
+    readonly property color base09: "#d0a872"
+    readonly property color base0A: "#c4a29a"
+    readonly property color base0B: "#4a7a8a"
+    readonly property color base0C: "#8ab5be"
+    readonly property color base0D: "#a890c4"
+    readonly property color base0E: "#d0a872"
+    readonly property color base0F: "#424057"
 
     // Surfaces
     readonly property color barBackground:     base00
     readonly property color pillForeground:    base01
     readonly property color overlayBackground: Qt.rgba(base00.r, base00.g, base00.b, 0.667)
+
+    // Returns barBackground blended with accent for module tinting
+    function tintedBackground(accent) {
+        var c = Qt.colorEqual(accent, "transparent") ? barBackground : accent
+        return Qt.rgba(
+            barBackground.r * 0.85 + c.r * 0.15,
+            barBackground.g * 0.85 + c.g * 0.15,
+            barBackground.b * 0.85 + c.b * 0.15,
+            1
+        )
+    }
 
     // Accents
     readonly property color launcher:          base08
@@ -57,7 +68,7 @@ Singleton {
     // Text
     readonly property color textMain:          base05
     readonly property color textDim:           base04
-    readonly property color textAccent:        base07
+    readonly property color textAccent:        base05
     readonly property color textBox:           base00
     readonly property color textBoxDim:        base03
 

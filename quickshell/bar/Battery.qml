@@ -31,11 +31,7 @@ Rectangle {
     readonly property bool isWarning: percent <= 30 && percent > 15 && !isPlugged
     readonly property bool isCritical: percent <= 15 && !isPlugged
 
-    color: {
-        if (isCritical) return "#0d0200"
-        if (isWarning) return "#0d0600"
-        return "#040806"
-    }
+    color: "transparent"
 
     readonly property var icons: ["", "", "", "", ""]
     readonly property string batIcon: {
@@ -56,9 +52,9 @@ Rectangle {
         font.family: FontConfig.fontFamily
         font.pixelSize: FontConfig.size
         color: {
-            if (root.isCritical) return "#ea6962"
-            if (root.isWarning) return "#e78a4e"
-            return "#7daea3"
+            if (root.isCritical) return "#d87a78"
+            if (root.isWarning) return "#d89868"
+            return "#8ba5a0"
         }
         text: {
             if (!root.isReady) return " :--%"

@@ -71,6 +71,7 @@ alias vi="nvim"
 alias fastfetch="fastfetch -c examples/27"
 alias reload="source ~/.zshrc"
 alias fman="compgen -c | fzf | xargs man"
+alias tsd="tmux-session-dispensary.sh"
 
 # -------------------------------
 #  PATH variables

@@ -7,7 +7,7 @@ Rectangle {
     id: root
     height: 30
     width: label.implicitWidth + 16
-    color: "#080a03"
+    color: "transparent"
     border.color: PanelColors.border
     border.width: 2
     radius: 0
@@ -39,7 +39,7 @@ Rectangle {
         text: " :" + root.percent + "%"
         font.family: FontConfig.fontFamily
         font.pixelSize: FontConfig.size
-        color: "#a9b665"
+        color: "#9faa7b"
     }
 
     MouseArea {

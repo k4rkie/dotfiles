@@ -8,7 +8,7 @@ return {
   require("plugins.flash"),
   require("plugins.surround"),
   require("plugins.webdevicons"),
-  require("plugins.colorhighlight"),
+  -- require("plugins.colorhighlight"),
   require("plugins.oil"),
   require("plugins.rendermarkdown"),
   require("plugins.conform"),

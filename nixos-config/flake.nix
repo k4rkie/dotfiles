@@ -18,6 +18,7 @@
       url = "github:vyrx-dev/toofan";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
   };
 
   outputs =

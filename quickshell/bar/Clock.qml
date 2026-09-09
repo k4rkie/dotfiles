@@ -7,7 +7,7 @@ Rectangle {
     id: root
     height: 30
     width: label.implicitWidth + 16
-    color: "#02040a"
+    color: "transparent"
     border.color: PanelColors.border
     border.width: 2
     radius: 0
@@ -32,7 +32,7 @@ Rectangle {
         text: root.timeText
         font.family: FontConfig.fontFamily
         font.pixelSize: FontConfig.size
-        color: "#82709c"
+        color: "#a890c4"
     }
 
     MouseArea {

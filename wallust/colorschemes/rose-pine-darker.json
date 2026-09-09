@@ -1,0 +1,27 @@
+{
+  "name": "Rose Pine Darker",
+  "variant": "dark",
+  "special": {
+    "background": "#080610",
+    "foreground": "#d0cce4",
+    "cursor": "#d0cce4"
+  },
+  "colors": {
+    "color0":  "#080610",
+    "color1":  "#c27282",
+    "color2":  "#4a7a8a",
+    "color3":  "#d0a872",
+    "color4":  "#a890c4",
+    "color5":  "#c4a29a",
+    "color6":  "#8ab5be",
+    "color7":  "#d0cce4",
+    "color8":  "#110e1c",
+    "color9":  "#c27282",
+    "color10": "#4a7a8a",
+    "color11": "#d0a872",
+    "color12": "#a890c4",
+    "color13": "#c4a29a",
+    "color14": "#8ab5be",
+    "color15": "#d0cce4"
+  }
+}

@@ -10,30 +10,30 @@ Rectangle {
     radius: 0
     border.width: 2
     border.color: PanelColors.border
-    color: "#060400"
+    color: "transparent"
 
     readonly property var isWifiConnected: Networking.devices.values[0].connected
     readonly property var wifiName: Networking.devices.values[0].networks.values.find(n => n.connected).name 
     readonly property var wifiStrength: Math.round(Networking.devices.values[0].networks.values.find(n => n.connected).signalStrength * 100)
+
+    readonly property var normalStateLabelText: isWifiConnected ? `󱚻 :${root.wifiStrength}%` : "󰖪 :OFF"
+    readonly property var hoverStateLabelText: isWifiConnected ? `󱚻 :${root.wifiName}` : "󰖪 :OFF"
 
     Text {
         id: label
         anchors.centerIn: parent
         font.family: FontConfig.fontFamily
         font.pixelSize: FontConfig.size
-        color: "#e78a4e"
-        text: {
-            if(isWifiConnected) return "󱚻 :" + root.wifiStrength + "%"
-            return "󰖪 :OFF"
-        }
+        color: "#d89868"
+        text: root.normalStateLabelText
     }
 
     MouseArea {
         anchors.fill: parent
         cursorShape: Qt.PointingHandCursor
         hoverEnabled: true
-        onEntered: parent.opacity = 0.7
-        onExited: parent.opacity = 1.0
+        onEntered: parent.opacity = 0.9, label.text = root.hoverStateLabelText
+        onExited: parent.opacity = 1.0, label.text = root.normalStateLabelText
         onClicked: Quickshell.execDetached(["sh","-c","quickshell ipc call control openWifi"])
     }
 }
