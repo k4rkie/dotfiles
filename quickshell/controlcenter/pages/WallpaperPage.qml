@@ -65,17 +65,19 @@ import "../apps"
                 Item {
                     width: parent.width
                     height: 320
+                    clip: true
 
                     GridView {
                         id: wallGrid
                         anchors.fill: parent
                         clip: true
+                        visible: wallPage.filteredWalls.length > 0
 
                         readonly property int cols: 3
                         readonly property int thumbW: Math.floor((width - 8) / cols)
                         readonly property int thumbH: Math.floor(thumbW * 0.58)
                         cellWidth: thumbW
-                        cellHeight: thumbH + 22
+                        cellHeight: thumbH
                         model: wallPage.filteredWalls
 
                         delegate: Item {
@@ -119,6 +121,8 @@ import "../apps"
                                     renderType: Text.NativeRendering
                                     width: parent.width
                                     height: 18
+                                    visible: false
+                                    opacity: 0
                                     text: modelData.wallName
                                     font.pixelSize: 12; font.bold: true; font.family: FontConfig.fontFamily
                                     color: wallHover.containsMouse ? PanelColors.launcher : PanelColors.textMain
@@ -136,6 +140,13 @@ import "../apps"
                                 onClicked: controlRoot.wallpaperSetProc.apply(modelData.filePath, modelData.isVideo)
                             }
                         }
+                    }
+                    Text {
+                        anchors.centerIn: parent
+                        visible: wallPage.filteredWalls.length === 0
+                        text: "No matches"
+                        font.pixelSize: FontConfig.size - 2; font.family: FontConfig.fontFamily; color: PanelColors.textDim
+                        renderType: Text.NativeRendering
                     }
                 }
             }

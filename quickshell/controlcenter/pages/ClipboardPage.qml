@@ -10,7 +10,7 @@ import "../../theme"
 import "../apps"
 
 
-            Column {
+Column {
     required property var controlRoot
                 width: parent.width
                 spacing: 6

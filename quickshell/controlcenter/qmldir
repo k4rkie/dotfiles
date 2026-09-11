@@ -1,9 +1,2 @@
 module controlcenter
 ControlCenter 1.0 ControlCenter.qml
-MediaSection 1.0 MediaSection.qml
-Pill 1.0 Pill.qml
-HeaderIconButton 1.0 HeaderIconButton.qml
-Divider 1.0 Divider.qml
-ActionRow 1.0 ActionRow.qml
-ToggleSwitch 1.0 ToggleSwitch.qml
-BevelOverlay 1.0 BevelOverlay.qml

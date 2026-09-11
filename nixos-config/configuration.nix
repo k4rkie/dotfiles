@@ -139,6 +139,12 @@
 
   programs.zsh.enable = true;
 
+  programs.nh = {
+    enable = true;
+    clean.enable = true;
+    clean.extraArgs = "--keep-since 4d --keep 3";
+    flake = "/home/k4rkie/dotfiles/nixos-config";
+  };
   programs.dconf.enable = true;
 
   programs.mango.enable = true;
@@ -244,7 +250,17 @@
     options = "--delete-older-than 30d";
   };
 
-  zramSwap.enable = true;
+  zramSwap = {
+    enable = true;
+    memoryPercent = 100;
+    algorithm = "zstd";
+  };
+
+  boot.kernel.sysctl = {
+    "vm.swappiness" = 180;
+    "vm.watermark_boost_factor" = 0;
+    "vm.watermark_scale_factor" = 125;
+  };
 
   # Prevent unlimited generations per profile
 

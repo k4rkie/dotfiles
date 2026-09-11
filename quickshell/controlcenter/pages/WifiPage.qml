@@ -8,6 +8,7 @@ import Quickshell.Bluetooth
 import Quickshell.Widgets
 import "../../theme"
 import "../apps"
+import "../components"
 
 
             Column {

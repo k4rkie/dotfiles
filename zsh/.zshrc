@@ -59,7 +59,7 @@ else
 fi
 
 # Set the prompt (ensure you use single quotes here)
-PROMPT='${container_name_prompt}[%F{#a1955f}%~%f] ${vcs_info_msg_0_}%k󰘧 '
+PROMPT='${container_name_prompt}[%F{#a1955f}%~%f] ${vcs_info_msg_0_}%k$ '
 
 # -------------------------------
 # 6. Aliases
@@ -68,9 +68,8 @@ alias ls="eza -lh  --icons=always --git"
 alias la="eza -lha  --icons=always --git"
 
 alias vi="nvim"
-alias fastfetch="fastfetch -c examples/27"
+# alias fastfetch="fastfetch -c examples/27"
 alias reload="source ~/.zshrc"
-alias fman="compgen -c | fzf | xargs man"
 alias tsd="tmux-session-dispensary.sh"
 
 # -------------------------------
@@ -134,3 +133,5 @@ export PATH="/home/k4rkie/.local/bin:$PATH"
 export PATH="$HOME/.npm-global/bin:$PATH"
 
 # export LD_LIBRARY_PATH=$NIX_LD_LIBRARY_PATH:$LD_LIBRARY_PATH
+
+# nerdfetch

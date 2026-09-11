@@ -2,7 +2,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Wayland
 import Quickshell.Services.Notifications
-import "theme"
+import "../../theme"
 
 // Transient notification toasts, stacked at the top-right corner of the
 // screen. Fed by the shared NotifState singleton; each card auto-expires after

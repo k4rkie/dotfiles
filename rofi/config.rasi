@@ -7,7 +7,7 @@ configuration {
     drun-display-format:        "{name}";
 }
 *{
-    font : "Mononoki Nerd Font 15.5";
+    font : "JetBrainsMono Nerd Font 15.5";
 }
 window {
     /* properties for window widget */

@@ -5,24 +5,24 @@
 background=080610
 foreground=d0cce4
 
-regular0=110e1c     # black (Overlay)
-regular1=c27282     # red (Love)
-regular2=4a7a8a     # green (Foam)
-regular3=d0a872     # yellow (Gold)
-regular4=a890c4     # blue (Pine)
-regular5=c4a29a     # magenta (Iris)
-regular6=8ab5be     # cyan (Rose)
-regular7=d0cce4     # white (Text)
+regular0=110e1c
+regular1=c27282
+regular2=4a7a8a
+regular3=d0a872
+regular4=a890c4
+regular5=c4a29a
+regular6=8ab5be
+regular7=d0cce4
 
-bright0=5e5a74      # bright black (lighter Overlay)
-bright1=c27282      # bright red
-bright2=4a7a8a      # bright green
-bright3=d0a872      # bright yellow
-bright4=a890c4      # bright blue
-bright5=c4a29a      # bright magenta
-bright6=8ab5be      # bright cyan
-bright7=d0cce4      # bright white
+bright0=5e5a74 
+bright1=c27282 
+bright2=4a7a8a 
+bright3=d0a872 
+bright4=a890c4 
+bright5=c4a29a 
+bright6=8ab5be 
+bright7=d0cce4 
 
-flash=d0a872        # yellow (Gold)
+flash=d0a872   
 
 cursor=080610 d0cce4

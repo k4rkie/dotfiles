@@ -61,39 +61,45 @@ import "../apps"
                     }
                 }
 
-                GridView {
-                    id: emojiGrid
-                    width: parent.width; height: 280
+                Item {
+                    width: parent.width
+                    height: 280
                     clip: true
-                    cellWidth: Math.floor(width / 8)
-                    cellHeight: Math.floor(width / 8)
-                    model: controlRoot.emojiFiltered
-                    currentIndex: controlRoot.emojiSelected
-                    onCurrentIndexChanged: controlRoot.emojiSelected = currentIndex
-                    delegate: Item {
-                        required property var modelData
-                        required property int index
-                        width: emojiGrid.cellWidth; height: emojiGrid.cellHeight
-                        Rectangle {
-                            anchors { fill: parent; margins: 2 }
-                            radius: 0
-                            color: emojiMouse.containsMouse || index === emojiGrid.currentIndex ? Qt.rgba(1,1,1,0.10) : "transparent"
-                            border.color: index === emojiGrid.currentIndex ? PanelColors.launcher : "transparent"
-                            border.width: 2
-                            Text { anchors.centerIn: parent; text: modelData.char; font.family: "Noto Color Emoji"; font.pixelSize: 26; renderType: Text.NativeRendering }
-                        }
-                        MouseArea {
-                            id: emojiMouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
-                            onClicked: { controlRoot.emojiCopyProc.copyEmoji(modelData.char); controlRoot.close() }
-                            onEntered: emojiGrid.currentIndex = index
+                    GridView {
+                        id: emojiGrid
+                        anchors.fill: parent
+                        clip: true
+                        visible: controlRoot.emojiFiltered.length > 0
+                        cellWidth: Math.floor(width / 8)
+                        cellHeight: Math.floor(width / 8)
+                        model: controlRoot.emojiFiltered
+                        currentIndex: controlRoot.emojiSelected
+                        onCurrentIndexChanged: controlRoot.emojiSelected = currentIndex
+                        delegate: Item {
+                            required property var modelData
+                            required property int index
+                            width: emojiGrid.cellWidth; height: emojiGrid.cellHeight
+                            Rectangle {
+                                anchors { fill: parent; margins: 2 }
+                                radius: 0
+                                color: emojiMouse.containsMouse || index === emojiGrid.currentIndex ? Qt.rgba(1,1,1,0.10) : "transparent"
+                                border.color: index === emojiGrid.currentIndex ? PanelColors.launcher : "transparent"
+                                border.width: 2
+                                Text { anchors.centerIn: parent; text: modelData.char; font.family: "Noto Color Emoji"; font.pixelSize: 26; renderType: Text.NativeRendering }
+                            }
+                            MouseArea {
+                                id: emojiMouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
+                                onClicked: { controlRoot.emojiCopyProc.copyEmoji(modelData.char); controlRoot.close() }
+                                onEntered: emojiGrid.currentIndex = index
+                            }
                         }
                     }
-                }
-                Text {
-                    width: parent.width
-                    visible: controlRoot.emojiFiltered.length === 0 && controlRoot._emojiQuery !== ""
-                    text: "No emoji found"
-                    font.pixelSize: FontConfig.sizeSmall; font.bold: true; font.family: FontConfig.fontFamily; color: PanelColors.textDim
-                    horizontalAlignment: Text.AlignHCenter; renderType: Text.NativeRendering
+                    Text {
+                        anchors.centerIn: parent
+                        visible: controlRoot.emojiFiltered.length === 0
+                        text: "No matches"
+                        font.pixelSize: FontConfig.size - 2; font.family: FontConfig.fontFamily; color: PanelColors.textDim
+                        renderType: Text.NativeRendering
+                    }
                 }
             }

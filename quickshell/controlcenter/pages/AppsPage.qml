@@ -62,13 +62,14 @@ import "../apps"
 
                 Item {
                     width: parent.width
-                    height: controlRoot.ccAppsFiltered.length === 0 ? 70 : Math.min(ccAppsList.contentHeight, 260)
+                    height: 260
                     clip: true
                     ListView {
                         id: ccAppsList
                         anchors.fill: parent
                         spacing: 2
                         clip: true
+                        visible: controlRoot.ccAppsFiltered.length > 0
                         model: controlRoot.ccAppsFiltered
                         delegate: Item {
                             required property var modelData
@@ -103,7 +104,7 @@ import "../apps"
                     Text {
                         anchors.centerIn: parent
                         visible: controlRoot.ccAppsFiltered.length === 0
-                        text: controlRoot.ccAppsSearch === "" ? "No apps" : "No match"
+                        text: "No matches"
                         font.pixelSize: FontConfig.size - 2; font.family: FontConfig.fontFamily; color: PanelColors.textDim
                         renderType: Text.NativeRendering
                     }

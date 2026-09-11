@@ -45,25 +45,28 @@ import "../apps"
                     }
                 }
 
-                Text {
-                    renderType: Text.NativeRendering
+                Item {
                     width: parent.width
-                    visible: controlRoot.notificationHistory.count === 0
-                    text: "No notifications"
-                    font.pixelSize: 16; font.family: FontConfig.fontFamily
-                    color: PanelColors.textDim
-                    horizontalAlignment: Text.AlignHCenter
-                    topPadding: 12
-                }
-
-                ListView {
-                    id: notiList
-                    width: parent.width
-                    height: Math.min(contentHeight, 300)
-                    spacing: 4
+                    height: 295
                     clip: true
-                    interactive: contentHeight > height
-                    model: controlRoot.notificationHistory
+
+                    Text {
+                        anchors.centerIn: parent
+                        visible: controlRoot.notificationHistory.count === 0
+                        text: "No notifications"
+                        font.pixelSize: FontConfig.size - 2; font.family: FontConfig.fontFamily
+                        color: PanelColors.textDim
+                        renderType: Text.NativeRendering
+                    }
+
+                    ListView {
+                        id: notiList
+                        anchors.fill: parent
+                        spacing: 4
+                        clip: true
+                        visible: controlRoot.notificationHistory.count > 0
+                        interactive: contentHeight > height
+                        model: controlRoot.notificationHistory
 
                     delegate: Rectangle {
                         required property var modelData
@@ -148,4 +151,5 @@ import "../apps"
                         }
                     }
                 }
+            }
             }

@@ -8,6 +8,7 @@ import Quickshell.Widgets
 import "../theme"
 import "apps"
 import "pages"
+import "components"
 
 PanelWindow {
     id: root
@@ -114,7 +115,7 @@ PanelWindow {
     // ---- identity --------------------------------------------------------
 
     readonly property string userName: Quickshell.env("USER")
-    readonly property string avatarPath: "/var/lib/AccountsService/icons/" + userName
+    readonly property string avatarPath: "/home/" + userName + "/.face"
     property string hostName: ""
     FileView {
         path: "/etc/hostname"
@@ -931,35 +932,29 @@ PanelWindow {
                     spacing: 12
 
                     Rectangle {
-                        width: 48; height: 48; radius: 24
+                        width: 48; height: 48
                         color: "transparent"
                         border.width: 1
                         border.color: PanelColors.profile
+                        visible: !avatarImg.visible
 
-                        Rectangle {
-                            anchors.fill: parent; anchors.margins: 1
-                            radius: width / 2
-                            color: PanelColors.rowBackground
-                            clip: true
-
-                            Image {
-                                id: avatarImg
-                                anchors.fill: parent
-                                source: "file://" + root.avatarPath
-                                fillMode: Image.PreserveAspectCrop
-                                smooth: true
-                                asynchronous: true
-                                visible: status === Image.Ready
-                            }
-                            Text {
-                                renderType: Text.NativeRendering
-                                anchors.centerIn: parent
-                                visible: !avatarImg.visible
-                                text: root.userName !== "" ? root.userName.charAt(0).toUpperCase() : "?"
-                                font.pixelSize: 16; font.bold: true; font.family: FontConfig.fontFamily
-                                color: PanelColors.textAccent
-                            }
+                        Text {
+                            renderType: Text.NativeRendering
+                            anchors.centerIn: parent
+                            text: root.userName !== "" ? root.userName.charAt(0).toUpperCase() : "?"
+                            font.pixelSize: 16; font.bold: true; font.family: FontConfig.fontFamily
+                            color: PanelColors.textAccent
                         }
+                    }
+
+                    Image {
+                        id: avatarImg
+                        width: 48; height: 48
+                        source: "file://" + root.avatarPath
+                        fillMode: Image.PreserveAspectFit
+                        smooth: true
+                        asynchronous: true
+                        visible: status === Image.Ready
                     }
 
                     Column {
@@ -1074,15 +1069,23 @@ PanelWindow {
         property bool isActive: false
         signal clicked()
         width: 36; height: 36; radius: 0
-        color: hmouse.containsMouse || isActive ? Qt.lighter(PanelColors.rowBackground, 1.35) : PanelColors.rowBackground
+        color: isActive ? Qt.darker(PanelColors.rowBackground, 1.2) : (hmouse.containsMouse ? Qt.lighter(PanelColors.rowBackground, 1.35) : PanelColors.rowBackground)
         border.width: 1
-        border.color: PanelColors.border
+        border.color: isActive ? PanelColors.textAccent : PanelColors.border
         Text {
             renderType: Text.NativeRendering
             anchors.centerIn: parent
             text: hbtn.iconText
             font.pixelSize: 16; font.family: FontConfig.fontFamily
             color: hmouse.containsMouse || hbtn.isActive ? PanelColors.textAccent : PanelColors.textMain
+        }
+        Rectangle {
+            anchors.bottom: parent.bottom
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: 20; height: 2
+            radius: 1
+            color: PanelColors.textAccent
+            visible: hbtn.isActive
         }
         MouseArea {
             id: hmouse; z: 2; anchors.fill: parent; hoverEnabled: true

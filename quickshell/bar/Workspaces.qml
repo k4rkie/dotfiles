@@ -29,6 +29,14 @@ Rectangle {
         6: "six", 7: "seven", 8: "eight", 9: "nine"
     })
 
+    property var buttonWidths: []
+    readonly property int activeIndex: {
+        for (let i = 0; i < visibleTags.length; i++) {
+            if (visibleTags[i].is_active) return i
+        }
+        return 0
+    }
+
     Process {
         id: watchProc
         running: true
@@ -50,6 +58,25 @@ Rectangle {
         Quickshell.execDetached(["mmsg", "dispatch", "view," + index])
     }
 
+    // Sliding indicator behind the active button
+    Rectangle {
+        id: indicator
+        x: {
+            var offset = 0
+            for (var i = 0; i < root.activeIndex; i++)
+                offset += (root.buttonWidths[i] || 0)
+            return 2 + offset
+        }
+        width: root.buttonWidths[root.activeIndex] || 0
+        height: 22
+        anchors.verticalCenter: parent.verticalCenter
+        color: PanelColors.workspaceActive
+        visible: root.visibleTags.length > 0
+        radius: 0
+
+
+    }
+
     Row {
         id: row
         x: 2
@@ -65,8 +92,14 @@ Rectangle {
                 readonly property bool isActive: modelData.is_active
 
                 width: Math.max(isActive ? 48 : 36, wsLabel.implicitWidth + 16)
+                onWidthChanged: {
+                    var w = root.buttonWidths.slice()
+                    w[index] = width
+                    root.buttonWidths = w
+                }
                 height: 22
-                color: isActive ? PanelColors.workspaceActive : (area.containsMouse ? PanelColors.rowBackground : PanelColors.barBackground)
+                // transparent when active so indicator shows through
+                color: isActive ? "transparent" : (area.containsMouse ? PanelColors.rowBackground : "transparent")
 
                 Text {
                     id: wsLabel

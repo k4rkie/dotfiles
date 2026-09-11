@@ -15,7 +15,7 @@ Rectangle {
     property string timeText: ""
 
     function updateTime() {
-        timeText = Qt.formatDateTime(new Date(), " hh:mm AP")
+        timeText = Qt.formatDateTime(new Date(), "󱦟 hh:mm AP")
     }
 
     Timer {

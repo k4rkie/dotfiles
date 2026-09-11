@@ -4,6 +4,7 @@ import Quickshell
 import Quickshell.Networking
 import Quickshell.Bluetooth
 import "../../theme"
+import "../components"
 
 
 Column {

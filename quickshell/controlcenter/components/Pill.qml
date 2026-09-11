@@ -1,5 +1,5 @@
 import QtQuick
-import "../theme"
+import "../../theme"
 Rectangle {
         id: pill
         property string iconText: ""

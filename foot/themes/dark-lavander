@@ -1,0 +1,26 @@
+# -*- conf -*-
+# DarkLavander
+
+[colors-dark]
+background=030303
+foreground=c1c1c1
+
+regular0=030303
+regular1=82709c
+regular2=a1955f
+regular3=d1a76b
+regular4=696969
+regular5=999999
+regular6=aaaaaa
+regular7=c1c1c1
+
+bright0=333333 
+bright1=82709c 
+bright2=a1955f 
+bright3=d1a76b 
+bright4=696969 
+bright5=999999 
+bright6=aaaaaa 
+bright7=c1c1c1 
+
+cursor=030303 c1c1c1

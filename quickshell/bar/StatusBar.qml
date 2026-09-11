@@ -52,8 +52,8 @@ PanelWindow {
             Memory {}
             Storage {}
             Battery {}
-            Tray {}
             Wifi {}
+            Tray {}
         }
     }
 }

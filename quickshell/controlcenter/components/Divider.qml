@@ -1,5 +1,5 @@
 import QtQuick
-import "../theme"
+import "../../theme"
 Rectangle {
         width: parent.width
         height: 1

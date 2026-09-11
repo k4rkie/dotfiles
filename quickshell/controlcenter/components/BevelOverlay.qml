@@ -1,5 +1,5 @@
 import QtQuick
-import "../theme"
+import "../../theme"
 Item {
         property bool pressed: false
         anchors.fill: parent

@@ -27,7 +27,7 @@
     "button": false
   },
   "terminal": {
-    "font_family": "Maple Mono NF",
+    "font_family": "Miras Nerd Font",
     "font_size": 22.0,
     "button": false,
     "toolbar": {
@@ -68,7 +68,7 @@
   "theme": {
     "mode": "dark",
     "light": "Gruvbox Light",
-    "dark": "Tokyo Night Dark"
+    "dark": "Rosé Pine"
   },
   "theme_overrides": {
     "Base16 Black Metal (Bathory Tweaked)": {
@@ -77,12 +77,12 @@
     }
   },
   "icon_theme": {
-    "mode": "light",
+    "mode": "dark",
     "light": "Light Charmed Icons",
     "dark": "Warm Charmed Icons"
   },
-  "ui_font_family": "Maple Mono NF",
-  "buffer_font_family": "Maple Mono NF",
+  "ui_font_family": "Miras Nerd Font",
+  "buffer_font_family": "Miras Nerd Font",
   "ui_font_size": 22.0,
   "buffer_font_size": 24.0,
   "window_decorations": "server",

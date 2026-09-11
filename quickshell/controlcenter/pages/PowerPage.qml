@@ -8,6 +8,7 @@ import Quickshell.Bluetooth
 import Quickshell.Widgets
 import "../../theme"
 import "../apps"
+import "../components"
 
 
             Column {
@@ -34,7 +35,6 @@ import "../apps"
                 }
                 ActionRow {
                     iconText: "󰐥"; labelText: "Power Off"
-                    danger: true
                     onClicked: controlRoot.runSession("systemctl poweroff")
                 }
             }

@@ -55,7 +55,7 @@ Singleton {
     readonly property color dashboard:         base02
 
     readonly property color tray:              base01
-    readonly property color workspaceActive:   base05
+    readonly property color workspaceActive:   base0D
     readonly property color workspaceInactive: base03
     readonly property color titleBackground:   base01
     readonly property color titleForeground:   base05
