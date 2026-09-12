@@ -6,8 +6,23 @@
   ...
 }:
 let
-  dotfiles = "${config.home.homeDirectory}/dotfiles"; # repo location
-  link = config.lib.file.mkOutOfStoreSymlink; # symlink instead of copying to the nix store
+  dotfiles = "${config.home.homeDirectory}/dotfiles";
+  slink = path: config.lib.file.mkOutOfStoreSymlink path;
+  configs = {
+    foot = "foot";
+    hypr = "hypr";
+    mango = "mango";
+    mpv = "mpv";
+    nvim = "nvim";
+    quickshell = "quickshell";
+    rmpc = "rmpc";
+    rofi = "rofi";
+    swayosd = "swayosd";
+    wallust = "wallust";
+    yazi = "yazi";
+    zathura = "zathura";
+    zed = "zed";
+  };
 in
 {
   home = {
@@ -17,28 +32,16 @@ in
   };
 
   # ~/.config symlinks
-  xdg.configFile = {
-    "foot".source = link "${dotfiles}/foot";
-    "hypr".source = link "${dotfiles}/hypr";
-    "mango".source = link "${dotfiles}/mango";
-    "mpv".source = link "${dotfiles}/mpv";
-    "nvim".source = link "${dotfiles}/nvim";
-    "quickshell".source = link "${dotfiles}/quickshell";
-    "rmpc".source = link "${dotfiles}/rmpc";
-    "rofi".source = link "${dotfiles}/rofi";
-    "swayosd".source = link "${dotfiles}/swayosd";
-    "waybar".source = link "${dotfiles}/waybar";
-    "wallust".source = link "${dotfiles}/wallust";
-    "yazi".source = link "${dotfiles}/yazi";
-    "zathura".source = link "${dotfiles}/zathura";
-    "zed".source = link "${dotfiles}/zed";
-  };
+  xdg.configFile = builtins.mapAttrs (name: subpath: {
+    source = slink "${dotfiles}/${subpath}";
+    recursive = true;
+  }) configs;
 
   # home directory symlinks
   home.file = {
-    ".tmux.conf".source = link "${dotfiles}/tmux/tmux.conf";
-    ".zshrc".source = link "${dotfiles}/zsh/.zshrc";
-    "scripts".source = link "${dotfiles}/scripts";
+    ".tmux.conf".source = slink "${dotfiles}/tmux/tmux.conf";
+    ".zshrc".source = slink "${dotfiles}/zsh/.zshrc";
+    "scripts".source = slink "${dotfiles}/scripts";
   };
 
   programs.home-manager.enable = true;
@@ -146,6 +149,7 @@ in
     imv
     zathura
     zathuraPkgs.zathura_pdf_poppler
+    libreoffice
     rmpc
 
     # --- Terminal Utilities & Navigation ---
@@ -166,7 +170,14 @@ in
     awww
     ffmpeg
     yt-dlp
-    libreoffice
+    (pkgs.writeShellApplication {
+      name = "ns";
+      runtimeInputs = with pkgs; [
+        fzf
+        nix-search-tv
+      ];
+      text = builtins.readFile "${pkgs.nix-search-tv.src}/nixpkgs.sh";
+    })
 
     # --- Language Runtimes & Compilers ---
     nodejs
