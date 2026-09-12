@@ -1,5 +1,6 @@
 import QtQuick
 import Quickshell
+import Quickshell.Io
 import Quickshell.Wayland
 import "../theme"
 
@@ -7,18 +8,27 @@ PanelWindow {
     id: root
     color: "transparent"
 
+    property bool barVisible: true
+    visible: barVisible
+    exclusionMode: barVisible ? ExclusionMode.Auto : ExclusionMode.Ignore
+    exclusiveZone: barVisible ? 34 : 0
+
     anchors {
         bottom: true
         left: true
         right: true
     }
 
-    exclusionMode: ExclusionMode.Auto
-    exclusiveZone: 30
-
     implicitHeight: 34
-    WlrLayershell.layer: WlrLayer.Overlay
+    WlrLayershell.layer: WlrLayershell.Overlay
     WlrLayershell.namespace: "quickshell:bar"
+
+    IpcHandler {
+        target: "bar"
+        function toggle(): void { root.barVisible = !root.barVisible }
+        function show(): void { root.barVisible = true }
+        function hide(): void { root.barVisible = false }
+    }
 
     Rectangle {
         anchors.fill: parent

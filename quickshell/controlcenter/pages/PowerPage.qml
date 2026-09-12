@@ -19,22 +19,22 @@ import "../components"
 
                 ActionRow {
                     iconText: "󰌾"; labelText: "Lock"
-                    onClicked: controlRoot.runSession("pidof hyprlock >/dev/null || hyprlock")
+                    onClicked: { controlRoot.runSession("pidof hyprlock >/dev/null || hyprlock"); controlRoot.close() }
                 }
                 ActionRow {
                     iconText: "󰍃"; labelText: "Logout"
-                    onClicked: controlRoot.runSession("loginctl terminate-session ${XDG_SESSION_ID}")
+                    onClicked: { controlRoot.runSession("loginctl terminate-session ${XDG_SESSION_ID}"); controlRoot.close() }
                 }
                 ActionRow {
                     iconText: "󰤄"; labelText: "Suspend"
-                    onClicked: controlRoot.runSession("systemctl suspend")
+                    onClicked: { controlRoot.runSession("systemctl suspend"); controlRoot.close() }
                 }
                 ActionRow {
                     iconText: "󰜎"; labelText: "Restart"
-                    onClicked: controlRoot.runSession("systemctl reboot")
+                    onClicked: { controlRoot.runSession("systemctl reboot"); controlRoot.close() }
                 }
                 ActionRow {
                     iconText: "󰐥"; labelText: "Power Off"
-                    onClicked: controlRoot.runSession("systemctl poweroff")
+                    onClicked: { controlRoot.runSession("systemctl poweroff"); controlRoot.close() }
                 }
             }

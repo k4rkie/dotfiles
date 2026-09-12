@@ -1,7 +1,3 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 {
   config,
   pkgs,
@@ -11,20 +7,23 @@
 
 {
   imports = [
-    # Include the results of the hardware scan.
-    ./hardware-configuration.nix
+    /etc/nixos/hardware-configuration.nix
+    inputs.mangowm.nixosModules.mango
+    inputs.home-manager.nixosModules.home-manager
   ];
+
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    extraSpecialArgs = { inherit inputs; };
+    users.k4rkie = import ./home.nix;
+  };
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "mentat"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -61,72 +60,25 @@
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
-    firefox
-    vim
     wget
     curl
 
     # --- Hardware & Core Integration ---
     brightnessctl
     acpi
-    pavucontrol
-    playerctl
-    networkmanagerapplet
-    blueman
-    bluez
 
     # --- Containers/Virtualization ---
     docker-compose
     podman
     distrobox
 
-    # --- File System & Storage Mechanics ---
-    thunar
-    gvfs
-    tumbler
-    udisks2
-    xdg-user-dirs
-    xdg-utils
-    rofi
-    hyprlock
-    hyprpicker
-    wl-clipboard
-    cliphist
-    swayosd
-    wlsunset
-    grim
-    slurp
-    libnotify
-    swayidle
-
     # --- System/GTK Foundation libraries ---
     glib
     gsettings-desktop-schemas
-
-    # --- Audio Daemons Helpers ---
-    mpd
   ];
-
   services.gvfs.enable = true;
   services.udisks2.enable = true;
   services.devmon.enable = true;
-  services.mpd = {
-    enable = true;
-    user = "k4rkie";
-    musicDirectory = "/home/k4rkie/Music";
-    settings = {
-      audio_output = [
-        {
-          type = "pipewire";
-          name = "PipeWire";
-        }
-      ];
-    };
-  };
-
-  systemd.services.mpd.environment = {
-    PIPEWIRE_RUNTIME_DIR = "/run/user/1000";
-  };
 
   services.power-profiles-daemon.enable = true;
   services.upower.enable = true;
@@ -217,6 +169,7 @@
     "d /var/cache/tuigreet 0755 greeter greeter - -"
   ];
 
+  security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -240,15 +193,7 @@
     powerOnBoot = false;
   };
 
-  # Keep boot menu clean but still allow rollbacks
   boot.loader.systemd-boot.configurationLimit = 10;
-
-  # Automatic garbage collection, clean snaps older than 30d
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 30d";
-  };
 
   zramSwap = {
     enable = true;
@@ -262,33 +207,12 @@
     "vm.watermark_scale_factor" = 125;
   };
 
-  # Prevent unlimited generations per profile
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [ 53317 ];
   networking.firewall.allowedUDPPorts = [ 53317 ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "26.05"; # Did you read the comment?
+  system.stateVersion = "26.05";
 
 }

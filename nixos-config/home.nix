@@ -2,7 +2,7 @@
   config,
   pkgs,
   lib,
-  toofan,
+  inputs,
   ...
 }:
 let
@@ -21,7 +21,6 @@ in
     "foot".source = link "${dotfiles}/foot";
     "hypr".source = link "${dotfiles}/hypr";
     "mango".source = link "${dotfiles}/mango";
-    "mpd".source = link "${dotfiles}/mpd";
     "mpv".source = link "${dotfiles}/mpv";
     "nvim".source = link "${dotfiles}/nvim";
     "quickshell".source = link "${dotfiles}/quickshell";
@@ -92,6 +91,18 @@ in
 
   services.mpd-mpris.enable = true;
 
+  services.mpd = {
+    enable = true;
+    musicDirectory = "${config.home.homeDirectory}/Music";
+    network.startWhenNeeded = true;
+    extraConfig = ''
+      audio_output {
+        type "pipewire"
+        name "PipeWire"
+      }
+    '';
+  };
+
   home.packages = with pkgs; [
     clang
     tree-sitter
@@ -101,11 +112,32 @@ in
     # --- Editors & Notes ---
     neovim
     zed-editor
-    obsidian
     foot
 
     # --- Web & Communications ---
+    firefox
     localsend
+
+    # --- Desktop Environment & Wayland ---
+    thunar
+    tumbler
+    rofi
+    hyprlock
+    hyprpicker
+    wl-clipboard
+    cliphist
+    swayosd
+    wlsunset
+    grim
+    slurp
+    swayidle
+    pavucontrol
+    playerctl
+    networkmanagerapplet
+    blueman
+    libnotify
+    xdg-user-dirs
+    xdg-utils
 
     # --- Media, Graphics & Audio ---
     gimp
@@ -118,6 +150,7 @@ in
 
     # --- Terminal Utilities & Navigation ---
     tmux
+    tealdeer
     yazi
     fd
     ripgrep
@@ -133,7 +166,6 @@ in
     awww
     ffmpeg
     yt-dlp
-    toofan.packages.${pkgs.stdenv.hostPlatform.system}.default
     libreoffice
 
     # --- Language Runtimes & Compilers ---

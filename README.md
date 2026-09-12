@@ -25,38 +25,39 @@
 | **clipboard** | Cliphist |
 | **color picker** | Hyprpicker |
 | **gamma** | Wlsunset |
-| **gtk** | Base16 theme, Papirus-Dark icons |
-| **font** | Mononoki Nerd Font|
+| **gtk** | Rose Pine, Papirus-Dark icons |
+| **font** | Maple Mono NF |
 
 
 ## install
 
 ### nixos 
 
-This setup uses nixos modules (home-manager) in `nixos-config/`.
+This setup uses NixOS Flakes and Home Manager as a module in `nixos-config/`.
 
-1. Copy your `hardware-configuration.nix` into `nixos-config/`
-2. Update the config paths in `nixos-config/configuration.nix` to match your setup
-3. Rebuild and switch
+1. Install NixOS (this generates your system's `/etc/nixos/hardware-configuration.nix`).
+2. Clone this repository to your home folder: `git clone https://github.com/k4rkie/dotfiles.git ~/dotfiles`
+3. Change to the config directory: `cd ~/dotfiles/nixos-config`
+4. Rebuild the system using the `--impure` flag (this is required so the flake can dynamically read hardware config from `/etc/nixos/`):
+
 ```bash
-sudo nixos-rebuild switch --flake .#your-hostname
+sudo nixos-rebuild switch --flake .#mentat --impure
 ```
 
-This will set up all nixos services and home-manager configs automatically.
+*(Note: If you are already using `nh`, you can just run `nh os switch --impure`)*
 
 ---
 
 ### non-nixos 
 
 Use the install script to symlink everything:
+
+> [!WARNING]  
+> Make sure to backup your old configs as this script will override the old ones and create new symlinks.
+
 ```bash
 git clone https://github.com/k4rkie/dotfiles.git 
 cd ~/dotfiles
 ./install.sh 
-```
-
-**For help**
-```bash
-./install.sh --help 
 ```
 

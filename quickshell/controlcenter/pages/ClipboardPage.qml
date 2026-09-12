@@ -136,7 +136,7 @@ Column {
                                         cursorShape: Qt.PointingHandCursor
                                         onClicked: (mouse) => {
                                             if (mouse.button === Qt.RightButton) controlRoot.clipDelete(modelData.index)
-                                            else controlRoot.clipCopy(modelData.index)
+                                            else { controlRoot.clipCopy(modelData.index); controlRoot.close() }
                                         }
                                     }
                                 }

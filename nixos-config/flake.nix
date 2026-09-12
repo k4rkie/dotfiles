@@ -14,11 +14,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    toofan = {
-      url = "github:vyrx-dev/toofan";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
   };
 
   outputs =
@@ -27,7 +22,6 @@
       nixpkgs,
       home-manager,
       mangowm,
-      toofan,
       ...
     }@inputs:
     {
@@ -37,19 +31,7 @@
         specialArgs = { inherit inputs; };
 
         modules = [
-          home-manager.nixosModules.home-manager
-          mangowm.nixosModules.mango
-          ./hardware-configuration.nix
           ./configuration.nix
-          {
-            # use same system pkgs and store in the nix/store
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit toofan; };
-
-            # Per-user Home Manager config
-            home-manager.users.k4rkie = import ./home.nix;
-          }
         ];
       };
     };
