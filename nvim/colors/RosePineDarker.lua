@@ -9,14 +9,14 @@ base16.setup({
   base05 = "#d0cce4",
   base06 = "#d0cce4",
   base07 = "#424057",
-  base08 = "#c27282",
-  base09 = "#d0a872",
-  base0A = "#c4a29a",
-  base0B = "#4a7a8a",
-  base0C = "#8ab5be",
-  base0D = "#a890c4",
-  base0E = "#d0a872",
-  base0F = "#424057",
+  base08 = "#c4a7e7",
+  base09 = "#c1c1c1",
+  base0A = "#f6c177",
+  base0B = "#9ccfd8",
+  base0C = "#aaaaaa",
+  base0D = "#c1c1c1",
+  base0E = "#999999",
+  base0F = "#aaaaaa",
 })
 
 vim.g.colors_name = "RosePineDarker"

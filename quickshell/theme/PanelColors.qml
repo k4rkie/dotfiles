@@ -8,22 +8,22 @@ Singleton {
     readonly property int transitionDuration: 250
 
     // Base16 Black Metal Bathory Tweaked
-    readonly property color base00: "#080610"
-    readonly property color base01: "#0c0a16"
-    readonly property color base02: "#110e1c"
-    readonly property color base03: "#5e5a74"
-    readonly property color base04: "#807a94"
-    readonly property color base05: "#d0cce4"
-    readonly property color base06: "#d0cce4"
-    readonly property color base07: "#424057"
-    readonly property color base08: "#c27282"
-    readonly property color base09: "#d0a872"
-    readonly property color base0A: "#c4a29a"
-    readonly property color base0B: "#4a7a8a"
-    readonly property color base0C: "#8ab5be"
-    readonly property color base0D: "#a890c4"
-    readonly property color base0E: "#d0a872"
-    readonly property color base0F: "#424057"
+    readonly property color base00: "#030303"
+    readonly property color base01: "#080808"
+    readonly property color base02: "#121212"
+    readonly property color base03: "#333333"
+    readonly property color base04: "#999999"
+    readonly property color base05: "#c1c1c1"
+    readonly property color base06: "#999999"
+    readonly property color base07: "#c1c1c1"
+    readonly property color base08: "#82709c"
+    readonly property color base09: "#aaaaaa"
+    readonly property color base0A: "#d1a76b"
+    readonly property color base0B: "#a1955f"
+    readonly property color base0C: "#aaaaaa"
+    readonly property color base0D: "#696969"
+    readonly property color base0E: "#999999"
+    readonly property color base0F: "#444444"
 
     // Surfaces
     readonly property color barBackground:     base00
@@ -42,8 +42,8 @@ Singleton {
     }
 
     // Accents
-    readonly property color launcher:          base08
-    readonly property color pillActive:        base08
+    readonly property color launcher:          base0C
+    readonly property color pillActive:        base0C
     readonly property color battery:           base0A
     readonly property color network:           base0B
     readonly property color audio:             base08
@@ -55,7 +55,7 @@ Singleton {
     readonly property color dashboard:         base02
 
     readonly property color tray:              base01
-    readonly property color workspaceActive:   base0D
+    readonly property color workspaceActive:   base0C
     readonly property color workspaceInactive: base03
     readonly property color titleBackground:   base01
     readonly property color titleForeground:   base05

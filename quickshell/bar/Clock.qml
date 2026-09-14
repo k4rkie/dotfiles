@@ -32,7 +32,7 @@ Rectangle {
         text: root.timeText
         font.family: FontConfig.fontFamily
         font.pixelSize: FontConfig.size
-        color: "#a890c4"
+        color: "#aaaaaa"
     }
 
     MouseArea {
