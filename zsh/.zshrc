@@ -68,7 +68,6 @@ alias ls="eza -lh  --icons=always --git"
 alias la="eza -lha  --icons=always --git"
 
 alias vi="nvim"
-# alias fastfetch="fastfetch -c examples/27"
 alias reload="source ~/.zshrc"
 alias tsd="tmux-session-dispensary.sh"
 
@@ -132,6 +131,9 @@ export PATH="/home/k4rkie/.local/bin:$PATH"
 # npm global prefix
 export PATH="$HOME/.npm-global/bin:$PATH"
 
-# export LD_LIBRARY_PATH=$NIX_LD_LIBRARY_PATH:$LD_LIBRARY_PATH
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# nerdfetch
+# bun completions
+[ -s "/home/k4rkie/.bun/_bun" ] && source "/home/k4rkie/.bun/_bun"
+
+set -o emacs

@@ -8,7 +8,7 @@ Rectangle {
     height: 30
     width: label.implicitWidth + 16
     color: "transparent"
-    border.color: PanelColors.border
+    border.color: PanelColors.barBorder
     border.width: 2
     radius: 0
 

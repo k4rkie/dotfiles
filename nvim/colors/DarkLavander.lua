@@ -1,7 +1,7 @@
 local base16 = require("base16-colorscheme")
 
 base16.setup({
-  base00 = "#030303",
+  base00 = "#060606",
   base01 = "#080808",
   base02 = "#121212",
   base03 = "#333333",

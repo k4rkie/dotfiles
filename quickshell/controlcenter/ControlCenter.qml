@@ -359,8 +359,8 @@ PanelWindow {
 
     Timer {
         id: wifiKickTimer
-        interval: 4000
-        running: root.page === "wifi"
+        interval: 10000
+        running: root.page === "wifi" && root.animState === "open"
         repeat: true
         onTriggered: root.kickWifiScan()
     }
@@ -451,8 +451,8 @@ PanelWindow {
 
     Timer {
         id: btCliRefreshTimer
-        interval: 2500
-        running: root.page === "bluetooth" && root.btAdapter === null
+        interval: 5000
+        running: root.page === "bluetooth" && root.btAdapter === null && root.animState === "open"
         repeat: true
         onTriggered: {
             root.refreshBtCliDevices()

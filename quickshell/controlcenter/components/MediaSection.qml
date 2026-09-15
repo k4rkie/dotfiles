@@ -9,6 +9,7 @@ Item {
     id: root
     width: parent.width
     implicitHeight: mediaCol.implicitHeight
+    property var controlRoot: null
 
     readonly property var playerList: {
         const result = []
@@ -174,7 +175,7 @@ Item {
     }
 
     Timer {
-        interval: 250; repeat: true; running: isPlaying && !userSeeking
+        interval: 1000; repeat: true; running: isPlaying && !userSeeking
         onTriggered: {
             if (!activePlayer) return
             const pos = activePlayer.position
@@ -305,6 +306,7 @@ Item {
             width: parent.width; spacing: 4
 
             WaveBar {
+                controlRoot: root.controlRoot
                 width: parent.width
                 accentColor: PanelColors.clock
                 from: 0
@@ -424,6 +426,7 @@ Item {
 
     component WaveBar: Item {
         id: bar
+        property var controlRoot: null
         property real value: 0
         property real from: 0
         property real to: 100
@@ -448,10 +451,10 @@ Item {
             bar.seeked(newVal)
         }
         property real _phase: 0
-        NumberAnimation on _phase { from: 0; to: Math.PI * 2; duration: 1200; loops: Animation.Infinite; running: bar.playing && !bar.activeInteraction }
+        NumberAnimation on _phase { from: 0; to: Math.PI * 2; duration: 1200; loops: Animation.Infinite; running: false }
         property real _waveAmount: 0.0
-        onPlayingChanged: _waveAmount = (playing && !activeInteraction) ? 1.0 : 0.0
-        onActiveInteractionChanged: _waveAmount = (playing && !activeInteraction) ? 1.0 : 0.0
+        onPlayingChanged: _waveAmount = 0.0
+        onActiveInteractionChanged: _waveAmount = 0.0
 
         property color _strokeColor: hovered ? Qt.lighter(bar.accentColor, 1.15) : bar.accentColor
 

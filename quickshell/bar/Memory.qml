@@ -8,7 +8,7 @@ Rectangle {
     height: 30
     width: label.implicitWidth + 16
     color: "transparent"
-    border.color: PanelColors.border
+    border.color: PanelColors.barBorder
     border.width: 2
     radius: 0
 
@@ -16,7 +16,7 @@ Rectangle {
 
     Process {
         id: memProc
-        command: ["bash", "-c", "awk '/MemTotal/ {t=$2} /MemAvailable/ {a=$2} END {if(t>0) printf \"%d\", (t-a)/t*100; else printf \"0\"}' /proc/meminfo"]
+        command: ["awk", "/MemTotal/ {t=$2} /MemAvailable/ {a=$2} END {if(t>0) printf \"%d\", (t-a)/t*100; else printf \"0\"}", "/proc/meminfo"]
         stdout: StdioCollector {
             onStreamFinished: {
                 const v = parseInt(text.trim())
@@ -26,7 +26,7 @@ Rectangle {
     }
 
     Timer {
-        interval: 2000
+        interval: 10000
         running: true
         repeat: true
         triggeredOnStart: true

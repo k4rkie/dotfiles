@@ -9,7 +9,7 @@ Rectangle {
     width: row.implicitWidth + 4
     visible: visibleTags.length > 0
     color: PanelColors.barBackground
-    border.color: PanelColors.border
+    border.color: PanelColors.barBorder
     border.width: 2
     radius: 0
 

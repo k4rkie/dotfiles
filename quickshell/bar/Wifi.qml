@@ -9,7 +9,7 @@ Rectangle {
     width: label.implicitWidth + 16
     radius: 0
     border.width: 2
-    border.color: PanelColors.border
+    border.color: PanelColors.barBorder
     color: "transparent"
 
     readonly property var isWifiConnected: Networking.devices.values[0].connected

@@ -9,7 +9,7 @@ Rectangle {
     width: trayRow.implicitWidth + 12
     visible: SystemTray.items.values.length > 0
     color: PanelColors.barBackground
-    border.color: PanelColors.border
+    border.color: PanelColors.barBorder
     border.width: 2
     radius: 0
 

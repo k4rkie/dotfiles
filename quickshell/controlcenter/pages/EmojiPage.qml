@@ -85,7 +85,7 @@ import "../apps"
                                 color: emojiMouse.containsMouse || index === emojiGrid.currentIndex ? Qt.rgba(1,1,1,0.10) : "transparent"
                                 border.color: index === emojiGrid.currentIndex ? PanelColors.launcher : "transparent"
                                 border.width: 2
-                                Text { anchors.centerIn: parent; text: modelData.char; font.family: "Noto Color Emoji"; font.pixelSize: 26; renderType: Text.NativeRendering }
+                                Text { anchors.centerIn: parent; text: modelData.char; font.family: "Noto Color Emoji"; font.pixelSize: 32; renderType: Text.NativeRendering }
                             }
                             MouseArea {
                                 id: emojiMouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor

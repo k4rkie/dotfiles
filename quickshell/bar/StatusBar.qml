@@ -60,8 +60,11 @@ PanelWindow {
             spacing: 8
 
             Memory {}
+            Separator {}
             Storage {}
+            Separator {}
             Battery {}
+            Separator {}
             Wifi {}
             Tray {}
         }

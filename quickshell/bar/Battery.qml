@@ -9,7 +9,7 @@ Rectangle {
     width: label.implicitWidth + 16
     radius: 0
     border.width: 2
-    border.color: PanelColors.border
+    border.color: PanelColors.barBorder
 
     readonly property var battery: {
         if (UPower.displayDevice && UPower.displayDevice.ready && UPower.displayDevice.isLaptopBattery)

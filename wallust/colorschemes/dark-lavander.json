@@ -1,13 +1,13 @@
 {
-  "name": "Dark Lavander",
+  "name": "DarkLavander",
   "variant": "dark",
   "special": {
-    "background": "#030303",
+    "background": "#060606",
     "foreground": "#c1c1c1",
     "cursor": "#c1c1c1"
   },
   "colors": {
-    "color0":  "#030303",
+    "color0":  "#060606",
     "color1":  "#82709c",
     "color2":  "#a1955f",
     "color3":  "#d1a76b",

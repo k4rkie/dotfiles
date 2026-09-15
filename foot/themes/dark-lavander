@@ -2,10 +2,10 @@
 # DarkLavander
 
 [colors-dark]
-background=030303
+background=060606
 foreground=c1c1c1
 
-regular0=030303
+regular0=060606
 regular1=82709c
 regular2=a1955f
 regular3=d1a76b
@@ -23,4 +23,4 @@ bright5=999999
 bright6=aaaaaa 
 bright7=c1c1c1 
 
-cursor=030303 c1c1c1
+cursor=060606 c1c1c1

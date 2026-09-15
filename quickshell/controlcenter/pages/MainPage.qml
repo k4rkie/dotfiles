@@ -97,6 +97,6 @@ Column {
             }
         }
 
-        MediaSection { id: mediaSection; width: parent.width }
+        MediaSection { id: mediaSection; width: parent.width; controlRoot: controlRoot }
     }
 }

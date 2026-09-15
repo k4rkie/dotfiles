@@ -8,7 +8,7 @@ Singleton {
     readonly property int transitionDuration: 250
 
     // Base16 Black Metal Bathory Tweaked
-    readonly property color base00: "#030303"
+    readonly property color base00: "#060606"
     readonly property color base01: "#080808"
     readonly property color base02: "#121212"
     readonly property color base03: "#333333"
@@ -27,6 +27,8 @@ Singleton {
 
     // Surfaces
     readonly property color barBackground:     base00
+    readonly property color barBorder:         base00
+    
     readonly property color pillForeground:    base01
     readonly property color overlayBackground: Qt.rgba(base00.r, base00.g, base00.b, 0.667)
 
