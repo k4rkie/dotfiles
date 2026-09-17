@@ -46,7 +46,10 @@ in
 
   programs.home-manager.enable = true;
 
-  xdg.userDirs.enable = true;
+  xdg.userDirs = {
+    enable = true;
+    createDirectories = true;
+  };
 
   programs.git = {
     enable = true;

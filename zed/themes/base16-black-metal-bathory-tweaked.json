@@ -81,8 +81,8 @@
         "terminal.ansi.green": "#d9af82ff",
         "terminal.ansi.bright_green": "#d9af82ff",
         "terminal.ansi.dim_green": "#d9af82bf",
-        "terminal.ansi.yellow": "#a1955fff",
-        "terminal.ansi.bright_yellow": "#a1955fff",
+        "terminal.ansi.yellow": "#779e44",
+        "terminal.ansi.bright_yellow": "#779e44",
         "terminal.ansi.dim_yellow": "#a1955fbf",
         "terminal.ansi.blue": "#696969ff",
         "terminal.ansi.bright_blue": "#696969ff",
@@ -98,13 +98,13 @@
         "terminal.ansi.dim_white": "#999999ff",
         "link_text.hover": "#696969ff",
         "version_control.added": "#d9af82ff",
-        "version_control.modified": "#a1955fff",
+        "version_control.modified": "#779e44",
         "version_control.word_added": "#d9af8259",
         "version_control.word_deleted": "#7d718fcc",
         "version_control.deleted": "#7d718fff",
         "version_control.conflict_marker.ours": "#d9af821a",
         "version_control.conflict_marker.theirs": "#6969691a",
-        "conflict": "#a1955fff",
+        "conflict": "#779e44",
         "conflict.background": "#a1955f1a",
         "conflict.border": "#a1955f80",
         "created": "#d9af82ff",
@@ -128,7 +128,7 @@
         "info": "#696969ff",
         "info.background": "#6969691a",
         "info.border": "#69696980",
-        "modified": "#a1955fff",
+        "modified": "#779e44",
         "modified.background": "#a1955f1a",
         "modified.border": "#a1955f80",
         "predictive": "#333333ff",
@@ -143,7 +143,7 @@
         "unreachable": "#999999ff",
         "unreachable.background": "#3333331a",
         "unreachable.border": "#333333ff",
-        "warning": "#a1955fff",
+        "warning": "#779e44",
         "warning.background": "#a1955f1a",
         "warning.border": "#a1955f80",
         "players": [
@@ -168,7 +168,7 @@
             "selection": "#aaaaaa30"
           },
           {
-            "cursor": "#a1955fff",
+            "cursor": "#779e44",
             "background": "#a1955f20",
             "selection": "#a1955f30"
           },
@@ -230,7 +230,7 @@
             "font_weight": null
           },
           "emphasis.strong": {
-            "color": "#a1955fff",
+            "color": "#779e44",
             "font_style": null,
             "font_weight": 700
           },
@@ -270,7 +270,7 @@
             "font_weight": null
           },
           "namespace": {
-            "color": "#a1955fff",
+            "color": "#779e44",
             "font_style": null,
             "font_weight": null
           },
@@ -385,7 +385,7 @@
             "font_weight": 700
           },
           "type": {
-            "color": "#a1955fff",
+            "color": "#779e44",
             "font_style": null,
             "font_weight": null
           },

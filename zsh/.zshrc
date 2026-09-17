@@ -50,7 +50,7 @@ else
 fi
 
 # Set the prompt (ensure you use single quotes here)
-PROMPT='${container_name_prompt}[%F{#779E44}%~%f] ${vcs_info_msg_0_}%k> '
+PROMPT='󰨓 ${container_name_prompt}[%F{#779E44}%~%f] ${vcs_info_msg_0_}%k> '
 
 # -------------------------------
 # 6. Aliases
