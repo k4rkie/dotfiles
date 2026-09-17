@@ -12,7 +12,7 @@ base16.setup({
   base08 = "#82709c",
   base09 = "#aaaaaa",
   base0A = "#d1a76b",
-  base0B = "#a1955f",
+  base0B = "#779e44",
   base0C = "#aaaaaa",
   base0D = "#696969",
   base0E = "#999999",

@@ -839,7 +839,6 @@ PanelWindow {
                     "cp -f \"$p\" " + lock + "; " +
                     "echo \"$p\" > \"" + cacheDir + "/last-wallpaper\""
             }
-
             var lockFile = home + "/.config/hypr/hyprlock.conf"
             script += "; " +
                 "sed -i '/^background {/,/^}/s|path = .*|path = " + lockImg.replace(/\\/g, "\\\\").replace(/&/g, "\\&") + "|' \"" + lockFile + "\" 2>/dev/null\n" +

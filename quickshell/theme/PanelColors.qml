@@ -8,7 +8,7 @@ Singleton {
     readonly property int transitionDuration: 250
 
     // Base16 Black Metal Bathory Tweaked
-    readonly property color base00: "#060606"
+    readonly property color base00: "#030303"
     readonly property color base01: "#080808"
     readonly property color base02: "#121212"
     readonly property color base03: "#333333"

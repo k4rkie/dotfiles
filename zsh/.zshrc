@@ -28,17 +28,8 @@ setopt CORRECT
 # -------------------------------
 # 4. Plugin Setup (manual)
 # -------------------------------
-# Plugins must be cloned manually to ~/.zsh/plugins/
-# - zsh-autosuggestions: https://github.com/zsh-users/zsh-autosuggestions
-# - zsh-syntax-highlighting: https://github.com/zsh-users/zsh-syntax-highlighting
-
 # Load autosuggestions (suggests commands based on history as you type)
 source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-
-# Load syntax highlighting (colors command syntax for clarity)
-# IMPORTANT: must be loaded last to work correctly
-source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
 # -------------------------------
 # 5. Prompt Configuration 
 # -------------------------------
@@ -59,7 +50,7 @@ else
 fi
 
 # Set the prompt (ensure you use single quotes here)
-PROMPT='${container_name_prompt}[%F{#a1955f}%~%f] ${vcs_info_msg_0_}%k$ '
+PROMPT='${container_name_prompt}[%F{#779E44}%~%f] ${vcs_info_msg_0_}%k> '
 
 # -------------------------------
 # 6. Aliases
@@ -70,7 +61,6 @@ alias la="eza -lha  --icons=always --git"
 alias vi="nvim"
 alias reload="source ~/.zshrc"
 alias tsd="tmux-session-dispensary.sh"
-
 # -------------------------------
 #  PATH variables
 # -------------------------------
@@ -135,5 +125,8 @@ export PATH="$HOME/.npm-global/bin:$PATH"
 
 # bun completions
 [ -s "/home/k4rkie/.bun/_bun" ] && source "/home/k4rkie/.bun/_bun"
+
+# nix
+export XDG_DATA_DIRS=$XDG_DATA_DIRS:$HOME/.nix-profile/share
 
 set -o emacs
