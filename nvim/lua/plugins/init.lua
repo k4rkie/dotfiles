@@ -1,17 +1,13 @@
 return {
   require("plugins.rose-pine"),
   require("plugins.snacks"),
-  require("plugins.lualine"),
   require("plugins.treesitter"),
   require("plugins.autopairs"),
   require("plugins.lsp"),
   require("plugins.flash"),
-  require("plugins.surround"),
   require("plugins.webdevicons"),
   require("plugins.colorhighlight"),
   require("plugins.oil"),
   require("plugins.rendermarkdown"),
   require("plugins.conform"),
-  require("plugins.luasnip"),
-  require("plugins.terminal"),
 }
