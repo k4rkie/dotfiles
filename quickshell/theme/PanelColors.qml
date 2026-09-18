@@ -67,7 +67,7 @@ Singleton {
     readonly property color battery:           base0A
     readonly property color network:           base0B
     readonly property color audio:             base08
-    readonly property color clock:             base05
+    readonly property color clock:             base0C
     readonly property color date:              base0C
     readonly property color brightness:        base0A
     readonly property color bluetooth:         base0D

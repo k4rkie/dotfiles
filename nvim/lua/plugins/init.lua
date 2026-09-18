@@ -1,5 +1,5 @@
 return {
-  require("plugins.base16"),
+  require("plugins.rose-pine"),
   require("plugins.snacks"),
   require("plugins.lualine"),
   require("plugins.treesitter"),

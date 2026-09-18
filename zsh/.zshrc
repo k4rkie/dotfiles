@@ -50,7 +50,7 @@ else
 fi
 
 # Set the prompt (ensure you use single quotes here)
-PROMPT='󰨓 ${container_name_prompt}[%F{#779E44}%~%f] ${vcs_info_msg_0_}%k> '
+PROMPT='${container_name_prompt}[%F{#efbe77}%~%f] ${vcs_info_msg_0_}%k> '
 
 # -------------------------------
 # 6. Aliases
@@ -130,3 +130,6 @@ export PATH="$HOME/.npm-global/bin:$PATH"
 export XDG_DATA_DIRS=$XDG_DATA_DIRS:$HOME/.nix-profile/share
 
 set -o emacs
+
+echo ""
+fastfetch 

@@ -11,7 +11,7 @@ window#osd #container {
 
 window#osd image,
 window#osd label {
-  color: #888888;
+  color: #8ab5be;
 }
 
 window#osd progressbar:disabled,
@@ -30,7 +30,7 @@ window#osd trough {
   min-height: inherit;
   border-radius: 0px;
   border: none;
-  background: alpha(#888888, 0.3);
+  background: alpha(#8ab5be, 0.3);
 }
 
 window#osd progress {
