@@ -26,31 +26,25 @@ setopt HIST_VERIFY                # Allow editing of history lines before execut
 ENABLE_CORRECTION="true"
 setopt CORRECT
 # -------------------------------
-# 4. Plugin Setup (manual)
+# 4. Plugin Setup
 # -------------------------------
-# Load autosuggestions (suggests commands based on history as you type)
 source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+# source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # -------------------------------
 # 5. Prompt Configuration 
 # -------------------------------
 setopt PROMPT_SUBST
 
-# Load vcs_info
-autoload -Uz vcs_info
-precmd() { vcs_info }
+typeset -A distro_logo
+distro_logo[nixos]="󱄅"
+distro_logo[fedora]=""
+distro_logo[arch]="󰣇"
+distro_logo[void]=""
 
-# Format the git output
-zstyle ':vcs_info:git:*' formats '(󰘬 %b) '
-
-# Get container name
-if [[ -n $CONTAINER_ID ]]; then
-  container_name_prompt="{󰏗 $CONTAINER_ID} "
-else
-  container_name_prompt=""
-fi
+distro=$(source /etc/os-release && echo $ID)
 
 # Set the prompt (ensure you use single quotes here)
-PROMPT='${container_name_prompt}[%F{#efbe77}%~%f] ${vcs_info_msg_0_}%k> '
+PROMPT='%F{#99c37c}[%f%F{#8ab5be}$USER%f%F{#be7180}@%f%F{#efbe77}%~%f%F{#99c37c}]%f> '
 
 # -------------------------------
 # 6. Aliases

@@ -605,7 +605,22 @@ PanelWindow {
         var a = DesktopEntries.applications.values[idx]
         if (!a) return
         AppUsageTracker.recordLaunch(a.id)
-        try { a.execute() } catch(e) { Quickshell.execDetached(["gtk-launch", a.id]) }
+        try {
+            if (a.runInTerminal) {
+                // portable: respect $TERMINAL, then xdg-terminal-exec/spec, then common terminals
+                // Quickshell's execute() ignores runInTerminal, so we wrap manually
+                var wd = a.workingDirectory
+                var shCode = 'term="${TERMINAL:-}";'
+                    + 'if [ -z "$term" ] && command -v xdg-terminal-exec >/dev/null 2>&1; then exec xdg-terminal-exec "$@"; fi;'
+                    + 'if [ -z "$term" ] && command -v xdg-terminal >/dev/null 2>&1; then exec xdg-terminal -- "$@"; fi;'
+                    + 'if [ -z "$term" ]; then for c in foot kitty alacritty wezterm ghostty gnome-terminal konsole xfce4-terminal xterm; do if command -v "$c" >/dev/null 2>&1; then term="$c"; break; fi; done; fi;'
+                    + 'if [ -z "$term" ]; then echo "no terminal found for Terminal=true: $*" >&2; exit 1; fi;'
+                    + 'case "$term" in gnome-terminal|konsole) exec "$term" -- "$@";; xfce4-terminal) exec "$term" -e "$*";; *) exec "$term" -e "$@";; esac'
+                Quickshell.execDetached({ command: ["bash", "-c", shCode, "bash"].concat(a.command), workingDirectory: wd })
+            } else {
+                Quickshell.execDetached({ command: a.command, workingDirectory: a.workingDirectory })
+            }
+        } catch(e) { Quickshell.execDetached(["gtk-launch", a.id]) }
         root.close()
     }
     Connections { target: LauncherHiddenApps; function onHiddenAppsChanged() { if (root.page === "apps") ccAppsFilterTimer.restart() } }
