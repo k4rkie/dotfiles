@@ -13,9 +13,30 @@ Rectangle {
     radius: 0
 
     property string timeText: ""
+    property var distroLogos: {
+      "nixos" :"󱄅",
+      "fedora":"",
+      "arch"  :"󰣇",
+      "void"  :"",
+      "debian":"󰣚",
+      "gentoo":"󰣨"
+    }
+    property string distro: ""
+
+    Process {
+        id: getDistroLogo
+        command: ["bash", "-c", "source /etc/os-release && echo $ID"]
+        running: true
+        stdout: StdioCollector {
+            onStreamFinished: {
+                root.distro = this.text.trim()
+                root.updateTime()
+            }
+        }
+    }
 
     function updateTime() {
-        timeText = Qt.formatDateTime(new Date(), "󱑒 hh:mm AP")
+        timeText = Qt.formatDateTime(new Date(), `${distroLogos[distro] || ''} hh:mm AP`)
     }
 
     Timer {

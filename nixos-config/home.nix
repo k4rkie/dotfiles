@@ -25,6 +25,7 @@ let
   };
 in
 {
+  imports = [ ./services/services.nix ];
   home = {
     username = "k4rkie";
     homeDirectory = "/home/k4rkie";
@@ -76,25 +77,6 @@ in
     enableZshIntegration = false;
   };
 
-  # Sway audio idle inhibitor
-  systemd.user.services.sway-audio-idle-inhibit = {
-    Unit = {
-      Description = "Prevent idle/sleep when audio is playing";
-    };
-
-    Service = {
-      Type = "simple";
-      ExecStartPre = "${pkgs.coreutils}/bin/sleep 3";
-      ExecStart = "${pkgs.sway-audio-idle-inhibit}/bin/sway-audio-idle-inhibit";
-      Restart = "on-failure";
-      RestartSec = "5";
-    };
-
-    Install = {
-      WantedBy = [ "default.target" ];
-    };
-  };
-
   services.mpd-mpris.enable = true;
 
   services.mpd = {
@@ -110,6 +92,7 @@ in
   };
 
   home.packages = with pkgs; [
+    (lib.hiPrio gcc)
     clang
     tree-sitter
     uv
@@ -144,6 +127,7 @@ in
     libnotify
     xdg-user-dirs
     xdg-utils
+    adw-gtk3
 
     # --- Media, Graphics & Audio ---
     gimp
@@ -154,6 +138,7 @@ in
     zathuraPkgs.zathura_pdf_poppler
     libreoffice
     rmpc
+    nwg-look
 
     # --- Terminal Utilities & Navigation ---
     tmux
@@ -181,6 +166,8 @@ in
       ];
       text = builtins.readFile "${pkgs.nix-search-tv.src}/nixpkgs.sh";
     })
+    lazygit
+    lazydocker
 
     # --- Language Runtimes & Compilers ---
     nodejs
@@ -198,6 +185,8 @@ in
     cmake
 
     # --- Misc Tools ---
+    fastfetch
+    cmatrix
     tesseract
     satty
     quickshell

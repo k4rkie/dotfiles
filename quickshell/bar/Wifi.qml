@@ -12,12 +12,33 @@ Rectangle {
     border.color: PanelColors.barBorder
     color: "transparent"
 
-    readonly property var isWifiConnected: Networking.devices.values[0].connected
-    readonly property var wifiName: Networking.devices.values[0].networks.values.find(n => n.connected).name 
-    readonly property var wifiStrength: Math.round(Networking.devices.values[0].networks.values.find(n => n.connected).signalStrength * 100)
+    readonly property var wifiDevice: {
+        for (let i = 0; i < Networking.devices.values.length; i++) {
+            const d = Networking.devices.values[i]
+            if (d.type === DeviceType.Wifi) return d
+        }
+        return null
+    }
 
-    readonly property var normalStateLabelText: isWifiConnected ? `󱚻 :${root.wifiStrength}%` : "󰖪 :OFF"
-    readonly property var hoverStateLabelText: isWifiConnected ? `󱚻 :${root.wifiName}` : "󰖪 :OFF"
+    readonly property var activeNet: {
+        if (!wifiDevice) return null
+        for (let i = 0; i < wifiDevice.networks.values.length; i++) {
+            const n = wifiDevice.networks.values[i]
+            if (n.connected) return n
+        }
+        return null
+    }
+
+    readonly property bool isWifiConnected: activeNet !== null
+    readonly property string wifiName: activeNet?.name ?? ""
+    readonly property int wifiStrength: {
+        if (!activeNet) return 0
+        const s = activeNet.signalStrength
+        return Math.round(s <= 1 ? s * 100 : s)
+    }
+
+    readonly property string normalStateLabelText: isWifiConnected ? `󱚻 :${root.wifiStrength}%` : "󰖪 :OFF"
+    readonly property string hoverStateLabelText: isWifiConnected ? `󱚻 :${root.wifiName}` : "󰖪 :OFF"
 
     Text {
         id: label

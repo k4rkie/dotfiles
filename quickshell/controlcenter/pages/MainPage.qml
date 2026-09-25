@@ -30,12 +30,20 @@ Column {
         Pill {
             width: (parent.width - parent.spacing) / 2
             iconText: checked ? "󰂯" : "󰂲"
-            labelText: controlRoot.btAdapter ? ((controlRoot.btAdapter.enabled ?? false) ? "On" : "Off")
-                : controlRoot.btCliState === "on" ? "On"
-                : controlRoot.btCliState === "off" ? "Off"
-                : "No adapter"
-            checked: controlRoot.btAdapter ? (controlRoot.btAdapter.enabled ?? false) : controlRoot.btCliState === "on"
-            onClicked: controlRoot.toggleBluetooth()
+            labelText: {
+                if (!controlRoot.btHasAdapter) return "No adapter"
+                if (!controlRoot.btPowered) return "Off"
+                if (controlRoot.btConnectedName !== "") return controlRoot.btConnectedName
+                return "On"
+            }
+            checked: controlRoot.btPowered
+            onClicked: {
+                if (!controlRoot.btHasAdapter) {
+                    controlRoot.openPage("bluetooth")
+                    return
+                }
+                controlRoot.toggleBluetooth()
+            }
             onRightClicked: controlRoot.openPage("bluetooth")
         }
     }
@@ -54,7 +62,7 @@ Column {
 
         Pill {
             width: (parent.width - parent.spacing) / 2
-            iconText: "󰂛"
+            iconText: controlRoot.dndOn ? "󰂛" : "󰂚"
             labelText: controlRoot.dndOn ? "DND On" : "DND Off"
             checked: controlRoot.dndOn
             onClicked: NotifState.dndOn = !NotifState.dndOn

@@ -371,14 +371,39 @@ PanelWindow {
         onTriggered: root.kickWifiScan()
     }
 
+    property string wifiIpAddress: ""
+    Process {
+        id: wifiIpProc
+        command: ["bash", "-c", "ip -4 addr show dev $(nmcli -g GENERAL.DEVICE device show 2>/dev/null | head -n1 || echo wlan0) 2>/dev/null | awk '/inet /{print $2}' | cut -d/ -f1"]
+        stdout: StdioCollector {
+            waitForEnd: true
+            onStreamFinished: root.wifiIpAddress = text.trim()
+        }
+    }
+
+    function wifiDisconnect() {
+        if (!wifiDevice || wifiActionProc.running) return
+        wifiActionProc.command = ["nmcli", "device", "disconnect", wifiDevice.name]
+        wifiActionProc.running = true
+    }
+
+    function updateWifiIp() {
+        if (Networking.wifiEnabled && !wifiIpProc.running)
+            wifiIpProc.running = true
+    }
+
     Connections {
         target: Networking
         function onWifiEnabledChanged() {
             if (!Networking.wifiEnabled) {
                 root.wifiCliReady = false
                 root.wifiCliSsid = ""
+                root.wifiIpAddress = ""
             }
-            if (root.page === "wifi") wifiRecoverTimer.restart()
+            if (root.page === "wifi") {
+                wifiRecoverTimer.restart()
+                root.updateWifiIp()
+            }
         }
     }
 
@@ -399,7 +424,7 @@ PanelWindow {
 
     Timer {
         id: queryBtTimer
-        interval: 1500
+        interval: 1000
         onTriggered: root.queryBtState()
     }
 
@@ -420,7 +445,7 @@ PanelWindow {
         btToggleProc.command = ["bash", "-c",
             "if ! bluetoothctl list 2>/dev/null | grep -q Controller; then echo none; " +
             "elif bluetoothctl show 2>/dev/null | grep -q 'Powered: yes'; then bluetoothctl power off; echo off; " +
-            "else rfkill unblock bluetooth; sleep 0.3; bluetoothctl power on; echo on; fi"]
+            "else rfkill unblock bluetooth 2>/dev/null; bluetoothctl power on; echo on; fi"]
         btToggleProc.running = true
         queryBtTimer.restart()
         btScanResumeTimer.restart()
@@ -428,14 +453,15 @@ PanelWindow {
 
     Timer {
         id: btScanResumeTimer
-        interval: 1600
+        interval: 1500
         onTriggered: {
-            if (root.page === "bluetooth" && root.btCliState === "on")
-                root.btCliSetScanning(true)
+            if (root.page === "bluetooth" && root.btPowered)
+                root.setBtScanning(true)
         }
     }
 
     readonly property bool btPowered: (btAdapter?.enabled ?? false) || btCliState === "on"
+    readonly property bool btHasAdapter: (btAdapter !== null) || (btCliState !== "none" && btCliState !== "unknown")
 
     property var btCliDevices: []
     Process {
@@ -451,12 +477,12 @@ PanelWindow {
 
     Timer {
         id: btCliRefreshTimer
-        interval: 5000
+        interval: 4000
         running: root.page === "bluetooth" && root.btAdapter === null && root.animState === "open"
         repeat: true
         onTriggered: {
             root.refreshBtCliDevices()
-            if (root.btCliState === "none") root.queryBtState()
+            if (root.btCliState === "none" || root.btCliState === "unknown") root.queryBtState()
         }
     }
 
@@ -500,9 +526,13 @@ PanelWindow {
         btCliListProc.running = true
     }
 
-    function btCliSetScanning(on) {
-        btCliScanProc.command = ["bluetoothctl", "scan", on ? "on" : "off"]
-        btCliScanProc.running = true
+    function setBtScanning(on) {
+        if (btAdapter) {
+            btAdapter.discovering = on
+        } else {
+            btCliScanProc.command = ["bluetoothctl", "scan", on ? "on" : "off"]
+            btCliScanProc.running = true
+        }
     }
 
     readonly property var btDeviceList: btAdapter?.devices.values ?? []
@@ -510,23 +540,28 @@ PanelWindow {
         ? btDeviceList.filter(d => d.bonded || d.paired || d.connected)
         : btCliDevices.filter(d => d.paired || d.connected)
     readonly property var btNearbyList: btAdapter !== null
-        ? ((btAdapter.discovering ?? false)
-            ? btDeviceList.filter(d => !(d.bonded || d.paired || d.connected)) : [])
-        : (root.page === "bluetooth"
-            ? btCliDevices.filter(d => !d.paired && !d.connected) : [])
+        ? btDeviceList.filter(d => !(d.bonded || d.paired || d.connected))
+        : (root.page === "bluetooth" ? btCliDevices.filter(d => !d.paired && !d.connected) : [])
 
-    function btDeviceGlyph(iconName) {
-        const i = iconName ?? ""
-        if (i.includes("headset") || i.includes("headphone") || i.includes("audio")) return "󰋋"
-        if (i.includes("keyboard")) return "󰌌"
-        if (i.includes("mouse")) return "󰍽"
-        if (i.includes("phone")) return "󰄜"
-        if (i.includes("watch")) return "󰖉"
+    readonly property string btConnectedName: {
+        const conn = btPairedList.find(d => d.connected)
+        if (conn) return conn.name !== "" ? conn.name : conn.address
+        return ""
+    }
+
+    function btDeviceGlyph(iconName, devName) {
+        const i = (iconName ?? "").toLowerCase()
+        const n = (devName ?? "").toLowerCase()
+        if (i.includes("headset") || i.includes("headphone") || i.includes("audio") || n.includes("buds") || n.includes("headphone") || n.includes("wh-") || n.includes("airpods")) return "󰋋"
+        if (i.includes("keyboard") || n.includes("keychron") || n.includes("keyboard")) return "󰌌"
+        if (i.includes("mouse") || n.includes("mouse") || n.includes("mx master")) return "󰍽"
+        if (i.includes("phone") || n.includes("phone") || n.includes("iphone") || n.includes("android")) return "󰄜"
+        if (i.includes("watch") || n.includes("watch")) return "󰖉"
         return "󰂯"
     }
 
     function btBatteryPct(d) {
-        if (!d.batteryAvailable) return -1
+        if (!d || !d.batteryAvailable) return -1
         return Math.round(d.battery <= 1 ? d.battery * 100 : d.battery)
     }
 

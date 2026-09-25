@@ -23,7 +23,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "mentat"; # Define your hostname.
+  networking.hostName = "mentat";
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -100,6 +100,8 @@
   programs.dconf.enable = true;
 
   programs.mango.enable = true;
+
+  programs.steam.enable = true;
 
   programs.nix-ld = {
     enable = true;

@@ -122,6 +122,7 @@ export PATH="$HOME/.npm-global/bin:$PATH"
 
 # nix
 export XDG_DATA_DIRS=$XDG_DATA_DIRS:$HOME/.nix-profile/share
+export LD_LIBRARY_PATH="$NIX_LD_LIBRARY_PATH:$LD_LIBRARY_PATH"
 
 set -o emacs
 

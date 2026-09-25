@@ -12,11 +12,6 @@ vim.keymap.set("n", "<C-h>", ":%s/", { desc = "Open search and replace" })
 vim.keymap.set("n", "<A-l>", ":tabn<CR>", { desc = "Switch to next tab" })
 vim.keymap.set("n", "<A-h>", ":tabp<CR>", { desc = "Switch to pervious tab" })
 
-vim.keymap.set("n", "<A-`>", ":ToggleTerm<CR>", { desc = "Toggle terminal (Ctrl-`)" })
-vim.keymap.set("t", "<A-`>", function()
-  require("toggleterm").toggle()
-end, { desc = "Toggle terminal (Ctrl-`)" })
-
 vim.keymap.set("n", "<leader>dg", function()
   vim.diagnostic.setqflist()
   vim.cmd("copen")
