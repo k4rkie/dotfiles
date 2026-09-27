@@ -10,6 +10,7 @@ let
   slink = path: config.lib.file.mkOutOfStoreSymlink path;
   configs = {
     foot = "foot";
+    fastfetch = "fastfetch";
     hypr = "hypr";
     mango = "mango";
     mpv = "mpv";
@@ -76,6 +77,8 @@ in
     nix-direnv.enable = true;
     enableZshIntegration = false;
   };
+
+  programs.noctalia.enable = true;
 
   services.mpd-mpris.enable = true;
 

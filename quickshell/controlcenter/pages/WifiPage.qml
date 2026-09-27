@@ -22,9 +22,12 @@ Column {
 
     onVisibleChanged: {
         if (visible) {
-            controlRoot.kickWifiScan()
+            // Instant: render cache first, background rescan only if stale.
+            controlRoot.refreshWifiCache()
+            controlRoot.kickWifiScan(false)
             controlRoot.updateWifiIp()
-            controlRoot.wifiRecoverTimer.restart()
+            if (!controlRoot.wifiCliReady)
+                controlRoot.wifiRecoverTimer.restart()
         }
         if (!visible) {
             controlRoot.cancelWifiPassword()
@@ -84,26 +87,31 @@ Column {
 
             // Rescan Button
             Rectangle {
-                width: 28; height: 28; radius: 0
-                color: rescanMouse.containsMouse ? Qt.lighter(PanelColors.rowBackground, 1.3) : PanelColors.rowBackground
+                width: 74; height: 22; radius: 0
+                color: rescanMouse.containsMouse && !controlRoot.wifiScanning
+                    ? Qt.lighter(PanelColors.rowBackground, 1.3) : PanelColors.rowBackground
                 border.width: 1
-                border.color: PanelColors.border
+                border.color: controlRoot.wifiScanning ? PanelColors.pillActive : PanelColors.border
                 visible: Networking.wifiEnabled
+                opacity: controlRoot.wifiScanning ? 0.8 : 1.0
 
                 Text {
                     renderType: Text.NativeRendering
                     anchors.centerIn: parent
-                    text: "󰑐"
-                    font.pixelSize: 13; font.family: FontConfig.fontFamily
-                    color: controlRoot.wifiScanning ? PanelColors.pillActive : (rescanMouse.containsMouse ? PanelColors.textAccent : PanelColors.textDim)
+                    text: controlRoot.wifiScanning ? "Scanning…" : "Scan"
+                    font.pixelSize: 10; font.family: FontConfig.fontFamily
+                    color: controlRoot.wifiScanning ? PanelColors.pillActive
+                        : (rescanMouse.containsMouse ? PanelColors.textAccent : PanelColors.textMain)
                 }
 
                 MouseArea {
                     id: rescanMouse
                     anchors.fill: parent; hoverEnabled: true
-                    cursorShape: Qt.PointingHandCursor
+                    enabled: !controlRoot.wifiScanning
+                    cursorShape: controlRoot.wifiScanning ? Qt.ArrowCursor : Qt.PointingHandCursor
                     onClicked: {
-                        controlRoot.kickWifiScan()
+                        if (controlRoot.wifiScanning) return
+                        controlRoot.kickWifiScan(true)
                         controlRoot.updateWifiIp()
                     }
                 }

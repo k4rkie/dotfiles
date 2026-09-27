@@ -9,6 +9,7 @@ import "../theme"
 import "apps"
 import "pages"
 import "components"
+import "services"
 
 PanelWindow {
     id: root
@@ -124,475 +125,92 @@ PanelWindow {
     }
 
     // ---- wifi --------------------------------------------------------------
+    // Logic lives in services/WifiService.qml (extracted move-only).
+    // Forwards below keep the controlRoot.* API unchanged for pages.
 
-    readonly property var wifiDevice: {
-        for (let i = 0; i < Networking.devices.values.length; i++) {
-            const d = Networking.devices.values[i]
-            if (d.type === DeviceType.Wifi) return d
-        }
-        return null
-    }
-    readonly property string wifiSsid: {
-        if (wifiCliSsid !== "") return wifiCliSsid
-        if (!wifiDevice || !Networking.wifiEnabled) return ""
-        for (let i = 0; i < wifiDevice.networks.values.length; i++) {
-            const n = wifiDevice.networks.values[i]
-            if (n.connected && n.name !== "") return n.name
-        }
-        return ""
+    WifiService {
+        id: wifiService
+        page: root.page
+        animState: root.animState
     }
 
-    property string wifiCliSsid: ""
-    property var wifiCliNetworks: []
-    property bool wifiCliReady: false
-    property bool wifiScanning: false
-    property var wifiKnownNames: []
-    property var wifiProfiles: ({})
-    property var wifiForgetQueue: []
-    property string wifiListOutput: ""
-
-    readonly property var wifiSortedNetworks: {
-        const nets = wifiCliReady
-            ? wifiCliNetworks : (wifiDevice?.networks.values ?? [])
-        return nets.slice().sort((a, b) => b.signalStrength - a.signalStrength)
-    }
-
-    property var pendingWifiNet: null
-
-    function wifiSignalGlyph(strength) {
-        const pct = strength <= 1 ? strength * 100 : strength
-        return pct > 75 ? "󰤨" : pct > 50 ? "󰤥"
-            : pct > 25 ? "󰤢" : "󰤟"
-    }
-
-    function wifiConnect(net) {
-        if (!net || net.stateChanging) return
-        if (net.connected) {
-            wifiReconnect(net)
-            return
-        }
-        if (typeof net.connect !== "function") {
-            if (wifiActionProc.running) return
-            if (net.security !== "--" && !net.known) {
-                root.pendingWifiNet = net
-                return
-            }
-            wifiActionProc.command = root.wifiConnectCommand(net.name)
-            wifiActionProc.running = true
-            return
-        }
-        const secured = net.security !== WifiSecurityType.Open
-            && net.security !== WifiSecurityType.Unknown && net.security !== WifiSecurityType.Owe
-        if (secured && !net.known) {
-            root.pendingWifiNet = net
-            return
-        }
-        net.connect()
-    }
-
-    function wifiReconnect(net) {
-        if (!net || wifiActionProc.running) return
-        wifiActionProc.command = root.wifiConnectCommand(net.name)
-        wifiActionProc.running = true
-    }
-
-    function wifiConnectCommand(ssid, password) {
-        const command = ["nmcli", "device", "wifi", "connect", ssid]
-        if (root.wifiDevice && root.wifiDevice.name)
-            command.push("ifname", root.wifiDevice.name)
-        if (password !== undefined) command.push("password", password)
-        return command
-    }
-
-    function submitWifiPassword() {
-        if (!pendingWifiNet || wifiPskInput.text === "" || wifiActionProc.running) return
-        if (typeof pendingWifiNet.connectWithPsk === "function") {
-            pendingWifiNet.connectWithPsk(wifiPskInput.text)
-        } else {
-            wifiActionProc.command = root.wifiConnectCommand(pendingWifiNet.name, wifiPskInput.text)
-            wifiActionProc.running = true
-        }
-        pendingWifiNet = null
-    }
-
-    function cancelWifiPassword() {
-        pendingWifiNet = null
-    }
-
-    function wifiForget(net) {
-        if (!net || wifiActionProc.running) return
-        if (typeof net.forget === "function") net.forget()
-        else {
-            const profiles = []
-            const profileNames = Object.keys(root.wifiProfiles)
-            for (let i = 0; i < profileNames.length; i++) {
-                const profileName = profileNames[i]
-                if (profileName === net.name || profileName.indexOf(net.name + " ") === 0)
-                    profiles.push(...root.wifiProfiles[profileName])
-            }
-            root.wifiForgetQueue = profiles.map(profile => profile.uuid)
-            root.deleteNextWifiProfile()
-        }
-    }
-
-    function deleteNextWifiProfile() {
-        if (wifiActionProc.running || wifiForgetQueue.length === 0) return
-        const queue = wifiForgetQueue.slice()
-        const uuid = queue.shift()
-        root.wifiForgetQueue = queue
-        wifiActionProc.command = ["nmcli", "connection", "delete", "uuid", uuid]
-        wifiActionProc.running = true
-    }
-
-    Process { id: wifiToggleProc; command: ["true"] }
-    Process {
-        id: wifiActionProc
-        command: ["true"]
-        onExited: {
-            if (root.wifiForgetQueue.length > 0) {
-                root.deleteNextWifiProfile()
-                return
-            }
-            if (root.page === "wifi" && Networking.wifiEnabled) {
-                wifiKnownProc.exec(wifiKnownProc.command)
-                wifiListProc.exec(wifiListProc.command)
-            }
-        }
-    }
-    Process {
-        id: wifiListProc
-        command: ["nmcli", "-t", "-e", "yes", "-f", "IN-USE,SSID,SIGNAL,SECURITY", "device", "wifi", "list"]
-        stdout: StdioCollector {
-            waitForEnd: true
-            onStreamFinished: {
-                root.wifiListOutput = text
-                root.parseWifiList(text)
-            }
-        }
-    }
-    Process {
-        id: wifiKnownProc
-        command: ["nmcli", "-t", "-e", "yes", "-f", "NAME,TYPE,UUID", "connection", "show"]
-        stdout: StdioCollector {
-            waitForEnd: true
-            onStreamFinished: {
-                const names = []
-                const profiles = {}
-                const lines = text.trim().split("\n")
-                for (let i = 0; i < lines.length; i++) {
-                    const f = root.splitNmcliLine(lines[i])
-                    if (f.length >= 3 && f[1] === "802-11-wireless") {
-                        names.push(f[0])
-                        if (!profiles[f[0]]) profiles[f[0]] = []
-                        profiles[f[0]].push({ name: f[0], uuid: f[2] })
-                    }
-                }
-                root.wifiKnownNames = names
-                root.wifiProfiles = profiles
-                if (root.wifiListOutput !== "") root.parseWifiList(root.wifiListOutput)
-            }
-        }
-    }
-    Process {
-        id: wifiRescanProc
-        command: ["nmcli", "device", "wifi", "rescan"]
-        onStarted: root.wifiScanning = true
-        onExited: {
-            root.wifiScanning = false
-            if (root.page === "wifi" && Networking.wifiEnabled)
-                wifiListProc.exec(wifiListProc.command)
-        }
-    }
-
-    function splitNmcliLine(line) {
-        const fields = []
-        let field = ""
-        let escaped = false
-        for (let i = 0; i < line.length; i++) {
-            const c = line[i]
-            if (escaped) { field += c; escaped = false }
-            else if (c === "\\") escaped = true
-            else if (c === ":") { fields.push(field); field = "" }
-            else field += c
-        }
-        if (escaped) field += "\\"
-        fields.push(field)
-        return fields
-    }
-
-    function parseWifiList(output) {
-        const result = []
-        const lines = output.trim().split("\n")
-        for (let i = 0; i < lines.length; i++) {
-            if (!lines[i]) continue
-            const f = root.splitNmcliLine(lines[i])
-            if (f.length < 4 || f[1] === "") continue
-            result.push({
-                name: f[1], signalStrength: Number(f[2]) || 0,
-                security: f[3] || "--", connected: f[0] === "*",
-                stateChanging: false,
-                known: root.wifiProfiles[f[1]] !== undefined
-            })
-            if (f[0] === "*") root.wifiCliSsid = f[1]
-        }
-        root.wifiCliNetworks = result
-        root.wifiCliReady = true
-        if (result.every(n => !n.connected)) root.wifiCliSsid = ""
-    }
-
-    function toggleWifi() {
-        if (wifiToggleProc.running) return
-        wifiToggleProc.command = ["nmcli", "radio", "wifi",
-            Networking.wifiEnabled ? "off" : "on"]
-        wifiToggleProc.running = true
-    }
-
-    function kickWifiScan() {
-        if (!Networking.wifiEnabled) return
-        if (!wifiKnownProc.running) wifiKnownProc.running = true
-        if (!wifiListProc.running) wifiListProc.running = true
-        if (!wifiRescanProc.running) {
-            root.wifiScanning = true
-            wifiRescanProc.running = true
-        }
-    }
-
-    Timer {
-        id: wifiKickTimer
-        interval: 10000
-        running: root.page === "wifi" && root.animState === "open"
-        repeat: true
-        onTriggered: root.kickWifiScan()
-    }
-
-    Timer {
-        id: wifiRecoverTimer
-        interval: 2000
-        onTriggered: root.kickWifiScan()
-    }
-
-    property string wifiIpAddress: ""
-    Process {
-        id: wifiIpProc
-        command: ["bash", "-c", "ip -4 addr show dev $(nmcli -g GENERAL.DEVICE device show 2>/dev/null | head -n1 || echo wlan0) 2>/dev/null | awk '/inet /{print $2}' | cut -d/ -f1"]
-        stdout: StdioCollector {
-            waitForEnd: true
-            onStreamFinished: root.wifiIpAddress = text.trim()
-        }
-    }
-
-    function wifiDisconnect() {
-        if (!wifiDevice || wifiActionProc.running) return
-        wifiActionProc.command = ["nmcli", "device", "disconnect", wifiDevice.name]
-        wifiActionProc.running = true
-    }
-
-    function updateWifiIp() {
-        if (Networking.wifiEnabled && !wifiIpProc.running)
-            wifiIpProc.running = true
-    }
-
-    Connections {
-        target: Networking
-        function onWifiEnabledChanged() {
-            if (!Networking.wifiEnabled) {
-                root.wifiCliReady = false
-                root.wifiCliSsid = ""
-                root.wifiIpAddress = ""
-            }
-            if (root.page === "wifi") {
-                wifiRecoverTimer.restart()
-                root.updateWifiIp()
-            }
-        }
-    }
+    property alias wifiDevice: wifiService.wifiDevice
+    property alias wifiSsid: wifiService.wifiSsid
+    property alias wifiCliSsid: wifiService.wifiCliSsid
+    property alias wifiCliNetworks: wifiService.wifiCliNetworks
+    property alias wifiCliReady: wifiService.wifiCliReady
+    property alias wifiScanning: wifiService.wifiScanning
+    property alias wifiKnownNames: wifiService.wifiKnownNames
+    property alias wifiProfiles: wifiService.wifiProfiles
+    property alias wifiForgetQueue: wifiService.wifiForgetQueue
+    property alias wifiListOutput: wifiService.wifiListOutput
+    property alias wifiLastRescanMs: wifiService.wifiLastRescanMs
+    property alias wifiRescanCooldownMs: wifiService.wifiRescanCooldownMs
+    property alias wifiSortedNetworks: wifiService.wifiSortedNetworks
+    property alias pendingWifiNet: wifiService.pendingWifiNet
+    property alias wifiIpAddress: wifiService.wifiIpAddress
+    property alias wifiToggleProc: wifiService.wifiToggleProc
+    property alias wifiActionProc: wifiService.wifiActionProc
+    property alias wifiListProc: wifiService.wifiListProc
+    property alias wifiKnownProc: wifiService.wifiKnownProc
+    property alias wifiRescanProc: wifiService.wifiRescanProc
+    property alias wifiIpProc: wifiService.wifiIpProc
+    property alias wifiKickTimer: wifiService.wifiKickTimer
+    property alias wifiRecoverTimer: wifiService.wifiRecoverTimer
+    function wifiSignalGlyph(strength) { return wifiService.wifiSignalGlyph(strength); }
+    function wifiConnect(net) { return wifiService.wifiConnect(net); }
+    function wifiReconnect(net) { return wifiService.wifiReconnect(net); }
+    function wifiConnectCommand(ssid, password) { return wifiService.wifiConnectCommand(ssid, password); }
+    function submitWifiPassword() { return wifiService.submitWifiPassword(); }
+    function cancelWifiPassword() { return wifiService.cancelWifiPassword(); }
+    function wifiForget(net) { return wifiService.wifiForget(net); }
+    function deleteNextWifiProfile() { return wifiService.deleteNextWifiProfile(); }
+    function splitNmcliLine(line) { return wifiService.splitNmcliLine(line); }
+    function parseWifiList(output) { return wifiService.parseWifiList(output); }
+    function toggleWifi() { return wifiService.toggleWifi(); }
+    function refreshWifiCache() { return wifiService.refreshWifiCache(); }
+    function kickWifiScan(force) { return wifiService.kickWifiScan(force); }
+    function wifiDisconnect() { return wifiService.wifiDisconnect(); }
+    function updateWifiIp() { return wifiService.updateWifiIp(); }
 
     // ---- bluetooth ---------------------------------------------------------
+    // Logic lives in services/BluetoothService.qml (extracted move-only).
+    // Forwards below keep the controlRoot.* API unchanged for pages.
 
-    readonly property var btAdapter: Bluetooth.defaultAdapter
-
-    property string btCliState: "unknown"
-    Process {
-        id: btStateProc
-        command: ["true"]
-        stdout: StdioCollector {
-            waitForEnd: true
-            onStreamFinished: root.btCliState = text.trim()
-        }
-    }
-    Process { id: btToggleProc; command: ["true"] }
-
-    Timer {
-        id: queryBtTimer
-        interval: 1000
-        onTriggered: root.queryBtState()
+    BluetoothService {
+        id: btService
+        page: root.page
+        animState: root.animState
     }
 
-    function queryBtState() {
-        if (root.btAdapter) return
-        btStateProc.command = ["bash", "-c",
-            "if ! bluetoothctl list 2>/dev/null | grep -q Controller; then echo none; " +
-            "elif bluetoothctl show 2>/dev/null | grep -q 'Powered: yes'; then echo on; " +
-            "else echo off; fi"]
-        btStateProc.running = true
-    }
+    property alias btAdapter: btService.btAdapter
+    property alias btCliState: btService.btCliState
+    property alias btCliDevices: btService.btCliDevices
+    property alias btPowered: btService.btPowered
+    property alias btHasAdapter: btService.btHasAdapter
+    property alias btDeviceList: btService.btDeviceList
+    property alias btPairedList: btService.btPairedList
+    property alias btNearbyList: btService.btNearbyList
+    property alias btConnectedName: btService.btConnectedName
+    property alias btStateProc: btService.btStateProc
+    property alias btToggleProc: btService.btToggleProc
+    property alias btCliListProc: btService.btCliListProc
+    property alias btCliScanProc: btService.btCliScanProc
+    property alias btCliActionProc: btService.btCliActionProc
+    property alias queryBtTimer: btService.queryBtTimer
+    property alias btScanResumeTimer: btService.btScanResumeTimer
+    property alias btCliRefreshTimer: btService.btCliRefreshTimer
+    function queryBtState() { return btService.queryBtState(); }
+    function toggleBluetooth() { return btService.toggleBluetooth(); }
+    function parseBtCliDevices(text) { return btService.parseBtCliDevices(text); }
+    function refreshBtCliDevices() { return btService.refreshBtCliDevices(); }
+    function setBtScanning(on) { return btService.setBtScanning(on); }
+    function btDeviceGlyph(iconName, devName) { return btService.btDeviceGlyph(iconName, devName); }
+    function btBatteryPct(d) { return btService.btBatteryPct(d); }
+    function btToggleDevice(d) { return btService.btToggleDevice(d); }
+    function btForgetDevice(d) { return btService.btForgetDevice(d); }
 
-    function toggleBluetooth() {
-        if (btAdapter) {
-            btAdapter.enabled = !btAdapter.enabled
-            return
-        }
-        btToggleProc.command = ["bash", "-c",
-            "if ! bluetoothctl list 2>/dev/null | grep -q Controller; then echo none; " +
-            "elif bluetoothctl show 2>/dev/null | grep -q 'Powered: yes'; then bluetoothctl power off; echo off; " +
-            "else rfkill unblock bluetooth 2>/dev/null; bluetoothctl power on; echo on; fi"]
-        btToggleProc.running = true
-        queryBtTimer.restart()
-        btScanResumeTimer.restart()
-    }
-
-    Timer {
-        id: btScanResumeTimer
-        interval: 1500
-        onTriggered: {
-            if (root.page === "bluetooth" && root.btPowered)
-                root.setBtScanning(true)
-        }
-    }
-
-    readonly property bool btPowered: (btAdapter?.enabled ?? false) || btCliState === "on"
-    readonly property bool btHasAdapter: (btAdapter !== null) || (btCliState !== "none" && btCliState !== "unknown")
-
-    property var btCliDevices: []
-    Process {
-        id: btCliListProc
-        command: ["true"]
-        stdout: StdioCollector {
-            waitForEnd: true
-            onStreamFinished: root.parseBtCliDevices(text)
-        }
-    }
-    Process { id: btCliScanProc; command: ["true"] }
-    Process { id: btCliActionProc; command: ["true"] }
-
-    Timer {
-        id: btCliRefreshTimer
-        interval: 4000
-        running: root.page === "bluetooth" && root.btAdapter === null && root.animState === "open"
-        repeat: true
-        onTriggered: {
-            root.refreshBtCliDevices()
-            if (root.btCliState === "none" || root.btCliState === "unknown") root.queryBtState()
-        }
-    }
-
-    function parseBtCliDevices(text) {
-        const pairedSet = {}
-        const connMap = {}
-        const all = []
-        let section = ""
-        for (const line of text.split("\n")) {
-            if (line === "==PAIRED==" || line === "==ALL==" || line === "==CONN==") {
-                section = line
-                continue
-            }
-            let m
-            if ((m = line.match(/^Device (\S+) (.*)$/))) {
-                if (section === "==PAIRED==") pairedSet[m[1]] = true
-                else if (section === "==ALL==")
-                    all.push({ mac: m[1], name: m[2], address: m[1], icon: "", bonded: true,
-                        paired: false, connected: false, batteryAvailable: false,
-                        battery: 0, pairing: false, state: -1 })
-                continue
-            }
-            if (section === "==CONN==") {
-                m = line.match(/^(\S+) (yes|no)$/)
-                if (m) connMap[m[1]] = m[2] === "yes"
-            }
-        }
-        for (const d of all) {
-            d.paired = !!pairedSet[d.mac]
-            d.connected = connMap[d.mac] === true
-        }
-        root.btCliDevices = all
-    }
-
-    function refreshBtCliDevices() {
-        btCliListProc.command = ["bash", "-c",
-            "echo ==PAIRED==; bluetoothctl devices Paired 2>/dev/null; " +
-            "echo ==ALL==; bluetoothctl devices 2>/dev/null; " +
-            "echo ==CONN==; bluetoothctl devices 2>/dev/null | while read -r _ mac _; do " +
-            "echo \"$mac $(bluetoothctl info \"$mac\" 2>/dev/null | awk '/Connected:/{print $2}')\"; done"]
-        btCliListProc.running = true
-    }
-
-    function setBtScanning(on) {
-        if (btAdapter) {
-            btAdapter.discovering = on
-        } else {
-            btCliScanProc.command = ["bluetoothctl", "scan", on ? "on" : "off"]
-            btCliScanProc.running = true
-        }
-    }
-
-    readonly property var btDeviceList: btAdapter?.devices.values ?? []
-    readonly property var btPairedList: btAdapter !== null
-        ? btDeviceList.filter(d => d.bonded || d.paired || d.connected)
-        : btCliDevices.filter(d => d.paired || d.connected)
-    readonly property var btNearbyList: btAdapter !== null
-        ? btDeviceList.filter(d => !(d.bonded || d.paired || d.connected))
-        : (root.page === "bluetooth" ? btCliDevices.filter(d => !d.paired && !d.connected) : [])
-
-    readonly property string btConnectedName: {
-        const conn = btPairedList.find(d => d.connected)
-        if (conn) return conn.name !== "" ? conn.name : conn.address
-        return ""
-    }
-
-    function btDeviceGlyph(iconName, devName) {
-        const i = (iconName ?? "").toLowerCase()
-        const n = (devName ?? "").toLowerCase()
-        if (i.includes("headset") || i.includes("headphone") || i.includes("audio") || n.includes("buds") || n.includes("headphone") || n.includes("wh-") || n.includes("airpods")) return "󰋋"
-        if (i.includes("keyboard") || n.includes("keychron") || n.includes("keyboard")) return "󰌌"
-        if (i.includes("mouse") || n.includes("mouse") || n.includes("mx master")) return "󰍽"
-        if (i.includes("phone") || n.includes("phone") || n.includes("iphone") || n.includes("android")) return "󰄜"
-        if (i.includes("watch") || n.includes("watch")) return "󰖉"
-        return "󰂯"
-    }
-
-    function btBatteryPct(d) {
-        if (!d || !d.batteryAvailable) return -1
-        return Math.round(d.battery <= 1 ? d.battery * 100 : d.battery)
-    }
-
-    function btToggleDevice(d) {
-        if (!d) return
-        if (root.btAdapter) {
-            if (!d.paired && !d.bonded) { d.pair(); return }
-            if (d.connected) { d.disconnect(); return }
-            d.trusted = true
-            d.connect()
-            return
-        }
-        const mac = "\"" + d.mac + "\""
-        btCliActionProc.command = ["bash", "-c",
-            "if ! bluetoothctl info " + mac + " 2>/dev/null | grep -q 'Paired: yes'; then " +
-            "bluetoothctl pair " + mac + " >/dev/null 2>&1; bluetoothctl trust " + mac + " >/dev/null 2>&1; fi; " +
-            "if bluetoothctl info " + mac + " 2>/dev/null | grep -q 'Connected: yes'; then " +
-            "bluetoothctl disconnect " + mac + " >/dev/null 2>&1; else bluetoothctl connect " + mac + " >/dev/null 2>&1; fi; true"]
-        btCliActionProc.running = true
-        btCliRefreshTimer.restart()
-    }
-
-    function btForgetDevice(d) {
-        if (!d) return
-        if (root.btAdapter) { d.forget(); return }
-        btCliActionProc.command = ["bash", "-c", "bluetoothctl remove \"" + d.mac + "\" >/dev/null 2>&1; true"]
-        btCliActionProc.running = true
-        btCliRefreshTimer.restart()
-    }
-
-    // ---- calendar (moved from standalone CalendarPopup) ----------------------
+    // ---- calendar ------------------------------------------------------------
     property int _calViewYear: new Date().getFullYear()
     property int _calViewMonth: new Date().getMonth()
     property int _calSelectedDay: -1
@@ -603,12 +221,13 @@ PanelWindow {
     signal calUpdateMonthRequested(int delta)
     function _calMonthName(m) { return ["January","February","March","April","May","June","July","August","September","October","November","December"][m] }
     function _calDaysInMonth(y,m) { return new Date(y, m+1, 0).getDate() }
-    function _calFirstWeekday(y,m) { return (new Date(y, m, 1).getDay() + 6) % 7 }    function calResetToday() {
+    function _calFirstWeekday(y,m) { return (new Date(y, m, 1).getDay() + 6) % 7 }
+    function calResetToday() {
         var now = new Date()
         _calTodayDay = now.getDate(); _calTodayMonth = now.getMonth(); _calTodayYear = now.getFullYear()
         _calSelectedDay = -1; _calViewYear = _calTodayYear; _calViewMonth = _calTodayMonth
     }
-    // ---- apps page (launcher embedded, 400px list) -----------------------
+    // ---- apps ----------------------------------------------------------------
     property string ccAppsSearch: ""
     property var ccAppsFiltered: []
     property int ccAppsSelected: -1
@@ -661,7 +280,7 @@ PanelWindow {
     Connections { target: LauncherHiddenApps; function onHiddenAppsChanged() { if (root.page === "apps") ccAppsFilterTimer.restart() } }
     Connections { target: AppUsageTracker; function onUsageMapChanged() { if (root.page === "apps") ccAppsFilterTimer.restart() } }
 
-    // ---- emoji (from LauncherEmojiView, scaled to 460) ---------------------
+    // ---- emoji ---------------------------------------------------------------
     property var _emojiAll: []
     property var emojiFiltered: []
     property string _emojiQuery: ""
@@ -908,10 +527,6 @@ PanelWindow {
     property alias clipListProc: clipListProc
     property alias clipActionProc: clipActionProc
     property alias clipImgProc: clipImgProc
-    property alias wifiToggleProc: wifiToggleProc
-    property alias wifiActionProc: wifiActionProc
-    property alias btToggleProc: btToggleProc
-    property alias btStateProc: btStateProc
     property alias emojiCopyProc: emojiCopyProc
     property alias emojiLoaderProc: emojiLoaderProc
 
@@ -919,33 +534,21 @@ PanelWindow {
 
         property alias emojiFilterDebounce: emojiFilterDebounce
 
-        property alias wifiKickTimer: wifiKickTimer
 
-        property alias wifiRecoverTimer: wifiRecoverTimer
 
-        property alias queryBtTimer: queryBtTimer
 
-        property alias btScanResumeTimer: btScanResumeTimer
 
-        property alias btCliRefreshTimer: btCliRefreshTimer
 
         property alias loadClipboardTimer: loadClipboardTimer
 
-        property alias wifiListProc: wifiListProc
 
-        property alias wifiKnownProc: wifiKnownProc
 
-        property alias wifiRescanProc: wifiRescanProc
 
-        property alias btCliListProc: btCliListProc
 
-        property alias btCliScanProc: btCliScanProc
 
-        property alias btCliActionProc: btCliActionProc
 
-    // ---- window body --------------------------------------------------------------------
+    // ---- window body ---------------------------------------------------------
 
-    // click outside the card closes the menu
     MouseArea {
         anchors.fill: parent
         onClicked: root.close()
@@ -1085,10 +688,6 @@ PanelWindow {
 
             Divider {}
 
-            // ---- main page ----
-
-
-            // ---- pages (modular) ----
             MainPage { controlRoot: root; visible: root.page === "main" }
             CalendarPage { controlRoot: root; visible: root.page === "calendar" }
             AppsPage { controlRoot: root; visible: root.page === "apps" }
@@ -1101,172 +700,6 @@ PanelWindow {
             WallpaperPage { controlRoot: root; visible: root.page === "wallpaper" }
 
         }
-    }
-
-    // ---- components ---------------------------------------------------------------------
-
-    // flat: no bevel — keep as no-op for compatibility
-    component BevelOverlay: Item {
-        property bool pressed: false
-        anchors.fill: parent
-        z: 1
-    }
-
-    component HeaderIconButton: Rectangle {
-        id: hbtn
-        property string iconText: ""
-        property bool isActive: false
-        signal clicked()
-        width: 36; height: 36; radius: 0
-        color: isActive ? Qt.darker(PanelColors.rowBackground, 1.2) : (hmouse.containsMouse ? Qt.lighter(PanelColors.rowBackground, 1.35) : PanelColors.rowBackground)
-        border.width: 1
-        border.color: isActive ? PanelColors.textAccent : PanelColors.border
-        Text {
-            renderType: Text.NativeRendering
-            anchors.centerIn: parent
-            text: hbtn.iconText
-            font.pixelSize: 16; font.family: FontConfig.fontFamily
-            color: hmouse.containsMouse || hbtn.isActive ? PanelColors.textAccent : PanelColors.textMain
-        }
-        Rectangle {
-            anchors.bottom: parent.bottom
-            anchors.horizontalCenter: parent.horizontalCenter
-            width: 20; height: 2
-            radius: 1
-            color: PanelColors.textAccent
-            visible: hbtn.isActive
-        }
-        MouseArea {
-            id: hmouse; z: 2; anchors.fill: parent; hoverEnabled: true
-            cursorShape: Qt.PointingHandCursor
-            onClicked: hbtn.clicked()
-        }
-    }
-
-    component Pill: Rectangle {
-        id: pill
-        property string iconText: ""
-        property string labelText: ""
-        property bool checked: false
-        property bool isActive: false
-        property color accentColor: PanelColors.pillActive
-        signal clicked()
-        signal rightClicked()
-        height: 42; radius: 0
-        color: {
-            if (checked || isActive)
-                return pillMouse.containsMouse ? Qt.lighter(accentColor, 1.15) : accentColor
-            return pillMouse.containsMouse ? Qt.lighter(PanelColors.rowBackground, 1.25) : PanelColors.rowBackground
-        }
-        border.width: 1
-        border.color: checked || isActive ? Qt.darker(accentColor, 1.2) : PanelColors.border
-
-
-        Row {
-            anchors.centerIn: parent
-            spacing: 7
-
-            Text {
-                renderType: Text.NativeRendering
-                text: pill.iconText
-                font.pixelSize: 16; font.family: FontConfig.fontFamily
-                color: pill.checked || pill.isActive ? PanelColors.pillForeground
-                    : pillMouse.containsMouse ? PanelColors.textAccent : PanelColors.textMain
-                anchors.verticalCenter: parent.verticalCenter
-        
-            }
-            Text {
-                renderType: Text.NativeRendering
-                text: pill.labelText
-                font.pixelSize: 16; font.bold: true; font.family: FontConfig.fontFamily
-                width: Math.max(0, pill.width - 38)
-                elide: Text.ElideRight
-                color: pill.checked || pill.isActive ? PanelColors.pillForeground
-                    : pillMouse.containsMouse ? PanelColors.textAccent : PanelColors.textDim
-                anchors.verticalCenter: parent.verticalCenter
-        
-            }
-        }
-
-        MouseArea {
-            id: pillMouse; z: 2; anchors.fill: parent; hoverEnabled: true
-            acceptedButtons: Qt.LeftButton | Qt.RightButton
-            cursorShape: Qt.PointingHandCursor
-            onClicked: (mouse) => {
-                if (mouse.button === Qt.RightButton) pill.rightClicked()
-                else pill.clicked()
-            }
-        }
-    }
-
-    component ActionRow: Rectangle {
-        id: actRow
-        property string iconText: ""
-        property string labelText: ""
-        property bool danger: false
-        signal clicked()
-        width: parent.width; height: 46; radius: 0
-        color: actMouse.containsMouse ? Qt.lighter(PanelColors.rowBackground, 1.25) : PanelColors.rowBackground
-        border.width: 1
-        border.color: PanelColors.border
-
-
-        Row {
-            anchors.centerIn: parent
-            spacing: 10
-
-            Text {
-                renderType: Text.NativeRendering
-                text: actRow.iconText
-                font.pixelSize: 16; font.family: FontConfig.fontFamily
-                color: actRow.danger ? PanelColors.error : PanelColors.textMain
-                anchors.verticalCenter: parent.verticalCenter
-            }
-            Text {
-                renderType: Text.NativeRendering
-                text: actRow.labelText
-                font.pixelSize: 16; font.bold: true; font.family: FontConfig.fontFamily
-                color: actRow.danger ? PanelColors.error : PanelColors.textMain
-                anchors.verticalCenter: parent.verticalCenter
-            }
-        }
-
-        MouseArea {
-            id: actMouse; z: 2; anchors.fill: parent; hoverEnabled: true
-            cursorShape: Qt.PointingHandCursor
-            onClicked: actRow.clicked()
-        }
-    }
-
-    component ToggleSwitch: Rectangle {
-        id: tswitch
-        property bool checked: false
-        signal toggled()
-        width: 34; height: 18; radius: 0
-        color: tswitch.checked ? PanelColors.pillActive : PanelColors.rowBackground
-        border.width: 1
-        border.color: PanelColors.border
-
-        Rectangle {
-            x: tswitch.checked ? parent.width - width - 2 : 2
-            anchors.verticalCenter: parent.verticalCenter
-            width: 14; height: 14; radius: 0
-            color: tswitch.checked ? PanelColors.pillForeground : PanelColors.textDim
-
-        }
-        MouseArea {
-            id: tswitchMouse
-            z: 2
-            anchors.fill: parent
-            cursorShape: Qt.PointingHandCursor
-            onClicked: tswitch.toggled()
-        }
-    }
-
-    component Divider: Rectangle {
-        width: parent.width
-        height: 1
-        color: PanelColors.border
     }
 
 }

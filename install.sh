@@ -11,7 +11,7 @@ mkdir -p "$CONFIG_DIR"
 
 # Core config directories
 configs=(
-    foot hypr mango mpv nvim quickshell rmpc rofi 
+    foot fastfetch hypr mango mpv nvim quickshell rmpc rofi 
     swayosd wallust waybar yazi zathura zed
 )
 
