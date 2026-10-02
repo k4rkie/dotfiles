@@ -59,9 +59,23 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  # --- GPU / Graphics (AMD Vega / Picasso) ---
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+    extraPackages = with pkgs; [
+      vulkan-loader
+      libva
+    ];
+  };
+  services.xserver.videoDrivers = [ "amdgpu" ];
+
   environment.systemPackages = with pkgs; [
     wget
     curl
+    vulkan-tools # vulkaninfo, vkcube
+    mesa-demos # glxinfo
+    libva-utils # vainfo
 
     # --- Hardware & Core Integration ---
     brightnessctl
@@ -118,6 +132,12 @@
 
       # Graphics and Wayland fallbacks
       libGL
+      libGLU
+      mesa # libEGL, libGLES, RADV ICD deps
+      vulkan-loader # libvulkan.so.1 <- your missing error
+      libdrm
+      libva
+      libvdpau
       libxkbcommon
       wayland
       alsa-lib

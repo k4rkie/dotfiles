@@ -2,7 +2,6 @@
 
 DIRS=(
     "$HOME"
-    "$HOME/learn"
     "$HOME/Projects"
     "$HOME/Projects/go"
     "$HOME/Projects/C"

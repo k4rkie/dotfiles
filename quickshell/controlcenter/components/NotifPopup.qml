@@ -13,8 +13,8 @@ PanelWindow {
     color: "transparent"
     exclusionMode: ExclusionMode.Ignore
 
-    anchors { top: true; right: true }
-    margins { top: 8; right: 8 }
+    anchors { bottom: true; }
+    margins { bottom: 44; }
 
     implicitWidth: 360
     implicitHeight: toastList.contentHeight

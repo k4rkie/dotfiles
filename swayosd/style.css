@@ -3,6 +3,7 @@ window#osd {
   border-radius: 0px;
   background: alpha(#080610, 1);
   border: 3px solid #110e1c;
+  margin-top: 10px;
 }
 
 window#osd #container {

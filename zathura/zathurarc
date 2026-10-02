@@ -10,4 +10,4 @@ set selection-clipboard clipboard
 set default-bg "#080610"
 set default-fg "#d0cce4"
 
-set font "Miras Nerd Font 14"
+set font "SFMono Nerd Font 14"
