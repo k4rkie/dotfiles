@@ -7,7 +7,8 @@ if [[ -f "$CAFFEINE_FILE" ]]; then
     
     pkill -x swayidle
     sleep 0.1
-    "$HOME/scripts/idle-handler.sh" &
+    nohup "$HOME/scripts/idle-handler.sh" </dev/null >/dev/null 2>&1 &
+    disown
 else
     pkill -x swayidle 2>/dev/null
     touch "$CAFFEINE_FILE"
