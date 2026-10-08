@@ -14,7 +14,7 @@ return {
       -- blink.cmp + nvim defaults have didChangeWatchedFiles.dynamicRegistration = false
       local base_caps = require("blink.cmp").get_lsp_capabilities({
         workspace = {
-          didChangeWatchedFiles = { dynamicRegistration = true, relativePatternSupport = true },
+          didChangeWatchedFiles = { dynamicRegistration = false, relativePatternSupport = false },
           fileOperations = {
             dynamicRegistration = true,
             didCreate = true,
@@ -38,7 +38,7 @@ return {
         settings = {
           basedpyright = {
             analysis = {
-              diagnosticMode = "workspace",
+              diagnosticMode = "openFilesOnly",
               autoSearchPaths = true,
               autoImportCompletions = true,
               typeCheckingMode = "basic",

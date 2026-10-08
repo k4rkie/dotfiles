@@ -26,7 +26,10 @@ let
   };
 in
 {
-  imports = [ ./services/services.nix ];
+  imports = [
+    ./services/services.nix
+    inputs.zen-browser.homeModules.beta
+  ];
   home = {
     username = "k4rkie";
     homeDirectory = "/home/k4rkie";
@@ -78,7 +81,12 @@ in
     enableZshIntegration = false;
   };
 
-  programs.noctalia.enable = true;
+  programs.zen-browser = {
+    enable = true;
+    profiles.default = {
+      sine.enable = true;
+    };
+  };
 
   services.mpd-mpris.enable = true;
 

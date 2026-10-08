@@ -6,7 +6,7 @@ import "../theme"
 Rectangle {
     id: root
     height: 30
-    width: label.implicitWidth + 16
+    width: row.implicitWidth + 16
     radius: 0
     border.width: 2
     border.color: PanelColors.barBorder
@@ -45,21 +45,51 @@ Rectangle {
         else idx = 0
         return icons[idx]
     }
+    readonly property color iconColor: {
+        if (root.isCritical) return "#d87a78"
+        if (root.isWarning) return "#d89868"
+        return "#8ba5a0"
+    }
 
-    Text {
-        id: label
+    Row {
+        id: row
         anchors.centerIn: parent
-        font.family: FontConfig.fontFamily
-        font.pixelSize: FontConfig.size
-        color: {
-            if (root.isCritical) return "#d87a78"
-            if (root.isWarning) return "#d89868"
-            return "#8ba5a0"
+        spacing: 6
+
+        Item {
+            anchors.verticalCenter: parent.verticalCenter
+            width: 22
+            height: 20
+
+            Text {
+                anchors.centerIn: parent
+                text: root.batIcon
+                font.family: FontConfig.fontFamily
+                font.pixelSize: FontConfig.size
+                color: root.iconColor
+            }
+
+            Text {
+                anchors.centerIn: parent
+                rotation: 90
+                transformOrigin: Item.Center
+                visible: root.isPlugged && root.isReady
+                text: "󱐋"
+                font.family: FontConfig.fontFamily
+                font.pixelSize: 12
+                color: "#080610"
+                style: Text.Outline
+                styleColor: "#1a1a1a"
+            }
         }
-        text: {
-            if (!root.isReady) return " :--%"
-            if (root.isPlugged) return batIcon + " 󱐋:" + root.percent + "%"
-            return batIcon + " :" + root.percent + "%"
+
+        Text {
+            id: label
+            anchors.verticalCenter: parent.verticalCenter
+            font.family: FontConfig.fontFamily
+            font.pixelSize: FontConfig.size
+            color: root.iconColor
+            text: !root.isReady ? ":--%" : ":" + root.percent + "%"
         }
     }
 
