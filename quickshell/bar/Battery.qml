@@ -76,10 +76,10 @@ Rectangle {
                 visible: root.isPlugged && root.isReady
                 text: "󱐋"
                 font.family: FontConfig.fontFamily
-                font.pixelSize: 12
+                font.pixelSize: 15
                 color: "#080610"
                 style: Text.Outline
-                styleColor: "#1a1a1a"
+                styleColor: "#8ba5a0"
             }
         }
 

@@ -160,6 +160,17 @@
 
   services.envfs.enable = true;
 
+  services.xserver = {
+    enable = true;
+    displayManager.startx.enable = true;
+    desktopManager = {
+      xterm.enable = false;
+      xfce = {
+        enable = true;
+      };
+    };
+  };
+
   fonts.packages = with pkgs; [
     nerd-fonts.mononoki
     nerd-fonts.departure-mono
