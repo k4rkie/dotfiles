@@ -76,7 +76,7 @@ Rectangle {
                 visible: root.isPlugged && root.isReady
                 text: "󱐋"
                 font.family: FontConfig.fontFamily
-                font.pixelSize: 15
+                font.pixelSize: 16
                 color: "#080610"
                 style: Text.Outline
                 styleColor: "#8ba5a0"

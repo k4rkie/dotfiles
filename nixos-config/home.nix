@@ -6,9 +6,7 @@
   ...
 }:
 let
-  dotfiles = "${config.home.homeDirectory}/dotfiles";
-  slink = path: config.lib.file.mkOutOfStoreSymlink path;
-  configs = {
+  dotfiles = "${config.home.homeDirectory}/dotfiles"; slink = path: config.lib.file.mkOutOfStoreSymlink path; configs = {
     foot = "foot";
     fastfetch = "fastfetch";
     hypr = "hypr";

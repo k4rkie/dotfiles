@@ -30,9 +30,9 @@ ln -sfn "$DOTFILES_DIR/scripts" "$HOME/scripts"
 echo "Linked ~/scripts"
 
 # Zsh
-rm -f "$HOME/.zshrc"
-ln -sfn "$DOTFILES_DIR/zsh/.zshrc" "$HOME/.zshrc"
-echo "Linked ~/.zshrc"
+rm -f "$HOME/.bashrc"
+ln -sfn "$DOTFILES_DIR/bash/.bashrc" "$HOME/.bashrc"
+echo "Linked ~/.bashrc"
 
 # Tmux
 rm -f "$HOME/.tmux.conf"

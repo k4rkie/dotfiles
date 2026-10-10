@@ -34,18 +34,8 @@ source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 # 5. Prompt Configuration 
 # -------------------------------
 setopt PROMPT_SUBST
-
-typeset -A distro_logo
-distro_logo[nixos]="󱄅"
-distro_logo[fedora]=""
-distro_logo[arch]="󰣇"
-distro_logo[void]=""
-
-distro=$(source /etc/os-release && echo $ID)
-
 # Set the prompt (ensure you use single quotes here)
 PROMPT='%F{#99c37c}[%f%F{#8ab5be}$USER%f%F{#be7180}@%f%F{#efbe77}%~%f%F{#99c37c}]%f> '
-
 # -------------------------------
 # 6. Aliases
 # -------------------------------
@@ -120,11 +110,6 @@ export PATH="$HOME/.npm-global/bin:$PATH"
 # bun completions
 [ -s "/home/k4rkie/.bun/_bun" ] && source "/home/k4rkie/.bun/_bun"
 
-# nix
-export XDG_DATA_DIRS=$XDG_DATA_DIRS:$HOME/.nix-profile/share
-export LD_LIBRARY_PATH="$NIX_LD_LIBRARY_PATH:$LD_LIBRARY_PATH"
-
 set -o emacs
 
-# echo ""
-# fastfetch 
+# nerdfetch 

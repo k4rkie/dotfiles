@@ -250,7 +250,7 @@ yellow='[33m'
 blue='[34m'
 magenta='[35m'
 white='[37m'
-grey='[90m'
+grey='\033[38;2;180;180;180m'
 reset='[0m'
 
 ## USER VARIABLES -- YOU CAN CHANGE THESE
