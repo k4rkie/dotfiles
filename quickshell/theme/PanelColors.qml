@@ -7,25 +7,6 @@ Singleton {
     id: root
     readonly property int transitionDuration: 250
 
-    // Base16 Black Metal Bathory Tweaked
-    // readonly property color base00: "#030303"
-    // readonly property color base01: "#080808"
-    // readonly property color base02: "#121212"
-    // readonly property color base03: "#333333"
-    // readonly property color base04: "#999999"
-    // readonly property color base05: "#c1c1c1"
-    // readonly property color base06: "#999999"
-    // readonly property color base07: "#c1c1c1"
-    // readonly property color base08: "#82709c"
-    // readonly property color base09: "#aaaaaa"
-    // readonly property color base0A: "#d1a76b"
-    // readonly property color base0B: "#a1955f"
-    // readonly property color base0C: "#aaaaaa"
-    // readonly property color base0D: "#696969"
-    // readonly property color base0E: "#999999"
-    // readonly property color base0F: "#444444"
-
-    // Base16 Rose Pine Darker 
     readonly property color base00: "#080610"
     readonly property color base01: "#110e1c"
     readonly property color base02: "#26233a"

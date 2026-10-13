@@ -1,62 +1,88 @@
-# -------------------------------
-# Bash Configuration - k4rkie
-# Simple, no plugins. Converted from .zshrc
-# -------------------------------
-
 # Only run for interactive shells
 [[ $- != *i* ]] && return
 
-# -------------------------------
-# 1. History
-# -------------------------------
+# History
 HISTFILE="$HOME/.bash_history"
 HISTSIZE=100000
 HISTFILESIZE=100000
 HISTCONTROL=ignoredups:erasedups:ignorespace
 
-shopt -s histappend   # append instead of overwrite (APPEND_HISTORY)
-shopt -s checkwinsize # update LINES/COLUMNS after each command
-shopt -s cdspell      # closest thing to zsh CORRECT: fix `cd` typos
-shopt -s dirspell     # tab-complete with small typos
+shopt -s histappend
+shopt -s checkwinsize
+shopt -s cdspell      
+shopt -s dirspell
 
 # Share history across terminals + save immediately:
-#  history -a = append current session to file (INC_APPEND)
-#  history -n = pull new lines from file (SHARE)
 PROMPT_COMMAND="history -a; history -n${PROMPT_COMMAND:+;$PROMPT_COMMAND}"
 
-# -------------------------------
-# 2. Prompt
-# -------------------------------
-# zsh was: green [...] + cyan $USER + pink @ + yellow path + green ]
-PS1='\[\e[38;2;153;195;124m\][\[\e[0m\]\[\e[38;2;138;181;190m\]\u\[\e[0m\]\[\e[38;2;190;113;128m\]@\[\e[0m\]\[\e[38;2;239;190;119m\]\w\[\e[0m\]\[\e[38;2;153;195;124m\]]\[\e[0m\]> '
+# Prompt - uses terminal palette (follows foot theme) instead of hardcoded hex
+style-prompt() {
+  local rst=$'\e[0m'
+  local bold=$'\e[1m'
+  local green=$'\e[32m'
+  local blue=$'\e[36m'
+  local red=$'\e[31m'
+  local yellow=$'\e[33m'
 
-set -o emacs
+  # prompt = [user@pwd]>
 
-# -------------------------------
-# 3. Aliases
-# -------------------------------
-alias ls="eza -lh --icons=always --git"
-alias la="eza -lha --icons=always --git"
+  # Add [
+  PS1='\['$green'\][\['$rst'\]'
+
+  # Add user
+  PS1+='\['$blue'\]\u\['$rst'\]'
+
+  # Add @
+  PS1+='\['$red'\]@\['$rst'\]'
+
+  # Add pwd
+  PS1+='\['$yellow'\]\w\['$rst'\]'
+
+  # Add ]>
+  PS1+='\['$green'\]]\['$rst'\]> '
+}
+style-prompt
+
+# Emacs binds
+set -o vi
+
+# Aliases
+alias ls="eza -lh --color=auto"
+alias la="eza -lha --color=auto"
 
 alias vi="nvim"
 alias reload="source ~/.bashrc"
 alias tsd="tmux-session-dispensary.sh"
 
-# -------------------------------
-# 4. Env + PATH 
-# -------------------------------
+alias rm="rm -i"
+
+alias hl="rg --passthru"
+
+# Env + PATH 
 export TERMINAL=foot
 export EDITOR=nvim
+export PAGER=less
+export MANPAGER=less
 
 export BUN_INSTALL="$HOME/.bun"
 export NVM_DIR="$HOME/.config/nvm"
+export PATH="$PATH:$BUN_INSTALL/bin:$HOME/.cargo/bin:$HOME/.local/bin:$HOME/scripts:$HOME/go/bin"
+export BAT_THEME="base16"
 
-export PATH="$HOME/.npm-global/bin:$BUN_INSTALL/bin:$HOME/.cargo/bin:$HOME/.opencode/bin:$HOME/.local/bin:$HOME/scripts:/usr/local/go/bin:$PATH"
-export PATH="$PATH:$HOME/go/bin"
-
-# -------------------------------
-# 5. Tools
-# -------------------------------
+## Enable colors in Less By:YSAP
+export LESS_TERMCAP_mb=$'\e[1;31m'
+export LESS_TERMCAP_md=$'\e[1;31m'
+export LESS_TERMCAP_me=$'\e[0m'
+export LESS_TERMCAP_se=$'\e[0m'
+export LESS_TERMCAP_so=$'\e[1;33;44m'
+export LESS_TERMCAP_ue=$'\e[0m'
+export LESS_TERMCAP_us=$'\e[4;1;32m'
+export LESS_TERMCAP_mr=$'\e[7m'
+export LESS_TERMCAP_mh=$'\e[2m'
+export LESS_TERMCAP_ZN=$'\e[74m'
+export LESS_TERMCAP_ZV=$'\e[75m'
+export LESS_TERMCAP_ZO=$'\e[73m'
+export LESS_TERMCAP_ZW=$'\e[75m'
 
 # zoxide
 command -v zoxide >/dev/null && eval "$(zoxide init bash)"
@@ -70,14 +96,11 @@ y() {
 	rm -f -- "$tmp"
 }
 
-# -------------------------------
-# 6. Lazy-loaded nvm (kept from zshrc)
-# -------------------------------
+# nvm (lazy-loaded)
 _lazy_load_nvm() {
 	unset -f nvm node npm npx
 	[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 }
-
 nvm()  { _lazy_load_nvm; nvm "$@"; }
 node() { _lazy_load_nvm; node "$@"; }
 npm()  { _lazy_load_nvm; npm "$@"; }
@@ -90,3 +113,8 @@ npx()  { _lazy_load_nvm; npx "$@"; }
 [ -f /usr/share/fzf/key-bindings.bash ] && source /usr/share/fzf/key-bindings.bash
 [ -f /usr/share/fzf/completion.bash ] && source /usr/share/fzf/completion.bash
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+#functions
+mann() {
+  man $1 | bat -l man --style=plain
+}

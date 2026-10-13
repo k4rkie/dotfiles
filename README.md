@@ -14,7 +14,7 @@
 | **shell** | Quickshell |
 | **osd** | Swayosd |
 | **terminal** | foot |
-| **shell** | Zsh |
+| **shell** | bash |
 | **editor** | Neovim |
 | **multiplexer** | Tmux |
 | **file manager** | Yazi (tui), Thunar (gui) |

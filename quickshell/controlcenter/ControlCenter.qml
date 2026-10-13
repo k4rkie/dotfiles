@@ -450,7 +450,7 @@ PanelWindow {
         running: false
         command: [
             "bash", "-c",
-            "find \"$HOME/Pictures/Wallpapers\" -type f \\( " +
+            "find \"$HOME/Pictures/Wallpapers/\" -type f \\( " +
             "-iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' " +
             "-o -iname '*.gif' -o -iname '*.jxl' -o -iname '*.bmp' \\) 2>/dev/null | sort | sed 's/$/ IMAGE/'; " +
             "find \"$HOME/Videos/Wallpapers\" -type f \\( " +
