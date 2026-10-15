@@ -3,3 +3,4 @@ mpd/log
 mpd/state
 hardware-configuration.nix
 SHetup
+quickshell/settings.conf

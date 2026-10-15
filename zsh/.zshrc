@@ -35,7 +35,7 @@ source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 # -------------------------------
 setopt PROMPT_SUBST
 # Set the prompt (ensure you use single quotes here)
-PROMPT='%F{#99c37c}[%f%F{#8ab5be}$USER%f%F{#be7180}@%f%F{#efbe77}%~%f%F{#99c37c}]%f> '
+PROMPT='%F{#99c37c}[%f%F{#95b1b7}$USER%f%F{#be7180}@%f%F{#efbe77}%~%f%F{#99c37c}]%f> '
 # -------------------------------
 # 6. Aliases
 # -------------------------------

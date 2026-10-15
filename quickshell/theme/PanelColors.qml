@@ -7,9 +7,9 @@ Singleton {
     id: root
     readonly property int transitionDuration: 250
 
-    readonly property color base00: "#080610"
-    readonly property color base01: "#110e1c"
-    readonly property color base02: "#26233a"
+    readonly property color base00: "#030206"
+    readonly property color base01: "#06050a"
+    readonly property color base02: "#0e0d15"
     readonly property color base03: "#6e6a86"
     readonly property color base04: "#908caa"
     readonly property color base05: "#d0cce4"
@@ -19,7 +19,7 @@ Singleton {
     readonly property color base09: "#d0a872"
     readonly property color base0A: "#c4a29a"
     readonly property color base0B: "#4a7a8a"
-    readonly property color base0C: "#8ab5be"
+    readonly property color base0C: "#95b1b7"
     readonly property color base0D: "#a890c4"
     readonly property color base0E: "#c27282"
     readonly property color base0F: "#6e6a86"

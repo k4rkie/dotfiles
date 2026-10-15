@@ -15,7 +15,7 @@ shopt -s dirspell
 # Share history across terminals + save immediately:
 PROMPT_COMMAND="history -a; history -n${PROMPT_COMMAND:+;$PROMPT_COMMAND}"
 
-# Prompt - uses terminal palette (follows foot theme) instead of hardcoded hex
+# Prompt
 style-prompt() {
   local rst=$'\e[0m'
   local bold=$'\e[1m'
@@ -39,7 +39,7 @@ style-prompt() {
   PS1+='\['$yellow'\]\w\['$rst'\]'
 
   # Add ]>
-  PS1+='\['$green'\]]\['$rst'\]> '
+  PS1+='\['$green'\]]\['$rst'\]󰅂 '
 }
 style-prompt
 

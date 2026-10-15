@@ -2,27 +2,27 @@
 # Rosé Pine (Darker/Muted)
 
 [colors-dark]
-background=080610
+background=030206
 foreground=d0cce4
 
-regular0=080610
+regular0=030206
 regular1=c27282
 regular2=4a7a8a
 regular3=d0a872
 regular4=a890c4
 regular5=c4a29a
-regular6=8ab5be
+regular6=95b1b7
 regular7=d0cce4
 
-bright0=110e1c 
+bright0=06050a 
 bright1=c27282 
 bright2=4a7a8a 
 bright3=d0a872 
 bright4=a890c4 
 bright5=c4a29a 
-bright6=8ab5be 
+bright6=95b1b7 
 bright7=d0cce4 
 
 flash=d0a872   
 
-cursor=080610 d0cce4
+cursor=030206 d0cce4

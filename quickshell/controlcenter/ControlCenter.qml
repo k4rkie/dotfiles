@@ -289,7 +289,7 @@ PanelWindow {
     function _applyEmojiFilter() { emojiFilterDebounce.restart() }
     function _doEmojiFilter() {
         var q = _emojiQuery.toLowerCase()
-        emojiFiltered = q === "" ? _emojiAll : _emojiAll.filter(function(e){ return e.name.includes(q) })
+        emojiFiltered = q === "" ? _emojiAll : _emojiAll.filter(function(e){ return e.name.includes(q) || (e.keywords && e.keywords.includes(q)) })
         emojiSelected = 0
     }
     function emojiLoad() {
