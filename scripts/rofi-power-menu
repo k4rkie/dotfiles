@@ -28,7 +28,7 @@ icons[shutdown]="\Uf0425"
 icons[cancel]="\Uf0156"
 
 declare -A actions
-actions[lockscreen]=""$HOME"/scripts/lock-debug.sh"
+actions[lockscreen]="pidof hyprlock &>/dev/null || (nohup hyprlock &>/dev/null &)"
 actions[logout]="loginctl terminate-session ${XDG_SESSION_ID-}"
 actions[suspend]="systemctl suspend"
 actions[hibernate]="systemctl hibernate"
@@ -255,7 +255,7 @@ else
                 echo "Selected: $entry" >&2
             else
                 # Perform the action
-                ${actions[$entry]}
+                eval "${actions[$entry]}"
             fi
             exit 0
         fi

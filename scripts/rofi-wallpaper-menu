@@ -8,13 +8,12 @@ if [[ ! -d "$WALL_DIR" ]]; then
     exit 1
 fi
 
-# 2. Build the entries list: "filename\0icon\x1ffull_path"
-# Passing to Rofi in -dmenu mode
+# 2. Build the entries list: "filename\0icon\x1ffull_path" for rofi dmenu mode
 CHOSEN_FILE=$(
-    find "$WALL_DIR" -maxdepth 1 -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" \) -printf "%f\n" | \
-    while read -r name; do
-        printf "%s\0icon\x1f%s/%s\n" "$name" "$WALL_DIR" "$name"
-    done | rofi -dmenu -show-icons -case-smart -theme "$HOME/.config/rofi/wallpaper-picker.rasi" -p "   Wallpaper"
+    find "$WALL_DIR" -maxdepth 1 \
+    -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" \) -printf '%f\n' | \
+    awk -v dir="$WALL_DIR" '{print $0 "\0icon\x1f" dir "/" $0}' | \
+    rofi -dmenu -show-icons -case-smart -theme "$HOME/.config/rofi/wallpaper-picker.rasi" -p "    Wallpaper"
 )
 
 # 3. If the user cancelled (Esc or clicked outside), exit cleanly
