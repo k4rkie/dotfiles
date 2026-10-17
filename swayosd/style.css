@@ -1,8 +1,8 @@
 window#osd {
   padding: 8px 16px;
   border-radius: 0px;
-  background: alpha(#06040b, 1);
-  border: 2px solid #26233a;
+  background: alpha(#030206, 1);
+  border: 2px solid #0e0d15;
   margin-top: 10px;
 }
 

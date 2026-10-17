@@ -33,8 +33,8 @@ PanelWindow {
         right: true
     }
     margins {
-        left: 0
-        right: 0
+        left: 300
+        right: 300
     }
 
     implicitHeight: 34

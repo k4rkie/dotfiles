@@ -56,6 +56,14 @@ Singleton {
                 timestamp: Date.now()
             }
             historyModel.insert(0, entry)
+            // keep at most 60 history entries; dismiss+drop the oldest
+            while (historyModel.count > 60) {
+                var old = historyModel.get(historyModel.count - 1)
+                if (old && old.notification) {
+                    try { old.notification.dismiss() } catch (e) {}
+                }
+                historyModel.remove(historyModel.count - 1)
+            }
             if (root.ready) toastModel.insert(0, entry)
         }
     }

@@ -67,6 +67,7 @@ PanelWindow {
                     Image {
                         anchors.fill: parent; anchors.margins: 2
                         source: toastCard.iconSource
+                        sourceSize: Qt.size(40, 40)
                         fillMode: Image.PreserveAspectCrop
                         asynchronous: true
                         visible: toastCard.iconSource !== ""

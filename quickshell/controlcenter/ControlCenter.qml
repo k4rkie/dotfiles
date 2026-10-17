@@ -161,7 +161,7 @@ PanelWindow {
     function wifiConnect(net) { return wifiService.wifiConnect(net); }
     function wifiReconnect(net) { return wifiService.wifiReconnect(net); }
     function wifiConnectCommand(ssid, password) { return wifiService.wifiConnectCommand(ssid, password); }
-    function submitWifiPassword() { return wifiService.submitWifiPassword(); }
+    function submitWifiPassword(psk) { return wifiService.submitWifiPassword(psk); }
     function cancelWifiPassword() { return wifiService.cancelWifiPassword(); }
     function wifiForget(net) { return wifiService.wifiForget(net); }
     function deleteNextWifiProfile() { return wifiService.deleteNextWifiProfile(); }
@@ -603,6 +603,7 @@ PanelWindow {
                         id: avatarImg
                         width: 48; height: 48
                         source: "file://" + root.avatarPath
+                        sourceSize: Qt.size(48, 48)
                         fillMode: Image.PreserveAspectFit
                         smooth: true
                         asynchronous: true

@@ -11,7 +11,7 @@ Rectangle {
   Text {
     id: label
     anchors.centerIn: parent
-    text: ":"
+    text: "|"
     font.family: FontConfig.fontFamily
     font.pixelSize: FontConfig.size
     color: PanelColors.base05

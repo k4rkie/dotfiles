@@ -1,13 +1,13 @@
 set recolor true
-set recolor-lightcolor "#080610"
+set recolor-lightcolor "#030206"
 set recolor-darkcolor "#d0cce4"
 
-set statusbar-bg "#080610"
+set statusbar-bg "#030206"
 set statusbar-fg "#d0cce4"
 
 set selection-clipboard clipboard
 
-set default-bg "#080610"
+set default-bg "#030206"
 set default-fg "#d0cce4"
 
 set font "SFMono Nerd Font 14"

@@ -1,0 +1,99 @@
+{
+  "layer": "top",
+  "position": "bottom",
+  "height": 34,
+  "margin-left": 120,
+  "margin-right": 120,
+  "reload_style_on_change": true,
+  "modules-left": [
+    "mango/workspaces",
+    "mango/window"
+  ],
+  "modules-center": [
+    "clock"
+  ],
+  "modules-right": [
+    "memory",
+    "custom/sep",
+    "disk#a",
+    "custom/sep",
+    "battery",
+    "custom/sep",
+    "network",
+    "tray"
+  ],
+  "mango/workspaces": {
+    "format": "{icon}",
+    "hide-empty": true,
+    "on-click": "activate",
+    "overview-label": "OVERVIEW",
+    "format-icons": {
+      "1": "one",
+      "2": "two",
+      "3": "three",
+      "4": "four",
+      "5": "five",
+      "6": "six",
+      "7": "seven",
+      "8": "eight",
+      "9": "nine"
+    }
+  },
+  "mango/window": {
+    "format": "{app_id}",
+    "icon": true,
+    "icon-size": 20
+  },
+  "clock": {
+    "format": "󰣇 {:%I:%M %p}",
+    "interval": 60
+  },
+  "memory": {
+    "format": " :{percentage}%",
+    "interval": 10,
+    "on-click": "foot -a btop btop"
+  },
+  "custom/sep": {
+    "format": "|",
+    "interval": "once"
+  },
+  "disk#a": {
+    "format": " :{percentage_used}%",
+    "interval": 3600
+  },
+  "battery": {
+    "format": "{icon} :{capacity}%",
+    "format-charging": "{icon} 󱐋:{capacity}%",
+    "format-full": "{icon} :{capacity}%",
+    "format-icons": {
+      "default": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ]
+    },
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "interval": 60
+  },
+  "network": {
+    "format-wifi": "󱚻 :{signalStrength}%",
+    "format-disconnected": "󰖪 :OFF",
+    "on-click": "exec ~/scripts/rofi-wifi-menu.sh",
+    "interval": 10
+  },
+  "tray": {
+    "icon-size": 22,
+    "spacing": 8
+  },
+}

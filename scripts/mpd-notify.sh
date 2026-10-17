@@ -25,12 +25,18 @@ notify() {
 }
 
 while true; do
-    state=$(rmpc status | jq -r '.state // ""')
-    title=$(rmpc song | jq -r '.metadata.title // ""')
-    [ -z "$title" ] && continue
+    state=$(rmpc status 2>/dev/null | jq -r '.state // ""')
+    title=$(rmpc song 2>/dev/null | jq -r '.metadata.title // ""')
+    if [ -z "$title" ]; then
+        sleep 2
+        continue
+    fi
 
     key="$state:$title"
-    [ "$key" = "$prev" ] && continue
+    if [ "$key" = "$prev" ]; then
+        sleep 1
+        continue
+    fi
     prev="$key"
     printf '%s' "$key" > "$STATE_FILE"
 

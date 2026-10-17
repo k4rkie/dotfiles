@@ -239,6 +239,8 @@ Item {
                     id: artB
                     anchors.fill: parent; anchors.margins: 2
                     source: artContainer._urlB
+                    sourceSize: Qt.size(64, 64)
+                    cache: false
                     fillMode: Image.PreserveAspectCrop
                     asynchronous: true; mipmap: true; smooth: true
                     opacity: artContainer._showA ? 0.0 : 1.0
@@ -248,6 +250,8 @@ Item {
                     id: artA
                     anchors.fill: parent; anchors.margins: 2
                     source: artContainer._urlA
+                    sourceSize: Qt.size(64, 64)
+                    cache: false
                     fillMode: Image.PreserveAspectCrop
                     asynchronous: true; mipmap: true; smooth: true
                     opacity: artContainer._showA ? 1.0 : 0.0

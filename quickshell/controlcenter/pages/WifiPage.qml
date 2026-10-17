@@ -257,7 +257,7 @@ Column {
                             echoMode: wifiPage.showPsk ? TextInput.Normal : TextInput.Password
                             clip: true
                             selectByMouse: true
-                            onAccepted: controlRoot.submitWifiPassword()
+                            onAccepted: controlRoot.submitWifiPassword(wifiPskInput.text)
                             Keys.onEscapePressed: controlRoot.cancelWifiPassword()
 
                             Connections {
@@ -306,7 +306,7 @@ Column {
                         id: pskOk
                         anchors.fill: parent; hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
-                        onClicked: controlRoot.submitWifiPassword()
+                        onClicked: controlRoot.submitWifiPassword(wifiPskInput.text)
                     }
                 }
 
@@ -410,6 +410,7 @@ Column {
                             }
 
                             Row {
+                                z: 2
                                 anchors { right: parent.right; rightMargin: 10; verticalCenter: parent.verticalCenter }
                                 spacing: 10
 
@@ -440,6 +441,7 @@ Column {
 
                             MouseArea {
                                 id: kMouse
+                                z: 1
                                 anchors.fill: parent; hoverEnabled: true
                                 cursorShape: Qt.PointingHandCursor
                                 onClicked: controlRoot.wifiConnect(kRow.modelData)

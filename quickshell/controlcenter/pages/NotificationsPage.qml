@@ -90,6 +90,8 @@ import "../apps"
                                 Image {
                                     anchors.fill: parent; anchors.margins: 2
                                     source: modelData.image !== "" ? modelData.image : ""
+                                    sourceSize: Qt.size(40, 40)
+                                    cache: false
                                     fillMode: Image.PreserveAspectCrop
                                     asynchronous: true
                                     visible: modelData.image !== ""

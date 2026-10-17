@@ -58,17 +58,20 @@ Item {
     }
 
     function wifiConnect(net) {
+        console.log("wifiConnect:", net ? net.name : null, JSON.stringify(net))
         if (!net || net.stateChanging) return
         if (net.connected) {
             wifiReconnect(net)
             return
         }
         if (typeof net.connect !== "function") {
-            if (wifiActionProc.running) return
+            if (wifiActionProc.running) { console.log("wifiConnect: proc busy, ignored"); return }
             if (net.security !== "--" && !net.known) {
+                console.log("wifiConnect: needs password")
                 root.pendingWifiNet = net
                 return
             }
+            console.log("wifiConnect: running nmcli")
             wifiActionProc.command = root.wifiConnectCommand(net.name)
             wifiActionProc.running = true
             return
@@ -96,12 +99,13 @@ Item {
         return command
     }
 
-    function submitWifiPassword() {
-        if (!pendingWifiNet || wifiPskInput.text === "" || wifiActionProc.running) return
+    function submitWifiPassword(psk) {
+        console.log("submitWifiPassword: pending=", !!pendingWifiNet, "psk len=", psk ? psk.length : -1, "busy=", wifiActionProc.running)
+        if (!pendingWifiNet || psk === undefined || psk === "" || wifiActionProc.running) return
         if (typeof pendingWifiNet.connectWithPsk === "function") {
-            pendingWifiNet.connectWithPsk(wifiPskInput.text)
+            pendingWifiNet.connectWithPsk(psk)
         } else {
-            wifiActionProc.command = root.wifiConnectCommand(pendingWifiNet.name, wifiPskInput.text)
+            wifiActionProc.command = root.wifiConnectCommand(pendingWifiNet.name, psk)
             wifiActionProc.running = true
         }
         pendingWifiNet = null
@@ -140,7 +144,11 @@ Item {
     Process {
         id: wifiActionProc
         command: ["true"]
+        stderr: SplitParser {
+            onRead: d => console.log("nmcli stderr:", d)
+        }
         onExited: {
+            console.log("wifiActionProc exited, forgetQueue:", root.wifiForgetQueue.length)
             if (root.wifiForgetQueue.length > 0) {
                 root.deleteNextWifiProfile()
                 return

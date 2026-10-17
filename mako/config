@@ -1,0 +1,48 @@
+# mako — styled to match quickshell NotifPopup.qml + PanelColors.qml
+# palette: popup/border/row/textMain/textDim/textAccent = base00/02/05/01/03/05...
+
+# ── window ──
+width=360
+height=160
+outer-margin=0
+padding=12,12
+
+# panel sits at top-right so cards stack downward from the top corner
+anchor=top-right
+layer=overlay
+max-visible=3
+sort=+time
+
+background-color=#030206
+border-color=#0e0d15
+border-size=1
+border-radius=0
+progress-color=over #95b1b7
+
+# ── fonts / text ──
+font=SFMono Nerd Font 12
+text-color=#d0cce4
+
+# title row = summary (QML: 16px bold #d0cce4)
+format=<b>%s</b>\n<span font='12px' foreground='#908caa'>%b</span>
+
+default-timeout=5000
+ignore-timeout=0
+
+# ── icons ──
+icons=1
+max-icon-size=42
+# square icon box (QML: 42x42, 1px border, rowBackground #06050a)
+icon-border-radius=0
+icon-path=/usr/share/icons/Papirus:/usr/share/icons/hicolor
+
+[urgency=high]
+background-color=#030206
+border-color=#c27282
+default-timeout=0
+text-color=#d0cce4
+
+[urgency=low]
+border-color=#0e0d15
+text-color=#908caa
+format=<b>%s</b>\n<span font='12px' foreground='#6e6a86'>%b</span>
