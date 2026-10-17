@@ -1,0 +1,145 @@
+@import "~/.config/rofi/colors-rofi-dark.rasi"
+
+configuration {
+    show-icons: true;
+}
+
+* {
+    font: "SFMono Nerd Font 15";
+}
+
+window {
+    transparency:     "real";
+    location:         center;
+    anchor:           center;
+    fullscreen:       false;
+    width:            62%;
+    enabled:          true;
+    margin:           0px;
+    padding:          6px;
+    border:           1px solid;
+    border-color:     #080808;
+    border-radius:    0px;
+    background-color: @background;
+    cursor:           "default";
+}
+
+mainbox {
+    enabled:          true;
+    spacing:          6px;
+    margin:           0px;
+    padding:          2px;
+    border:           0px;
+    background-color: transparent;
+    children:         [ inputbar, content-box ];
+}
+
+inputbar {
+    enabled:          true;
+    spacing:          0px;
+    padding:          2px 4px;
+    background-color: transparent;
+    text-color:       @foreground;
+    children:         [ prompt, textbox-prompt-colon, entry ];
+}
+
+prompt {
+    text-color:       @foreground;
+    padding:          0px 4px 0px 0px;
+}
+
+textbox-prompt-colon {
+    expand:           false;
+    str:              ":";
+    text-color:       @foreground;
+    margin:           0px 0.3em 0em 0em;
+}
+
+entry {
+    text-color:        @foreground;
+    placeholder:       "Search wallpaper...";
+    placeholder-color: #444444;
+}
+
+/* Horizontal split: Left = Listview, Right = Preview */
+content-box {
+    orientation:      horizontal;
+    spacing:          6px;
+    margin:           0px;
+    padding:          0px;
+    background-color: transparent;
+    children:         [ listview, preview-box ];
+}
+
+/* Left column: List of wallpapers */
+listview {
+    enabled:          true;
+    width:            38%;
+    columns:          1;
+    lines:            8;
+    cycle:            true;
+    dynamic:          true;
+    scrollbar:        false;
+    layout:           vertical;
+    reverse:          false;
+    fixed-height:     false;
+    fixed-columns:    true;
+    spacing:          3px;
+    margin:           0px;
+    padding:          2px;
+    border:           0px solid;
+    border-radius:    0px;
+    background-color: transparent;
+    cursor:           "default";
+}
+
+element {
+    enabled:          true;
+    spacing:          0px;
+    margin:           1px 0px;
+    padding:          6px 8px;
+    border:           0px solid;
+    border-radius:    0px;
+    background-color: transparent;
+    text-color:       @foreground;
+    cursor:           pointer;
+    children:         [ element-text ];
+}
+
+element-text {
+    background-color: transparent;
+    text-color:       inherit;
+    cursor:           inherit;
+    vertical-align:   0.5;
+    horizontal-align: 0.0;
+}
+
+element selected {
+    background-color: @selected-normal-background;
+    text-color:       @selected-normal-foreground;
+}
+
+element selected.normal {
+    background-color: @selected-normal-background;
+    text-color:       @selected-normal-foreground;
+}
+
+/* Right column: Image preview */
+preview-box {
+    expand:           true;
+    margin:           0px;
+    padding:          4px;
+    border:           1px solid;
+    border-color:     #080808;
+    border-radius:    0px;
+    background-color: @background;
+    children:         [ icon-current-entry ];
+}
+
+icon-current-entry {
+    expand:           true;
+    size:             320px;
+    squared:          false;
+    horizontal-align: 0.5;
+    vertical-align:   0.5;
+}

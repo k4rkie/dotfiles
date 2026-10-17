@@ -118,3 +118,7 @@ npx()  { _lazy_load_nvm; npx "$@"; }
 mann() {
   man $1 | bat -l man --style=plain
 }
+
+
+# Added by Antigravity CLI installer
+export PATH="/home/k4rkie/.local/bin:$PATH"

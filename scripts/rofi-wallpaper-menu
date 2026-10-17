@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+    
+WALL_DIR="${1:-$HOME/Pictures/Wallpapers}"
+
+# 1. Verify directory exists
+if [[ ! -d "$WALL_DIR" ]]; then
+    echo "Directory does not exist: $WALL_DIR" >&2
+    exit 1
+fi
+
+# 2. Build the entries list: "filename\0icon\x1ffull_path"
+# Passing to Rofi in -dmenu mode
+CHOSEN_FILE=$(
+    find "$WALL_DIR" -maxdepth 1 -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" \) -printf "%f\n" | \
+    while read -r name; do
+        printf "%s\0icon\x1f%s/%s\n" "$name" "$WALL_DIR" "$name"
+    done | rofi -dmenu -show-icons -case-smart -theme "$HOME/.config/rofi/wallpaper-picker.rasi" -p "   Wallpaper"
+)
+
+# 3. If the user cancelled (Esc or clicked outside), exit cleanly
+[[ -z "$CHOSEN_FILE" ]] && exit 0
+
+# 4. Output the full path
+SELECTED_PATH="$WALL_DIR/$CHOSEN_FILE"
+
+awww img $SELECTED_PATH --transition-type random
+
