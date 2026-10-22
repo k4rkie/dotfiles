@@ -10,7 +10,7 @@
 }
 
 window#waybar {
-    background-color: #030206;
+    background-color: alpha(#030206, 0.95);
 }
 
 window#waybar > box {

@@ -52,7 +52,7 @@
       "storage"
       "docker"
     ];
-    shell = pkgs.zsh;
+    shell = pkgs.bash;
     packages = with pkgs; [ ];
   };
 
@@ -103,7 +103,7 @@
     defaultNetwork.settings.dns_enabled = true;
   };
 
-  programs.zsh.enable = true;
+  programs.bash.enable = true;
 
   programs.nh = {
     enable = true;

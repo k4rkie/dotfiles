@@ -158,7 +158,6 @@ in
     ripgrep
     zoxide
     bat
-    eza
     btop
     unzip
     file
@@ -199,7 +198,6 @@ in
     cmatrix
     tesseract
     satty
-    quickshell
     qalculate-gtk
     sway-audio-idle-inhibit
     (papirus-icon-theme.override { color = "indigo"; })
