@@ -1,5 +1,25 @@
 {
   "nodes": {
+    "auto-cpufreq": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1792609737,
+        "narHash": "sha256-vfmqH26p9JjqXdtFJ2j0fbiu3X4SISezi/s6X6ak1u0=",
+        "owner": "AdnanHodzic",
+        "repo": "auto-cpufreq",
+        "rev": "5a1683037a583785f802b5d039022127b9b154cd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "AdnanHodzic",
+        "repo": "auto-cpufreq",
+        "type": "github"
+      }
+    },
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": "nixpkgs-lib"
@@ -69,15 +89,16 @@
         "scenefx": "scenefx"
       },
       "locked": {
-        "lastModified": 1789620966,
-        "narHash": "sha256-Wz2QKEiuamyjGH0GwwTPVwlHw4uDRcZ6onn+92Iwx1Y=",
+        "lastModified": 1792288609,
+        "narHash": "sha256-n/VaBi0yVOggB+ERQFCRNzYEfYpDSqbYkG066WCendQ=",
         "owner": "mangowm",
         "repo": "mango",
-        "rev": "aa019c707ea7fb80cf3dce082beb43ec333a6ea5",
+        "rev": "8ab8dd6da49de0c26b8355806ed3d3684c261aca",
         "type": "github"
       },
       "original": {
         "owner": "mangowm",
+        "ref": "0.18.2",
         "repo": "mango",
         "type": "github"
       }
@@ -115,10 +136,10 @@
     },
     "root": {
       "inputs": {
+        "auto-cpufreq": "auto-cpufreq",
         "home-manager": "home-manager",
         "mangowm": "mangowm",
-        "nixpkgs": "nixpkgs",
-        "zen-browser": "zen-browser"
+        "nixpkgs": "nixpkgs"
       }
     },
     "scenefx": {
@@ -156,29 +177,6 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default-linux",
-        "type": "github"
-      }
-    },
-    "zen-browser": {
-      "inputs": {
-        "home-manager": [
-          "home-manager"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1791022445,
-        "narHash": "sha256-jr7YVkvOYS+bJjzBwoqtN8b8inJN8UDWziWufAWH1SY=",
-        "owner": "0xc000022070",
-        "repo": "zen-browser-flake",
-        "rev": "e56900732d1fa6f360db502451a457ffe3ca1e6e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "0xc000022070",
-        "repo": "zen-browser-flake",
         "type": "github"
       }
     }

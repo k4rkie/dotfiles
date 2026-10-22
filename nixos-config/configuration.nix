@@ -10,6 +10,7 @@
     /etc/nixos/hardware-configuration.nix
     inputs.mangowm.nixosModules.mango
     inputs.home-manager.nixosModules.home-manager
+    inputs.auto-cpufreq.nixosModules.default
   ];
 
   home-manager = {
@@ -59,6 +60,25 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  nixpkgs.overlays = [
+    (final: prev: {
+      waybar = (prev.waybar.override { cavaSupport = false; }).overrideAttrs (old: {
+        version = "0.15.0-mango";
+        src = prev.fetchFromGitHub {
+          owner = "Alexays";
+          repo = "Waybar";
+          rev = "c15ec02ede4343592a59eb5c2ff4443c9c045f7c";
+          hash = "sha256-mBDWjeeIuFfDZQuBxHu+EpbJ+GMbbSxpRz0WVM2N+ZI=";
+        };
+        mesonFlags = old.mesonFlags ++ [
+          "-Dmango=true"
+          "-Dwwan=disabled"
+        ];
+        doInstallCheck = false;
+      });
+    })
+  ];
+
   # --- GPU / Graphics (AMD Vega / Picasso) ---
   hardware.graphics = {
     enable = true;
@@ -94,7 +114,6 @@
   services.udisks2.enable = true;
   services.devmon.enable = true;
 
-  services.power-profiles-daemon.enable = true;
   services.upower.enable = true;
 
   virtualisation.docker.enable = true;
@@ -104,6 +123,7 @@
   };
 
   programs.bash.enable = true;
+  programs.auto-cpufreq.enable = true;
 
   programs.nh = {
     enable = true;
@@ -160,22 +180,9 @@
 
   services.envfs.enable = true;
 
-  services.xserver = {
-    enable = true;
-    displayManager.startx.enable = true;
-    desktopManager = {
-      xterm.enable = false;
-      xfce = {
-        enable = true;
-      };
-    };
-  };
-
   fonts.packages = with pkgs; [
-    nerd-fonts.mononoki
     nerd-fonts.departure-mono
     maple-mono.NF
-    nerd-fonts.ubuntu-mono
     noto-fonts-color-emoji
   ];
   fonts.fontconfig.enable = true;
@@ -215,6 +222,8 @@
       "flakes"
     ];
     auto-optimise-store = true;
+    max-jobs = 1;
+    cores = 2;
   };
 
   security.sudo.extraConfig = ''

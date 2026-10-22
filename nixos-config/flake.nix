@@ -10,16 +10,13 @@
     };
 
     mangowm = {
-      url = "github:mangowm/mango";
+      url = "github:mangowm/mango/0.18.2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    zen-browser = {
-      url = "github:0xc000022070/zen-browser-flake";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        home-manager.follows = "home-manager";
-      };
+    auto-cpufreq = {
+        url = "github:AdnanHodzic/auto-cpufreq";
+        inputs.nixpkgs.follows = "nixpkgs";
     };
 
   };
@@ -30,7 +27,7 @@
       nixpkgs,
       home-manager,
       mangowm,
-      zen-browser,
+      auto-cpufreq,
       ...
     }@inputs:
     {

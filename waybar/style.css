@@ -10,11 +10,14 @@
 }
 
 window#waybar {
-    background-color: alpha(#030206, 0.95);
+    background: transparent;
 }
 
 window#waybar > box {
     padding: 0 12px;
+    margin: 0px 6px 0px 6px;
+    background-color: alpha(#030206, 1);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.6);
 }
 
 /* workspaces */

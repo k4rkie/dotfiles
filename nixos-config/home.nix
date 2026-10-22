@@ -27,7 +27,6 @@ in
 {
   imports = [
     ./services/services.nix
-    inputs.zen-browser.homeModules.beta
   ];
   home = {
     username = "k4rkie";
@@ -80,13 +79,6 @@ in
     enableZshIntegration = false;
   };
 
-  programs.zen-browser = {
-    enable = true;
-    profiles.default = {
-      sine.enable = true;
-    };
-  };
-
   services.mpd-mpris.enable = true;
 
   services.mpd = {
@@ -118,6 +110,7 @@ in
     localsend
 
     # --- Desktop Environment & Wayland ---
+    waybar
     thunar
     tumbler
     rofi

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-killall -SIGUSR2 waybar
+pkill -SIGUSR2 waybar
 
 pkill swayosd-server 
 swayosd-server >/dev/null 2>&1 &

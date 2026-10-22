@@ -2,8 +2,9 @@
   "layer": "top",
   "position": "bottom",
   "height": 34,
-  "margin-left": 120,
-  "margin-right": 120,
+  "exclusive": true,
+  "margin-left": 420,
+  "margin-right": 420,
   "reload_style_on_change": true,
   "modules-left": [
     "battery",
@@ -26,17 +27,6 @@
     "hide-empty": true,
     "on-click": "activate",
     "overview-label": "OVERVIEW",
-    "format-icons": {
-      "1": "one",
-      "2": "two",
-      "3": "three",
-      "4": "four",
-      "5": "five",
-      "6": "six",
-      "7": "seven",
-      "8": "eight",
-      "9": "nine"
-    }
   },
   "mango/window": {
     "format": "{app_id}",
