@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 
-mmsg dispatch reload_config
-
-pkill -f mpd-notify.sh
-~/scripts/mpd-notify.sh &
+killall -SIGUSR2 waybar
 
 pkill swayosd-server 
 swayosd-server >/dev/null 2>&1 &

@@ -21,6 +21,7 @@
     selected-active-foreground: #030206;
 
     selected-normal-background: #95b1b7;
+    selected-normal-background-wallpaper: #0e0d15;
     selected-normal-foreground: #030206;
     selected-urgent-background: #d8647e;
     selected-urgent-foreground: #030206;
@@ -32,7 +33,6 @@
     alternate-active-foreground: #030206;
     alternate-urgent-background: #d8647e;
     alternate-urgent-foreground: #030206;
-
 }
 
 #window {

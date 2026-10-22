@@ -11,13 +11,14 @@ let
     fastfetch = "fastfetch";
     hypr = "hypr";
     mango = "mango";
+    mako = "mako";
     mpv = "mpv";
     nvim = "nvim";
-    quickshell = "quickshell";
     rmpc = "rmpc";
     rofi = "rofi";
     swayosd = "swayosd";
     wallust = "wallust";
+    waybar = "waybar";
     yazi = "yazi";
     zathura = "zathura";
     zed = "zed";
@@ -43,7 +44,7 @@ in
   # home directory symlinks
   home.file = {
     ".tmux.conf".source = slink "${dotfiles}/tmux/tmux.conf";
-    ".zshrc".source = slink "${dotfiles}/zsh/.zshrc";
+    ".bashrc".source = slink "${dotfiles}/bash/.bashrc";
     "scripts".source = slink "${dotfiles}/scripts";
   };
 

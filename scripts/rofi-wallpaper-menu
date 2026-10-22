@@ -24,3 +24,4 @@ SELECTED_PATH="$WALL_DIR/$CHOSEN_FILE"
 
 awww img $SELECTED_PATH --transition-type random
 
+cp $SELECTED_PATH $HOME/.cache/lockscreen.png

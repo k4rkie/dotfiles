@@ -47,8 +47,10 @@ style-prompt
 set -o vi
 
 # Aliases
-alias ls="eza -lh --color=auto"
-alias la="eza -lha --color=auto"
+alias ls="ls -lh --color=auto"
+alias la="ls -lhA --color=auto"
+
+alias ..="cd .."
 
 alias vi="nvim"
 alias reload="source ~/.bashrc"
@@ -57,6 +59,11 @@ alias tsd="tmux-session-dispensary.sh"
 alias rm="rm -i"
 
 alias hl="rg --passthru"
+
+alias gs="git status"
+alias gc="git commit"
+alias gp="git push"
+alias gl="git log"
 
 # Env + PATH 
 export TERMINAL=foot
@@ -118,7 +125,6 @@ npx()  { _lazy_load_nvm; npx "$@"; }
 mann() {
   man $1 | bat -l man --style=plain
 }
-
 
 # Added by Antigravity CLI installer
 export PATH="/home/k4rkie/.local/bin:$PATH"

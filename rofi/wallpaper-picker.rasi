@@ -1,145 +1,67 @@
-@import "~/.config/rofi/colors-rofi-dark.rasi"
-
-configuration {
-    show-icons: true;
-}
-
+@import "colors-rofi-dark.rasi"
 * {
-    font: "SFMono Nerd Font 15";
+    font: "SFMono Nerd Font 12";
+    background-color: transparent;
+    text-color: @foreground;
 }
-
 window {
-    transparency:     "real";
-    location:         center;
-    anchor:           center;
-    fullscreen:       false;
-    width:            62%;
-    enabled:          true;
-    margin:           0px;
-    padding:          6px;
-    border:           1px solid;
-    border-color:     #080808;
-    border-radius:    0px;
+    width: 50%;
+    height: 360px;
+    location: center;
+    anchor: center;
+    border: 0;
+    border-radius: 0;
+    padding: 14px;
     background-color: @background;
-    cursor:           "default";
 }
-
 mainbox {
-    enabled:          true;
-    spacing:          6px;
-    margin:           0px;
-    padding:          2px;
-    border:           0px;
-    background-color: transparent;
-    children:         [ inputbar, content-box ];
+    spacing: 8px;
+    children: [ inputbar, listview ];
 }
-
 inputbar {
-    enabled:          true;
-    spacing:          0px;
-    padding:          2px 4px;
-    background-color: transparent;
-    text-color:       @foreground;
-    children:         [ prompt, textbox-prompt-colon, entry ];
+    padding: 12px 18px;
+    spacing: 12px;
+    border-radius: 0;
+    background-color: @background;
+    children: [ prompt, entry ];
 }
-
-prompt {
-    text-color:       @foreground;
-    padding:          0px 4px 0px 0px;
-}
-
-textbox-prompt-colon {
-    expand:           false;
-    str:              ":";
-    text-color:       @foreground;
-    margin:           0px 0.3em 0em 0em;
-}
-
 entry {
-    text-color:        @foreground;
-    placeholder:       "Search wallpaper...";
+    placeholder: "Search wallpaper...";
+    text-color: @foreground;
+    background-color: transparent;
     placeholder-color: #444444;
 }
-
-/* Horizontal split: Left = Listview, Right = Preview */
-content-box {
-    orientation:      horizontal;
-    spacing:          6px;
-    margin:           0px;
-    padding:          0px;
-    background-color: transparent;
-    children:         [ listview, preview-box ];
-}
-
-/* Left column: List of wallpapers */
 listview {
-    enabled:          true;
-    width:            38%;
-    columns:          1;
-    lines:            8;
-    cycle:            true;
-    dynamic:          true;
-    scrollbar:        false;
-    layout:           vertical;
-    reverse:          false;
-    fixed-height:     false;
-    fixed-columns:    true;
-    spacing:          3px;
-    margin:           0px;
-    padding:          2px;
-    border:           0px solid;
-    border-radius:    0px;
-    background-color: transparent;
-    cursor:           "default";
+    columns: 3;
+    lines: 1;
+    flow: horizontal;
+    fixed-height: true;
+    fixed-columns: true;
+    cycle: false;
+    scrollbar: false;
+    padding: 0px;
+    spacing: 0px;
+    border: 0px;
 }
-
 element {
-    enabled:          true;
-    spacing:          0px;
-    margin:           1px 0px;
-    padding:          6px 8px;
-    border:           0px solid;
-    border-radius:    0px;
-    background-color: transparent;
-    text-color:       @foreground;
-    cursor:           pointer;
-    children:         [ element-text ];
+    orientation: vertical;
+    padding: 0px;
+    margin: 0px;
+    spacing: 2px;
+    border-radius: 0;
 }
-
-element-text {
-    background-color: transparent;
-    text-color:       inherit;
-    cursor:           inherit;
-    vertical-align:   0.5;
-    horizontal-align: 0.0;
-}
-
-element selected {
-    background-color: @selected-normal-background;
-    text-color:       @selected-normal-foreground;
-}
-
 element selected.normal {
-    background-color: @selected-normal-background;
-    text-color:       @selected-normal-foreground;
+    background-color: @selected-normal-background-wallpaper;
+    text-color: @selected-normal-foreground;
+    border-radius: 0;
 }
-
-/* Right column: Image preview */
-preview-box {
-    expand:           true;
-    margin:           0px;
-    padding:          4px;
-    border:           1px solid;
-    border-color:     #080808;
-    border-radius:    0px;
-    background-color: @background;
-    children:         [ icon-current-entry ];
-}
-
-icon-current-entry {
-    expand:           true;
-    size:             320px;
-    squared:          false;
+element-icon {
+    size: 250px;
+    border-radius: 0;
     horizontal-align: 0.5;
-    vertical-align:   0.5;
+    vertical-align: 0.5;
+}
+element-text {
+    horizontal-align: 0.5;
+    text-color: transparent;
 }
