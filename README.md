@@ -11,11 +11,9 @@
 | component | tool |
 |-----------|------|
 | **wm** | Mango  |
-| **shell** | Quickshell |
 | **osd** | Swayosd |
 | **terminal** | foot |
 | **shell** | bash |
-| **editor** | Neovim |
 | **multiplexer** | Tmux |
 | **file manager** | Yazi (tui), Thunar (gui) |
 | **music** | MPD + rmpc |
@@ -26,7 +24,7 @@
 | **color picker** | Hyprpicker |
 | **gamma** | Wlsunset |
 | **gtk** | Rose Pine, Papirus-Dark icons |
-| **font** | Maple Mono NF |
+| **font** | SFMono Nerd Font|
 
 
 ## install

@@ -47,8 +47,8 @@ style-prompt
 set -o vi
 
 # Aliases
-alias ls="ls -lh --color=auto"
-alias la="ls -lhA --color=auto"
+alias ls="eza -lh"
+alias la="eza -lhA"
 
 alias ..="cd .."
 

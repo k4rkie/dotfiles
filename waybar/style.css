@@ -6,7 +6,7 @@
     margin: 0;
 
     font-family: "SFMono Nerd Font";
-    font-size: 19.8px;
+    font-size: 19px;
 }
 
 window#waybar {
@@ -14,10 +14,8 @@ window#waybar {
 }
 
 window#waybar > box {
-    padding: 0 12px;
-    margin: 0px 6px 0px 6px;
+    padding: 0 4px;
     background-color: alpha(#030206, 1);
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.6);
 }
 
 /* workspaces */
@@ -27,9 +25,10 @@ window#waybar > box {
     min-width: 12px;
     padding: 0 10px;
     margin: 5px 1px;
-    background: none;
     color: #6e6a86;
     font-weight: normal;
+    background-color: #06050a;
+    border: 1px solid #0f0f18;
 }
 
 #workspaces button:hover {
@@ -49,6 +48,26 @@ window#waybar > box {
 #workspaces button.overview {
     color: #030206;
     background: #c27282;
+}
+
+#clock,
+#memory,
+#disk,
+#battery,
+#network,
+#tray,
+#idle_inhibitor {
+    padding: 0 10px;
+    margin: 5px 1px;
+    background-color: #06050a;
+    border: 1px solid #0f0f18;
+}
+
+#idle_inhibitor {
+    color: #6e6a86;
+}
+#idle_inhibitor.activated {
+    color: #d87a78;
 }
 
 #clock {
@@ -99,7 +118,7 @@ window#waybar > box {
 #custom-sep {
     color: #d0cce4;
     opacity: 0.2;
-    margin: 0 12px;
+    margin: 0 4px;
 }
 
 menu {
@@ -118,9 +137,9 @@ menuitem:hover {
 }
 tooltip {
     background: #030206;
-    border: 2px solid #0e0d15;
-    border-radius: 0;
+    border: 1px solid #0f0f18;
 }
 tooltip label {
     color: #908caa;
 }
+

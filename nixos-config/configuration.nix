@@ -116,10 +116,13 @@
 
   services.upower.enable = true;
 
-  virtualisation.docker.enable = true;
-  virtualisation.podman = {
-    enable = true;
-    defaultNetwork.settings.dns_enabled = true;
+  virtualisation = {
+    containers.registries.search = [ "docker.io" "quay.io" ];
+    docker.enable = true;
+    podman = {
+        enable = true;
+        defaultNetwork.settings.dns_enabled = true;
+    };
   };
 
   programs.bash.enable = true;
