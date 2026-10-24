@@ -235,7 +235,7 @@ wm="$(echo "${XDG_CURRENT_DESKTOP:-$DESKTOP_SESSION}" | sed 's/.*\.//')"
 
 ## OS AGE DETECTION
 
-birth_install=$(stat -c %W /)
+birth_install=1781693440
 current=$(date +%s)
 time_progression=$((current - birth_install))
 days_difference=$((time_progression / 86400))
@@ -250,7 +250,7 @@ yellow='[33m'
 blue='[34m'
 magenta='[35m'
 white='[37m'
-grey='\033[38;2;180;180;180m'
+grey='\033[38;2;60;60;60m'
 reset='[0m'
 
 ## USER VARIABLES -- YOU CAN CHANGE THESE

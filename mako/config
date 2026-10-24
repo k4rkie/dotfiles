@@ -16,7 +16,7 @@ sort=+time
 background-color=#030206
 border-color=#0e0d15
 border-size=1
-border-radius=0
+border-radius=4
 progress-color=over #95b1b7
 
 # ── fonts / text ──

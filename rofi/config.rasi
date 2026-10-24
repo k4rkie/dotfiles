@@ -25,7 +25,7 @@ window {
     padding:                     6px;
     border:                      1px solid;
     border-color:                #080808;
-    border-radius:               0px;
+    border-radius:               4px;
     cursor:                      "default";
 }
 /*****----- Listview -----*****/
@@ -44,7 +44,7 @@ listview {
     margin:                      0px;
     padding:                     6px;
     border:                      0px solid;
-    border-radius:               0px;
+    border-radius:               4px;
     cursor:                      "default";
 }
 

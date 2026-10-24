@@ -60,6 +60,7 @@ alias rm="rm -i"
 
 alias hl="rg --passthru"
 
+alias gaa="git add ."
 alias gs="git status"
 alias gc="git commit"
 alias gp="git push"
@@ -116,11 +117,6 @@ npx()  { _lazy_load_nvm; npx "$@"; }
 # bun completions (fast, keep eager)
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
-# fzf: Ctrl-R = history, Ctrl-T = files, Alt-C = cd
-[ -f /usr/share/fzf/key-bindings.bash ] && source /usr/share/fzf/key-bindings.bash
-[ -f /usr/share/fzf/completion.bash ] && source /usr/share/fzf/completion.bash
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
-
 #functions
 mann() {
   man $1 | bat -l man --style=plain
@@ -128,3 +124,8 @@ mann() {
 
 # Added by Antigravity CLI installer
 export PATH="/home/k4rkie/.local/bin:$PATH"
+
+# fzf key bindings + completions
+if [[ $- == *i* ]] && command -v fzf >/dev/null; then
+  eval "$(fzf --bash)"
+fi

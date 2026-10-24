@@ -1,6 +1,6 @@
 window#osd {
   padding: 8px 16px;
-  border-radius: 0px;
+  border-radius: 4px;
   background: alpha(#030206, 1);
   border: 2px solid #0e0d15;
   margin-top: 10px;
@@ -29,14 +29,14 @@ window#osd progressbar {
 
 window#osd trough {
   min-height: inherit;
-  border-radius: 0px;
+  border-radius: 4px;
   border: none;
   background: alpha(#95b1b7, 0.3);
 }
 
 window#osd progress {
   min-height: inherit;
-  border-radius: 0px;
+  border-radius: 4px;
   border: none;
   background: #95b1b7;
 }

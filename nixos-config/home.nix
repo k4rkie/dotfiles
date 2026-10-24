@@ -53,6 +53,25 @@ in
     enable = true;
     createDirectories = true;
   };
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "text/html" = "firefox.desktop";
+      "x-scheme-handler/http" = "firefox.desktop";
+      "x-scheme-handler/https" = "firefox.desktop";
+      "x-scheme-handler/about" = "firefox.desktop";
+      "image/png" = "imv.desktop";
+      "image/jpeg" = "imv.desktop";
+      "image/webp" = "imv.desktop";
+      "application/pdf" = "org.pwmt.zathura.desktop";
+      "video/mp4" = "mpv.desktop";
+      "video/x-matroska" = "mpv.desktop";
+      "video/webm" = "mpv.desktop";
+      "video/quicktime" = "mpv.desktop";
+      "video/mpeg" = "mpv.desktop";
+      "video/ogg" = "mpv.desktop";
+    };
+  };
 
   programs.git = {
     enable = true;
@@ -67,30 +86,12 @@ in
 
   programs.fzf = {
     enable = true;
-    enableZshIntegration = false;
-    changeDirWidgetCommand = "fd --type d";
-    changeDirWidgetOptions = [ "--preview 'tree -C {} | head -200'" ];
-    defaultCommand = "fd --type f";
+    enableBashIntegration = true;
   };
 
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
-    enableZshIntegration = false;
-  };
-
-  services.mpd-mpris.enable = true;
-
-  services.mpd = {
-    enable = true;
-    musicDirectory = "${config.home.homeDirectory}/Music";
-    network.startWhenNeeded = true;
-    extraConfig = ''
-      audio_output {
-        type "pipewire"
-        name "PipeWire"
-      }
-    '';
   };
 
   home.packages = with pkgs; [
@@ -119,6 +120,7 @@ in
     wl-clipboard
     cliphist
     swayosd
+    mako
     wlsunset
     grim
     slurp
@@ -134,13 +136,13 @@ in
 
     # --- Media, Graphics & Audio ---
     gimp
+    krita
     audacity
     mpv
     imv
     zathura
     zathuraPkgs.zathura_pdf_poppler
     libreoffice
-    rmpc
     nwg-look
 
     # --- Terminal Utilities & Navigation ---
